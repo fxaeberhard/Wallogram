@@ -72,18 +72,18 @@ package com.beamergame {
 			
 			var matrix:Array = new Array();
 			//var name:String = this.owner.getProperty('name');
-			var ownerE:com.pblabs.engine.entity.Entity = (owner as com.pblabs.engine.entity.Entity);
-			if (ownerE.name == 'Player1') {
+			//var ownerE:com.pblabs.engine.entity.Entity = (owner as com.pblabs.engine.entity.Entity);
+			//if (ownerE.name == 'Player1') {
 				matrix = matrix.concat([0, 0, 0, 0, 255]);// red
 				matrix = matrix.concat([0, 0, 0, 0, 0]);// gree
 				matrix = matrix.concat([0, 0, 0, 0, 0]);// blue
 				matrix = matrix.concat([0, 0, 0, 1, 0]);// alpha
-			} else {
+			//} else {
 				matrix = matrix.concat([0, 0, 0, 0, 0]);
 				matrix = matrix.concat([0, 0, 0, 0, 0]);
 				matrix = matrix.concat([0, 0, 0, 0, 255]);
 				matrix = matrix.concat([0, 0, 0, 1, 0]);
-			}
+			//}
 			
 			var s:Sprite = (rendererReference.displayObject as Sprite);
 			s.filters = [ new ColorMatrixFilter(matrix) ];

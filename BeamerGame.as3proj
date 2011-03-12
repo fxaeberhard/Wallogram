@@ -37,7 +37,7 @@
     <option linkReport="" />
     <option loadExterns="" />
     <option staticLinkRSL="True" />
-    <option additional="" />
+    <option additional="--keep-as3-metadata+=TypeHint,EditorData,Embed" />
     <option compilerConstants="" />
     <option customSDK="" />
   </build>

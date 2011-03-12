@@ -21,7 +21,7 @@
       <path-element>C:\prog\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\Users\fx\Desktop\documents\workspace\beamergame\BeamerGame\bin\PBEngine.swc</path-element>
+      <path-element>C:\Users\fx\Desktop\documents\workspace\beamergame\BeamerGame\PBEngine.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
