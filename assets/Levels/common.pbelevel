@@ -1,0 +1,77 @@
+<things version="1">
+	
+	<entity name="SpatialDB">
+		<component type="com.pblabs.box2D.Box2DManagerComponent" name="Manager"/>
+	</entity>
+	
+	<entity name="Scene">
+		<component type="com.pblabs.rendering2D.DisplayObjectScene" name="Scene">
+			<trackObject componentReference="Player1"/>
+			<sceneViewName>MainView</sceneViewName>
+		</component>
+	</entity>
+	 
+	<entity name="sceneColor">
+		<component type="com.pblabs.rendering2D.BitmapDataScene" name="scene">
+			<sceneView type="com.pblabs.rendering2D.ui.SceneView" >
+				<width>400</width>
+				<height>300</height>
+			</sceneView>
+			<position>
+				<x>0</x>
+				<y>0</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="Box2D">
+		<component type="com.pblabs.box2D.Box2DDebugComponent" name="Debug">
+			<spatialManager componentReference="SpatialDB"/>
+			<scene componentReference="Scene"/>
+		</component>
+	</entity>
+  
+	<!-- 1st guy -->  
+	<entity name="Player1" template="PlayerTemplate">
+		<component name="Spatial">
+		<position type="">
+				<x>400</x>
+				<y>100</y>
+			</position>
+		</component>
+		<component name="Controller">
+		  <input childType="com.pblabs.engine.core.InputKey">
+			<GoLeft>LEFT</GoLeft>
+			<GoRight>RIGHT</GoRight>
+			<Jump>UP</Jump>
+		  </input>
+		</component>
+	</entity>
+	
+	<!-- 2nd guy -->
+	<entity name="Player2" template="PlayerTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>420</x>
+				<y>100</y>
+			</position>
+		</component>
+		
+		<component name="Controller">
+		  <input childType="com.pblabs.engine.core.InputKey">
+			<GoLeft>A</GoLeft>
+			<GoRight>D</GoRight>
+			<Jump>W</Jump>
+		  </input>
+		</component>
+	</entity>
+  
+  
+	<group name="Common">
+		<objectReference name="SpatialDB"/>
+		<objectReference name="Scene"/>
+		<objectReference name="Box2D"/>
+		<objectReference name="Player1"/>
+		<objectReference name="Player2"/>
+	</group>
+</things>
