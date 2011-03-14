@@ -6,7 +6,7 @@
       <file filename="../Assets/Levels/common.pbelevel"/>
       <group name="Common"/>
    </level>
-   <level index="1" name="Bowl">
+   <level index="1" name="Level1">
       <file filename="../Assets/Levels/spriteSheets.pbelevel"/>
       <group name="SpriteSheets"/>
       <file filename="../Assets/Levels/templates.pbelevel"/>
@@ -15,7 +15,7 @@
       <file filename="../Assets/Levels/level1.pbelevel"/>
       <group name="Level1Data"/>
    </level>
-   <level index="2" name="Downstairs">
+   <level index="2" name="Level2">
       <file filename="../Assets/Levels/spriteSheets.pbelevel"/>
       <group name="SpriteSheets"/>
       <file filename="../Assets/Levels/templates.pbelevel"/>
@@ -24,7 +24,7 @@
       <file filename="../Assets/Levels/level2.pbelevel"/>
       <group name="Level2Data"/>
    </level>
-   <level index="3" name="Upstairs">
+   <level index="3" name="Level3">
       <file filename="../Assets/Levels/spriteSheets.pbelevel"/>
       <group name="SpriteSheets"/>
       <file filename="../Assets/Levels/templates.pbelevel"/>

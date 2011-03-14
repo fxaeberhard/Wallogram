@@ -1,6 +1,7 @@
 package {
 	
 	// *** Flash Imports *** //
+	import com.pblabs.rendering2D.SpriteRenderer;
     import flash.display.Sprite;
     import flash.utils.*;
 	import flash.filters.*;
@@ -34,6 +35,7 @@ package {
             // Make sure all the types our XML will use are registered.
             PBE.registerType(com.pblabs.rendering2D.DisplayObjectScene);
             PBE.registerType(com.pblabs.rendering2D.SpriteSheetRenderer);
+            PBE.registerType(SpriteRenderer);
             PBE.registerType(com.pblabs.rendering2D.spritesheet.SpriteSheetComponent);
             PBE.registerType(com.pblabs.rendering2D.SimpleSpatialComponent);
             PBE.registerType(com.pblabs.rendering2D.BasicSpatialManager2D);
@@ -64,7 +66,7 @@ package {
             addChild(sv);
 
             // Load the descriptions, and start up level 1.
-            LevelManager.instance.load("../assets/levelDescriptions.xml", 3);
+            LevelManager.instance.load("../assets/levelDescriptions.xml", 1);
         }
     }
 }

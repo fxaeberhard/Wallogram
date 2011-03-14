@@ -33,7 +33,7 @@ package
         [Embed(source = "../assets/Images/platform.png")]
         public var _platform:Class;
         
-        [Embed(source = "../assets/Sounds/testSound.mp3")]
-        public var _testSound:Class;
+       // [Embed(source = "../assets/Sounds/testSound.mp3")]
+       // public var _testSound:Class;
     }
 }

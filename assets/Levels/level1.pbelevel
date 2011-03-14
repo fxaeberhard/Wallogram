@@ -1,9 +1,10 @@
 <things version="1">
+	
 	<entity name="Platform1" template="Platform">
 		<component name="Spatial">
 			<position type="">
-				<x>94</x>
-				<y>450</y>
+				<x>-105</x>
+				<y>105</y>
 			</position>
 		</component>
 	</entity>
@@ -11,8 +12,8 @@
 	<entity name="Platform2" template="Platform">
 		<component name="Spatial">
 			<position type="">
-				<x>400</x>
-				<y>500</y>
+				<x>-315</x>
+				<y>105</y>
 			</position>
 		</component>
 	</entity>
@@ -20,15 +21,68 @@
 	<entity name="Platform3" template="Platform">
 		<component name="Spatial">
 			<position type="">
-				<x>706</x>
-				<y>450</y>
+				<x>105</x>
+				<y>105</y>
+			</position>
+		</component>
+	</entity>
+  
+	<entity name="Platform4" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>315</x>
+				<y>105</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="Platform21" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-105</x>
+				<y>-50</y>
+			</position>
+		</component>
+	</entity>
+  
+	<entity name="Platform22" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-315</x>
+				<y>-50</y>
 			</position>
 		</component>
 	</entity>
 
+	<entity name="Platform23" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>105</x>
+				<y>-50</y>
+			</position>
+		</component>
+	</entity>
+  
+	<entity name="Platform24" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>315</x>
+				<y>-50</y>
+			</position>
+		</component>
+	</entity>
+
+	<entity name="Background1" template="Background"></entity>
+	
 	<group name="Level1Data">
+		<objectReference name="Background1"/>
 		<objectReference name="Platform1"/>
 		<objectReference name="Platform2"/>
 		<objectReference name="Platform3"/>
+		<objectReference name="Platform4"/>
+		<objectReference name="Platform21"/>
+		<objectReference name="Platform22"/>
+		<objectReference name="Platform23"/>
+		<objectReference name="Platform24"/>
 	</group>
 </things>

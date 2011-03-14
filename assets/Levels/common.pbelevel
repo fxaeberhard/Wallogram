@@ -6,26 +6,23 @@
 	
 	<entity name="Scene">
 		<component type="com.pblabs.rendering2D.DisplayObjectScene" name="Scene">
-			<trackObject componentReference="Player1"/>
+			<!--<trackObject componentReference="Player1"/>-->
 			<sceneViewName>MainView</sceneViewName>
-		</component>
-	</entity>
-	 
-	<entity name="sceneColor">
-		<component type="com.pblabs.rendering2D.BitmapDataScene" name="scene">
-			<sceneView type="com.pblabs.rendering2D.ui.SceneView" >
-				<width>400</width>
-				<height>300</height>
-			</sceneView>
 			<position>
 				<x>0</x>
 				<y>0</y>
 			</position>
+			<sceneView type="com.pblabs.rendering2D.ui.SceneView" >
+				<width>800</width>
+				<height>600</height>
+			</sceneView>
 		</component>
 	</entity>
-	
+
 	<entity name="Box2D">
-		<component type="com.pblabs.box2D.Box2DDebugComponent" name="Debug">
+		<!--
+		<component type="com.pblabs.box2D.Box2DComponent" name="Debug">-->
+		<component type="com.pblabs.box2D.Box2DDebugComponent" name="Debug">  
 			<spatialManager componentReference="SpatialDB"/>
 			<scene componentReference="Scene"/>
 		</component>
@@ -35,11 +32,12 @@
 	<entity name="Player1" template="PlayerTemplate">
 		<component name="Spatial">
 		<position type="">
-				<x>400</x>
-				<y>100</y>
+				<x>-315</x>
+				<y>0</y>
 			</position>
 		</component>
 		<component name="Controller">
+		  <team childType="String">red</team>
 		  <input childType="com.pblabs.engine.core.InputKey">
 			<GoLeft>LEFT</GoLeft>
 			<GoRight>RIGHT</GoRight>
@@ -52,12 +50,13 @@
 	<entity name="Player2" template="PlayerTemplate">
 		<component name="Spatial">
 			<position type="">
-				<x>420</x>
-				<y>100</y>
+				<x>315</x>
+				<y>0</y>
 			</position>
 		</component>
 		
 		<component name="Controller">
+		  <team childType="String">blue</team>
 		  <input childType="com.pblabs.engine.core.InputKey">
 			<GoLeft>A</GoLeft>
 			<GoRight>D</GoRight>
@@ -65,10 +64,21 @@
 		  </input>
 		</component>
 	</entity>
+	
+	
   
-  
+  	<entity name="Explosion" template="ExplosionTemplate">
+		<!--<component name="Spatial">
+			<position type="">
+				<x>315</x>
+				<y>0</y>
+			</position>
+		</component>-->
+	</entity>
+	
 	<group name="Common">
 		<objectReference name="SpatialDB"/>
+		<objectReference name="Explosion"/>
 		<objectReference name="Scene"/>
 		<objectReference name="Box2D"/>
 		<objectReference name="Player1"/>
