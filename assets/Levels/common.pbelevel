@@ -20,9 +20,8 @@
 	</entity>
 
 	<entity name="Box2D">
-		<!--
-		<component type="com.pblabs.box2D.Box2DComponent" name="Debug">-->
-		<component type="com.pblabs.box2D.Box2DDebugComponent" name="Debug">  
+		<component type="com.pblabs.box2D.Box2DDebugComponent" name="Debug">
+		<!--<component type="com.pblabs.box2D.Box2DComponent" name="Debug">  -->
 			<spatialManager componentReference="SpatialDB"/>
 			<scene componentReference="Scene"/>
 		</component>
@@ -78,7 +77,6 @@
 	
 	<group name="Common">
 		<objectReference name="SpatialDB"/>
-		<objectReference name="Explosion"/>
 		<objectReference name="Scene"/>
 		<objectReference name="Box2D"/>
 		<objectReference name="Player1"/>

@@ -51,7 +51,7 @@ package com.beamergame {
 		private var _onGroundTime:Number = 0;
 		private var _jointDef2:b2RevoluteJointDef = null;
 		private var _joint:b2Joint = null;
-		private var _target;
+		private var _target = null;
 		
         public function get input():InputMap {
             return _inputMap;
@@ -83,10 +83,15 @@ package com.beamergame {
 				if (_joint) {
 					this.box2dReference.spatialManager.world.DestroyJoint(_joint);
 					_joint = null;
-					//this.
+					
+					var s:Box2DSpatialComponent = (this.owner.lookupComponentByName("Spatial") as Box2DSpatialComponent);
+					s.position = new Point(s.position.x, s.position.y-50);
+					trace("moved"+s.position);
+					velocity.y -= 60;
+				} else {
+					velocity.y -= 280;
 				}
 				
-                velocity.y -= 280;
                 _jump = 0;
 				_jumping = true;
 				
@@ -94,13 +99,11 @@ package com.beamergame {
 			
 			if (_onGround > 0) {
 				_onGroundTime++;
-				if (_onGroundTime > 500) {
-					var t = PBE.lookup("Explosion");
-					var s:Box2DSpatialComponent = t.lookupComponentByName("Spatial");
-					var a = t.lookupComponentByName("FrameAnimation");
-					a.play( "explode" );
-					s.position = _target.position;
-					_target.owner.remove();
+				if (_onGroundTime > 150 && _target != null) {
+			//		var t = PBE.lookup("Window");
+			//		var s:Box2DSpatialComponent = t.lookupComponentByName("Spatial");
+				//	s.canMove = true;
+				_target.canMove = true;
 				}
 			} else {
 				_onGroundTime = 0;
@@ -132,14 +135,14 @@ package com.beamergame {
         }
         
         private function _OnCollision(event:CollisionEvent):void {
-
-			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Platform")) {
-                if (event.normal.y > 0.7)
+			
+		    if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Platform")) {
+		        if (event.normal.y > 0.7)
                     _onGround++;
             }
-            
-            if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Platform")) {
-                if (event.normal.y < -0.7) {
+        
+			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Platform")) {
+                if (event.normal.y > 0.7) {
                     _onGround++;
 						
 					if ( _left + _right == 0 ) {
@@ -151,24 +154,19 @@ package com.beamergame {
 				
 				_target = event.collider;
 				
-				if ( event.normal.y > 0.7 ) {
+				if ( event.normal.y < -0.7 ) {
 				
 					
 					_jointDef2 = new b2RevoluteJointDef();
 					_jointDef2.localAnchor1 = new b2Vec2(0, 0);
-					_jointDef2.localAnchor2 = new b2Vec2(0, 0);
+					_jointDef2.localAnchor2 = new b2Vec2(0, 1	);
 					
 					_jointDef2.collideConnected = false;
-					_jointDef2.body1 = event.collidee.body;
-					_jointDef2.body2 = event.collider.body;
-				//	event.contactPoint.
-					//BE.
-					//event.collider
-					//PBE.scene.
+					_jointDef2.body1 = event.collider.body;
+					_jointDef2.body2 = event.collidee.body;
 					event.preventDefault();
 					event.stopPropagation();
 					event.stopImmediatePropagation();
-					//_jointDef2.type
 				}
             }
 			
@@ -236,7 +234,11 @@ package com.beamergame {
         }
         
         private function _OnJump(value:Number):void {
-            if (_onGround > 0 || _joint != null) {
+          
+			if ( _joint != null) {
+              //  animatorReference.play( "jump" );
+				_jump = value;
+			} else if (_onGround > 0) {
                 animatorReference.play( "jump" );
 				_jump = value;
 			}

@@ -27,7 +27,7 @@ package {
 	// *** Project imports *** //
     import com.beamergame.PlayerController;
     
-    [SWF(width="800", height="600", frameRate="60")]
+    [SWF(width="800", height="600", frameRate="60", backgroundColor="#000000")]
     public class BeamerGame extends Sprite
     {        
         public function BeamerGame()
@@ -64,9 +64,8 @@ package {
             sv.width = 800;
             sv.height = 600;
             addChild(sv);
-
-            // Load the descriptions, and start up level 1.
-            LevelManager.instance.load("../assets/levelDescriptions.xml", 1);
+			
+            LevelManager.instance.load("../assets/levelDescriptions.xml", 1);		// Load the descriptions, and start up level 1.
         }
     }
 }
