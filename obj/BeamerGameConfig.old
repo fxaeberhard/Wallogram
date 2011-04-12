@@ -14,18 +14,18 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'15.03.2011'</value>
+      <value>'12.04.2011'</value>
     </define>
     <source-path append="true">
-      <path-element>C:\Users\JMA\Documents\Documents Francois-Xavier\BeamerGame\src</path-element>
-      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>C:\Users\fx\Desktop\documents\workspace\beamergame\BeamerGame\src</path-element>
+      <path-element>C:\prog\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\Users\JMA\Documents\Documents Francois-Xavier\BeamerGame\bin\PBEngine.swc</path-element>
+      <path-element>C:\Users\fx\Desktop\documents\workspace\beamergame\BeamerGame\bin\PBEngine.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\JMA\Documents\Documents Francois-Xavier\BeamerGame\src\BeamerGame.as</path-element>
+    <path-element>C:\Users\fx\Desktop\documents\workspace\beamergame\BeamerGame\src\BeamerGame.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

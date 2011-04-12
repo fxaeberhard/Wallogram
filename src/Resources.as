@@ -28,14 +28,14 @@ package
         [Embed(source = "../assets/Levels/templates.pbelevel", mimeType = 'application/octet-stream')]
         public var _levelTemplates:Class;
         
-        [Embed(source = "../assets/Images/triple_window.jpg")]
+        [Embed(source = "../assets/Images/background.png")]
         public var _window:Class;
         [Embed(source = "../assets/Images/mannequin.png")]
         public var _mannequin:Class;
         [Embed(source = "../assets/Images/platform.png")]
         public var _platform:Class;
         
-       // [Embed(source = "../assets/Sounds/testSound.mp3")]
-       // public var _testSound:Class;
+        [Embed(source = "../assets/Images/window.png")]
+        public var _window2:Class;
     }
 }

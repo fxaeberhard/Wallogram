@@ -1,10 +1,6 @@
 package com.beamergame {
 
 	// *** Flash Imports *** //
-	import Box2D.Common.Math.b2Vec2;
-	import Box2D.Dynamics.Joints.*;
-	import com.pblabs.engine.entity.Entity;
-	import com.pblabs.engine.entity.IEntity;
 	import flash.display.BitmapData;
     import flash.geom.Point;
     import flash.display.Sprite;
@@ -13,7 +9,6 @@ package com.beamergame {
 	import flash.filters.*;
 	
 	// *** PBE Imports *** //
-    import com.pblabs.box2D.CollisionEvent;
     import com.pblabs.engine.PBE;
 	import com.pblabs.engine.entity.Entity;
     import com.pblabs.engine.components.TickedComponent;
@@ -21,11 +16,16 @@ package com.beamergame {
     import com.pblabs.engine.entity.EntityComponent;
     import com.pblabs.engine.entity.PropertyReference;
     import com.pblabs.engine.debug.Logger;
+	import com.pblabs.engine.entity.Entity;
+	import com.pblabs.engine.entity.IEntity;
 	import com.pblabs.animation.AnimatorComponent;
 	import com.pblabs.rendering2D.SpriteSheetRenderer;
-	import com.pblabs.box2D.Box2DSpatialComponent;
     import com.pblabs.engine.PBE;
+	import com.pblabs.box2D.Box2DSpatialComponent;
+    import com.pblabs.box2D.CollisionEvent;
 	
+	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.Joints.*;
     
     /**
      * Component responsible for translating keyboard input to forces on the
@@ -36,7 +36,7 @@ package com.beamergame {
         public var velocityReference:PropertyReference;
 		public var rendererReference:SpriteSheetRenderer;
 		public var animatorReference:AnimatorComponent;
-		public var box2dReference:com.pblabs.box2D.Box2DSpatialComponent;
+		public var box2dReference:Box2DSpatialComponent;
 		
 		public var team:String;
 		
@@ -51,7 +51,7 @@ package com.beamergame {
 		private var _onGroundTime:Number = 0;
 		private var _jointDef2:b2RevoluteJointDef = null;
 		private var _joint:b2Joint = null;
-		private var _target = null;
+		private var _target:Box2DSpatialComponent = null;
 		
         public function get input():InputMap {
             return _inputMap;
@@ -99,11 +99,11 @@ package com.beamergame {
 			
 			if (_onGround > 0) {
 				_onGroundTime++;
-				if (_onGroundTime > 150 && _target != null) {
-			//		var t = PBE.lookup("Window");
-			//		var s:Box2DSpatialComponent = t.lookupComponentByName("Spatial");
-				//	s.canMove = true;
-				_target.canMove = true;
+				if (_onGroundTime > 30 && _target != null) {
+					_target.canMove = true;
+					_target.canRotate = true;
+					_target = null;
+					_onGroundTime = 0;
 				}
 			} else {
 				_onGroundTime = 0;
@@ -152,14 +152,16 @@ package com.beamergame {
 					}
 				}
 				
-				_target = event.collider;
+				var t:String = event.collidee.owner["name"];
+				trace(t);
+				if (t.indexOf("WPlateform") != -1) {	
+					_target = event.collidee;
+				}
 				
 				if ( event.normal.y < -0.7 ) {
-				
-					
 					_jointDef2 = new b2RevoluteJointDef();
 					_jointDef2.localAnchor1 = new b2Vec2(0, 0);
-					_jointDef2.localAnchor2 = new b2Vec2(0, 1	);
+					_jointDef2.localAnchor2 = new b2Vec2(0, 1);
 					
 					_jointDef2.collideConnected = false;
 					_jointDef2.body1 = event.collider.body;

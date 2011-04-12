@@ -8,7 +8,7 @@
   
   <entity name="PlatformSpriteSheet">
     <component type="com.pblabs.rendering2D.spritesheet.SpriteSheetComponent" name="SpriteSheet">
-      <image filename="../Assets/Images/triple_window.jpg"/>
+      <image filename="../Assets/Images/window.png"/>
     </component>
   </entity>
   
