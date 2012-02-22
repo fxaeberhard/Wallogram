@@ -1,0 +1,125 @@
+<things version="1">
+	
+
+	<entity name="Platform24" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>0</x>
+				<y>350</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="Window" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>-100</x>
+				<y>100</y>
+			</position>
+		</component>
+	</entity>
+
+	<entity name="Background1" template="Background"></entity>
+
+	
+	
+	<entity name="WindowBorder" >
+		<component type="com.pblabs.box2D.Box2DSpatialComponent" name="Spatial">
+			<canMove>false</canMove>
+			<canRotate>false</canRotate>
+	  
+			<collidesWithTypes childType="String">
+				<_0>Player</_0>
+			</collidesWithTypes>
+	  
+			<collisionShapes childType="com.pblabs.box2D.CollisionShape">
+				<_0 type="com.pblabs.box2D.PolygonCollisionShape">
+					<vertices childType="flash.geom.Point">
+						<_0 type=""><x>-1</x><y>-1</y></_0>
+						<_1 type=""><x>1</x><y>-1</y></_1>
+						<_2 type=""><x>1</x><y>1</y></_2>
+						<_3 type=""><x>-1</x><y>1</y></_3>
+					</vertices>
+				</_0>
+			</collisionShapes>
+			<collisionType childType="String">
+				<_0>WindowBorder</_0>
+				<_1>Renderable</_1>
+			</collisionType>
+			<spatialManager componentReference="SpatialDB"/>
+			<size type="">
+				<x>517</x>
+				<y>5</y>
+			</size>
+			
+			<position type="">
+				<x>-100</x>
+				<y>195</y>
+			</position>
+		</component>
+	</entity>
+	
+	
+	
+	
+	<entity name="Flyer" >
+		<component type="com.pblabs.box2D.Box2DSpatialComponent" name="Spatial">
+			<canMove>false</canMove>
+			<canRotate>false</canRotate>
+	  
+			<collidesWithTypes childType="String">
+				<_0>Player</_0>
+			</collidesWithTypes>
+	  
+			<collisionShapes childType="com.pblabs.box2D.CollisionShape">
+				<_0 type="com.pblabs.box2D.PolygonCollisionShape">
+					<vertices childType="flash.geom.Point">
+						<_0 type=""><x>-1</x><y>-1</y></_0>
+						<_1 type=""><x>1</x><y>-1</y></_1>
+						<_2 type=""><x>1</x><y>1</y></_2>
+						<_3 type=""><x>-1</x><y>1</y></_3>
+					</vertices>
+				</_0>
+			</collisionShapes>
+			<collisionType childType="String">
+				<_0>Flyer</_0>
+				<_1>Renderable</_1>
+			</collisionType>
+			<spatialManager componentReference="SpatialDB"/>
+			<size type="">
+				<x>94</x>
+				<y>132</y>
+			</size>
+			
+			<position type="">
+				<x>300</x>
+				<y>150</y>
+			</position>
+		</component>
+		
+		<component type="com.pblabs.rendering2D.SpriteSheetRenderer" name="Render">
+			<layerIndex>10</layerIndex>
+			<scene entityName="scene" componentReference="Scene"/>
+			<positionProperty>@Spatial.position</positionProperty>
+			<rotationProperty>@Spatial.rotation</rotationProperty>
+			<sizeProperty>@Spatial.size</sizeProperty>
+			<spriteSheet componentReference="FlyerpriteSheet"/>
+		</component>
+	</entity>
+	
+	
+	
+	
+	<group name="Level2Data">
+		<objectReference name="Window"/>
+		<objectReference name="WindowBorder"/>
+		<objectReference name="Flyer"/>
+	<!--		<objectReference name="Platform2"/>
+		<objectReference name="Platform3"/>
+		<objectReference name="Platform4"/>
+		<objectReference name="Platform21"/>
+		<objectReference name="Platform22"/>
+		<objectReference name="Platform23"/>-->
+		<objectReference name="Platform24"/>
+	</group>
+</things>
