@@ -9,7 +9,7 @@ require('config.php');
 	<link rel="icon" type="image/ico" href="/favicon.ico" /> 
 	
 	<!-- YUI Css -->
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.3.0/build/cssfonts/fonts-min.css&3.3.0/build/cssreset/reset-min.css&3.3.0/build/cssgrids/grids-min.css&3.3.0/build/cssbase/base-min.css&" charset="utf-8" /> 
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.4.1/build/cssfonts/fonts-min.css&3.4.1/build/cssreset/reset-min.css&3.4.1/build/cssgrids/grids-min.css&3.4.1/build/cssbase/base-min.css&" charset="utf-8" /> 
 	<meta id="customstyles" />
 	<style> 
 	#doc {
@@ -58,12 +58,12 @@ require('config.php');
 	<div id="logger"></div>
 
 	<!-- YUI Base Classes -->
-	<!--<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.3.0pr3/build/yui/yui-min.js&3.3.0pr3/build/loader/loader-min.js"></script> 
+	<!--<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.4.1/build/yui/yui-min.js&3.4.1/build/loader/loader-min.js"></script> 
 	-->
  	<script type="text/javascript" src="lib/yui3/build/yui/yui.js"></script> 
 	<script type="text/javascript" src="lib/yui3/build/loader/loader.js"></script> 
 	
-	<script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+	<script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
   	
 	<script type="text/javascript">
 		var sessionId = '<?php echo session_id();?>',

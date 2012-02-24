@@ -15,6 +15,7 @@ package
 	import com.pblabs.box2D.CollisionEvent;
 	import com.pblabs.box2D.PolygonCollisionShape;
 	import com.pblabs.engine.PBE;
+	import com.pblabs.engine.core.InputKey;
 	import com.pblabs.engine.core.LevelEvent;
 	import com.pblabs.engine.core.LevelManager;
 	import com.pblabs.engine.entity.Entity;
@@ -31,13 +32,16 @@ package
 	import com.pusher.Pusher;
 	import com.pusher.PusherConstants;
 	import com.pusher.auth.PostAuthorizer;
+	import com.pusher.channel.Channel;
 	import com.pusher.events.PusherEvent;
 	
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.filters.*;
 	import flash.geom.Point;
+	import flash.net.URLRequest;
 	import flash.text.*;
 	import flash.utils.*;
 	import flash.utils.Timer;
@@ -51,37 +55,26 @@ package
 		
 		private var currentScreen:Number = 0;
 		private var tf:TextField = new TextField();
-		private var startingPositions:Array = [ new Point(0, 0) , new Point(0, 0), new Point(0, 0), new Point(0, 0) ];
+		private var startingPositions:Array = [ new Point(315, -250) , new Point(0, 0), new Point(0, 0), new Point(0, 0) ];
 		
 		private var sessionId:String = '222';	
-		private static var pusherApiKey:String = '9d4eb6ada84f3af3c77f';
+		private static var pusherAppAuthKey:String = '9d4eb6ada84f3af3c77f';
 		private static var pusherChannelPrefix:String = 'private-';
 		private static var pusherAppId:String = '10827';
 		private static var pusherSecretKey:String = 'c0ecc6aa74215d03cc22';
+		private static var pusherAuthUrl:String = "http://localhost/wallogram/web/pusher_auth.php";
+		private static var padUrl:String = "http://www.red-agent.com/wallogram/web/pad.php";
+		private static var QRURL:String = "http://chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=";
 		
 		private var pusher:Pusher;
-		private var wsocket:WebSocket;
+		private var channel:Channel;
+		private var players:Object = {};
 		
 		public function Wallogram() {
 			this.initPusherWebsocket();
-			this.startGame();
+			this.initPBE();
 			this.initLoggerTextField();
-		}
-		
-		public function initLoggerTextField():void {
-			tf.text = "";
-			this.addChild(tf);
-			tf.width = 400;
-			tf.height = 100;
-			tf.x = 312;
-			tf.y = 384;
-			var format1:TextFormat = new TextFormat();
-			format1.color = 0xFFFFFF;
-			format1.align = "center";
-			format1.font = "Arial";
-			format1.size = 40;
-			format1.bold = true;
-			tf.setTextFormat(format1);
+			this.initUI();
 		}
 		public function initPusherWebsocket():void {
 			trace("Wallogram.initPusherWebsocket()");
@@ -89,27 +82,13 @@ package
 			Pusher.log = function(msg:String):void {
 				trace(msg);
 			}
+			Pusher.authorizer = new PostAuthorizer(Wallogram.pusherAuthUrl);
 			
-			this.pusher = new Pusher(Wallogram.pusherAppId, "test");
-			this.pusher.bind(PusherConstants.SUBSCRIBE_EVENT_NAME, this.onPusherMessage);
-			this.pusher.subscribe(Wallogram.pusherChannelPrefix + this.sessionId);
-			/*this.wsocket = new WebSocket(
-			32323,			//id
-			"ws://ws.pusherapp.com/app/"+this.pusherApiKey,	//url
-			[],             //protocols
-			"http://localhost",             //origin
-			"",             //proxyHost
-			0,              //proxyPort
-			"",             //cookie
-			null,             //headers
-			this.logger);
-			this.wsocket.addEventListener("open", this.onPusherOpen);
-			this.wsocket.addEventListener("message", this.onPusherMessage);
-			*/
-			return;
-		}
-		public function dispatchPusherEvent(evt:String, data:Object):void {
-			//this.wsocket.send((new JSONEncoder({event: evt, data: data})).getString());
+			this.pusher = new Pusher(Wallogram.pusherAppAuthKey, "test");
+			this.channel = this.pusher.subscribe(Wallogram.pusherChannelPrefix + this.sessionId);
+			this.channel.bind("client-pad-event", this.onClientPadEvent);
+			this.channel.bind("client-connection", this.onClientConnection);
+			
 		}
 		public function onPusherOpen(e:Event):void {
 			trace("onPusherOpen");
@@ -117,46 +96,52 @@ package
 			//this.dispatchPusherEvent("pusher:subscribe", { channel: "private-"+sessionId } );
 			//this.dispatchPusherEvent("pusher:subscribe", { channel: "presence" } );
 		}
-		public function onPusherMessage(e:PusherEvent):void {		
-			trace("onPusherMessage", e);
-			return;			
-		}
-		public function updateTitle(e:Event):void {
-			this.currentScreen++;
+		public function onClientPadEvent(data:Object):void {		
+			trace("Wallogram.onClientPadEvent()", data);
 			
-			var format1:TextFormat = new TextFormat();
-			format1.color = 0xFFFFFF;
-			format1.align = "center";
-			format1.font = "Arial";
-			format1.size = 20;
-			format1.bold = false;
+			var p:IEntity = this.players[data.uid] as IEntity;
+			var pc:PlayerController = PlayerController(p.lookupComponentByType(PlayerController));
 			
-			switch (this.currentScreen) {
-				case 1:
-					this.tf.text = "This is a rough sample of our game.";
+			switch (data.button) {
+				case "cross-down": 
+					switch (data.position) {
+						case "a": 
+						case "b":
+						case "top": 
+							pc._OnJump(1);
+							break;
+						case "left":
+							pc._OnLeft(1);
+							break;
+						case "right": 
+							pc._OnRight(1);
+							break;
+					}
 					break;
 				
-				case 2:
-					this.tf.text = "Neither visuals nor level design is definitive.";
-					break;
-				
-				case 3:
-					this.tf.text = "Red player have to catch blue ones.";
-					break;
-				
-				case 4:
-					this.tf.text = "Player 1 uses up, down, right and left\n Player2 uses w, a, s , d \n Player 3 uses j, i, k, l";
-					break;
-				
-				case 5:
-					this.removeChild(this.tf);
-					this.startGame();
+				case "cross-up": 
+					switch (data.position) {
+						case "a": 
+						case "b":
+						case "top": 
+							pc._OnJump(0);
+							break;
+						case "left":
+							pc._OnLeft(0);
+							break;
+						case "right": 
+							pc._OnRight(0);
+							break;
+					}
 					break;
 			}
-			tf.setTextFormat(format1);
+			return;			
+		}
+		public function onClientConnection(data: Object):void {
+			this.initPlayer(data.uid);
 		}
 		
-		public function startGame():void {	
+		public function initPBE():void {	
 			// Make sure all the types our XML will use are registered.
 			PBE.registerType(com.pblabs.rendering2D.DisplayObjectScene);
 			PBE.registerType(com.pblabs.rendering2D.SpriteSheetRenderer);
@@ -214,40 +199,17 @@ package
 			t.world.CreateJoint(_jointDef);
 		}
 		
-		private var players:Object = {};
 		public function initPlayer(uid:String):void {
-			trace("initPlayer");
+			trace("Wallogram.initPlayer("+uid+")");
 			
 			var playerEntity:IEntity = PBE.templateManager.instantiateEntity("PlayerTemplate");
-			var spatialComponent:Box2DSpatialComponent = Box2DSpatialComponent(playerEntity.lookupComponentByType(Box2DSpatialComponent));
-			spatialComponent.position = startingPositions[0];
-			
-			players[uid] = playerEntity;
+			var sc:Box2DSpatialComponent = Box2DSpatialComponent(playerEntity.lookupComponentByType(Box2DSpatialComponent));
+			var pc:PlayerController = PlayerController(playerEntity.lookupComponentByType(PlayerController));
+			sc.position = startingPositions[0];y
+			this.players[uid] = playerEntity;
 		}
-		public function onLevelLoaded(e) {
-			
-			this.initPlayer("1");	
-			/*	
-			<entity name="Player1" template="PlayerTemplate">
-			<component name="Spatial">
-			<position type="">
-			<x>315</x>
-			<y>200</y>
-			</position>
-			</component>
-			<component name="Controller">
-			<team childType="String">red</team>
-			<input childType="com.pblabs.engine.core.InputKey">
-			<GoLeft>LEFT</GoLeft>
-			<GoRight>RIGHT</GoRight>
-			<Jump>UP</Jump>
-			</input>
-			</component>
-			</entity>
-			*/
-			//trace("instantiating playe");
-			//PBE.scene
-			//t.world.CreateJoint(_jointDef);
+		public function onLevelLoaded(e:LevelEvent):void {
+			//this.initPlayer("test");
 			
 			this.createJoint("Window1", "WPlateform1");
 			this.createJoint("Window12", "WPlateform12");
@@ -268,5 +230,65 @@ package
 			this.createJoint("LWindow3", "LWPlateform3");
 			this.createJoint("LWindow32", "LWPlateform32");
 		}
+		
+		public function initUI():void {
+			var myImageLoader:Loader = new Loader();
+			var myImageLocation:URLRequest = new URLRequest(Wallogram.QRURL+escape(Wallogram.padUrl+"?sid="+this.sessionId));
+			// load the bitmap data from the image source in the Loader instance
+			myImageLoader.load(myImageLocation);
+			// add the Loader instance to the display list
+			this.addChild(myImageLoader);
+		}
+		
+		public function initLoggerTextField():void {
+			tf.text = "";
+			this.addChild(tf);
+			tf.width = 400;
+			tf.height = 100;
+			tf.x = 312;
+			tf.y = 384;
+			var format1:TextFormat = new TextFormat();
+			format1.color = 0xFFFFFF;
+			format1.align = "center";
+			format1.font = "Arial";
+			format1.size = 40;
+			format1.bold = true;
+			tf.setTextFormat(format1);
+		}
+		/*
+		public function updateTitle(e:Event):void {
+		this.currentScreen++;
+		
+		var format1:TextFormat = new TextFormat();
+		format1.color = 0xFFFFFF;
+		format1.align = "center";
+		format1.font = "Arial";
+		format1.size = 20;
+		format1.bold = false;
+		
+		switch (this.currentScreen) {
+		case 1:
+		this.tf.text = "This is a rough sample of our game.";
+		break;
+		
+		case 2:
+		this.tf.text = "Neither visuals nor level design is definitive.";
+		break;
+		
+		case 3:
+		this.tf.text = "Red player have to catch blue ones.";
+		break;
+		
+		case 4:
+		this.tf.text = "Player 1 uses up, down, right and left\n Player2 uses w, a, s , d \n Player 3 uses j, i, k, l";
+		break;
+		
+		case 5:
+		this.removeChild(this.tf);
+		this.startGame();
+		break;
+		}
+		tf.setTextFormat(format1);
+		}*/
 	}
 }

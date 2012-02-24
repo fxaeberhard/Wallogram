@@ -12,7 +12,7 @@ Y = YUI({
     insertBefore: 'customstyles',
     gallery: 'gallery-2011.02.18-23-10',
     filter: 'raw'
-}).use('node', 'event', 'slider', 'charts', function (Y) {
+}).use('node', 'event', 'slider', 'charts', 'event-resize', 'event-touch', 'event-move', function (Y) {
 	var pusher, channel, state,
 		mychart,
 		myDataValues = [ 
@@ -29,6 +29,39 @@ Y = YUI({
 			];
     
     	
+	/* Fit pad to window */
+	function fitPad() {
+		var bodyNode = Y.one("body"),
+			padNode = Y.one(".pad"),
+			winWidth = bodyNode.get('winWidth');
+			winHeight = bodyNode.get('winHeight');
+			maxWidth = 640,
+			maxHeight = 291,
+			padRatio = maxWidth/maxHeight,
+			width=0, height=0, widthByH=0;
+		
+		if (winWidth > maxWidth && winHeight > maxHeight) {
+			width = maxWidth;
+			height = maxHeight;
+		} else {
+			widthByH = padRatio * winHeight;
+			if (widthByH < winWidth) {
+				width = widthByH; 
+				height = winHeight;
+			} else {
+				width = winWidth;
+				height = winWidth/padRatio;
+			}
+		}
+
+		padNode.setStyle("width", width);
+		padNode.setStyle("height", height);
+		padNode.setStyle("marginLeft", -width/2);
+		padNode.setStyle("marginTop", -height/2);
+	}
+	fitPad();
+	Y.on("windowresize", fitPad);
+	
 	/******************************************** Pusher Setup */
 	 // Enable pusher logging - don't include this in production
 	function initPusherConnection() {
@@ -38,8 +71,16 @@ Y = YUI({
         Pusher.channel_auth_endpoint = 'pusher_auth.php';
         
         pusher = new Pusher(pusherAuthKey);
-		channel = pusher.subscribe(pusherChannelPrefix+screenId);
-		//channel = pusher.subscribe("private-wallogram");
+        channel = pusher.subscribe(pusherChannelPrefix+screenId);
+		channel.bind('pusher:subscription_succeeded', function(status) {
+			console.log("Connected to pusher channel.");
+			Y.one(".logger").append("c");
+			triggerPusherEvent('client-connection', {});
+		});
+		channel.bind('pusher:subscription_error', function(status) {
+			alert('Error subscribing to pusher channel.');
+		});
+		
 	}    
     function triggerPusherEvent(evt, data) {
     	data.uid = sessionId;
@@ -50,7 +91,7 @@ Y = YUI({
 	/******************************************** Pad Events */
 	var currentCrossButton = null,
 		crossNode = Y.one('.pad-cross');
-	
+	/*
 	function resetCross() {
 		crossNode.removeClass('pad-cross-top')
 		.removeClass('pad-cross-bottom')
@@ -76,6 +117,9 @@ Y = YUI({
 		console.log("Pressing: "+position);
 		if (position == currentCrossButton) return;
 		setCross(position);
+
+
+		this.addClass('pad-button-pressed');
 	}
 	function releaseCross(e, position) {
 		console.log("Releasing: "+position);
@@ -88,11 +132,14 @@ Y = YUI({
 				});
 			}
 		}
+
+		this.removeClass('pad-button-pressed');
 	}
 	function enterCross(e, position) {
 		console.log("Entering: "+position+" (b:"+e.button+", cCrossButton: "+currentCrossButton+")");
 		if (e.button== 0 || position == currentCrossButton) return;
 		setCross(position);
+		this.addClass('pad-button-pressed');
 	}
 	function leaveCross(e, position) {
 		if (position == currentCrossButton) {
@@ -104,18 +151,89 @@ Y = YUI({
 				});
 			}
 		}
-	}
-	function pressButton(e, position) {
-		if (position == 'a' || position == 'b') {
-			triggerPusherEvent('client-pad-event', 
-				{ button: 'button', 
-					position: position
-				});
-		}
-		this.addClass('pad-button-pressed');
-	}
-	function releaseButton(e, position) {
+
 		this.removeClass('pad-button-pressed');
+	}*/
+	function log(msg) {
+	//	Y.one(".logger").append(msg+"|");
+	}
+	
+	function pressButton(e) {
+		log("press: ");
+		var cTarget = e.target;
+
+		if (e.target.position)
+			log(e.target.position);
+		else log("undef");
+
+//		if (e.changedTouches) {
+//			log (e.changedTouches.length);
+//			log(e.changedTouches[0]._event);
+//			log(e.changedTouches[0]._event.target.className);
+//			log(e.changedTouches[0]._event.currentTarget.className);
+			//cTarget = e.changedTouches[0];
+//		}
+		
+		if (!cTarget.position) return; 
+
+		switch (cTarget.position) {
+			case "top":
+			case "left":
+			case "right":
+			case "a":
+			case "b":
+				triggerPusherEvent('client-pad-event', 
+					{ button: 'cross-down', 
+					  position: cTarget.position
+					});
+				break;
+		}
+		cTarget.addClass('pad-button-pressed');
+
+		e.preventDefault();
+		e.stopPropagation();
+		e.halt();
+		e.stopImmediatePropagation();
+	}
+	function onMove(e) {
+		//log("move: "+e.target.position);
+
+		e.preventDefault();
+		e.stopPropagation();
+		e.halt();
+		e.stopImmediatePropagation();
+	}
+	function releaseButton(e) {
+		log("release: ");
+		var cTarget = e.target;
+		//if (e.changedTouches) {
+		//	cTarget = e.changedTouches[0];
+		//}
+		if (cTarget.position)
+			log(cTarget.position);
+		else log("undef");
+		
+		if (!cTarget.position) return;
+
+	
+		switch (cTarget.position) {
+			case "top":
+			case "left":
+			case "right":
+			case "a":
+			case "b":
+				triggerPusherEvent('client-pad-event', 
+					{ button: 'cross-up', 
+					  position: cTarget.position
+					});
+				break;
+		}
+		cTarget.removeClass('pad-button-pressed');
+
+		e.preventDefault();
+		e.stopPropagation();
+		e.halt();
+		e.stopImmediatePropagation();
 	}
 	/************************** Set up events */
 	function bindPad() {
@@ -125,21 +243,41 @@ Y = YUI({
     	var crossPositions = ['top', 'bottom', 'left', 'right'],
     		buttonsPositions = ['a', 'b', 'start', 'select'],
     		i = 0, node, pos;
+    	Y.one(".pad").on("gesturemovestart", pressButton);
+    	Y.one(".pad").on("gesturechange", onMove);
+    	Y.one(".pad").on("gesturemoveend", releaseButton);
+    	
     	for (;i<crossPositions.length;i++) {
     		pos = crossPositions[i];
     		node = Y.one('.pad-crossdummy-'+pos);
-    		node.on('mousedown', pressCross, null, pos);
+  /*  		node.on('mousedown', pressCross, null, pos);
     		node.on('mouseup', releaseCross, null, pos);
     		node.on('mouseenter', enterCross, null, pos);
     		node.on('mouseleave', leaveCross, null, pos);
     		node.on('dragenter', enterCross, null, pos);
     		node.on('dragleave', leaveCross, null, pos);
+*/
+    		node.position = pos;
+    		/*
+    		node.on('touchstart', pressButton);
+    		node.on('touchmove', function(){});
+    		node.on('touchend', releaseButton);
+    		*/
+    		
+    		/*
+    		node.on('gesturemovestart', pressButton);
+    		node.on('gesturemove', function(){});
+    		node.on('gesturemoveend', releaseButton);*/
     	}
     	for (i=0;i<buttonsPositions.length;i++) {
     		pos = buttonsPositions[i];
     		node = Y.one('.pad-button-'+pos);
-    		node.on('mousedown', pressButton, null, pos);
-    		node.on('mouseup', releaseButton, null, pos);
+    		node.position = pos;
+    		/*
+    		node.on('gesturemovestart', pressButton);
+    		node.on('gesturemove', function(){});
+    		node.on('gesturemoveend', releaseButton);
+    		*/
     	}
 	}
 	
@@ -173,7 +311,6 @@ Y = YUI({
 	};
 
 	function read_accelerometer() {
-	  
 	    /* If we have rotation rate device has gyroscopes and start */
 	    /* reading gyroscopes instead...                            */
 	    if(event.rotationRate) {

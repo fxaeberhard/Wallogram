@@ -1,31 +1,28 @@
 package org.redagent.wallogram {
 
 	// *** Flash Imports *** //
-	import flash.display.BitmapData;
-    import flash.geom.Point;
-    import flash.display.Sprite;
-	import flash.geom.ColorTransform;
-	import flash.geom.*;
-	import flash.filters.*;
-	
-	// *** PBE Imports *** //
-    import com.pblabs.engine.PBE;
-	import com.pblabs.engine.entity.Entity;
-    import com.pblabs.engine.components.TickedComponent;
-    import com.pblabs.engine.core.InputMap;
-    import com.pblabs.engine.entity.EntityComponent;
-    import com.pblabs.engine.entity.PropertyReference;
-    import com.pblabs.engine.debug.Logger;
-	import com.pblabs.engine.entity.Entity;
-	import com.pblabs.engine.entity.IEntity;
-	import com.pblabs.animation.AnimatorComponent;
-	import com.pblabs.rendering2D.SpriteSheetRenderer;
-    import com.pblabs.engine.PBE;
-	import com.pblabs.box2D.Box2DSpatialComponent;
-    import com.pblabs.box2D.CollisionEvent;
-	
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Joints.*;
+	
+	import com.pblabs.animation.AnimatorComponent;
+	import com.pblabs.box2D.Box2DSpatialComponent;
+	import com.pblabs.box2D.CollisionEvent;
+	import com.pblabs.engine.PBE;
+	import com.pblabs.engine.components.TickedComponent;
+	import com.pblabs.engine.core.InputMap;
+	import com.pblabs.engine.debug.Logger;
+	import com.pblabs.engine.entity.Entity;
+	import com.pblabs.engine.entity.EntityComponent;
+	import com.pblabs.engine.entity.IEntity;
+	import com.pblabs.engine.entity.PropertyReference;
+	import com.pblabs.rendering2D.SpriteSheetRenderer;
+	
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
+	import flash.filters.*;
+	import flash.geom.*;
+	import flash.geom.ColorTransform;
+	import flash.geom.Point;
     
     /**
      * Component responsible for translating keyboard input to forces on the
@@ -137,14 +134,14 @@ package org.redagent.wallogram {
         }
         
         private function _OnCollision(event:CollisionEvent):void {
-			
-		    if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Platform")) {
-		        if (event.normal.y > 0.7)
+			/*
+		    if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player")) {
+		        if (event.normal.y < -0.7)
                     _onGround++;
-            }
+            }*/
         
-			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Platform")) {
-                if (event.normal.y > 0.7) {
+			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player")) {
+                if (event.normal.y < -0.7) {
                     _onGround++;
 						
 					if ( _left + _right == 0 ) {
@@ -154,24 +151,25 @@ package org.redagent.wallogram {
 					}
 				}
 				
-				var t:String = event.collidee.owner["name"];
-				trace(t);
+				var t:String = event.collider.owner["name"];
+				//trace(t);
 				if (t.indexOf("WPlateform") != -1) {	
-					_target = event.collidee;
+					_target = event.collider;
+					
+					if ( event.normal.y > 0.7 ) {
+						_jointDef2 = new b2RevoluteJointDef();
+						_jointDef2.localAnchor1 = new b2Vec2(0, 0);
+						_jointDef2.localAnchor2 = new b2Vec2(0, 1);
+						
+						_jointDef2.collideConnected = false;
+						_jointDef2.body1 = event.collidee.body;
+						_jointDef2.body2 = event.collider.body;
+						event.preventDefault();
+						event.stopPropagation();
+						event.stopImmediatePropagation();
+					}
 				}
 				
-				if ( event.normal.y < -0.7 ) {
-					_jointDef2 = new b2RevoluteJointDef();
-					_jointDef2.localAnchor1 = new b2Vec2(0, 0);
-					_jointDef2.localAnchor2 = new b2Vec2(0, 1);
-					
-					_jointDef2.collideConnected = false;
-					_jointDef2.body1 = event.collider.body;
-					_jointDef2.body2 = event.collidee.body;
-					event.preventDefault();
-					event.stopPropagation();
-					event.stopImmediatePropagation();
-				}
             }
 			
 			if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player") &&
@@ -204,18 +202,19 @@ package org.redagent.wallogram {
 		}
 		
         private function _OnCollisionEnd(event:CollisionEvent):void {
-			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Platform")) {
-                if (event.normal.y > 0.7)
+			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player")) {
+                if (event.normal.y < -0.7)
                     _onGround--;
             }
             
-            if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Platform")) {
-                if (event.normal.y < -0.7)
+            if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player")) {
+                if (event.normal.y > 0.7)
                     _onGround--;
             }
         }
         
-        private function _OnLeft(value:Number):void {
+        public function _OnLeft(value:Number):void {
+			trace("onleft(val;"+value+", onground: +"+_onGround);
 			if (_onGround > 0) {
 				if (value == 0 ) {
 					animatorReference.play( "idle" );
@@ -226,7 +225,8 @@ package org.redagent.wallogram {
             _left = value;
         }
         
-        private function _OnRight(value:Number):void {
+        public function _OnRight(value:Number):void {
+			trace("onRight(val;"+value+", onground: +"+_onGround);
 			if (_onGround > 0) {
 				if (value == 0 ) {
 					animatorReference.play( "idle" );
@@ -237,8 +237,8 @@ package org.redagent.wallogram {
 			_right = value;
         }
         
-        private function _OnJump(value:Number):void {
-          
+        public function _OnJump(value:Number):void {
+			trace("onJump(val;"+value+", onground: +"+_onGround+", joint. "+_joint);          
 			if ( _joint != null) {
               //  animatorReference.play( "jump" );
 				_jump = value;

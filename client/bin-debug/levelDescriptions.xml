@@ -6,6 +6,7 @@
       <file filename="Levels/common.pbelevel"/>
       <group name="Common"/>
    </level>
+   
    <level index="1" name="Level1">
       <file filename="Levels/spriteSheets.pbelevel"/>
       <group name="SpriteSheets"/>
@@ -15,6 +16,7 @@
       <file filename="Levels/level1.pbelevel"/>
       <group name="Level1Data"/>
    </level>
+   
    <level index="2" name="Level2">
       <file filename="Levels/spriteSheets.pbelevel"/>
       <group name="SpriteSheets"/>
@@ -24,11 +26,12 @@
       <file filename="Levels/level2.pbelevel"/>
       <group name="Level2Data"/>
    </level>
+   
    <level index="3" name="Level3">
       <file filename="Levels/spriteSheets.pbelevel"/>
       <group name="SpriteSheets"/>
       <file filename="Levels/templates.pbelevel"/>
-      <file filename="Levels/common.pbelevel"/>
+      <file filename="Levels/common.pbelevel" />
       <group name="Common"/>
       <file filename="Levels/level3.pbelevel"/>
       <group name="Level3Data"/>

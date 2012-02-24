@@ -29,6 +29,7 @@
 			<reference>@Render.spriteIndex</reference>
 		</component>
 		
+		<!-- Spatial Component -->
 		<component type="com.pblabs.box2D.Box2DSpatialComponent" name="Spatial">
 			<canRotate>false</canRotate>
 			<canSleep>false</canSleep>
@@ -54,14 +55,14 @@
 				<_1>Renderable</_1>
 			</collisionType>
 			<spatialManager componentReference="SpatialDB"/>
-			<position type="">
-				<x>400</x>
-				<y>100</y>
-			</position>
 			<size type="">
 				<x>64</x>
 				<y>74</y>
 			</size>
+			<position type="">
+				<x>280</x>
+				<y>0</y>
+			</position>
 		</component>
 		
 		<component type="com.pblabs.rendering2D.SpriteSheetRenderer" name="Render">
@@ -78,6 +79,10 @@
 			<animatorReference componentName="FrameAnimation" />
 			<rendererReference componentName="Render" />
 			<box2dReference componentName="Spatial" />
+			
+		
+		  	<team childType="String">blue</team>
+		  	<input childType="com.pblabs.engine.core.InputKey"></input>
 		</component>
 	</template>
 

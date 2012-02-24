@@ -13,39 +13,44 @@ $_REQUEST['sid'];
 		<link rel="icon" type="image/ico" href="/favicon.ico" /> 
 		
 		<!-- YUI 3 -->
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.3.0/build/cssfonts/fonts-min.css&3.3.0/build/cssreset/reset-min.css&3.3.0/build/cssgrids/grids-min.css&3.3.0/build/cssbase/base-min.css" charset="utf-8" /> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.4.1/build/cssfonts/fonts-min.css&3.4.1/build/cssreset/reset-min.css&3.4.1/build/cssgrids/grids-min.css&3.4.1/build/cssbase/base-min.css" charset="utf-8" /> 
 		
 		<!-- Shadowbox -->
-		<link rel="stylesheet" type="text/css" href="lib/shadowbox-3.0.3/shadowbox.css">
+		<link rel="stylesheet" type="text/css" href="lib/Shadowbox-3.0.3/shadowbox.css">
 	
 		<!-- Pad -->
 		<meta id="customstyles" /> 
 		<link rel="stylesheet" type="text/css" href="assets/pad.css">
+		
 	</head>
 
 	<body class="yui3-skin-sam">
-	
+		
+		<div class="logger" style="positon:absolute;top:0;color:white;"></div>
+		
 		<!-- Markup -->
 		<div class="pad" >
+			<div class="pad-content">
+				<div class=".pad-button pad-crossdummy-top"></div>
+				<div class=".pad-button pad-crossdummy-bottom"></div>
+				<div class=".pad-button pad-crossdummy-left"></div>
+				<div class=".pad-button pad-crossdummy-right"></div>
+				<div class=".pad-button pad-button-select"></div>
+				<div class=".pad-button pad-button-start"></div>
+				<div class=".pad-button pad-button-a"></div>
+				<div class=".pad-button pad-button-b"></div>
 			<div class="pad-cross"></div>
-			<div class="pad-crossdummy-top"></div>
-			<div class="pad-crossdummy-bottom"></div>
-			<div class="pad-crossdummy-left"></div>
-			<div class="pad-crossdummy-right"></div>
-			<div class="pad-button-select"></div>
-			<div class="pad-button-start"></div>
-			<div class="pad-button-a"></div>
-			<div class="pad-button-b"></div>
+			</div>
 		</div>
 	
 		<!-- YUI 3 - Loader -->
-		<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.3.0pr3/build/yui/yui-min.js&3.3.0pr3/build/loader/loader-min.js"></script> 
+		<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.4.1/build/yui/yui-min.js&3.4.1/build/loader/loader-min.js"></script> 
 
 		<!-- Shwadowbox -->
-		<script type="text/javascript" src="lib/shadowbox-3.0.3/shadowbox.js"></script>
+		<script type="text/javascript" src="lib/Shadowbox-3.0.3/shadowbox.js"></script>
 		
 		<!-- Pusher JS -->
-		<script src="http://js.pusherapp.com/1.9/pusher.min.js" type="text/javascript"></script>
+		<script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
 	  	
 	  	<!-- Wallogram - Pad -->
 		<script type="text/javascript">
