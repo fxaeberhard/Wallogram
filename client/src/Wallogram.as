@@ -1,4 +1,4 @@
-package
+package 
 {
 	
 	import Box2D.Common.Math.b2Vec2;
@@ -50,6 +50,8 @@ package
 	import flash.xml.XMLNodeType;
 	
 	import org.redagent.wallogram.PlayerController;
+	import org.redagent.wallogram.Resources;
+	
 	
 	public class Wallogram extends Sprite {
 		
@@ -62,7 +64,7 @@ package
 		private static var pusherChannelPrefix:String = 'private-';
 		private static var pusherAppId:String = '10827';
 		private static var pusherSecretKey:String = 'c0ecc6aa74215d03cc22';
-		private static var pusherAuthUrl:String = "http://localhost/wallogram/web/pusher_auth.php";
+		private static var pusherAuthUrl:String = "http://www.red-agent.com/wallogram/web/pusher_auth.php";
 		private static var padUrl:String = "http://www.red-agent.com/wallogram/web/pad.php";
 		private static var QRURL:String = "http://chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=";
 		
@@ -84,17 +86,15 @@ package
 			}
 			Pusher.authorizer = new PostAuthorizer(Wallogram.pusherAuthUrl);
 			
-			this.pusher = new Pusher(Wallogram.pusherAppAuthKey, "test");
+			this.pusher = new Pusher(Wallogram.pusherAppAuthKey, "http://www.red-agent.com");
+		//	this.pusher.bind("pusher:connection_established", this.onPusherConnected);
 			this.channel = this.pusher.subscribe(Wallogram.pusherChannelPrefix + this.sessionId);
 			this.channel.bind("client-pad-event", this.onClientPadEvent);
 			this.channel.bind("client-connection", this.onClientConnection);
 			
 		}
-		public function onPusherOpen(e:Event):void {
-			trace("onPusherOpen");
-			//this.dispatchPusherEvent("pusher:subscribe", { channel: "private" } );
-			//this.dispatchPusherEvent("pusher:subscribe", { channel: "private-"+sessionId } );
-			//this.dispatchPusherEvent("pusher:subscribe", { channel: "presence" } );
+		public function onPusherConnected(data:Object):void {
+			trace("onPusherConnected");
 		}
 		public function onClientPadEvent(data:Object):void {		
 			trace("Wallogram.onClientPadEvent()", data);
