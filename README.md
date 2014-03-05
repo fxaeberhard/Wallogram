@@ -1,7 +1,7 @@
 Wallogram is a plateform game where player use they're mobile phone as a pad.
 
 Distributed under the MIT License.
-Visit [http://www.red-agent.com/wallogram/] for more informations.
+Visit [http://wallogram.red-agent.com](http://wallogram.red-agent.com) for more informations.
 
 Build
 =======================
