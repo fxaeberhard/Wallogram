@@ -1,0 +1,59 @@
+/*
+ * Wallogram
+ * http://wallogram.red-agent.com
+ *
+ * Copyright (c) 2014 
+ * Licensed under the MIT License
+ */
+/**
+ * @fileoverview
+ * @author Francois-Xavier Aeberhard <fx@red-agent.com>
+ */
+
+body {
+    background: #444;
+}
+.yui3-wallogram-pad {    
+    background: url(../assets/nespad_back.png) no-repeat;
+    background-size: 100%;
+}
+.pad-button {
+    position: absolute;
+    background: pink;
+}
+.pad-button-top {
+    top: 28%;
+    left: 13%;
+    width: 12%;
+    height: 26%;
+}
+.pad-button-bottom {
+    top: 72%;
+    left: 14%;
+    width: 12%;
+    height: 26%;
+}
+.pad-button-left {
+    top: 51%;
+    left: 2%;
+    width: 12%;
+    height: 26%;
+}
+.pad-button-right {
+    top: 51%;
+    left: 23%;
+    width: 12%;
+    height: 26%;
+}
+.pad-button-a {
+    top: 59%;
+    left: 65%;
+    width: 12%;
+    height: 26%;
+}
+.pad-button-b {
+    top: 59%;
+    left: 79%;
+    width: 12%;
+    height: 26%;
+}

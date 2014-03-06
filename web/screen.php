@@ -68,8 +68,8 @@ require('config.php');
 	<script type="text/javascript">
 		var sessionId = '<?php echo session_id();?>',
 			pusherChannel = 'private-'+sessionId,
-			pusherAppId = '<?php echo PUSHERAPP_APPID; ?>',
-			pusherAuthKey = '<?php echo PUSHERAPP_AUTHKEY; ?>';
+			pusherAppId = '<?php echo PUSHER_APPID; ?>',
+			pusherAuthKey = '<?php echo PUSHER_AUTHKEY; ?>';
 
 		
 		Pusher.log = function(message) {
