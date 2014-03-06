@@ -1,0 +1,507 @@
+<things version="1">
+		
+	<!-- Playfield limits -->
+	<entity name="Limit1" template="Limit">
+		<component name="Spatial">
+			<position type="">
+				<x>-370</x>
+				<y>100</y>
+			</position>
+			<size type="">
+				<x>50</x>
+				<y>500</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="Limit2" template="Limit">
+		<component name="Spatial">
+			<position type="">
+				<x>-200</x>
+				<y>-250</y>
+			</position>
+			<size type="">
+				<x>320</x>
+				<y>265</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="Limit3" template="Limit">
+		<component name="Spatial">
+			<position type="">
+				<x>320</x>
+				<y>-320</y>
+			</position>
+			<size type="">
+				<x>105</x>
+				<y>100</y>
+			</size>
+		</component>
+	</entity>	
+	
+	<entity name="Limit4" template="Limit">
+		<component name="Spatial">
+			<position type="">
+				<x>80</x>
+				<y>-384</y>
+			</position>
+			<size type="">
+				<x>500</x>
+				<y>20</y>
+			</size>
+		</component>
+	</entity>	
+		
+	<entity name="Limit5" template="Limit">
+		<component name="Spatial">
+			<position type="">
+				<x>390</x>
+				<y>0</y>
+			</position>
+			<size type="">
+				<x>20</x>
+				<y>800</y>
+			</size>
+		</component>
+	</entity>	
+	<!-- Right side plateform -->
+	
+	<entity name="Platform5" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>320</x>
+				<y>250</y>
+			</position>
+			<size type="">
+				<x>105</x>
+				<y>10</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="Platform1" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>320</x>
+				<y>118</y>
+			</position>
+			<size type="">
+				<x>105</x>
+				<y>10</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="Platform2" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>320</x>
+				<y>-10</y>
+			</position>
+			<size type="">
+				<x>105</x>
+				<y>10</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="Platform3" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>320</x>
+				<y>-138</y>
+			</position>
+			<size type="">
+				<x>105</x>
+				<y>10</y>
+			</size>
+		</component>
+	</entity>
+	
+	<!-- Center windows -->
+	<entity name="Window1" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>-300</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="Window12" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>-300</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="Window2" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>-170</y>
+			</position>
+		</component>
+	</entity>	
+	<entity name="Window22" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>-170</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="Window3" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>-40</y>
+			</position>
+		</component>
+	</entity>	
+	<entity name="Window32" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>-40</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="Window4" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>85</y>
+			</position>
+		</component>
+	</entity>
+	<entity name="Window42" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>85</y>
+			</position>
+		</component>
+	</entity>
+	<entity name="Window5" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>213</y>
+			</position>
+		</component>
+	</entity>
+	<entity name="Window52" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>213</y>
+			</position>
+		</component>
+	</entity>
+	
+	<!-- Window Center Plateform -->
+	<entity name="WPlateform1" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>-266</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform12" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>-266</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform2" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>-136</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform22" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>-136</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform3" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>-6</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform32" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>-6</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform4" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>119</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform42" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>119</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform5" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>50</x>
+				<y>247</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="WPlateform52" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>180</x>
+				<y>247</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	
+	
+	<!-- left window -->
+	<entity name="LWindow1" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>-260</x>
+				<y>-40</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="LWindow12" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>-120</x>
+				<y>-40</y>
+			</position>
+		</component>
+	</entity>
+	<entity name="LWindow2" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>-260</x>
+				<y>85</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="LWindow22" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>-120</x>
+				<y>85</y>
+			</position>
+		</component>
+	</entity>
+	<entity name="LWindow3" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>-260</x>
+				<y>213</y>
+			</position>
+		</component>
+	</entity>
+	
+	<entity name="LWindow32" template="WindowTemplate">
+		<component name="Spatial">
+			<position type="">
+				<x>-120</x>
+				<y>213</y>
+			</position>
+		</component>
+	</entity>
+	
+	<!-- Left Window Plateforms -->
+	<entity name="LWPlateform1" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-260</x>
+				<y>-6</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="LWPlateform12" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-120</x>
+				<y>-6</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="LWPlateform2" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-260</x>
+				<y>119</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="LWPlateform22" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-120</x>
+				<y>119</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="LWPlateform3" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-260</x>
+				<y>247</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	<entity name="LWPlateform32" template="Platform">
+		<component name="Spatial">
+			<position type="">
+				<x>-120</x>
+				<y>247</y>
+			</position>
+			<size type="">
+				<x>60</x>
+				<y>5</y>
+			</size>
+		</component>
+	</entity>
+	
+	<entity name="Background1" template="Background"></entity>
+	
+	<group name="LevelData">
+		<objectReference name="Background1"/>
+		<objectReference name="Platform1"/>
+		<objectReference name="Platform2"/>
+		<objectReference name="Platform3"/>
+		<objectReference name="Platform4"/>
+		<objectReference name="Platform5"/>
+		
+		<objectReference name="Window1"/>
+		<objectReference name="Window2"/>
+		<objectReference name="Window3"/>
+		<objectReference name="Window4"/>
+		<objectReference name="Window5"/>
+		<objectReference name="Window12"/>
+		<objectReference name="Window22"/>
+		<objectReference name="Window32"/>
+		<objectReference name="Window42"/>
+		<objectReference name="Window52"/>		
+		
+		<objectReference name="WPlateform1"/>
+		<objectReference name="WPlateform12"/>
+		<objectReference name="WPlateform2"/>
+		<objectReference name="WPlateform22"/>
+		<objectReference name="WPlateform3"/>
+		<objectReference name="WPlateform32"/>
+		<objectReference name="WPlateform4"/>
+		<objectReference name="WPlateform42"/>
+		<objectReference name="WPlateform5"/>
+		<objectReference name="WPlateform52"/>
+		
+		
+		<objectReference name="LWindow1"/>
+		<objectReference name="LWindow12"/>
+		<objectReference name="LWindow2"/>
+		<objectReference name="LWindow22"/>
+		<objectReference name="LWindow3"/>
+		<objectReference name="LWindow32"/>
+		
+		<objectReference name="LWPlateform1"/>
+		<objectReference name="LWPlateform12"/>
+		<objectReference name="LWPlateform2"/>
+		<objectReference name="LWPlateform22"/>
+		<objectReference name="LWPlateform3"/>
+		<objectReference name="LWPlateform32"/>
+		
+		<objectReference name="Limit1"/>
+		<objectReference name="Limit2"/>
+		<objectReference name="Limit3"/>
+		<objectReference name="Limit4"/>
+		<objectReference name="Limit5"/>
+		
+	</group>
+</things>

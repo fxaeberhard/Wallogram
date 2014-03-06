@@ -1,26 +1,30 @@
-package 
-{
-	
+/*
+* Wallogram
+* http://wallogram.albasim.ch
+*
+* Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
+* Licensed under the MIT License
+*/
+package {	
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Joints.*;
 	import Box2D.Dynamics.b2Body;
 	
-	import com.adobe.serialization.json.JSONDecoder;
-	import com.adobe.serialization.json.JSONEncoder;
+	import com.dozeo.pusheras.Pusher;
+	import com.dozeo.pusheras.channel.PusherChannel;
+	import com.dozeo.pusheras.events.PusherChannelEvent;
+	import com.dozeo.pusheras.events.PusherEvent;
+	import com.dozeo.pusheras.vo.PusherOptions;
 	import com.pblabs.animation.AnimatorComponent;
 	import com.pblabs.box2D.Box2DDebugComponent;
 	import com.pblabs.box2D.Box2DManagerComponent;
 	import com.pblabs.box2D.Box2DSpatialComponent;
 	import com.pblabs.box2D.CircleCollisionShape;
-	import com.pblabs.box2D.CollisionEvent;
 	import com.pblabs.box2D.PolygonCollisionShape;
 	import com.pblabs.engine.PBE;
-	import com.pblabs.engine.core.InputKey;
 	import com.pblabs.engine.core.LevelEvent;
 	import com.pblabs.engine.core.LevelManager;
-	import com.pblabs.engine.entity.Entity;
 	import com.pblabs.engine.entity.IEntity;
-	import com.pblabs.engine.resource.Resource;
 	import com.pblabs.rendering2D.BasicSpatialManager2D;
 	import com.pblabs.rendering2D.DisplayObjectScene;
 	import com.pblabs.rendering2D.SimpleSpatialComponent;
@@ -29,11 +33,6 @@ package
 	import com.pblabs.rendering2D.spritesheet.CellCountDivider;
 	import com.pblabs.rendering2D.spritesheet.SpriteSheetComponent;
 	import com.pblabs.rendering2D.ui.SceneView;
-	import com.pusher.Pusher;
-	import com.pusher.PusherConstants;
-	import com.pusher.auth.PostAuthorizer;
-	import com.pusher.channel.Channel;
-	import com.pusher.events.PusherEvent;
 	
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -44,61 +43,78 @@ package
 	import flash.net.URLRequest;
 	import flash.text.*;
 	import flash.utils.*;
-	import flash.utils.Timer;
-	import flash.xml.XMLDocument;
-	import flash.xml.XMLNode;
-	import flash.xml.XMLNodeType;
 	
+	import org.as3commons.logging.api.LOGGER_FACTORY;
+	import org.as3commons.logging.setup.SimpleTargetSetup;
+	import org.as3commons.logging.setup.target.TraceTarget;
 	import org.redagent.wallogram.PlayerController;
 	import org.redagent.wallogram.Resources;
 	
-	
 	public class Wallogram extends Sprite {
 		
-		private var currentScreen:Number = 0;
 		private var tf:TextField = new TextField();
 		private var startingPositions:Array = [ new Point(315, -250) , new Point(0, 0), new Point(0, 0), new Point(0, 0) ];
 		
-		private var sessionId:String = '222';	
-		private static var pusherAppAuthKey:String = '9d4eb6ada84f3af3c77f';
-		private static var pusherChannelPrefix:String = 'private-';
-		private static var pusherAppId:String = '10827';
-		private static var pusherSecretKey:String = 'c0ecc6aa74215d03cc22';
-		private static var pusherAuthUrl:String = "http://www.red-agent.com/wallogram/web/pusher_auth.php";
-		private static var padUrl:String = "http://www.red-agent.com/wallogram/web/pad.php";
-		private static var QRURL:String = "http://chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=";
+		private var screenId:String = '222';	
+		
+		private static const APP_ID:String = '10827';
+		private static const APP_KEY:String = '9d4eb6ada84f3af3c77f';
+		private static const AUTH_ENDPOINT:String = 'http://www.red-agent.com/wallogram/web/pusher_auth_2.php';
+		private static const ORIGIN:String = 'http://localhost/';
+		private static const SECURE:Boolean = true;	
+		private static const CHANNELPREFIX:String = 'private-';
+		
+		private static const CONNECTIONEVENT:String = "clientconnection";
+		private static const PADEVENT:String = "pad";
+		
+		private static const PADURL:String = "http://www.red-agent.com/wallogram/web/pad.php";
+		private static const QRURL:String = "http://chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=";
 		
 		private var pusher:Pusher;
-		private var channel:Channel;
+		private var channel:PusherChannel;
 		private var players:Object = {};
 		
 		public function Wallogram() {
-			this.initPusherWebsocket();
+			
+			LOGGER_FACTORY.setup = new SimpleTargetSetup(new TraceTarget);
+			
+			this.initPusher();
 			this.initPBE();
 			this.initLoggerTextField();
 			this.initUI();
 		}
-		public function initPusherWebsocket():void {
+		public function initPusher():void {
 			trace("Wallogram.initPusherWebsocket()");
 			
-			Pusher.log = function(msg:String):void {
-				trace(msg);
-			}
-			Pusher.authorizer = new PostAuthorizer(Wallogram.pusherAuthUrl);
 			
-			this.pusher = new Pusher(Wallogram.pusherAppAuthKey, "http://www.red-agent.com");
-		//	this.pusher.bind("pusher:connection_established", this.onPusherConnected);
-			this.channel = this.pusher.subscribe(Wallogram.pusherChannelPrefix + this.sessionId);
-			this.channel.bind("client-pad-event", this.onClientPadEvent);
-			this.channel.bind("client-connection", this.onClientConnection);
-			
+			var pusherOptions:PusherOptions = new PusherOptions();
+			pusherOptions.applicationKey = APP_KEY;
+			pusherOptions.auth_endpoint = AUTH_ENDPOINT;
+			pusherOptions.origin = ORIGIN;
+			//pusherOptions.secure = SECURE;
+						
+			// create pusher client and connect to server
+			this.pusher =  new Pusher(pusherOptions);
+			this.pusher.verboseLogging = true;
+			this.pusher.addEventListener(PusherEvent.CONNECTION_ESTABLISHED, this.onPusherConnected);
+			this.pusher.connect();
 		}
 		public function onPusherConnected(data:Object):void {
 			trace("onPusherConnected");
-		}
-		public function onClientPadEvent(data:Object):void {		
-			trace("Wallogram.onClientPadEvent()", data);
 			
+			this.channel = this.pusher.subscribe(CHANNELPREFIX + this.screenId);
+			this.channel.addEventListener("connection", this.onClientConnection);
+			this.channel.addEventListener("pad-event", this.onClientPadEvent);
+		}
+		public function runOnce(e: Event):void {
+			trace("Wallogram.runOnce()");
+			this.channel.dispatchPusherEvent(new PusherEvent("move"));
+			
+		}
+		public function onClientPadEvent(event:PusherEvent):void {		
+			trace("Wallogram.onClientPadEvent()");
+			
+			var data:Object = event.data;
 			var p:IEntity = this.players[data.uid] as IEntity;
 			var pc:PlayerController = PlayerController(p.lookupComponentByType(PlayerController));
 			
@@ -137,8 +153,9 @@ package
 			}
 			return;			
 		}
-		public function onClientConnection(data: Object):void {
-			this.initPlayer(data.uid);
+		public function onClientConnection(event:PusherEvent):void {
+			trace("onClientConnection");
+			this.initPlayer(event.data.uid);
 		}
 		
 		public function initPBE():void {	
@@ -177,14 +194,15 @@ package
 			
 			LevelManager.instance.addEventListener(LevelEvent.LEVEL_LOADED_EVENT, this.onLevelLoaded);
 			
-			LevelManager.instance.load("levelDescriptions.xml", 1);		// Load the descriptions, and start up level 1.
-			
+			// Load the descriptions, and start up level 1.	
+			LevelManager.instance.load("levelDescriptions.xml", 1);
 		}
 		
 		public function getBody(name:String):b2Body {
 			var f:Box2DSpatialComponent = PBE.lookupComponentByName(name, "Spatial") as Box2DSpatialComponent;
 			return f.body;
 		}
+		
 		public function createJoint(entity1:String, entity2:String):void {
 			var t:Box2DManagerComponent = PBE.lookupComponentByName("SpatialDB", "Manager") as Box2DManagerComponent;
 			
@@ -205,7 +223,7 @@ package
 			var playerEntity:IEntity = PBE.templateManager.instantiateEntity("PlayerTemplate");
 			var sc:Box2DSpatialComponent = Box2DSpatialComponent(playerEntity.lookupComponentByType(Box2DSpatialComponent));
 			var pc:PlayerController = PlayerController(playerEntity.lookupComponentByType(PlayerController));
-			sc.position = startingPositions[0];y
+			sc.position = startingPositions[0];
 			this.players[uid] = playerEntity;
 		}
 		public function onLevelLoaded(e:LevelEvent):void {
@@ -233,7 +251,7 @@ package
 		
 		public function initUI():void {
 			var myImageLoader:Loader = new Loader();
-			var myImageLocation:URLRequest = new URLRequest(Wallogram.QRURL+escape(Wallogram.padUrl+"?sid="+this.sessionId));
+			var myImageLocation:URLRequest = new URLRequest(QRURL+escape(PADURL+"?sid="+this.screenId));
 			// load the bitmap data from the image source in the Loader instance
 			myImageLoader.load(myImageLocation);
 			// add the Loader instance to the display list

@@ -1,3 +1,10 @@
+/*
+* Wallogram
+* http://wallogram.albasim.ch
+*
+* Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
+* Licensed under the MIT License
+*/
 package org.redagent.wallogram {
 
 	// *** Flash Imports *** //
@@ -10,19 +17,12 @@ package org.redagent.wallogram {
 	import com.pblabs.engine.PBE;
 	import com.pblabs.engine.components.TickedComponent;
 	import com.pblabs.engine.core.InputMap;
-	import com.pblabs.engine.debug.Logger;
-	import com.pblabs.engine.entity.Entity;
-	import com.pblabs.engine.entity.EntityComponent;
-	import com.pblabs.engine.entity.IEntity;
 	import com.pblabs.engine.entity.PropertyReference;
 	import com.pblabs.rendering2D.SpriteSheetRenderer;
 	
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.filters.*;
 	import flash.geom.*;
-	import flash.geom.ColorTransform;
-	import flash.geom.Point;
     
     /**
      * Component responsible for translating keyboard input to forces on the

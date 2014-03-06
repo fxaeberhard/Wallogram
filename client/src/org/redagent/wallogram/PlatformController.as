@@ -1,17 +1,18 @@
+/*
+* Wallogram
+* http://wallogram.albasim.ch
+*
+* Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
+* Licensed under the MIT License
+*/
 package org.redagent.wallogram {
 
 	// *** Flash Imports *** //
-	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Joints.*;
-	import com.pblabs.engine.entity.Entity;
-	import com.pblabs.engine.entity.IEntity;
-	import flash.display.BitmapData;
-    import flash.geom.Point;
-    import flash.display.Sprite;
-	import flash.geom.ColorTransform;
-	import flash.geom.*;
+	
 	import flash.filters.*;
-
+	import flash.geom.*;
+	
     /**
      * Component responsible for translating keyboard input to forces on the
      * player entity.
