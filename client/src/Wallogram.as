@@ -1,10 +1,10 @@
 /*
-* Wallogram
-* http://wallogram.albasim.ch
-*
-* Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
-* Licensed under the MIT License
-*/
+ * Wallogram
+ * http://wallogram.red-agent.com
+ *
+ * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
+ * Licensed under the MIT License
+ */
 package {	
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Joints.*;
@@ -76,16 +76,15 @@ package {
 		
 		public function Wallogram() {
 			
-			LOGGER_FACTORY.setup = new SimpleTargetSetup(new TraceTarget);
-			
-			this.initPusher();
+			//this.initPusher();
 			this.initPBE();
 			this.initLoggerTextField();
-			this.initUI();
+			//this.initUI();
 		}
 		public function initPusher():void {
 			trace("Wallogram.initPusherWebsocket()");
 			
+			LOGGER_FACTORY.setup = new SimpleTargetSetup(new TraceTarget);
 			
 			var pusherOptions:PusherOptions = new PusherOptions();
 			pusherOptions.applicationKey = APP_KEY;
@@ -100,16 +99,11 @@ package {
 			this.pusher.connect();
 		}
 		public function onPusherConnected(data:Object):void {
-			trace("onPusherConnected");
+			trace("Wallogram.onPusherConnected");
 			
 			this.channel = this.pusher.subscribe(CHANNELPREFIX + this.screenId);
 			this.channel.addEventListener("connection", this.onClientConnection);
 			this.channel.addEventListener("pad-event", this.onClientPadEvent);
-		}
-		public function runOnce(e: Event):void {
-			trace("Wallogram.runOnce()");
-			this.channel.dispatchPusherEvent(new PusherEvent("move"));
-			
 		}
 		public function onClientPadEvent(event:PusherEvent):void {		
 			trace("Wallogram.onClientPadEvent()");
@@ -195,7 +189,7 @@ package {
 			LevelManager.instance.addEventListener(LevelEvent.LEVEL_LOADED_EVENT, this.onLevelLoaded);
 			
 			// Load the descriptions, and start up level 1.	
-			LevelManager.instance.load("levelDescriptions.xml", 1);
+			LevelManager.instance.load("levelDescriptions.xml", 0);
 		}
 		
 		public function getBody(name:String):b2Body {
@@ -256,6 +250,7 @@ package {
 			myImageLoader.load(myImageLocation);
 			// add the Loader instance to the display list
 			this.addChild(myImageLoader);
+			//trace("Wallogram.initUI(): Error fetching QR");
 		}
 		
 		public function initLoggerTextField():void {

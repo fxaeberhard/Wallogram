@@ -1,10 +1,10 @@
 /*
-* Wallogram
-* http://wallogram.albasim.ch
-*
-* Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
-* Licensed under the MIT License
-*/
+ * Wallogram
+ * http://wallogram.red-agent.com
+ *
+ * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
+ * Licensed under the MIT License
+ */
 YUI.add("wallogram-accelerometer", function(Y) {
     var data = {x: 0, y: 0, z: 0},
     previous = {x: 0, y: 0, z: 0},
