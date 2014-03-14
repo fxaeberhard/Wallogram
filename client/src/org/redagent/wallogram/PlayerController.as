@@ -23,6 +23,8 @@ package org.redagent.wallogram {
 	import flash.display.Sprite;
 	import flash.filters.*;
 	import flash.geom.*;
+	
+	import mx.utils.ObjectUtil;
     
     /**
      * Component responsible for translating keyboard input to forces on the
@@ -40,12 +42,11 @@ package org.redagent.wallogram {
 		public var team:String;
 		
 		private var _chasing:Boolean = true;
-		private var _jumping:Boolean = true;
         private var _inputMap:InputMap;
         private var _left:Number = 0;
         private var _right:Number = 0;
         private var _jump:Number = 0;
-        private var _onGround:int = 0;
+        private var _onGround:Boolean = false;
 		
 		private var _onGroundTime:Number = 0;
 		private var _jointDef2:b2RevoluteJointDef = null;
@@ -84,19 +85,16 @@ package org.redagent.wallogram {
 					_joint = null;
 					
 					var s:Box2DSpatialComponent = (this.owner.lookupComponentByName("Spatial") as Box2DSpatialComponent);
-					s.position = new Point(s.position.x, s.position.y-50);
-					trace("moved"+s.position);
+					s.position = new Point(s.position.x, s.position.y - 50);
+					trace("moved" + s.position);
 					velocity.y -= 60;
 				} else {
 					velocity.y -= 280;
 				}
-				
-                _jump = 0;
-				_jumping = true;
-				
+                _jump = 0;				
 			}
 			
-			if (_onGround > 0) {
+			if (_onGround) {
 				_onGroundTime++;
 				if (_onGroundTime > 30 && _target != null) {
 					_target.canMove = true;
@@ -134,15 +132,43 @@ package org.redagent.wallogram {
         }
         
         private function _OnCollision(event:CollisionEvent):void {
-			/*
-		    if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player")) {
-		        if (event.normal.y < -0.7)
-                    _onGround++;
-            }*/
-        
+			trace("PlayerController._OnCollision(" + event.collider.collisionType.typeName + ", "
+				+ event.collidee.collisionType.typeName
+				+ ", normal: " + event.normal.y);
+			
+			// Collision event are not always in the same order (for js pad and keyboard players), normalize
+			var	collidee = event.collidee,
+				normal = event.normal.y;
 			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player")) {
-                if (event.normal.y < -0.7) {
-                    _onGround++;
+				collidee = event.collider,
+				normal = -normal;
+			}
+			
+			// When the hit the ground, player start playing
+		    if (PBE.objectTypeManager.doesTypeOverlap(collidee.collisionType, "Platform")) {
+		        if (normal > 0.7) {
+                    _onGround = true;
+					
+					if (_left + _right == 0) {
+						animatorReference.play("idle");
+					} else {
+						animatorReference.play("run");
+					}
+				}
+            }
+			
+			return;
+			// When they touch players change color (chase game)
+			if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player") &&
+				PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player") &&
+				this.team == "blue" ) {
+				this.setTeam("red");
+			}
+			
+			// Player can grab plateform from the button
+			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Platform")) {
+                if (event.normal.y > -0.7) {
+                    _onGround  = true;
 						
 					if ( _left + _right == 0 ) {
 						animatorReference.play( "idle" );
@@ -171,13 +197,6 @@ package org.redagent.wallogram {
 				}
 				
             }
-			
-			if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player") &&
-				PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player") &&
-				this.team == "blue" ) {
-					this.setTeam("red");
-			}
-			
         }
         
 		private function setTeam(team:String):void {
@@ -202,23 +221,27 @@ package org.redagent.wallogram {
 		}
 		
         private function _OnCollisionEnd(event:CollisionEvent):void {
+			trace("PlayerController._OnCollisionEnd(" + event.collider.collisionType.typeName + ", " + event.collidee.collisionType.typeName + ")");
+			
+			
 			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player")) {
                 if (event.normal.y < -0.7)
-                    _onGround--;
+                    _onGround = false;
             }
             
             if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player")) {
                 if (event.normal.y > 0.7)
-                    _onGround--;
+                    _onGround = false;
             }
         }
         
         public function _OnLeft(value:Number):void {
-			trace("onleft(val;"+value+", onground: +"+_onGround);
-			if (_onGround > 0) {
+			trace("onleft(val: " + value + ", onground: " + _onGround + ")");
+			if (_onGround) {
 				if (value == 0 ) {
 					animatorReference.play( "idle" );
 				} else {
+					_right = 0;
 					animatorReference.play( "run" );
 				}
 			}
@@ -226,11 +249,12 @@ package org.redagent.wallogram {
         }
         
         public function _OnRight(value:Number):void {
-			trace("onRight(val;"+value+", onground: +"+_onGround);
-			if (_onGround > 0) {
+			trace("onRight(val: " + value + ", onground: " + _onGround + ")");
+			if (_onGround) {
 				if (value == 0 ) {
 					animatorReference.play( "idle" );
 				} else {
+					_left = 0;
 					animatorReference.play( "run" );
 				}
 			}
@@ -238,11 +262,8 @@ package org.redagent.wallogram {
         }
         
         public function _OnJump(value:Number):void {
-			trace("onJump(val;"+value+", onground: +"+_onGround+", joint. "+_joint);          
-			if ( _joint != null) {
-              //  animatorReference.play( "jump" );
-				_jump = value;
-			} else if (_onGround > 0) {
+			trace("onJump(val: " + value + ", onground: " + _onGround + ", joint: " + _joint + ")");          
+			if (_onGround) {
                 animatorReference.play( "jump" );
 				_jump = value;
 			}

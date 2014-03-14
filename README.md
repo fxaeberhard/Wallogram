@@ -1,4 +1,4 @@
-Wallogram is a plateform game where player use they're mobile phone as a pad.
+Wallogram is a game where players use their mobile phone as a pad.
 
 Distributed under the MIT License.
 

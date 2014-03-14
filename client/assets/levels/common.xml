@@ -1,31 +1,39 @@
+<!--
+Wallogram
+http://wallogram.red-agent.com
+
+Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
+Licensed under the MIT License
+-->
 <things version="1">
-	
+
 	<entity name="SpatialDB">
 		<component type="com.pblabs.box2D.Box2DManagerComponent" name="Manager"/>
 	</entity>
-	
+
 	<entity name="Scene">
 		<component type="com.pblabs.rendering2D.DisplayObjectScene" name="Scene">
-			<!--<trackObject componentReference="Player1"/>-->
+			<!--<trackObject componentReference="Player1"/> -->
 			<sceneViewName>MainView</sceneViewName>
 			<position>
 				<x>0</x>
 				<y>0</y>
 			</position>
-			<sceneView type="com.pblabs.rendering2D.ui.SceneView" >
-				<width>1024</width>
-				<height>768</height>
+			<sceneView type="com.pblabs.rendering2D.ui.SceneView">
+				<width>1920</width>
+				<height>1080</height>
 			</sceneView>
 		</component>
 	</entity>
 
+	<!-- Draw Box2D debug shapes -->
 	<entity name="Box2D">
-		<!--<component type="com.pblabs.box2D.Box2DDebugComponent" name="Debug">-->
-		<component type="com.pblabs.box2D.Box2DSpatialComponent" name="Debug">  
+		<component type="com.pblabs.box2D.Box2DDebugComponent" name="Debug">
 			<spatialManager componentReference="SpatialDB"/>
+			<scene componentReference="Scene"/>
 		</component>
 	</entity>
-	
+
 	<group name="Common">
 		<objectReference name="SpatialDB"/>
 		<objectReference name="Scene"/>

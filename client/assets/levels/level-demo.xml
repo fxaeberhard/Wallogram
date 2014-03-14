@@ -1,12 +1,5 @@
-<!--
-Wallogram
-http://wallogram.red-agent.com
-
-Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
-Licensed under the MIT License
--->
 <things version="1">
-		
+
     <!-- Playfield limits -->
     <entity name="Limit1" template="Limit">
         <component name="Spatial">
@@ -43,8 +36,8 @@ Licensed under the MIT License
                 <y>100</y>
             </size>
         </component>
-    </entity>	
-	
+    </entity>
+
     <entity name="Limit4" template="Limit">
         <component name="Spatial">
             <position type="">
@@ -56,8 +49,8 @@ Licensed under the MIT License
                 <y>20</y>
             </size>
         </component>
-    </entity>	
-		
+    </entity>
+
     <entity name="Limit5" template="Limit">
         <component name="Spatial">
             <position type="">
@@ -69,9 +62,9 @@ Licensed under the MIT License
                 <y>800</y>
             </size>
         </component>
-    </entity>	
-    <!-- Right side plateform -->
+    </entity>
 	
+    <!-- Right side plateform -->
     <entity name="Platform5" template="Platform">
         <component name="Spatial">
             <position type="">
@@ -120,7 +113,7 @@ Licensed under the MIT License
             </size>
         </component>
     </entity>
-	
+
     <!-- Center windows -->
     <entity name="Window1" template="WindowTemplate">
         <component name="Spatial">
@@ -130,7 +123,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <entity name="Window12" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -139,7 +132,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <entity name="Window2" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -147,7 +140,7 @@ Licensed under the MIT License
                 <y>-170</y>
             </position>
         </component>
-    </entity>	
+    </entity>
     <entity name="Window22" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -156,7 +149,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <entity name="Window3" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -164,7 +157,7 @@ Licensed under the MIT License
                 <y>-40</y>
             </position>
         </component>
-    </entity>	
+    </entity>
     <entity name="Window32" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -173,7 +166,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <entity name="Window4" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -206,7 +199,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <!-- Window Center Plateform -->
     <entity name="WPlateform1" template="Platform">
         <component name="Spatial">
@@ -328,8 +321,8 @@ Licensed under the MIT License
             </size>
         </component>
     </entity>
-	
-	
+
+
     <!-- left window -->
     <entity name="LWindow1" template="WindowTemplate">
         <component name="Spatial">
@@ -339,7 +332,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <entity name="LWindow12" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -356,7 +349,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <entity name="LWindow22" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -373,7 +366,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <entity name="LWindow32" template="WindowTemplate">
         <component name="Spatial">
             <position type="">
@@ -382,7 +375,7 @@ Licensed under the MIT License
             </position>
         </component>
     </entity>
-	
+
     <!-- Left Window Plateforms -->
     <entity name="LWPlateform1" template="Platform">
         <component name="Spatial">
@@ -456,16 +449,13 @@ Licensed under the MIT License
             </size>
         </component>
     </entity>
-		
+
     <entity name="Background1" template="Background">
-        <component type="com.pblabs.rendering2D.SpriteRenderer" name="Render">
-            <scene componentReference="Scene"/>
-            <positionProperty>@Spatial.position</positionProperty>
-            <sizeProperty>@Spatial.size</sizeProperty>
+        <component name="Render">
             <fileName>images/background.png</fileName>
         </component>
     </entity>
-	
+
     <!-- 1st guy -->
     <entity name="Player1" template="PlayerTemplate">
         <component name="Spatial">
@@ -482,8 +472,8 @@ Licensed under the MIT License
                 <Jump>UP</Jump>
             </input>
         </component>
-    </entity>  
-	
+    </entity>
+
     <!-- 2nd guy -->
     <entity name="Player2" template="PlayerTemplate">
         <component name="Spatial">
@@ -491,7 +481,7 @@ Licensed under the MIT License
                 <x>315</x>
                 <y>-100</y>
             </position>
-        </component>		
+        </component>
         <component name="Controller">
             <team childType="String">blue</team>
             <input childType="com.pblabs.engine.core.InputKey">
@@ -501,19 +491,17 @@ Licensed under the MIT License
             </input>
         </component>
     </entity>
-	
+
     <group name="LevelData">
-	
-		
         <objectReference name="Player1"/>
-        <objectReference name="Player2"/>	
-		
+        <objectReference name="Player2"/>
+
         <objectReference name="Background1"/>
         <objectReference name="Platform1"/>
         <objectReference name="Platform2"/>
         <objectReference name="Platform3"/>
         <objectReference name="Platform5"/>
-		
+
         <objectReference name="Window1"/>
         <objectReference name="Window2"/>
         <objectReference name="Window3"/>
@@ -524,7 +512,7 @@ Licensed under the MIT License
         <objectReference name="Window32"/>
         <objectReference name="Window42"/>
         <objectReference name="Window52"/>
-				
+
         <objectReference name="WPlateform1"/>
         <objectReference name="WPlateform12"/>
         <objectReference name="WPlateform2"/>
@@ -535,26 +523,26 @@ Licensed under the MIT License
         <objectReference name="WPlateform42"/>
         <objectReference name="WPlateform5"/>
         <objectReference name="WPlateform52"/>
-		
-		
+
+
         <objectReference name="LWindow1"/>
         <objectReference name="LWindow12"/>
         <objectReference name="LWindow2"/>
         <objectReference name="LWindow22"/>
         <objectReference name="LWindow3"/>
         <objectReference name="LWindow32"/>
-		
+
         <objectReference name="LWPlateform1"/>
         <objectReference name="LWPlateform12"/>
         <objectReference name="LWPlateform2"/>
         <objectReference name="LWPlateform22"/>
         <objectReference name="LWPlateform3"/>
         <objectReference name="LWPlateform32"/>
-		
+
         <objectReference name="Limit1"/>
         <objectReference name="Limit2"/>
         <objectReference name="Limit3"/>
         <objectReference name="Limit4"/>
-        <objectReference name="Limit5"/>	
+        <objectReference name="Limit5"/>
     </group>
 </things>
