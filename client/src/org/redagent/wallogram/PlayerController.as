@@ -140,11 +140,11 @@ package org.redagent.wallogram {
 			var	collidee = event.collidee,
 				normal = event.normal.y;
 			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player")) {
-				collidee = event.collider,
+				collidee = event.collider;
 				normal = -normal;
 			}
 			
-			// When the hit the ground, player start playing
+			// When the player hits the ground, change state
 		    if (PBE.objectTypeManager.doesTypeOverlap(collidee.collisionType, "Platform")) {
 		        if (normal > 0.7) {
                     _onGround = true;

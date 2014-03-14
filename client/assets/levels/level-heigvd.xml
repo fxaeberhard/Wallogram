@@ -7,6 +7,38 @@ Licensed under the MIT License
 -->
 <things version="1">
 		
+    <!-- 1st guy -->
+    <entity name="Player1" template="PlayerTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>-777</x>
+                <y>-200</y>
+            </position>
+        </component>
+        <component name="Controller">
+            <team childType="String">red</team>
+            <input childType="com.pblabs.engine.core.InputKey">
+                <GoLeft>LEFT</GoLeft>
+                <GoRight>RIGHT</GoRight>
+                <Jump>UP</Jump>
+            </input>
+        </component>
+    </entity>
+    
+    <entity name="Background1" template="Background">
+        <component name="Render">
+            <!--<fileName>images/murheigvd.jpg</fileName>-->
+            <fileName>images/blackpoint.png</fileName>
+        </component>
+        <component name="Spatial">
+            <size type="">
+                <x>1920</x>
+                <y>1080</y>
+            </size>
+        </component>
+    </entity>
+    
+    <!-- Invisible platforms -->
     <entity name="Platform1" template="Platform">
         <component name="Spatial">
             <position type="">
@@ -115,39 +147,56 @@ Licensed under the MIT License
             </size>
         </component>
     </entity>
-		
-    <!-- 1st guy -->
-    <entity name="Player1" template="PlayerTemplate">
+        
+    <!-- Visible platforms -->    
+    <template name="VisiblePlatformTemplate" template="Platform">   
+        <component type="com.pblabs.rendering2D.SpriteRenderer" name="Render2">
+            <scene componentReference="Scene"/>
+            <positionProperty>@Spatial.position</positionProperty>
+            <sizeProperty>@Spatial.size</sizeProperty>
+            <fileName>images/greypoint.png</fileName>
+        </component>
+    </template>
+    <entity name="VPlatform1" template="VisiblePlatformTemplate">
         <component name="Spatial">
             <position type="">
-                <x>-777</x>
-                <y>-200</y>
+                <x>320</x>
+                <y>80</y>
             </position>
-        </component>
-        <component name="Controller">
-            <team childType="String">red</team>
-            <input childType="com.pblabs.engine.core.InputKey">
-                <GoLeft>LEFT</GoLeft>
-                <GoRight>RIGHT</GoRight>
-                <Jump>UP</Jump>
-            </input>
-        </component>
-    </entity>
-    
-    <entity name="Background1" template="Background">
-        <component name="Render">
-            <fileName>images/murheigvd.jpg</fileName>
-        </component>
-        <component name="Spatial">
             <size type="">
-                <x>1920</x>
-                <y>1080</y>
+                <x>50</x>
+                <y>15</y>
             </size>
         </component>
-    </entity>
-	
+    </entity>    
+    <entity name="VPlatform2" template="VisiblePlatformTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>655</x>
+                <y>-146</y>
+            </position>
+            <size type="">
+                <x>40</x>
+                <y>15</y>
+            </size>
+        </component>
+    </entity>      
+    <entity name="VPlatform3" template="VisiblePlatformTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>-50</x>
+                <y>217</y>
+            </position>
+            <size type="">
+                <x>116</x>
+                <y>15</y>
+            </size>
+        </component>  
+    </entity>  
+                	
     <group name="LevelData">
-        <objectReference name="Background1"/>
+        <!-- Invisible platforms -->
+        <!--<objectReference name="Background1"/>-->
         <objectReference name="Player1"/>
         <objectReference name="Platform1"/>
         <objectReference name="Platform2"/>
@@ -157,6 +206,11 @@ Licensed under the MIT License
         <objectReference name="Platform6"/>
         <objectReference name="Platform7"/>
         <objectReference name="Platform8"/>
-        <objectReference name="Platform9"/>		
+        <objectReference name="Platform9"/>
+        
+        <!-- Visible platforms -->
+        <objectReference name="VPlatform1"/>	
+        <objectReference name="VPlatform2"/>	
+        <objectReference name="VPlatform3"/>
     </group>
 </things>

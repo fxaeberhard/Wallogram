@@ -36,6 +36,7 @@ package {
 	
 	import flash.display.Loader;
 	import flash.display.Sprite;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.filters.*;
@@ -47,39 +48,57 @@ package {
 	import org.as3commons.logging.api.LOGGER_FACTORY;
 	import org.as3commons.logging.setup.SimpleTargetSetup;
 	import org.as3commons.logging.setup.target.TraceTarget;
+	import org.osmf.layout.ScaleMode;
 	import org.redagent.wallogram.PlayerController;
 	import org.redagent.wallogram.Resources;
 	
 	public class Wallogram extends Sprite {
 		
 		private var tf:TextField = new TextField();
-		private var startingPositions:Array = [ new Point(315, -250) , new Point(0, 0), new Point(0, 0), new Point(0, 0) ];
+		//private var startingPositions:Array = [ new Point(315, -250) , new Point(0, 0), new Point(0, 0), new Point(0, 0) ];/**/
+		private var startingPositions:Array = [ new Point(-777, -200)];
 		
 		private var screenId:String = '222';	
 		
-		private static const APP_ID:String = '10827';
 		private static const APP_KEY:String = '9d4eb6ada84f3af3c77f';
-		private static const AUTH_ENDPOINT:String = 'http://www.red-agent.com/wallogram/web/pusher_auth_2.php';
+		private static const AUTH_ENDPOINT:String = 'http://www.red-agent.com/wallogram/pusher_auth_2.php';
 		private static const ORIGIN:String = 'http://localhost/';
 		private static const SECURE:Boolean = true;	
 		private static const CHANNELPREFIX:String = 'private-';
 		
-		private static const CONNECTIONEVENT:String = "clientconnection";
-		private static const PADEVENT:String = "pad";
+		private static const CONNECTIONEVENT:String = "connection";
+		private static const PADEVENT:String = "pad-event";
 		
-		private static const PADURL:String = "http://www.red-agent.com/wallogram/web/pad.php";
+		private static const PADURL:String = "http://www.red-agent.com/wallogram/pad.php";
 		private static const QRURL:String = "http://chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=";
 		
 		private var pusher:Pusher;
 		private var channel:PusherChannel;
 		private var players:Object = {};
-		
+	
 		public function Wallogram() {
 			
-			//this.initPusher();
-			this.initPBE();
+			// Scale the stage to a third
+			stage.scaleMode = StageScaleMode.SHOW_ALL;
+			this.scaleX = 0.66666666	;
+			this.scaleY = 0.66666666;
+			
+			// Draw black background 
+			graphics.beginFill(0x000000);
+			graphics.drawRect( -200 , 0 , 2500, 1080);
+			graphics.endFill();
+			
+			// Init logger
 			this.initLoggerTextField();
-			//this.initUI();
+			
+			// Init Push Button Engine
+			this.initPBE();
+			
+			// Init pusher service
+			this.initPusher();	
+			
+			// Init user interface
+			//this.initUI();											// Draw QR in the top-left corner
 		}
 		public function initPusher():void {
 			trace("Wallogram.initPusherWebsocket()");
@@ -102,8 +121,8 @@ package {
 			trace("Wallogram.onPusherConnected");
 			
 			this.channel = this.pusher.subscribe(CHANNELPREFIX + this.screenId);
-			this.channel.addEventListener("connection", this.onClientConnection);
-			this.channel.addEventListener("pad-event", this.onClientPadEvent);
+			this.channel.addEventListener(Wallogram.CONNECTIONEVENT, this.onClientConnection);
+			this.channel.addEventListener(Wallogram.PADEVENT, this.onClientPadEvent);
 		}
 		public function onClientPadEvent(event:PusherEvent):void {		
 			trace("Wallogram.onClientPadEvent()");
@@ -182,22 +201,26 @@ package {
 			sv.name = "MainView";
 			sv.x = 0;
 			sv.y = 0;
-			sv.width = 1024;
-			sv.height = 768;
+			sv.width = 1920;
+			sv.height = 1080;
+			/*sv.width = stage.width;
+			sv.height = stage.height;*/
 			addChild(sv);
 			
 			LevelManager.instance.addEventListener(LevelEvent.LEVEL_LOADED_EVENT, this.onLevelLoaded);
 			
 			// Load the descriptions, and start up level 1.	
-			LevelManager.instance.load("levelDescriptions.xml", 0);
+			LevelManager.instance.load("levelDescriptions.xml", 1);
 		}
 		
 		public function getBody(name:String):b2Body {
 			var f:Box2DSpatialComponent = PBE.lookupComponentByName(name, "Spatial") as Box2DSpatialComponent;
-			return f.body;
+			return (f) ? f.body : null;
 		}
 		
 		public function createJoint(entity1:String, entity2:String):void {
+			if (!this.getBody(entity1)) return;
+			
 			var t:Box2DManagerComponent = PBE.lookupComponentByName("SpatialDB", "Manager") as Box2DManagerComponent;
 			
 			var _jointDef:b2PrismaticJointDef = new b2PrismaticJointDef ();

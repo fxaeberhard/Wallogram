@@ -52,11 +52,11 @@ Licensed under the MIT License
                     <vertices childType="flash.geom.Point">
                         <_0 type="">
                             <x>-0.35</x>
-                            <y>-0.65</y>
+                            <y>-0.45</y>
                         </_0>
                         <_1 type="">
                             <x>0.35</x>
-                            <y>-0.65</y>
+                            <y>-0.45</y>
                         </_1>
                         <_2 type="">
                             <x>0.35</x>

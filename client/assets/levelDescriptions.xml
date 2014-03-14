@@ -8,23 +8,23 @@ Licensed under the MIT License
 <levelDescriptions>
 
     <level index="0" name="Demo">
-        <file filename="levels/spriteSheets.xml" />
-        <group name="SpriteSheets" />
-        <file filename="levels/templates.xml" />
-        <file filename="levels/common.xml" />
-        <group name="Common" />
-        <file filename="levels/level-demo.xml" />
-        <group name="LevelData" />
+        <file filename="levels/spriteSheets.xml"/>
+        <group name="SpriteSheets"/>
+        <file filename="levels/templates.xml"/>
+        <file filename="levels/common.xml"/>
+        <group name="Common"/>
+        <file filename="levels/level-demo.xml"/>
+        <group name="LevelData"/>
     </level>
 
     <level index="1" name="Portes ouvertes heig-vd">
-        <file filename="levels/spriteSheets.xml" />
-        <group name="SpriteSheets" />
-        <file filename="levels/templates.xml" />
-        <file filename="levels/common.xml" />
-        <group name="Common" />
-        <file filename="levels/level-heigvd.xml" />
-        <group name="LevelData" />
+        <file filename="levels/spriteSheets.xml"/>
+        <group name="SpriteSheets"/>
+        <file filename="levels/templates.xml"/>
+        <file filename="levels/common.xml"/>
+        <group name="Common"/>
+        <file filename="levels/level-heigvd.xml"/>
+        <group name="LevelData"/>
     </level>
 
 </levelDescriptions>
