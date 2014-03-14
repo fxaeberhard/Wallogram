@@ -19,6 +19,8 @@ body {
 }
 .pad-button {
     position: absolute;
+}
+.pad-button-pressed {
     background: pink;
 }
 .pad-button-top {

@@ -20,7 +20,8 @@ $session_id = (isset($_REQUEST['sid'])) ? $_REQUEST['sid'] : '222';
         <!-- Meta -->
         <title>Wallogram pad</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="icon" type="image/ico" href="/favicon.ico" /> 
+        <link rel="icon" type="image/ico" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 
         <!-- YUI3 -->
         <link rel="stylesheet" type="text/css" href="lib/yui3/build/cssnormalize/cssnormalize-min.css" /> 
@@ -46,7 +47,7 @@ $session_id = (isset($_REQUEST['sid'])) ? $_REQUEST['sid'] : '222';
 
         <!-- Initialization -->
         <script type="text/javascript">
-            YUI().use('event-resize', 'event-touch', 'event-move', 'widget', "json",
+            YUI().use('event-resize', 'event-gestures', 'widget', "json",
                     'widget-position', 'widget-position-align', 'array-extras',
                     'wallogram-pad', 'wallogram-pusher', function(Y) {          // Fetch dependencies
 

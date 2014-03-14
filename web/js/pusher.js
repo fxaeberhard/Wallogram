@@ -18,7 +18,6 @@ YUI.add("wallogram-pusher", function(Y) {
                 Y.log("Unable to find Pusher libraries", "error", "Y.Wallogram.Pusher");
                 return;
             }
-
             window.Pusher.channel_auth_endpoint = this.get("authEndpoint");
             window.Pusher.log = Y.log;                                          // Enable pusher logging - don't include this in production
             document.WEB_SOCKET_DEBUG = true;                                   // Flash fallback logging - don't include this in production
@@ -60,7 +59,9 @@ YUI.add("wallogram-pusher", function(Y) {
             data = data || {};
             data.uid = this.get("sessionId");
             data.sid = this.get("screenId");
-            this.channel.trigger(evt, data);
+            if (this.channel) {
+                this.channel.trigger(evt, data);
+            }
         }
     }, {
         ATTRS: {

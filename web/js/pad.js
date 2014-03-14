@@ -19,17 +19,37 @@ YUI.add("wallogram-pad", function(Y) {
                 node.position = b;
                 cb.append(node);
             });
-
+            //this.get("contentBox").append(Y.JSON.stringify(Y.UA));
+            //this.get("contentBox").append(Y.UA.mobile);
             this.fitPad();
         },
         bindUI: function() {
             var cb = this.get("contentBox");
 
-            cb.on("gesturemovestart", Y.bind(this.pressButton, this));
-            cb.on("gesturechange", Y.bind(this.onMove, this));
-            cb.on("gesturemoveend", Y.bind(this.releaseButton, this));
-
             Y.on("windowresize", Y.bind(this.fitPad, this));
+
+            if (!Y.UA.mobile || Y.UA.mobile === "windows") {
+                cb.all(".pad-button").on("gesturemovestart", Y.bind(this.pressButton, this), {
+                    preventDefault: true
+                });
+                cb.all(".pad-button").on("gesturemove", Y.bind(this.onMove, this), {
+                    preventDefault: true,
+                    standAlone: true
+                });
+                cb.all(".pad-button").on("gesturemoveend", Y.bind(this.releaseButton, this), {
+                    preventDefault: true,
+                    standAlone: true
+                });
+            } else {
+                cb.all(".pad-button").on("touchstart", Y.bind(this.pressButton, this));
+                cb.all(".pad-button").on("touchmove", Y.bind(this.onMove, this));
+                cb.all(".pad-button").on("touchend", Y.bind(this.releaseButton, this));
+            }
+
+//            cb.on("touchstart", Y.bind(this.pressButton, this));
+//            cb.on("touchmove", Y.bind(this.onMove, this));
+//            cb.on("touchend", Y.bind(this.releaseButton, this));
+
 
             //Y.Array.each(this.BUTTONS, function(pos) {
             //node = Y.one('.pad-crossdummy-' + pos);
@@ -93,7 +113,9 @@ YUI.add("wallogram-pad", function(Y) {
             //padNode.setStyle("marginTop", -height / 2);
         },
         pressButton: function(e) {
-            //log("press: ");
+            //Y.log("Wallogram.Pad.press()");
+            //this.get("contentBox").append("press&nbsp;");
+            //return;
             var button = e.target.position;
 
             if (!button)
@@ -119,8 +141,9 @@ YUI.add("wallogram-pad", function(Y) {
             e.stopImmediatePropagation();
         },
         onMove: function(e) {
-            //log("move: "+e.target.position);
-
+            Y.log("Wallogram.Pad.move: " + e.target.position);
+//this.get("contentBox").append("onMove&nbsp;");
+//return;
             e.preventDefault();
             e.stopPropagation();
             e.halt();
@@ -129,6 +152,8 @@ YUI.add("wallogram-pad", function(Y) {
         releaseButton: function(e) {
             var button = e.target.position;
 
+//this.get("contentBox").append("release&nbsp;");
+//return;
             if (!button)
                 return;
 
