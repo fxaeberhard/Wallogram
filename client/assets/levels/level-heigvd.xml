@@ -11,8 +11,8 @@ Licensed under the MIT License
     <entity name="Player1" template="PlayerTemplate">
         <component name="Spatial">
             <position type="">
-                <x>-777</x>
-                <y>-200</y>
+                <x>-457</x>
+                <y>-130</y>
             </position>
         </component>
         <component name="Controller">
@@ -27,8 +27,9 @@ Licensed under the MIT License
     
     <entity name="Background1" template="Background">
         <component name="Render">
-            <!--<fileName>images/murheigvd.jpg</fileName>-->
-            <fileName>images/blackpoint.png</fileName>
+            <fileName>images/grid.png</fileName>
+<!--            <fileName>images/murheigvd.jpg</fileName>-->
+<!--            <fileName>images/blackpoint.png</fileName>-->
         </component>
         <component name="Spatial">
             <size type="">
@@ -42,8 +43,8 @@ Licensed under the MIT License
     <entity name="Platform1" template="Platform">
         <component name="Spatial">
             <position type="">
-                <x>-777</x>
-                <y>-143</y>
+                <x>-779</x>
+                <y>-148</y>
             </position>
             <size type="">
                 <x>286</x>
@@ -54,36 +55,36 @@ Licensed under the MIT License
     <entity name="Platform2" template="Platform">
         <component name="Spatial">
             <position type="">
-                <x>-615</x>
-                <y>168</y>
+                <x>-618</x>
+                <y>171</y>
             </position>
             <size type="">
                 <x>391</x>
-                <y>218</y>
+                <y>220</y>
             </size>
         </component>
     </entity>    
     <entity name="Platform3" template="Platform">
         <component name="Spatial">
             <position type="">
-                <x>-448</x>
-                <y>-32</y>
+                <x>-450</x>
+                <y>-38</y>
             </position>
             <size type="">
                 <x>269</x>
-                <y>82</y>
+                <y>76</y>
             </size>
         </component>
     </entity>
     <entity name="Platform4" template="Platform">
         <component name="Spatial">
             <position type="">
-                <x>4</x>
-                <y>-96</y>
+                <x>24</x>
+                <y>-99</y>
             </position>
             <size type="">
                 <x>533</x>
-                <y>298</y>
+                <y>310</y>
             </size>
         </component>
     </entity>		
@@ -103,22 +104,22 @@ Licensed under the MIT License
         <component name="Spatial">
             <position type="">
                 <x>173</x>
-                <y>255</y>
+                <y>264</y>
             </position>
             <size type="">
                 <x>260</x>
-                <y>144</y>
+                <y>149</y>
             </size>
         </component>
     </entity>    
     <entity name="Platform7" template="Platform">
         <component name="Spatial">
             <position type="">
-                <x>580</x>
-                <y>55</y>
+                <x>586</x>
+                <y>49</y>
             </position>
             <size type="">
-                <x>392</x>
+                <x>395</x>
                 <y>219</y>
             </size>
         </component>
@@ -127,18 +128,18 @@ Licensed under the MIT License
         <component name="Spatial">
             <position type="">
                 <x>454</x>
-                <y>-208</y>
+                <y>-221</y>
             </position>
             <size type="">
                 <x>257</x>
-                <y>144</y>
+                <y>149</y>
             </size>
         </component>
     </entity>  
     <entity name="Platform9" template="Platform">
         <component name="Spatial">
             <position type="">
-                <x>816</x>
+                <x>826</x>
                 <y>-176</y>
             </position>
             <size type="">
@@ -160,11 +161,23 @@ Licensed under the MIT License
     <entity name="VPlatform1" template="VisiblePlatformTemplate">
         <component name="Spatial">
             <position type="">
-                <x>320</x>
-                <y>80</y>
+                <x>310</x>
+                <y>30</y>
             </position>
             <size type="">
-                <x>50</x>
+                <x>30</x>
+                <y>15</y>
+            </size>
+        </component>
+    </entity>  
+    <entity name="VPlatform22" template="VisiblePlatformTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>345</x>
+                <y>140</y>
+            </position>
+            <size type="">
+                <x>30</x>
                 <y>15</y>
             </size>
         </component>
@@ -172,15 +185,15 @@ Licensed under the MIT License
     <entity name="VPlatform2" template="VisiblePlatformTemplate">
         <component name="Spatial">
             <position type="">
-                <x>655</x>
-                <y>-146</y>
+                <x>640</x>
+                <y>-166</y>
             </position>
             <size type="">
-                <x>40</x>
+                <x>30</x>
                 <y>15</y>
             </size>
         </component>
-    </entity>      
+    </entity>   
     <entity name="VPlatform3" template="VisiblePlatformTemplate">
         <component name="Spatial">
             <position type="">
@@ -196,7 +209,7 @@ Licensed under the MIT License
                 	
     <group name="LevelData">
         <!-- Invisible platforms -->
-        <!--<objectReference name="Background1"/>-->
+<!--        <objectReference name="Background1"/>-->
         <objectReference name="Player1"/>
         <objectReference name="Platform1"/>
         <objectReference name="Platform2"/>
@@ -210,7 +223,8 @@ Licensed under the MIT License
         
         <!-- Visible platforms -->
         <objectReference name="VPlatform1"/>	
-        <objectReference name="VPlatform2"/>	
+        <objectReference name="VPlatform2"/>		
+        <objectReference name="VPlatform22"/>	
         <objectReference name="VPlatform3"/>
     </group>
 </things>

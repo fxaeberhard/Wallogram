@@ -38,11 +38,13 @@ package {
 	import flash.display.Sprite;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.TimerEvent;
 	import flash.filters.*;
 	import flash.geom.Point;
 	import flash.net.URLRequest;
 	import flash.text.*;
+	import flash.ui.KeyLocation;
 	import flash.utils.*;
 	
 	import org.as3commons.logging.api.LOGGER_FACTORY;
@@ -56,17 +58,17 @@ package {
 		
 		private var tf:TextField = new TextField();
 		//private var startingPositions:Array = [ new Point(315, -250) , new Point(0, 0), new Point(0, 0), new Point(0, 0) ];/**/
-		private var startingPositions:Array = [ new Point(-777, -200)];
+		private var startingPositions:Array = [ new Point(-457, -130)];
 		
-		private var screenId:String = '222';	
+		private var screenId:String = 'po';	
 		
 		private static const APP_KEY:String = '9d4eb6ada84f3af3c77f';
 		private static const AUTH_ENDPOINT:String = 'http://www.red-agent.com/wallogram/pusher_auth_2.php';
 		private static const ORIGIN:String = 'http://localhost/';
 		private static const SECURE:Boolean = true;	
 		private static const CHANNELPREFIX:String = 'private-';
+		private static const PRESENCECHANNELPREFIX:String = 'presence-';
 		
-		private static const CONNECTIONEVENT:String = "connection";
 		private static const PADEVENT:String = "pad-event";
 		
 		private static const PADURL:String = "http://www.red-agent.com/wallogram/pad.php";
@@ -74,6 +76,7 @@ package {
 		
 		private var pusher:Pusher;
 		private var channel:PusherChannel;
+		private var presenceChannel:PusherChannel;
 		private var players:Object = {};
 	
 		public function Wallogram() {
@@ -99,6 +102,16 @@ package {
 			
 			// Init user interface
 			//this.initUI();											// Draw QR in the top-left corner
+			
+			// Remove all players on backspace click
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, function (e:KeyboardEvent) {
+				if (e.keyCode === 8) {
+					for (var i in players) {
+						players[i].destroy();
+					}
+					this.players = {};
+				}
+			});
 		}
 		public function initPusher():void {
 			trace("Wallogram.initPusherWebsocket()");
@@ -121,16 +134,33 @@ package {
 			trace("Wallogram.onPusherConnected");
 			
 			this.channel = this.pusher.subscribe(CHANNELPREFIX + this.screenId);
-			this.channel.addEventListener(Wallogram.CONNECTIONEVENT, this.onClientConnection);
+			this.channel.addEventListener("connection", this.onClientConnection);
 			this.channel.addEventListener(Wallogram.PADEVENT, this.onClientPadEvent);
+			
+			//this.presenceChannel = this.pusher.subscribe(PRESENCECHANNELPREFIX + this.screenId);
+			//this.presenceChannel.addEventListener(/*/**/*/, this.onClientConnection);
+		}
+		public function onClientConnection(event:PusherEvent):void {
+			trace("onClientConnection");
+			this.initPlayer(event.data.uid);
 		}
 		public function onClientPadEvent(event:PusherEvent):void {		
 			trace("Wallogram.onClientPadEvent()");
 			
 			var data:Object = event.data;
 			var p:IEntity = this.players[data.uid] as IEntity;
+			
+			if (p === null) {
+				trace("unable to find player: " + data.uid);
+				return;
+			}
+			
 			var pc:PlayerController = PlayerController(p.lookupComponentByType(PlayerController));
 			
+			if (pc === null) {
+				trace("unable to find player: " + data.uid);
+				return;
+			}
 			switch (data.button) {
 				case "cross-down": 
 					switch (data.position) {
@@ -165,10 +195,6 @@ package {
 					break;
 			}
 			return;			
-		}
-		public function onClientConnection(event:PusherEvent):void {
-			trace("onClientConnection");
-			this.initPlayer(event.data.uid);
 		}
 		
 		public function initPBE():void {	
@@ -235,8 +261,11 @@ package {
 		}
 		
 		public function initPlayer(uid:String):void {
-			trace("Wallogram.initPlayer("+uid+")");
+			trace("Wallogram.initPlayer("+uid+")");			
 			
+			if (this.players[uid]) {
+				this.players[uid].destroy();
+			}
 			var playerEntity:IEntity = PBE.templateManager.instantiateEntity("PlayerTemplate");
 			var sc:Box2DSpatialComponent = Box2DSpatialComponent(playerEntity.lookupComponentByType(Box2DSpatialComponent));
 			var pc:PlayerController = PlayerController(playerEntity.lookupComponentByType(PlayerController));

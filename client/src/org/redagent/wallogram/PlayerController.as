@@ -33,11 +33,14 @@ package org.redagent.wallogram {
 	 * @author Francois-Xavier Aeberhard <fx@red-agent.com>
      */
     public class PlayerController extends TickedComponent {
-        [TypeHint(type="flash.geom.Point")]
+		
+		[TypeHint(type="flash.geom.Point")]
         public var velocityReference:PropertyReference;
 		public var rendererReference:SpriteSheetRenderer;
 		public var animatorReference:AnimatorComponent;
 		public var box2dReference:Box2DSpatialComponent;
+		
+		public var STARTINGPOSITION:Point = new Point(-457, -130);
 		
 		public var team:String;
 		
@@ -47,6 +50,10 @@ package org.redagent.wallogram {
         private var _right:Number = 0;
         private var _jump:Number = 0;
         private var _onGround:Boolean = false;
+		private var _blinking:Boolean = true;
+		
+		private var _blinkCounter: Number = 0;
+		private var _blinkCounterInter: Number = 0;
 		
 		private var _onGroundTime:Number = 0;
 		private var _jointDef2:b2RevoluteJointDef = null;
@@ -65,6 +72,9 @@ package org.redagent.wallogram {
                 _inputMap.mapActionToHandler("Jump", _OnJump);
             }
         }
+		public function resetPosition():void {
+			this.box2dReference.position = STARTINGPOSITION;
+		}
         
         public override function onTick(tickRate:Number):void {
 			//trace("Player.onTick(): ", _right, _left);
@@ -113,13 +123,37 @@ package org.redagent.wallogram {
 				_jointDef2 = null;
 			}
 			
+			if (this.box2dReference.position.y > 500) {
+				this.resetPosition();
+			}
+			
             owner.setProperty(velocityReference, velocity);
+			
+			// Blinking mode
+			if (this._blinking) {
+				this._blinkCounterInter++;
+				if (this._blinkCounterInter === 10) {		
+					this._blinkCounter++;
+					this._blinkCounterInter = 0;
+					if (this._blinkCounter %2 === 0) {
+						this.rendererReference.alpha = 100;
+					} else {
+						this.rendererReference.alpha = 0;
+					}
+					
+					if (this._blinkCounter === 10) {
+						this._blinking = false;
+						this._blinkCounter = 0;
+						this._blinkCounterInter = 0;
+					}
+				}
+			}
         }
         
         protected override function onAdd():void {
             super.onAdd();
 			
-			this.setTeam(this.team);
+			//this.setTeam(this.team);
 			
             owner.eventDispatcher.addEventListener(CollisionEvent.COLLISION_EVENT, _OnCollision);
             owner.eventDispatcher.addEventListener(CollisionEvent.COLLISION_STOPPED_EVENT, _OnCollisionEnd);
@@ -137,8 +171,8 @@ package org.redagent.wallogram {
 				+ ", normal: " + event.normal.y);
 			
 			// Collision event are not always in the same order (for js pad and keyboard players), normalize
-			var	collidee = event.collidee,
-				normal = event.normal.y;
+			var	collidee:Box2DSpatialComponent = event.collidee,
+				normal:Number = event.normal.y;
 			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player")) {
 				collidee = event.collider;
 				normal = -normal;
@@ -200,6 +234,7 @@ package org.redagent.wallogram {
         }
         
 		private function setTeam(team:String):void {
+			return;
 			this.team = team;
 			trace("Player.setTeam(" + team + ")");
 			var matrix:Array = new Array();

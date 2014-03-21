@@ -1,0 +1,217 @@
+<!--
+Wallogram
+http://wallogram.red-agent.com
+
+Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
+Licensed under the MIT License
+-->
+<things version="1">
+		
+    <!-- 1st guy -->
+    <entity name="Player1" template="PlayerTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>-777</x>
+                <y>-200</y>
+            </position>
+        </component>
+        <component name="Controller">
+            <team childType="String">red</team>
+            <input childType="com.pblabs.engine.core.InputKey">
+                <GoLeft>LEFT</GoLeft>
+                <GoRight>RIGHT</GoRight>
+                <Jump>UP</Jump>
+            </input>
+        </component>
+    </entity>
+    
+    <entity name="Background1" template="Background">
+        <component name="Render">
+            <fileName>images/grid.png</fileName>
+<!--            <fileName>images/murheigvd.jpg</fileName>-->
+<!--            <fileName>images/blackpoint.png</fileName>-->
+        </component>
+        <component name="Spatial">
+            <size type="">
+                <x>1920</x>
+                <y>1080</y>
+            </size>
+        </component>
+    </entity>
+    
+    <!-- Invisible platforms -->
+    <entity name="Platform1" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>-777</x>
+                <y>-143</y>
+            </position>
+            <size type="">
+                <x>286</x>
+                <y>161</y>
+            </size>
+        </component>
+    </entity>    
+    <entity name="Platform2" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>-615</x>
+                <y>168</y>
+            </position>
+            <size type="">
+                <x>391</x>
+                <y>218</y>
+            </size>
+        </component>
+    </entity>    
+    <entity name="Platform3" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>-448</x>
+                <y>-32</y>
+            </position>
+            <size type="">
+                <x>269</x>
+                <y>82</y>
+            </size>
+        </component>
+    </entity>
+    <entity name="Platform4" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>4</x>
+                <y>-96</y>
+            </position>
+            <size type="">
+                <x>533</x>
+                <y>298</y>
+            </size>
+        </component>
+    </entity>		
+    <entity name="Platform5" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>-246</x>
+                <y>177</y>
+            </position>
+            <size type="">
+                <x>197</x>
+                <y>111</y>
+            </size>
+        </component>
+    </entity>
+    <entity name="Platform6" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>173</x>
+                <y>255</y>
+            </position>
+            <size type="">
+                <x>260</x>
+                <y>144</y>
+            </size>
+        </component>
+    </entity>    
+    <entity name="Platform7" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>580</x>
+                <y>55</y>
+            </position>
+            <size type="">
+                <x>392</x>
+                <y>219</y>
+            </size>
+        </component>
+    </entity>    
+    <entity name="Platform8" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>454</x>
+                <y>-208</y>
+            </position>
+            <size type="">
+                <x>257</x>
+                <y>144</y>
+            </size>
+        </component>
+    </entity>  
+    <entity name="Platform9" template="Platform">
+        <component name="Spatial">
+            <position type="">
+                <x>816</x>
+                <y>-176</y>
+            </position>
+            <size type="">
+                <x>207</x>
+                <y>118</y>
+            </size>
+        </component>
+    </entity>
+        
+    <!-- Visible platforms -->    
+    <template name="VisiblePlatformTemplate" template="Platform">   
+        <component type="com.pblabs.rendering2D.SpriteRenderer" name="Render2">
+            <scene componentReference="Scene"/>
+            <positionProperty>@Spatial.position</positionProperty>
+            <sizeProperty>@Spatial.size</sizeProperty>
+            <fileName>images/greypoint.png</fileName>
+        </component>
+    </template>
+    <entity name="VPlatform1" template="VisiblePlatformTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>320</x>
+                <y>80</y>
+            </position>
+            <size type="">
+                <x>50</x>
+                <y>15</y>
+            </size>
+        </component>
+    </entity>    
+    <entity name="VPlatform2" template="VisiblePlatformTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>660</x>
+                <y>-146</y>
+            </position>
+            <size type="">
+                <x>40</x>
+                <y>15</y>
+            </size>
+        </component>
+    </entity>      
+    <entity name="VPlatform3" template="VisiblePlatformTemplate">
+        <component name="Spatial">
+            <position type="">
+                <x>-50</x>
+                <y>217</y>
+            </position>
+            <size type="">
+                <x>116</x>
+                <y>15</y>
+            </size>
+        </component>  
+    </entity>  
+                	
+    <group name="LevelData">
+        <!-- Invisible platforms -->
+        <objectReference name="Background1"/>
+        <objectReference name="Player1"/>
+        <objectReference name="Platform1"/>
+        <objectReference name="Platform2"/>
+        <objectReference name="Platform3"/>
+        <objectReference name="Platform4"/>
+        <objectReference name="Platform5"/>
+        <objectReference name="Platform6"/>
+        <objectReference name="Platform7"/>
+        <objectReference name="Platform8"/>
+        <objectReference name="Platform9"/>
+        
+        <!-- Visible platforms -->
+        <objectReference name="VPlatform1"/>	
+        <objectReference name="VPlatform2"/>	
+        <objectReference name="VPlatform3"/>
+    </group>
+</things>

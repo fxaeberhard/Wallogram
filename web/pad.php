@@ -9,9 +9,7 @@
 ?>
 <?php
 require('config.php');                                                          // Get the config
-session_start();                                                                // Init php session
-$session_id = (isset($_REQUEST['sid'])) ? $_REQUEST['sid'] : '222';
-//$_REQUEST['sid'];
+$screenId = (isset($_REQUEST['sid'])) ? $_REQUEST['sid'] : 'po';
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,7 +51,7 @@ $session_id = (isset($_REQUEST['sid'])) ? $_REQUEST['sid'] : '222';
 
                 var pusher = new 　Y.Wallogram.Pusher({                         // Init pusher connection
                         sessionId: '<?php echo session_id(); ?>',               // Player identifier
-                        screenId: '<?php echo $session_id ?>',                  // Playfield identifier
+                        screenId: '<?php echo $screenId ?>',                  // Playfield identifier
                         key: '<?php echo PUSHER_AUTHKEY; ?>'                    // Pusher autentication key
                     }),
                     pad = new Y.Wallogram.Pad();                                // Init pad;

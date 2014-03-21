@@ -23,24 +23,34 @@ YUI.add("wallogram-pusher", function(Y) {
             document.WEB_SOCKET_DEBUG = true;                                   // Flash fallback logging - don't include this in production
 
             this.pusher = new window.Pusher(this.get("key"));
-            this.channel = this.pusher.subscribe(this.get("channelPrefix") + this.get("screenId"));
 
-            // Send connected event as soon as the connection is established
+            // Subscribe to presence channel
+            //this.presenceChannel = this.pusher.subscribe("presence-" + this.get("screenId")); 
+            //this.presenceChannel.bind('pusher:subscription_succeeded', Y.bind(function(status) {
+            //    Y.log("Connected to pusher presence channel: " + status, "info", "Y.Wallogram.Pusher");
+            //}, this));
+            
+            // Subscribe to event channel
+            this.channel = this.pusher.subscribe(this.get("channelPrefix") + this.get("screenId"));
             this.channel.bind('pusher:subscription_succeeded', Y.bind(function(status) {
                 Y.log("Connected to pusher channel: " + status, "info", "Y.Wallogram.Pusher");
                 this.trigger('client-connection');
             }, this));
 
+            //this.channel.bind('pusher:subscription_error', function(status) {
+            //    alert('Error subscribing to pusher channel.');
+            //});
+
             // Log any error
             this.pusher.connection.bind('error', function(err) {
-                if (err.data.code === 4004) {
+                if (err.data && err.data.code === 4004) {
                     Y.log("Pusher daily limit", "error", "Y.Wallogram.Pusher");
                 } else {
                     Y.log("Pusher error", "error", "Y.Wallogram.Pusher");
                 }
             });
 
-            // Forward any non-pusher specific event to the facade
+            // Forward any non-pusher specific event 
             this.pusher.bind_all(Y.bind(function(event, data) {
                 Y.log("Pusher event: " + event, "info", "Y.Wallogram.Pusher");
                 if (event.indexOf("pusher:") !== 0) {                           //ignore pusher specific event
@@ -50,10 +60,6 @@ YUI.add("wallogram-pusher", function(Y) {
                     this.fire(event, data);
                 }
             }, this));
-
-            //this.channel.bind('pusher:subscription_error', function(status) {
-            //    alert('Error subscribing to pusher channel.');
-            //});
         },
         trigger: function(evt, data) {
             data = data || {};
