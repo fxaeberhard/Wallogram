@@ -1,8 +1,9 @@
-Wallogram is a game where players use their mobile phone as a pad.
+Wallogram turns our envrionment in a video game playground. To do so the game is projected 
+on walls and facades and players use their mobile phone as a game controller.
+
+Visit [http://wallogram.red-agent.com](http://wallogram.red-agent.com) for a demo.
 
 Distributed under the MIT License.
-
-Visit [http://wallogram.red-agent.com](http://wallogram.red-agent.com) for more informations.
 
 How to build
 =======================

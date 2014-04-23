@@ -1,6 +1,8 @@
 # Build files #
 ###############
 client/bin-debug
+client/bin-release
+client-air/bin-debug
 nbproject/*
 
 # Eclipse project files #

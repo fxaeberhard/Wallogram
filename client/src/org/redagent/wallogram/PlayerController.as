@@ -40,7 +40,8 @@ package org.redagent.wallogram {
 		public var animatorReference:AnimatorComponent;
 		public var box2dReference:Box2DSpatialComponent;
 		
-		public var STARTINGPOSITION:Point = new Point(-457, -130);
+		//public var STARTINGPOSITION:Point = new Point(-357, -130);
+		public var STARTINGPOSITION:Point = new Point(280, 0);
 		
 		public var team:String;
 		
@@ -96,7 +97,7 @@ package org.redagent.wallogram {
 					
 					var s:Box2DSpatialComponent = (this.owner.lookupComponentByName("Spatial") as Box2DSpatialComponent);
 					s.position = new Point(s.position.x, s.position.y - 50);
-					trace("moved" + s.position);
+					//trace("moved" + s.position);
 					velocity.y -= 60;
 				} else {
 					velocity.y -= 280;
@@ -104,23 +105,23 @@ package org.redagent.wallogram {
                 _jump = 0;				
 			}
 			
-			if (_onGround) {
-				_onGroundTime++;
+			if (this._onGround) {
+				this._onGroundTime++;
 				if (_onGroundTime > 30 && _target != null) {
-					_target.canMove = true;
-					_target.canRotate = true;
-					_target = null;
-					_onGroundTime = 0;
+					this._target.canMove = true;
+					this._target.canRotate = true;
+					this._target = null;
+					this._onGroundTime = 0;
 				}
 			} else {
-				_onGroundTime = 0;
+				this._onGroundTime = 0;
 			}
 			
 			if (_jointDef2 != null) {
 				//var s:Box2DSpatialComponent = PBE.lookup("Explosion").lookupComponentByName("Spatial");
 				//owner.lookupComponentByName("
-				_joint = this.box2dReference.spatialManager.world.CreateJoint(_jointDef2);
-				_jointDef2 = null;
+				this._joint = this.box2dReference.spatialManager.world.CreateJoint(_jointDef2);
+				this._jointDef2 = null;
 			}
 			
 			if (this.box2dReference.position.y > 500) {
@@ -153,7 +154,7 @@ package org.redagent.wallogram {
         protected override function onAdd():void {
             super.onAdd();
 			
-			//this.setTeam(this.team);
+			this.setTeam(this.team);
 			
             owner.eventDispatcher.addEventListener(CollisionEvent.COLLISION_EVENT, _OnCollision);
             owner.eventDispatcher.addEventListener(CollisionEvent.COLLISION_STOPPED_EVENT, _OnCollisionEnd);
@@ -167,14 +168,15 @@ package org.redagent.wallogram {
         
         private function _OnCollision(event:CollisionEvent):void {
 			trace("PlayerController._OnCollision(" + event.collider.collisionType.typeName + ", "
-				+ event.collidee.collisionType.typeName
-				+ ", normal: " + event.normal.y);
+				+ event.collidee.collisionType.typeName	+ ", normal: " + event.normal.y);
 			
 			// Collision event are not always in the same order (for js pad and keyboard players), normalize
 			var	collidee:Box2DSpatialComponent = event.collidee,
+				collider:Box2DSpatialComponent = event.collider,
 				normal:Number = event.normal.y;
 			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player")) {
 				collidee = event.collider;
+				collider = event.collidee;
 				normal = -normal;
 			}
 			
@@ -191,50 +193,37 @@ package org.redagent.wallogram {
 				}
             }
 			
-			return;
 			// When they touch players change color (chase game)
-			if (PBE.objectTypeManager.doesTypeOverlap(event.collider.collisionType, "Player") &&
-				PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Player") &&
+			if (PBE.objectTypeManager.doesTypeOverlap(collider.collisionType, "Player") &&
+				PBE.objectTypeManager.doesTypeOverlap(collidee.collisionType, "Player") &&
 				this.team == "blue" ) {
 				this.setTeam("red");
 			}
-			
 			// Player can grab plateform from the button
-			if (PBE.objectTypeManager.doesTypeOverlap(event.collidee.collisionType, "Platform")) {
-                if (event.normal.y > -0.7) {
-                    _onGround  = true;
-						
-					if ( _left + _right == 0 ) {
-						animatorReference.play( "idle" );
-					} else {
-						animatorReference.play( "run" );
-					}
-				}
+			if (PBE.objectTypeManager.doesTypeOverlap(collidee.collisionType, "Platform")
+				&& collidee.owner["name"].indexOf("WPlateform") != -1) {
 				
-				var t:String = event.collider.owner["name"];
-				//trace(t);
-				if (t.indexOf("WPlateform") != -1) {	
-					_target = event.collider;
-					
-					if ( event.normal.y > 0.7 ) {
-						_jointDef2 = new b2RevoluteJointDef();
-						_jointDef2.localAnchor1 = new b2Vec2(0, 0);
-						_jointDef2.localAnchor2 = new b2Vec2(0, 1);
-						
-						_jointDef2.collideConnected = false;
-						_jointDef2.body1 = event.collidee.body;
-						_jointDef2.body2 = event.collider.body;
-						event.preventDefault();
-						event.stopPropagation();
-						event.stopImmediatePropagation();
-					}
-				}
+				// Plateform falls on collision
+				this._target = collidee;
 				
+				// Player can grab platforms
+				if (normal < -0.7) {
+					this._onGround = true;
+										
+					_jointDef2 = new b2RevoluteJointDef();
+					_jointDef2.localAnchor1 = new b2Vec2(0, 0);
+					_jointDef2.localAnchor2 = new b2Vec2(0, 1);
+					_jointDef2.collideConnected = false;
+					_jointDef2.body1 = collider.body;
+					_jointDef2.body2 = collidee.body;
+					event.preventDefault();
+					event.stopPropagation();
+					event.stopImmediatePropagation();
+				}
             }
         }
         
 		private function setTeam(team:String):void {
-			return;
 			this.team = team;
 			trace("Player.setTeam(" + team + ")");
 			var matrix:Array = new Array();
@@ -298,7 +287,9 @@ package org.redagent.wallogram {
         
         public function _OnJump(value:Number):void {
 			trace("onJump(val: " + value + ", onground: " + _onGround + ", joint: " + _joint + ")");          
-			if (_onGround) {
+			if (_joint != null) {
+				_jump = value;
+			} else if (_onGround) {
                 animatorReference.play( "jump" );
 				_jump = value;
 			}

@@ -24,19 +24,31 @@ YUI.add("wallogram-pusher", function(Y) {
 
             this.pusher = new window.Pusher(this.get("key"));
 
-            // Subscribe to presence channel
-            //this.presenceChannel = this.pusher.subscribe("presence-" + this.get("screenId")); 
-            //this.presenceChannel.bind('pusher:subscription_succeeded', Y.bind(function(status) {
-            //    Y.log("Connected to pusher presence channel: " + status, "info", "Y.Wallogram.Pusher");
-            //}, this));
+            // Forward any non-pusher specific event 
+            this.pusher.bind_all(Y.bind(function(event, data) {
+                Y.log("Pusher event: " + event, "info", "Y.Wallogram.Pusher");
+                //if (event.indexOf("pusher:") !== 0) {                           //ignore pusher specific event
+                    this.publish(event, {
+                        emitFacade: false
+                    });
+                    this.fire(event, data);
+                //}
+            }, this));
             
             // Subscribe to event channel
             this.channel = this.pusher.subscribe(this.get("channelPrefix") + this.get("screenId"));
             this.channel.bind('pusher:subscription_succeeded', Y.bind(function(status) {
                 Y.log("Connected to pusher channel: " + status, "info", "Y.Wallogram.Pusher");
-                this.trigger('client-connection');
+                this.fire("subscription_succeeded");
+                //this.trigger('client-connection');
             }, this));
 
+            // Subscribe to presence channel
+            //this.presenceChannel = this.pusher.subscribe("presence-" + this.get("screenId")); 
+            //this.presenceChannel.bind('pusher:subscription_succeeded', Y.bind(function(status) {
+            //    Y.log("Connected to pusher presence channel: " + status, "info", "Y.Wallogram.Pusher");
+            //}, this));
+            //
             //this.channel.bind('pusher:subscription_error', function(status) {
             //    alert('Error subscribing to pusher channel.');
             //});
@@ -49,17 +61,6 @@ YUI.add("wallogram-pusher", function(Y) {
                     Y.log("Pusher error", "error", "Y.Wallogram.Pusher");
                 }
             });
-
-            // Forward any non-pusher specific event 
-            this.pusher.bind_all(Y.bind(function(event, data) {
-                Y.log("Pusher event: " + event, "info", "Y.Wallogram.Pusher");
-                if (event.indexOf("pusher:") !== 0) {                           //ignore pusher specific event
-                    this.publish(event, {
-                        emitFacade: false
-                    });
-                    this.fire(event, data);
-                }
-            }, this));
         },
         trigger: function(evt, data) {
             data = data || {};

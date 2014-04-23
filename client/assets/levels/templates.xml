@@ -205,12 +205,14 @@ Licensed under the MIT License
         <component type="com.pblabs.box2D.Box2DSpatialComponent" name="Spatial">
             <canMove>false</canMove>
             <canRotate>false</canRotate>
-
+            <collisionType childType="String">
+                <_0>Limit</_0>
+                <_1>Renderable</_1>
+            </collisionType>
             <collidesWithTypes childType="String">
                 <_0>Player</_0>
                 <_0>Platform</_0>
             </collidesWithTypes>
-
             <collisionShapes childType="com.pblabs.box2D.CollisionShape">
                 <_0 type="com.pblabs.box2D.PolygonCollisionShape">
                     <vertices childType="flash.geom.Point">
@@ -233,10 +235,6 @@ Licensed under the MIT License
                     </vertices>
                 </_0>
             </collisionShapes>
-            <collisionType childType="String">
-                <_0>Limit</_0>
-                <_1>Renderable</_1>
-            </collisionType>
             <spatialManager componentReference="SpatialDB"/>
             <size type="">
                 <x>65</x>
@@ -268,11 +266,13 @@ Licensed under the MIT License
         <component type="com.pblabs.box2D.Box2DSpatialComponent" name="Spatial">
             <canMove>true</canMove>
             <canRotate>true</canRotate>
-
             <collidesWithTypes childType="String">
                 <_0>Window</_0>
             </collidesWithTypes>
-
+            <collisionType childType="String">
+                <_0>Window</_0>
+                <!--<_1>Renderable</_1> -->
+            </collisionType>
             <collisionShapes childType="com.pblabs.box2D.CollisionShape">
                 <_0 type="com.pblabs.box2D.PolygonCollisionShape">
                     <vertices childType="flash.geom.Point">
@@ -295,10 +295,6 @@ Licensed under the MIT License
                     </vertices>
                 </_0>
             </collisionShapes>
-            <collisionType childType="String">
-                <_0>Window</_0>
-                <!--<_1>Renderable</_1> -->
-            </collisionType>
             <spatialManager componentReference="SpatialDB"/>
             <size type="">
                 <x>56</x>

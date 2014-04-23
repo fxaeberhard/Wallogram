@@ -46,9 +46,9 @@ YUI.add("wallogram-pad", function(Y) {
                 cb.all(".pad-button").on("touchend", Y.bind(this.releaseButton, this));
             }
 
-//            cb.on("touchstart", Y.bind(this.pressButton, this));
-//            cb.on("touchmove", Y.bind(this.onMove, this));
-//            cb.on("touchend", Y.bind(this.releaseButton, this));
+            //cb.on("touchstart", Y.bind(this.pressButton, this));
+            //cb.on("touchmove", Y.bind(this.onMove, this));
+            //cb.on("touchend", Y.bind(this.releaseButton, this));
 
 
             //Y.Array.each(this.BUTTONS, function(pos) {
@@ -96,15 +96,15 @@ YUI.add("wallogram-pad", function(Y) {
                     height = winWidth / padRatio;
                 }
             }
-//            this.setAttrs({
-//                width: winWidth,
-//                height: winHeight
-//            });
             this.setAttrs({
                 width: width,
                 height: height
             });
             this.centered();
+            //this.setAttrs({
+            //    width: winWidth,
+            //    height: winHeight
+            //});
             //this.get("contentBox").setStyles({
             //    width: width,
             //    height: height
@@ -142,8 +142,8 @@ YUI.add("wallogram-pad", function(Y) {
         },
         onMove: function(e) {
             Y.log("Wallogram.Pad.move: " + e.target.position);
-//this.get("contentBox").append("onMove&nbsp;");
-//return;
+            //this.get("contentBox").append("onMove&nbsp;");
+            //return;
             e.preventDefault();
             e.stopPropagation();
             e.halt();
@@ -152,8 +152,8 @@ YUI.add("wallogram-pad", function(Y) {
         releaseButton: function(e) {
             var button = e.target.position;
 
-//this.get("contentBox").append("release&nbsp;");
-//return;
+            //this.get("contentBox").append("release&nbsp;");
+            //return;
             if (!button)
                 return;
 
