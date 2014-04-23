@@ -1,7 +1,7 @@
-Wallogram turns our envrionment in a video game playground. To do so the game is projected 
-on walls and facades and players use their mobile phone as a game controller.
+Wallogram turns our environment in a video game playground. To do so the game is projected 
+on walls and facades and several players use their mobile phone as a game controller.
 
-Visit [http://wallogram.red-agent.com](http://wallogram.red-agent.com) for a demo.
+Visit [http://www.red-agent.com/wallogram](http://www.red-agent.com/wallogram) for a demo.
 
 Distributed under the MIT License.
 

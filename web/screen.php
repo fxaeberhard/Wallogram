@@ -1,7 +1,7 @@
 <?php
 /*
  * Wallogram
- * http://wallogram.red-agent.com
+ * http://www.red-agent.com/wallogram
  *
  * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
  * Licensed under the MIT License
@@ -9,7 +9,7 @@
 
 require('config.php');
 $screenId = "po";
-$padUrl = 'http://wallogram.red-agent.com/pad.php?sid=' . $screenId;
+$padUrl = 'http://www.red-agent.com/wallogram/pad.php?sid=' . $screenId;
 ?><!DOCTYPE html>
 <html>
     <head>
@@ -40,7 +40,7 @@ $padUrl = 'http://wallogram.red-agent.com/pad.php?sid=' . $screenId;
                     Wallogram turns our environment in a video game playground. 
                 </p>
                 <p>
-                    To do so the game is projected on walls and facades and players use their mobile phone as a game controller.
+                    To do so the game is projected on walls and facades and several players use their mobile phone as a game controller.
                 </p>
             </div>
 
@@ -94,8 +94,8 @@ $padUrl = 'http://wallogram.red-agent.com/pad.php?sid=' . $screenId;
             <!-- QR -->
             <div class="qr">
                 <a href_o="<?php echo $padUrl ?>" target="_blank" class="wallogram-padlink">
-                    <!--<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chld=Q&choe=UTF-8&chl=<?php echo urlencode($padUrl) ?>" width="200" height="200" />-->
-                    <img src="qr.php?url=<?php echo urlencode($padUrl) ?>" width="200" height="200" />
+                    <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chld=Q&choe=UTF-8&chl=<?php echo urlencode($padUrl) ?>" width="200" height="200" />
+                    <!-- <img src="qr.php?url=<?php echo urlencode($padUrl) ?>" width="200" height="200" />-->
                     <img class="wallogram-padlink-logo" src="assets/wallogram-picto-pad-110.png" />
                     <span>Scan to play</span>
                 </a>
@@ -163,13 +163,11 @@ $padUrl = 'http://wallogram.red-agent.com/pad.php?sid=' . $screenId;
                 });
 
                 pusher.on("client-connection", function() {                     // When a clien connects,
-//                    Y.all(".wallogram-playpage").show();                        // show play page
                     Y.all(".wallogram-welcomepage").hide();
-                    Y.all(".wallogram-playpage").setStyle("height", "auto");
+                    Y.all(".wallogram-playpage").setStyle("height", "auto");    // show play page
+                    //Y.all(".wallogram-playpage").show();                      
                 });
-                Y.later(2000, this, function() {
-                    Y.all(".wallogram-playpage").setStyle("height", 0);
-                });
+                //Y.all(".wallogram-playpage").setStyle("height", 0);
             });
         </script>
     </body>

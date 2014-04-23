@@ -1,7 +1,7 @@
 <?php
 /*
  * Wallogram
- * http://wallogram.red-agent.com
+ * http://www.red-agent.com/wallogram
  *
  * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
  * Licensed under the MIT License

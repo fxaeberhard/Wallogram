@@ -22,7 +22,7 @@ require('config.php');
     <body>
         <?php
         session_start();
-        $padUrl = 'http://wallogram.red-agent.com/pad.php?sid=' . session_id();
+        $padUrl = 'http://www.red-agent.com/wallogram/pad.php?sid=' . session_id();
         $padUrl = 'pad.php?sid=' . session_id();
         ?>
 
