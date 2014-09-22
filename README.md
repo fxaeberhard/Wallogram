@@ -7,5 +7,6 @@ Distributed under the MIT License.
 
 How to build
 =======================
-* Add link to the framework.swc component
-* Add compiling option: --keep-as3-metadata+=TypeHint,EditorData,Embed
+* Install node.js
+* Execute npm install
+* nodes run_server.js

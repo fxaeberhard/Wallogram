@@ -1,6 +1,6 @@
 {
-    "name" : "Anagrammatix",
-    "description" : "Anagram Multiplayer Game",
+    "name" : "Wallogram",
+    "description" : "",
     "version" : "0.1.0",
     "private" : true,
     "dependencies": {

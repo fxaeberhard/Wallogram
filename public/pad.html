@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+
+        <!-- Meta -->
+        <title>Wallogram - Pad</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="author" content="fx@red-agent.com">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="icon" type="image/png" href="favicon.png" />
+
+        <!-- YUI3 -->
+        <link rel="stylesheet" type="text/css" href="libs/yui3/build/cssnormalize/cssnormalize-min.css" />
+        <!--<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.14.1/build/cssnormalize/cssnormalize-min.css" />-->
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="css/pad.css" />
+
+    </head>
+
+    <body class="yui3-skin-sam">
+
+        <!-- Libraries -->
+        <script src="libs/yui3/build/yui/yui-min.js" type="text/javascript"></script>
+        <!--<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.14.1/build/yui/yui-min.js"></script>-->
+        <script src="libs/jquery-2.0.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        <!-- Sources -->
+        <script src="js/pad/pad.js" type="text/javascript"></script>
+        <script src="js/io.js"></script>
+
+        <!-- Initialization -->
+        <script type="text/javascript">
+            jQuery(function($) {
+                $.IO.init();                                                    // Init socket.io
+                $.IO.gameId = $.urlParam("gameId");
+
+                YUI().use('event-resize', 'event-gestures', 'widget', "json",
+                    'widget-position', 'widget-position-align', 'array-extras',
+                    'wallogram-pad', function(Y) {                              // Fetch dependencies
+                        var pad = new Y.Wallogram.Pad().render();               // Init pad;
+
+                        $.IO.emit('playerJoinGame', {
+                            playerName: 'anon'
+                        });                                                     // Send the gameId and playerName to the server
+                    });
+            }($));
+        </script>
+    </body>
+</html>

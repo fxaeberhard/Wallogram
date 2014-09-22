@@ -1,0 +1,24 @@
+/*
+ * Wallogram
+ * http://www.red-agent.com/wallogram
+ *
+ * Copyright (c) 2014 
+ * Licensed under the MIT License
+ */
+/**
+ * @fileoverview
+ * @author Francois-Xavier Aeberhard <fx@red-agent.com>
+ */
+body {
+    font-family: Arial;
+}
+.screen-msg {
+    position: absolute;
+    width: 10em;
+    top: 1em;
+    left: 50%;
+    margin-left: -5em;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
