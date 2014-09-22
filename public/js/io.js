@@ -4,10 +4,11 @@ jQuery(function($) {
 
     /**
      * All the code relevant to Socket.IO is collected in the IO namespace.
-     *
-     * @type {{init: Function, bindEvents: Function, onConnected: Function, onNewGameCreated: Function, playerJoinedRoom: Function, beginNewGame: Function, onNewWordData: Function, hostCheckAnswer: Function, gameOver: Function, error: Function}}
      */
     var IO = {
+        /**
+         * 
+         */
         gameId: null,
         /**
          * This is called when the page is displayed. It connects the Socket.IO client
@@ -26,21 +27,60 @@ jQuery(function($) {
             console.log("IO.onConnected(id: " + IO.socket.io.engine.id + ")");
             IO.id = IO.socket.io.engine.id;
         },
-        emit: function(type, data) {
-            data && (data.gameId = IO.gameId);
-            IO.socket.emit(type, data);
-        },
-        on: function(type, callback) {
-            IO.socket.on(type, callback);
-        },
         /**
          * An error has occurred.
          * @param data
          */
         error: function(data) {
             alert(data.message);
-        }
+        },
+        /**
+         * 
+         * @param {String} type
+         * @param {Object} data
+         */
+        emit: function(type, data) {
+            data = data || {};
+            data.gameId = IO.gameId;
+            data.socketId = IO.id;
 
+            IO.socket.emit(type, data);
+        },
+        /**
+         * 
+         * @param {String} type
+         * @param {Functiom} callback
+         */
+        on: function(type, callback) {
+            IO.socket.on(type, callback);
+        }
     };
     $.IO = IO;
+
+    /**
+     * Utils
+     */
+    $.urlParam = function(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    };
+    $.HHMMSS = function(sec_num) {
+        var minutes = Math.floor((sec_num) / 60000),
+            seconds = Math.floor((sec_num - (minutes * 60000)) / 1000),
+            milliseconds = Math.floor((sec_num - (minutes * 60000) - (seconds * 1000)) / 10);
+
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        if (milliseconds < 10) {
+            milliseconds = "0" + milliseconds;
+        }
+        return minutes + ':' + seconds + ':' + milliseconds;
+    };
+    
 }($));

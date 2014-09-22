@@ -11,7 +11,7 @@ YUI.add("wallogram-pad", function(Y) {
      * 
      */
     var Pad = Y.Base.create("wallogram-pad", Y.Widget, [Y.WidgetPosition, Y.WidgetPositionAlign], {
-        BUTTONS: ["UP_ARROW", "LEFT_ARROW", "RIGHT_ARROW", "A", "B"], //                         disabled: 'bottom', 'start', 'select'
+        BUTTONS: ["UP_ARROW", "LEFT_ARROW", "RIGHT_ARROW", "A", "B"], //        // disabled: 'bottom', 'start', 'select'
         renderUI: function() {
             var node, cb = this.get("contentBox");
 
@@ -20,9 +20,11 @@ YUI.add("wallogram-pad", function(Y) {
                 node.position = b;
                 cb.append(node);
             });
-            //this.get("contentBox").append(Y.JSON.stringify(Y.UA));
-            //this.get("contentBox").append(Y.UA.mobile);
+
             this.fitPad();
+
+            //cb.append(Y.JSON.stringify(Y.UA));
+            //cb.append(Y.UA.mobile);
         },
         bindUI: function() {
             var cb = this.get("contentBox");
@@ -114,65 +116,37 @@ YUI.add("wallogram-pad", function(Y) {
             //padNode.setStyle("marginTop", -height / 2);
         },
         pressButton: function(e) {
-            //Y.log("Wallogram.Pad.press()");
-            //this.get("contentBox").append("press&nbsp;");
-            //return;
+            Y.log("Wallogram.Pad.press()");
             var button = e.target.position;
 
             if (!button)
                 return;
 
-            switch (button) {
-                case "UP_ARROW":
-                case "LEFT_ARROW":
-                case "RIGHT_ARROW":
-                case "A":
-                case "B":
-                    $.IO.emit('padEvent', {
-                        type: 'down',
-                        position: button
-                    });
-                    break;
-            }
+            this.emit("down", button);
             e.target.addClass('pad-button-pressed');
 
-//            e.preventDefault();
-//            e.stopPropagation();
             e.halt(true);
-//            e.stopImmediatePropagation();
         },
         onMove: function(e) {
-            Y.log("Wallogram.Pad.move: " + e.target.position);
+            //Y.log("Wallogram.Pad.move: " + e.target.position);
             //this.get("contentBox").append("onMove&nbsp;");
-            //return;
             e.halt(true);
         },
         releaseButton: function(e) {
+            Y.log("Wallogram.Pad.release()");
             var button = e.target.position;
 
-            //this.get("contentBox").append("release&nbsp;");
-            //return;
             if (!button)
                 return;
 
-            switch (button) {
-                case "UP_ARROW":
-                case "LEFT_ARROW":
-                case "RIGHT_ARROW":
-                case "A":
-                case "B":
-                    $.IO.emit('padEvent', {
-                        type: 'up',
-                        position: button
-                    });
-                    break;
-            }
+            this.emit("up", button);
             e.target.removeClass('pad-button-pressed');
 
-            e.preventDefault();
-            e.stopPropagation();
-            e.halt();
-            e.stopImmediatePropagation();
+            e.halt(true);
+            //e.preventDefault();
+            //e.stopPropagation();
+            //e.stopImmediatePropagation();
+            //
             //log("release: ");
             //if (e.changedTouches) {
             //	target = e.changedTouches[0];
@@ -181,6 +155,20 @@ YUI.add("wallogram-pad", function(Y) {
             //    log(target.position);
             //else
             //    log("undef");
+        },
+        emit: function(type, button) {
+            switch (button) {
+                case "UP_ARROW":
+                case "LEFT_ARROW":
+                case "RIGHT_ARROW":
+                case "A":
+                case "B":
+                    $.IO.emit('padEvent', {
+                        type: type,
+                        position: button
+                    });
+                    break;
+            }
         }
     }, {
         ATTRS: {

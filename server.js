@@ -1,4 +1,4 @@
-var io, gameSocket;
+var io, socket;
 
 /**
  * This function is called by index.js to initialize a new game instance.
@@ -13,7 +13,7 @@ exports.initGame = function(sio, socket) {
 
     // Host Events
     gameSocket.on('hostCreateNewGame', hostCreateNewGame);
-    gameSocket.on('hostHeartbeat', hostHeartbeat);
+    gameSocket.on('heartBeat', hostHeartbeat);
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
@@ -42,11 +42,12 @@ function hostCreateNewGame() {
 }
 
 function hostHeartbeat(data) {
+    console.log("hostHeartbeat()", data);
     var keys = [];
     for (var k in io.sockets.connected) {
         keys.push(k);
     }
-    io.sockets.in(data.hostSocket).emit('timer', keys);                         // gameSocket.nsp.connected
+    io.sockets.in(data.socketId).emit('heartBeat', keys);                       // gameSocket.nsp.connected
 }
 
 /* *****************************

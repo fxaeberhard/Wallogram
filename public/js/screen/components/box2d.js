@@ -269,6 +269,11 @@ Crafty.c("Box2D", {
         });
         return this;
     },
+    remove: function() {
+        for (var i = 0; i < this.fixtures.length; i++) {
+            this.body.DestroyFixture(this.fixtures[i]);
+        }
+    }
 });
 
 /**@

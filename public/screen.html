@@ -1,7 +1,7 @@
 <!doctype html>
 <html > 
     <head>
-        
+
         <!-- Meta -->
         <title>Wallogram - Screen</title>
         <meta name="description" content="Wallogram">
@@ -12,22 +12,24 @@
 
         <!-- Stylesheets -->
         <link rel="stylesheet" type="text/css" href="css/screen.css" />
+
     </head>
 
     <body>
 
-        <div class="screen-msg">10</div>
+        <!-- Markup -->
+        <div class="screen-msg"></div>
 
         <!-- Libraries -->
         <script src="libs/Box2dWeb-2.1.a.3.js"></script>  
         <script src="libs/crafty.js"></script>
-        <script src="libs/box2d.js"></script>
         <script src="libs/jquery-2.0.2.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
 
         <!-- Sources -->
         <script src="js/screen/sprites.js"></script>
         <script src="js/screen/scenes/demo.js"></script>
+        <script src="js/screen/components/box2d.js"></script>
         <script src="js/screen/components/Player.js"></script>
         <script src="js/screen/components/Platform.js"></script>
         <script src="js/io.js"></script>
