@@ -14,7 +14,7 @@ jQuery(function($) {
         /* *************************************
          *                Setup                *
          * *********************************** */
-        PLAYERCFG: {x: 5, y: 10},
+        PLAYERCFG: {x: 10, y: 5},
         WIDTH: 600,
         HEIGHT: 400,
         /**
@@ -49,19 +49,6 @@ jQuery(function($) {
                 $("body").append("<a href='pad.html?gameId=" + data.gameId + "' target='_blank'>Pad</a>");
             });
 
-            IO.on('playerJoinedRoom', function(data) {                          // As a player joins the game, instantiate a crafty entity
-                console.log("Screen.playerJoinedRoom()", data);
-                var player = Crafty.e("2D, Canvas, Player, WebsocketController")
-                    .setPosition(App.PLAYERCFG);
-
-                App.players[data.socketId] = player;
-            });
-
-            IO.on('padEvent', function(data) {                                  // Forward pad events to the target crafty entity
-                //console.log("Screen.padEvent", data);
-                App.players[data.socketId].onPadEvent(data);
-            });
-
             IO.on('heartBeat', function(data) {
                 $.each(App.players, function(id, player) {                      // checking for each players on host and each player received from server if they still exist
                     console.log("Screen.heartBeat()");
@@ -73,34 +60,74 @@ jQuery(function($) {
                 });
             });
 
+            IO.on('playerJoinedRoom', function(data) {                          // As a player joins the game, instantiate a crafty entity
+                console.log("Screen.playerJoinedRoom()", data);
+                App.addPlayer(data);
+            });
+
+            IO.on('padEvent', function(data) {                                  // Forward pad events to the target crafty entity
+                //console.log("Screen.padEvent", data);
+                if (!App.players[data.socketId]) {
+                    App.addPlayer(data);
+                }
+                App.players[data.socketId].onPadEvent(data);
+            });
+
             $("body").keydown(function(e) {                                     // Keyboard events
                 switch (e.keyCode) {
                     case 49:                                                    // 1: Restart game
                         App.setState("countdown");
                         break;
+
                     case 50:                                                    // 2: Add a debug player playable w/ keyboard
                         if (!App.players["DEBUG"]) {
-                            App.players["DEBUG"] =
-                                Crafty.e("2D, Canvas, Player, Keyboard")
-                                .setPosition(App.PLAYERCFG);
+                            App.players["DEBUG"] = Crafty.e("Player, Keyboard").setPosition(App.PLAYERCFG);
                         }
                         break;
                 }
             });
         },
-        run: function() {
-            var startTime = new Date().getTime();
-
-            App.timerHandler = setInterval(function() {
-                $(".screen-msg").text(App.HHMMSS(new Date().getTime() - startTime));
-            }, 53);
+        addPlayer: function(cfg) {
+            var player = Crafty.e("Player, WebsocketController").setPosition(App.PLAYERCFG);
+            App.players[cfg.socketId] = player;
         },
         setState: function(newState) {
-            switch (App.state) {
-            }
-            switch (newState) {
+            switch (App.state) {                                                // Exit previous state
                 case "countdown":
-                    $.each(App.players, function(i, p) {
+                    this.walls.destroy();
+                    clearTimeout(App.countDown);
+                    break;
+
+                case "run":
+                    clearInterval(App.timerHandler);
+                    break;
+            }
+
+            switch (newState) {                                                 // Enter new state
+                case "countdown":
+                    var w = 200, h = 200, cfg = {
+                        bodyType: 'static',
+                        density: 1.0,
+                        friction: 10,
+                        restitution: 0
+                    };
+
+                    this.walls = Crafty.e("2D, Canvas, Box2D")
+                        .box2d($.extend(cfg, {
+                            shape: [[0, 0], [w, 0], [w, 10], [0, 10]]
+                        }))
+                        .setPosition({x: App.PLAYERCFG.x - w / 200, y: App.PLAYERCFG.y - h / 200})
+                        .addFixture($.extend(cfg, {
+                            shape: [[0, 0], [10, 0], [10, h], [0, h]]
+                        }))
+                        .addFixture($.extend(cfg, {
+                            shape: [[(w - 10), 0], [w, 0], [w, h], [(w - 10), h]]
+                        }))
+                        .addFixture($.extend(cfg, {
+                            shape: [[0, (h - 10)], [w, (h - 10)], [w, h], [0, h]]
+                        }));
+
+                    $.each(App.players, function(i, p) {                        // Bring all players to starting position
                         p.setPosition(App.PLAYERCFG);
                     });
 
@@ -112,13 +139,13 @@ jQuery(function($) {
                             if (countDown === 0) {
                                 App.setState("run");
                             } else {
-                                setTimeout(step, 1000);
+                                App.countDown = setTimeout(step, 1000);
                             }
                             countDown--;
                         };
 
                     $(".screen-msg").text("Starting...");
-                    setTimeout(step, 1000);
+                    App.countDown = setTimeout(step, 1000);
                     break;
 
                 case "run":
@@ -129,7 +156,7 @@ jQuery(function($) {
                     }, 53);
                     break;
 
-                case "gameOver":
+                case "win":
                     break;
             }
             App.state = newState;

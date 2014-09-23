@@ -8,7 +8,7 @@
 Crafty.c("Player", {
     ANIMSPEED: 800,
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.requires("2D, Canvas,  MannequinSprite, SpriteAnimation, Box2D")   // Requirements
+        this.requires("2D, Canvas, MannequinSprite, SpriteAnimation, Box2D")   // Requirements
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
@@ -20,20 +20,6 @@ Crafty.c("Player", {
                 friction: 0.2,
                 restitution: 0.1,
                 shape: "box"
-            })
-            .onContact("Box2D", function() {
-//                var that = this, pos = this.body.GetPosition();
-//                if (this.isjumping && this.jumped && this.body.m_linearVelocity.y === 0) {
-//                    Crafty.box2D.world.QueryPoint(function() {
-//                        this.run(this.isrunning);
-//                    }, new b2Vec2(pos.x, pos.y + 65 / 2 + 2));
-//                    console.log(e, this.isrunning);
-////                    this.isjumping = false;
-//                }
-
-//                if (this.body.m_linearVelocity.y === 0) {
-                this.onground = true;
-//                }
             })
             .bind("EnterFrame", function() {
                 var body = this.body;                                           // Get the var body from the child.
@@ -47,11 +33,16 @@ Crafty.c("Player", {
                     body.m_linearVelocity.x = 5;                                // Adds to the linearVelocity of the box.
                     this.unflip();
                 }
-                if (this.onground && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
+                if (this.jumped && this.onground) {
+                    console.log("EnterFrame(): jumped");
+                    this.jumped = false;
+                }
+                if (this.onground && !this.jumped && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
                     console.log("EnterFrame(): jumping");
 
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    body.ApplyImpulse(new b2Vec2(0, 1000), body.GetWorldCenter());//Applys and impuls to the player. (Makes it jump)
+                    this.body.m_linearVelocity.y = 0;
+                    body.ApplyImpulse(new b2Vec2(0, 1600), body.GetWorldCenter());//Applys and impulse to the player. (Makes it jump)
                     this.animate("jump");
 
 //                    var pos = body.GetPosition();
@@ -81,7 +72,7 @@ Crafty.c("Player", {
 //                            this.isjumping = false;
                     //    }
 
-                    this.jumped = false;
+                    this.jumped = true;
                     this.onground = false;
                 }
 //                if (this.isjumping) {
@@ -99,6 +90,23 @@ Crafty.c("Player", {
 //                    // Increase power
 //                    this.body.ApplyForce(new b2Vec2(1000 * this.isrunning, 0), this.body.GetWorldCenter());
 //                }
+            })
+            .onContact("Box2D", function() {
+//                var that = this, pos = this.body.GetPosition();
+//                if (this.isjumping && this.jumped && this.body.m_linearVelocity.y === 0) {
+//                    Crafty.box2D.world.QueryPoint(function() {
+//                        this.run(this.isrunning);
+//                    }, new b2Vec2(pos.x, pos.y + 65 / 2 + 2));
+//                    console.log(e, this.isrunning);
+////                    this.isjumping = false;
+//                }
+
+                console.log("lm", this.body.m_linearVelocity.y);
+                if (this.body.m_linearVelocity.y <= 1.5 && this.body.m_linearVelocity.y >= -1.5 && !this.onground) {
+                    console.log("onGround");
+                    this.onground = true;
+                    this.run(this.isrunning);
+                }
             })
             .bind("KeyDown", function() {
                 if (this.isDown('LEFT_ARROW')) {
@@ -146,11 +154,6 @@ Crafty.c("Player", {
                 this.animate("idle", -1);
             }
         }
-    },
-    setPosition: function(pos) {
-        this.body.SetAwake(true);                                               // Wakes the body up if its sleeping
-        this.body.SetPosition(new b2Vec2(pos.y, pos.x));
-        return this;
     }
 });
 
@@ -165,7 +168,7 @@ Crafty.c("WebsocketController", {
         return this.states[key];
     },
     onPadEvent: function(e) {
-        this.states[e.position] = e.type === "press";
-        this.trigger(e.type === "press" ? "KeyDown" : "KeyUp");
+        this.states[e.position] = e.type === "down";
+        this.trigger(e.type === "down" ? "KeyDown" : "KeyUp");
     }
 });

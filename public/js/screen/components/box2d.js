@@ -273,6 +273,11 @@ Crafty.c("Box2D", {
         for (var i = 0; i < this.fixtures.length; i++) {
             this.body.DestroyFixture(this.fixtures[i]);
         }
+    },
+    setPosition: function(pos) {
+        this.body.SetAwake(true);                                               // Wakes the body up if its sleeping
+        this.body.SetPosition(new b2Vec2(pos.x, pos.y));
+        return this;
     }
 });
 
