@@ -20,6 +20,10 @@ Crafty.c("Platform", {
             .addComponent("Solid");                                             // a dummy component that means the player won't fall through
     }
 });
+
+/**
+ * 
+ */
 Crafty.c("Falling", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
 //        this.requires("Platform, Gravity")
