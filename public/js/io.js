@@ -82,5 +82,16 @@ jQuery(function($) {
         }
         return minutes + ':' + seconds + ':' + milliseconds;
     };
-    
+    $.arrayFind = function(a, fn) {
+        for (var i = 0; i < a.length; i++) {
+            if (fn(i, a[i], a)) {
+                return a[i];
+            }
+        }
+    };
+    $.size = function(o) {
+        return $.map(App.players, function(n, i) {
+            return i;
+        }).length;
+    };
 }($));

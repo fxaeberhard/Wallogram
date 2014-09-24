@@ -19,11 +19,7 @@ jQuery(function($) {
             width: 600,
             height: 400,
             countdownDuration: 5,
-            entities: [
-                {components: "Platform", x: 10, y: 5},
-                {components: "Platform", x: 3, y: 10},
-                {components: "Target", x: 11, y: 3}
-            ]
+            entities: []
         },
         /**
          * This runs when the page initially loads.
@@ -33,11 +29,15 @@ jQuery(function($) {
 
             IO.init();                                                          // Init socket.io
 
-            App.initCrafty();
+            $.getJSON("levels/wallcomem.json", null, function(cfg) {            // Retrieve current level
+                App.setCfg(cfg);                                                // Update game cfg
 
-            App.bindEvents();
+                App.initCrafty();                                               // Init crafty
 
-            IO.emit('hostCreateNewGame');                                       // Join a game
+                App.bindEvents();                                               // Bind game events
+
+                IO.emit('hostCreateNewGame');                                   // Join a game
+            });
         },
         bindEvents: function() {
             IO.on('newGameCreated', function(data) {                            // When the game is created
@@ -54,7 +54,7 @@ jQuery(function($) {
 
             IO.on('heartBeat', function(data) {
                 $.each(App.players, function(id, player) {                      // checking for each players on host and each player received from server if they still exist
-                    console.log("Screen.heartBeat()");
+                    //console.log("Screen.heartBeat()");
                     if (id.indexOf("DEBUG") === -1 &&
                         $.inArray(id, data) === -1) {                           // if the player doews not exist in the returned value 
                         player.destroy();                                       // Destroy the player entity
@@ -92,6 +92,8 @@ jQuery(function($) {
             if (App.state === newState)
                 return;
 
+            console.log("Screen.setState(" + newState + ")");
+
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
                     this.walls.destroy();
@@ -109,7 +111,7 @@ jQuery(function($) {
 
             switch (newState) {                                                 // Enter new state
                 case "countdown":                                               // Show countdown before play
-                    //IO.emit('restart');                                         // Notify pads
+                    //IO.emit('restart');                                       // Notify pads
                     App.showCountdown();
                     break;
 
@@ -121,8 +123,7 @@ jQuery(function($) {
                     break;
 
                 case "win":                                                     // Somebody reach the goal
-                    $(".screen-msg").prepend("Final time<br />");
-
+                    $(".screen-msg").html("Final time<br />" + $(".screen-msg").html());
                     App.restartHandler = setTimeout(function() {
                         App.setState("countdown");
                     }, 10000);
@@ -145,32 +146,27 @@ jQuery(function($) {
             App.addDebugPlayer();
         },
         addPlayer: function(cfg) {
-            var player = Crafty.e("Player, WebsocketController").setPosition(App.cfg.player),
-                playerCount = $.map(App.players, function(n, i) {
-                    return i;
-                }).length;
+            App.players[cfg.socketId] = Crafty.e("Player, WebsocketController")
+                .setPosition(App.cfg.player);
 
-            App.players[cfg.socketId] = player;
-
-            if (playerCount === 0) {
+            if ($.size(App.players) === 1) {
                 this.setState("countdown");
             }
         },
         addDebugPlayer: function() {
-            if (!App.players["DEBUG"]) {
-                App.players["DEBUG"] = Crafty.e("Player, Keyboard").setPosition(App.cfg.player);
+            if (!App.players.DEBUG) {
+                App.players.DEBUG = Crafty.e("Player, Keyboard").setPosition(App.cfg.player);
             }
         },
         showCountdown: function() {
-            var w = 200, h = 200,
+            var w = 200, h = 200, //                                            // Append a box to limit players moves
                 cfg = {
                     bodyType: 'static',
                     density: 1.0,
                     friction: 10,
                     restitution: 0
                 };
-
-            this.walls = Crafty.e("2D, Canvas, Box2D")                          // Append a box to limit players moves
+            this.walls = Crafty.e("2D, Canvas, Box2D")
                 .box2d($.extend(cfg, {
                     shape: [[0, 0], [w, 0], [w, 10], [0, 10]]
                 }))
@@ -199,7 +195,6 @@ jQuery(function($) {
                     }
                     countDown--;
                 };
-
             $(".screen-msg").text("Ready");
             App.countdownHandler = setTimeout(step, 1000);                      // Show count down
         },

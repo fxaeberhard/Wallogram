@@ -1,0 +1,21 @@
+{
+    "player": {
+        "x": 10,
+        "y": 5
+    },
+    "width": 600,
+    "height": 400,
+    "entities": [{
+            "components": "Platform",
+            "x": 10,
+            "y": 5
+        }, {
+            "components": "Platform",
+            "x": 3,
+            "y": 10
+        }, {
+            "components": "Target",
+            "x": 11,
+            "y": 3
+        }]
+}

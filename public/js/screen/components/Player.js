@@ -54,10 +54,26 @@ Crafty.c("Player", {
                     this.onground = false;
                 }
             })
-            .onContact("Box2D", function(contacts) {
-                if (contacts[0].contact.fixtureA.m_userData === "foot") {
+            .onContact("Box2D", function(fixtures) {
+
+                var onGround = $.arrayFind(fixtures, function(i, f) {
+                    return f.contact.fixtureA.m_userData === "foot";
+                });
+                if (onGround) {
                     if (!this.onground
                         && this.body.m_linearVelocity.y <= 1.5 && this.body.m_linearVelocity.y >= -1.5) {
+                        //console.log("Screen.onContact(): ground hit");
+                        this.onground = true;
+                        this.run(this.currentDir);
+                    }
+                    this.sideContact = false;
+                } else {
+                    this.sideContact = true;
+                }
+                return;
+                if (onGround) {
+                    if (!this.onground) {
+//                        && this.body.m_linearVelocity.y <= 1.5 && this.body.m_linearVelocity.y >= -1.5) {
                         //console.log("Screen.onContact(): ground hit");
                         this.onground = true;
                         this.run(this.currentDir);
