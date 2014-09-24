@@ -16,20 +16,20 @@ Crafty.c("Player", {
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
             .idle()                                                             // Run idle animation
-            .attr({x: 100, w: 128, h: 128})                                     // set width and height
+            .attr({x: 100, w: 64, h: 64})                                       // set width and height
             .box2d({
                 bodyType: 'dynamic',
                 density: 1.0,
                 friction: 0.2,
                 restitution: 0.1,
-                shape: [[40, 30], [90, 30], [90, 125], [40, 125]]
+                shape: [[this.w / 3, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w - 2], [this.w / 3, this.w - 2]]
             })
             .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
                 density: 1.0,
                 friction: 0.2,
                 restitution: 0.1,
-                shape: [[40, 120], [90, 120], [90, 128], [40, 128]],
+                shape: [[this.w / 3, this.w - 5], [2 * this.w / 3, this.w - 5], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
                 isSensor: true,
                 userData: "foot"
             })

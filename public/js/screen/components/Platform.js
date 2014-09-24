@@ -22,6 +22,16 @@ Crafty.c("Platform", {
 /**
  * 
  */
+Crafty.c("VisiblePlatform", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("Platform, Color")                                               // allows the entity to be drawn as a colored box
+            .color("white");
+    }
+});
+
+/**
+ * 
+ */
 Crafty.c("Target", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("2D, Canvas, Box2D, Color, MouseHover")                   // allows the entity to be drawn as a colored box

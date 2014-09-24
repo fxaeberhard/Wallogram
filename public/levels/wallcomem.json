@@ -1,21 +1,88 @@
 {
     "player": {
-        "x": 10,
-        "y": 5
+        "x": 430,
+        "y": 300
     },
-    "width": 600,
-    "height": 400,
+    "width": 1920,
+    "height": 1080,
+    "countdownDuration": 5,
     "entities": [{
             "components": "Platform",
-            "x": 10,
-            "y": 5
+            "x": 42,
+            "y": 312,
+            "w": 286,
+            "h": 161
         }, {
             "components": "Platform",
-            "x": 3,
-            "y": 10
+            "x": 151,
+            "y": 601,
+            "w": 391,
+            "h": 220
+        }, {
+            "components": "Platform",
+            "x": 374,
+            "y": 468,
+            "w": 269,
+            "h": 76
+        }, {
+            "components": "Platform",
+            "x": 695,
+            "y": 204,
+            "w": 533,
+            "h": 310
+        }, {
+            "components": "Platform",
+            "x": 615,
+            "y": 660,
+            "w": 197,
+            "h": 111
+        }, {
+            "components": "Platform",
+            "x": 1349,
+            "y": 477,
+            "w": 389,
+            "h": 231
+        }, {
+            "components": "Platform",
+            "x": 1005,
+            "y": 724,
+            "w": 260,
+            "h": 143
+        }, {
+            "components": "Platform",
+            "x": 1674,
+            "y": 305,
+            "w": 204,
+            "h": 118
+        }, {
+            "components": "Platform",
+            "x": 1284,
+            "y": 261,
+            "w": 263,
+            "h": 145
+        }, {
+            "components": "VisiblePlatform",
+            "x": 835,
+            "y": 744,
+            "w": 147,
+            "h": 30
+        }, {
+            "components": "VisiblePlatform",
+            "x": 1236,
+            "y": 568,
+            "w": 68,
+            "h": 15
+        }, {
+            "components": "VisiblePlatform",
+            "x": 1282,
+            "y": 637,
+            "w": 58,
+            "h": 15
         }, {
             "components": "Target",
-            "x": 11,
-            "y": 3
+            "x": 1747,
+            "y": 246,
+            "w": 56,
+            "h": 57
         }]
 }
