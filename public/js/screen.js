@@ -146,7 +146,7 @@ jQuery(function($) {
         },
         addPlayer: function(cfg) {
             var player = Crafty.e("Player, WebsocketController").setPosition(App.cfg.player),
-                playerCount = $.map(a, function(n, i) {
+                playerCount = $.map(App.players, function(n, i) {
                     return i;
                 }).length;
 
