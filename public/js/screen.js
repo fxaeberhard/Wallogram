@@ -78,6 +78,10 @@ jQuery(function($) {
 
             $("body").keydown(function(e) {                                     // Keyboard events
                 switch (e.keyCode) {
+                    case 191:                                                   // ~: Debug
+                        App.toggleDebug();
+                        break;
+
                     case 49:                                                    // 1: Restart game
                         App.setState("countdown");
                         break;
@@ -86,6 +90,15 @@ jQuery(function($) {
                         App.addDebugPlayer();
                         break;
                 }
+            });
+
+            var stats = new Stats();
+            stats.setMode(0);                                                   // 0: fps, 1: ms
+            document.body.appendChild(stats.domElement);
+            stats.begin();
+            Crafty.bind("RenderScene", function() {
+                stats.end();
+                stats.begin();
             });
         },
         setState: function(newState) {
