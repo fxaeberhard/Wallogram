@@ -37,6 +37,10 @@ jQuery(function($) {
                 App.bindEvents();                                               // Bind game events
 
                 IO.emit('hostCreateNewGame');                                   // Join a game
+
+                App.initEdition();
+
+                App.toggleDebug(true);
             });
         },
         bindEvents: function() {
@@ -49,7 +53,7 @@ jQuery(function($) {
                     IO.emit('heartBeat');
                 }, 5000);
 
-                $("body").append("<a href='pad.html?gameId=" + data.gameId + "' target='_blank'>Pad</a>");
+                $(".wallo-admin").append("<a href='pad.html?gameId=" + data.gameId + "' target='_blank'>Pad</a>");
             });
 
             IO.on('heartBeat', function(data) {
@@ -89,10 +93,25 @@ jQuery(function($) {
                     case 50:                                                    // 2: Add a debug player w/ keyboard
                         App.addDebugPlayer();
                         break;
+
+                    case 51:
+                        var wnd = window.open("about:blank", "", "_blank");     // 3: Open current cfg in a blank frame
+                        wnd.document.write(JSON.stringify(App.cfg));
+
+                    case 52:                                                    // 4: Full screen
+                        var isFullScreen = (document.fullScreenElement && document.fullScreenElement !== null) || document.mozFullScreen || document.webkitIsFullScreen,
+                            cfs = document.exitFullscreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || document.msExitFullscreen,
+                            el = document.documentElement,
+                            rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+                        if (isFullScreen) {
+                            cfs.call(document);                                 //Exits full-screen mode and returns to the document view.
+                        } else {
+                            rfs.call(el, Element.ALLOW_KEYBOARD_INPUT);
+                        }
                 }
             });
 
-            var stats = new Stats();
+            var stats = new Stats();                                            // Initialize fps counter
             stats.setMode(0);                                                   // 0: fps, 1: ms
             document.body.appendChild(stats.domElement);
             stats.begin();
@@ -148,13 +167,18 @@ jQuery(function($) {
          *                Crafty               *
          * *********************************** */
         initCrafty: function() {
+            $("body").width(App.cfg.width).height(App.cfg.height);
             Crafty.init(App.cfg.width, App.cfg.height);                         // Start crafty
             Crafty.canvas.init();
 
             Crafty.box2D.init(0, 10, 32, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
-            Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
 
-            Crafty.scene($.urlParam("scene") || "comemwall");                   // Instantiate the scene
+            //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
+
+            $.each($.App.cfg.entities, function(i, p) {                         // Add entities from config file
+                var entity = Crafty.e(p.components).setConfig(p);
+                entity.cfgObject = p;
+            });
 
             App.addDebugPlayer();
         },
@@ -169,6 +193,9 @@ jQuery(function($) {
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
                 App.players.DEBUG = Crafty.e("Player, Keyboard").setPosition(App.cfg.player);
+            } else {
+                App.players.DEBUG.destroy();
+                App.players.DEBUG = null;
             }
         },
         showCountdown: function() {
@@ -213,6 +240,70 @@ jQuery(function($) {
         },
         setCfg: function(cfg) {
             $.extend(App.cfg, cfg);
+        },
+        /* *************************************
+         *                Edition              *
+         * *********************************** */
+        initEdition: function() {
+            $("body").prepend('<div class="wallo-edit"><div class="wallo-edit-dd"></div></div>');
+
+            YUI().use("dd-drag", "resize", "event-mouseenter", function(Y) {
+                var node = Y.one(".wallo-edit-dd"),
+                    drag = new Y.DD.Drag({node: node}),
+                    resize = new Y.Resize({node: node}),
+                    isDragging = false,
+                    toggleIsDragging = function() {
+                        isDragging = !isDragging;
+                    };
+
+                drag.on(["drag:start", "drag:end"], toggleIsDragging);
+                drag.on(["drag:drag", "drag:end"], App.savePositions);
+
+                resize.on(["resize:start", "resize:end"], toggleIsDragging);
+                resize.on(["resize:resize", "resize:end"], App.savePositions);
+
+                node.after("mouseleave", function() {
+                    if (!isDragging) {
+                        App.hideEdition();
+                    }
+                });
+            });
+        },
+        showEdition: function(entity) {
+            $('.wallo-edit').show();
+            $('.wallo-edit-dd').css("left", entity.x)
+                .css("top", entity.y)
+                .width(entity.w)
+                .height(entity.h);
+
+            $('.wallo-edit-dd')[0].currentEntity = entity;
+        },
+        hideEdition: function() {
+            $('.wallo-edit').hide();
+        },
+        savePositions: function() {
+            var node = $('.wallo-edit-dd'),
+                cfg = {
+                    x: node.position().left,
+                    y: node.position().top,
+                    w: node.width(),
+                    h: node.height()
+                };
+            node[0].currentEntity.setConfig(cfg);
+            $.extend(node[0].currentEntity.cfgObject, cfg);
+        },
+        toggleDebug: function(val) {
+            this.debug = val || !this.debug;
+
+            $("body").toggleClass("wallo-debugmode")
+                .toggleClass("wallo-stdmode");
+
+            if (!Crafty.box2D.debugCanvas) {
+                Crafty.box2D.showDebugInfo();                                   // Start the Box2D debugger
+            }
+            Crafty.box2D.ShowBox2DDebug = this.debug;
+            Crafty.box2D.debugCanvas.getContext('2d')
+                .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
         }
     };
     $.App = App;                                                                // Set up global reference

@@ -277,8 +277,20 @@ Crafty.c("Box2D", {
     },
     setPosition: function(pos) {
         this.body.SetAwake(true);                                               // Wakes the body up if its sleeping
-        this.body.SetPosition(new b2Vec2(pos.x, pos.y));
+        this.body.SetPosition(new b2Vec2(pos.x / Crafty.box2D.PTM_RATIO, pos.y / Crafty.box2D.PTM_RATIO));
         return this;
+    },
+    setSize: function(size) {
+        this.fixtures[0].m_shape.SetAsOrientedBox(
+            (this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO,
+            new b2Vec2((this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO)
+            );
+        return this;
+    },
+    setConfig: function(cfg) {
+        return this.attr(cfg)
+            .setSize(cfg)
+            .setPosition(cfg);
     }
 });
 
@@ -409,6 +421,7 @@ Crafty.extend({
                 c.style.left = "0px";
                 c.style.top = "0px";
 
+                this.debugCanvas = c;
                 Crafty.stage.elem.appendChild(c);
 
                 var debugDraw = new b2DebugDraw();

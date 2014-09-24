@@ -11,6 +11,8 @@
  */
 body {
     font-family: Arial;
+    margin: 0;
+    /*background: url(../assets/murheigvd.jpg);*/
 }
 .screen-msg {
     position: absolute;
@@ -21,4 +23,44 @@ body {
     font-size: 2em;
     font-weight: bold;
     text-align: center;
+}
+
+.wallo-admin {
+    position: fixed;
+    top: 0px;
+    background: rgba(0,0,0,0.5);
+    padding: 0.9em;
+    color: white;
+    z-index: 2;
+    font-size: 0.9em;
+    z-index: 1002;
+}
+.wallo-admin a {
+    color: white;
+}
+
+#stats {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+.wallo-edit {
+    position: absolute;
+    top: 0px;
+    width:1000px;
+    height: 1000px;
+    z-index: 1000;
+    display: none;
+}
+.wallo-edit-dd {
+    position: relative;
+    background-color: rgba(200, 200, 200, 0.5);
+    cursor: move;
+}
+
+.wallo-stdmode #stats,
+.wallo-stdmode .wallo-edit,
+.wallo-stdmode .wallo-admin {
+    display: none !important;
 }

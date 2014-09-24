@@ -90,7 +90,7 @@ jQuery(function($) {
         }
     };
     $.size = function(o) {
-        return $.map(App.players, function(n, i) {
+        return $.map(o, function(n, i) {
             return i;
         }).length;
     };
