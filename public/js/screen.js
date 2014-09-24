@@ -17,6 +17,7 @@ jQuery(function($) {
         PLAYERCFG: {x: 10, y: 5},
         WIDTH: 600,
         HEIGHT: 400,
+        COUNTDOWNDURATION: 5,
         /**
          * This runs when the page initially loads.
          */
@@ -32,6 +33,8 @@ jQuery(function($) {
             Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
 
             Crafty.scene("demo");                                               // Instantiate the scene
+
+            App.addDebugPlayer();
 
             App.bindEvents();
 
@@ -79,10 +82,8 @@ jQuery(function($) {
                         App.setState("countdown");
                         break;
 
-                    case 50:                                                    // 2: Add a debug player playable w/ keyboard
-                        if (!App.players["DEBUG"]) {
-                            App.players["DEBUG"] = Crafty.e("Player, Keyboard").setPosition(App.PLAYERCFG);
-                        }
+                    case 50:                                                    // 2: Add a debug player w/ keyboard
+                        App.addDebugPlayer();
                         break;
                 }
             });
@@ -91,11 +92,16 @@ jQuery(function($) {
             var player = Crafty.e("Player, WebsocketController").setPosition(App.PLAYERCFG);
             App.players[cfg.socketId] = player;
         },
+        addDebugPlayer: function() {
+            if (!App.players["DEBUG"]) {
+                App.players["DEBUG"] = Crafty.e("Player, Keyboard").setPosition(App.PLAYERCFG);
+            }
+        },
         setState: function(newState) {
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
                     this.walls.destroy();
-                    clearTimeout(App.countDown);
+                    clearTimeout(App.countDownHandler);
                     break;
 
                 case "run":
@@ -104,51 +110,12 @@ jQuery(function($) {
             }
 
             switch (newState) {                                                 // Enter new state
-                case "countdown":
-                    var w = 200, h = 200, cfg = {
-                        bodyType: 'static',
-                        density: 1.0,
-                        friction: 10,
-                        restitution: 0
-                    };
-
-                    this.walls = Crafty.e("2D, Canvas, Box2D")
-                        .box2d($.extend(cfg, {
-                            shape: [[0, 0], [w, 0], [w, 10], [0, 10]]
-                        }))
-                        .setPosition({x: App.PLAYERCFG.x - w / 200, y: App.PLAYERCFG.y - h / 200})
-                        .addFixture($.extend(cfg, {
-                            shape: [[0, 0], [10, 0], [10, h], [0, h]]
-                        }))
-                        .addFixture($.extend(cfg, {
-                            shape: [[(w - 10), 0], [w, 0], [w, h], [(w - 10), h]]
-                        }))
-                        .addFixture($.extend(cfg, {
-                            shape: [[0, (h - 10)], [w, (h - 10)], [w, h], [0, h]]
-                        }));
-
-                    $.each(App.players, function(i, p) {                        // Bring all players to starting position
-                        p.setPosition(App.PLAYERCFG);
-                    });
-
-                    IO.emit('restart');
-
-                    var countDown = 3,
-                        step = function() {
-                            $(".screen-msg").text(countDown);
-                            if (countDown === 0) {
-                                App.setState("run");
-                            } else {
-                                App.countDown = setTimeout(step, 1000);
-                            }
-                            countDown--;
-                        };
-
-                    $(".screen-msg").text("Starting...");
-                    App.countDown = setTimeout(step, 1000);
+                case "countdown":                                               // Show countdown before play
+                    //IO.emit('restart');                                         // Notify pads
+                    App.showCountdown();
                     break;
 
-                case "run":
+                case "run":                                                     // Play
                     var startTime = new Date().getTime();
 
                     App.timerHandler = setInterval(function() {
@@ -156,10 +123,52 @@ jQuery(function($) {
                     }, 53);
                     break;
 
-                case "win":
+                case "win":                                                     // Somebody reach the goal
                     break;
             }
             App.state = newState;
+        },
+        showCountdown: function() {
+            var w = 200, h = 200,
+                cfg = {
+                    bodyType: 'static',
+                    density: 1.0,
+                    friction: 10,
+                    restitution: 0
+                };
+
+            this.walls = Crafty.e("2D, Canvas, Box2D")                          // Append a box to limit players moves
+                .box2d($.extend(cfg, {
+                    shape: [[0, 0], [w, 0], [w, 10], [0, 10]]
+                }))
+                .setPosition({x: App.PLAYERCFG.x - w / 200, y: App.PLAYERCFG.y - h / 200})
+                .addFixture($.extend(cfg, {
+                    shape: [[0, 0], [10, 0], [10, h], [0, h]]
+                }))
+                .addFixture($.extend(cfg, {
+                    shape: [[(w - 10), 0], [w, 0], [w, h], [(w - 10), h]]
+                }))
+                .addFixture($.extend(cfg, {
+                    shape: [[0, (h - 10)], [w, (h - 10)], [w, h], [0, h]]
+                }));
+
+            $.each(App.players, function(i, p) {                                // Bring all players to starting position
+                p.setPosition(App.PLAYERCFG);
+            });
+
+            var countDown = App.COUNTDOWNDURATION,
+                step = function() {
+                    $(".screen-msg").text(countDown);
+                    if (countDown === 0) {
+                        App.setState("run");
+                    } else {
+                        App.countDownHandler = setTimeout(step, 1000);
+                    }
+                    countDown--;
+                };
+
+            $(".screen-msg").text("Starting...");
+            App.countDownHandler = setTimeout(step, 1000);                     // Show count down
         }
     };
     $.App = App;                                                                // Set up global reference

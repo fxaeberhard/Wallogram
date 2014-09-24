@@ -13,11 +13,10 @@ Crafty.c("Platform", {
             .box2d({
                 bodyType: 'static',
                 density: 1.0,
-                friction: 0.2,
-                restitution: 0.1,
+                friction: 10,
+                restitution: 0,
                 shape: "box"
-            })
-            .addComponent("Solid");                                             // a dummy component that means the player won't fall through
+            });
     }
 });
 

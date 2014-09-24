@@ -12,13 +12,7 @@ Crafty.scene("demo", function() {
             bodyType: 'static',
             density: 1.0,
             friction: 10,
-            restitution: 0,
-            shape: [
-                [0, 0],
-                [w, 0],
-                [w, 10],
-                [0, 10]
-            ]
+            restitution: 0
         };
 
     // Add platforms
