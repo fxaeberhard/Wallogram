@@ -1,12 +1,12 @@
 Wallogram turns our environment in a video game playground. To do so the game is projected 
-on walls and facades and several players use their mobile phone as a game controller.
+on walls and facades and players use their mobile phone as a game controller.
 
-Visit [http://www.red-agent.com/wallogram](http://www.red-agent.com/wallogram) for a demo.
+Demo: [http://www.red-agent.com/wallogram](http://www.red-agent.com/wallogram)
 
 Distributed under the MIT License.
 
 How to build
 =======================
 * Install node.js
-* Execute npm install
-* nodes run_server.js
+* Run npm install
+* Run node run_server.js

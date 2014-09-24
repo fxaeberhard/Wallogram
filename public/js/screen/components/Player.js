@@ -24,12 +24,13 @@ Crafty.c("Player", {
                 restitution: 0.1,
                 shape: [[40, 30], [90, 30], [90, 125], [40, 125]]
             })
-            .addFixture({
+            .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
                 density: 1.0,
                 friction: 0.2,
                 restitution: 0.1,
-                shape: [[41, 120], [89, 120], [89, 128], [41, 128]],
+                shape: [[40, 120], [90, 120], [90, 128], [40, 128]],
+                isSensor: true,
                 userData: "foot"
             })
             .bind("EnterFrame", function() {

@@ -23,6 +23,28 @@ Crafty.c("Platform", {
 /**
  * 
  */
+Crafty.c("Target", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("2D, Canvas, Box2D, Color")                               // allows the entity to be drawn as a colored box
+            .attr({w: 30, h: 30})                                               // set width and height
+            .color("red")                                                       // set color
+            .box2d({
+                bodyType: 'static',
+                density: 1.0,
+                friction: 10,
+                restitution: 0,
+                isSensor: true,
+                shape: "box"
+            })
+            .onContact("Player", function(contacts) {
+                $.App.setState("win");
+            });
+    }
+});
+
+/**
+ * 
+ */
 Crafty.c("Falling", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
 //        this.requires("Platform, Gravity")

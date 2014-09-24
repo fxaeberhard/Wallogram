@@ -5,11 +5,14 @@
  * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
  * Licensed under the MIT License
  */
-Crafty.scene("demo", function() {
+Crafty.scene("comemwall", function() {
 
     // Add platforms
-    Crafty.e("Platform").setPosition({x: 10, y: 5});
-    Crafty.e("Platform").setPosition({x: 3, y: 10});
+    $.each($.App.cfg.entities, function(i, p) {
+        Crafty.e(p.components)
+            .attr(p)
+            .setPosition(p);
+    });
 
     // Add limits
     var w = $.App.cfg.width,
