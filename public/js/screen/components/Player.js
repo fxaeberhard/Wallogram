@@ -28,7 +28,7 @@ Crafty.c("Player", {
                 bodyType: 'dynamic',
                 density: 1.0,
                 friction: 0.2,
-                restitution: 0.1,
+                restitution: 0,
                 shape: [[this.w / 3, this.w - 5], [2 * this.w / 3, this.w - 5], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
                 isSensor: true,
                 userData: "foot"
