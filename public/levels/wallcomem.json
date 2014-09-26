@@ -79,6 +79,12 @@
             "w": 58,
             "h": 15
         }, {
+            "components": "VisiblePlatform",
+            "x": 1550,
+            "y": 380,
+            "w": 60,
+            "h": 15
+        }, {
             "components": "Target",
             "x": 1747,
             "y": 246,
