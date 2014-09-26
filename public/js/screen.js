@@ -82,7 +82,7 @@ jQuery(function($) {
 
             $("body").keydown(function(e) {                                     // Keyboard events
                 switch (e.keyCode) {
-                    case 191:                                                   // ~: Debug
+                    case 192:                                                   // ~: Debug
                         App.toggleDebug();
                         break;
 
