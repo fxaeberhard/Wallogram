@@ -90,5 +90,23 @@
             "y": 246,
             "w": 56,
             "h": 57
+        }, {
+	        "components": "OutOfBounds",
+	        "x": -1000,
+	        "y": 1500,
+	        "w": 4000,
+	        "h": 30
+        }, {
+	        "components": "OutOfBounds",
+	        "x": -1000,
+	        "y": 0,
+	        "w": 30,
+	        "h": 1500
+        }, {
+	        "components": "OutOfBounds",
+	        "x": 3000,
+	        "y": 0,
+	        "w": 30,
+	        "h": 1500
         }]
 }

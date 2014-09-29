@@ -53,14 +53,16 @@ jQuery(function($) {
                     IO.emit('heartBeat');
                 }, 5000);
 
-                $(".wallo-admin").append("<a href='pad.html?gameId=" + data.gameId + "' target='_blank'>Pad</a>");
+                $(".wallo-admin").append("<a href='pad.html?gameId=" + data.gameId + "' target='_blank'>Pad</a>")
+                	.append("<div id='gameId'>gameId = " + data.gameId + "</div>");
             });
 
             IO.on('heartBeat', function(data) {
                 $.each(App.players, function(id, player) {                      // checking for each players on host and each player received from server if they still exist
                     //console.log("Screen.heartBeat()");
                     if (id.indexOf("DEBUG") === -1 &&
-                        $.inArray(id, data) === -1) {                           // if the player doews not exist in the returned value 
+                        $.inArray(id, data) === -1) {                          // if the player doews not exist in the returned value 
+                        console.log(player);
                         player.destroy();                                       // Destroy the player entity
                         delete App.players[id];                                 // and delete this client from the players array
                     }
@@ -82,7 +84,7 @@ jQuery(function($) {
 
             $("body").keydown(function(e) {                                     // Keyboard events
                 switch (e.keyCode) {
-                    case 192:                                                   // ~: Debug
+                    case 192:                                                   // §: Debug
                         App.toggleDebug();
                         break;
 
@@ -120,6 +122,11 @@ jQuery(function($) {
                 stats.begin();
             });
         },
+        resetPlayer: function(data){
+        	console.log(data[0].obj)
+        	data[0].obj.body.SetLinearVelocity(new b2Vec2(0,0));									// Reset velocity 
+        	data[0].obj.setPosition(App.cfg.player);                                      			// Destroy the player entity
+		},
         setState: function(newState) {
             if (App.state === newState)
                 return;

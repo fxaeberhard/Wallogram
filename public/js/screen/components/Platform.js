@@ -51,6 +51,25 @@ Crafty.c("Target", {
     }
 });
 
+Crafty.c("OutOfBounds", {
+	init: function() {
+		this.requires("2D, Canvas, Box2D, Color, MouseHover")
+			.attr({w: 3000, h:30})
+			.color("red")
+			.box2d({
+				bodyType:"static",
+				density: 1.0,
+				friction: 10,
+				restutution: 0,
+				isSensor: true,
+				shape: "box"
+			})
+			.onContact("Player", function(contacts){
+				$.App.resetPlayer(contacts);
+			})
+	}
+});
+
 /**
  *
  */
