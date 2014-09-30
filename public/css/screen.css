@@ -18,8 +18,8 @@ body {
 .screen-msg {
     position: absolute;
     width: 10em;
-    top: 1em;
-    left: 50%;
+    top: 230px;
+    left: 530px;
     margin-left: -5em;
     font-size: 2em;
     font-weight: bold;
