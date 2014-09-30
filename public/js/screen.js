@@ -201,7 +201,7 @@ jQuery(function($) {
                 App.players.DEBUG = Crafty.e("Player, Keyboard").setPosition(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
-                App.players.DEBUG = null;
+                delete App.players.DEBUG;
             }
         },
         showCountdown: function() {
