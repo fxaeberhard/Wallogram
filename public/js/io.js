@@ -32,7 +32,7 @@ jQuery(function($) {
          * @param data
          */
         error: function(data) {
-            alert(data.message);
+            console.error(data.message);
         },
         /**
          * 
@@ -93,5 +93,15 @@ jQuery(function($) {
         return $.map(o, function(n, i) {
             return i;
         }).length;
+    };
+    $.bindC = function(f, c) {
+        var xargs = arguments.length > 2 ?
+            arguments.slice(arguments, 2) : null;
+        return function() {
+            var fn = $.type(f) === "string" ? c[f] : f,
+                args = (xargs) ?
+                xargs.concat(arguments) : arguments;
+            return fn.apply(c || fn, args);
+        };
     };
 }($));

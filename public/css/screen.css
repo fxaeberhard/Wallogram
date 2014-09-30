@@ -9,10 +9,15 @@
  * @fileoverview
  * @author Francois-Xavier Aeberhard <fx@red-agent.com>
  */
+html {
+    height: 100%;
+}
 body {
     font-family: Arial;
     margin: 0;
     background: black;
+    height: 100%;
+    overflow: hidden;
     /*background: url(../assets/murheigvd.jpg);*/
 }
 .screen-msg {
@@ -24,29 +29,68 @@ body {
     font-size: 2em;
     font-weight: bold;
     text-align: center;
-}
-
-.wallo-admin {
-    position: fixed;
-    top: 0px;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 0.9em;
     color: white;
-    z-index: 2;
-    font-size: 0.9em;
-    z-index: 1002;
 }
-.wallo-admin a {
+.wallo-page {
+    height: 100%;
+
+    letter-spacing: -0.31em;
+    *letter-spacing: normal;
+    *word-spacing: -0.43em;
+    text-rendering: optimizespeed;
+    font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+    display: -webkit-flex;
+    -webkit-flex-flow: row wrap;
+    display: -ms-flexbox;                                                       /* IE10 uses display: flexbox */
+    -ms-flex-flow: row wrap;
+}
+.wallo-debugmode .wallo-page {
+    padding-right: 300px;
+}
+.wallo-u {
+    display: inline-block;
+    zoom: 1;
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+    text-rendering: auto;
+}
+.wallo-play {
+    overflow: auto;
+    width: 100%;
+}
+.wallo-debugmode .wallo-crafty {
+    border-right: 1px dashed white;
+    border-bottom: 1px dashed white;
+}
+.Box2DCanvasDebug {
+    z-index: 150;
+}
+.wallo-edit {
+    width: 299px;
+    height: 100%;
+    margin-right: -300px;
+    border-left: 1px solid white;
+    color: white;
+    font-size: 0.9em;
+}
+.wallo-edit-content {
+    padding: 0.9em;
+}
+.wallo-edit a {
     color: white;
 }
 
 #stats {
     position: fixed;
-    top: 0px;
-    right: 0px;
+    bottom: .9em;
+    right: .9em;
+}
+#stats #fps {
+    background: black !important;
 }
 
-.wallo-edit {
+.wallo-edit-overlay {
     position: absolute;
     top: 0px;
     width:1000px;
@@ -62,6 +106,6 @@ body {
 
 .wallo-stdmode #stats,
 .wallo-stdmode .wallo-edit,
-.wallo-stdmode .wallo-admin {
+.wallo-stdmode .wallo-edit-overlay {
     display: none !important;
 }

@@ -29,7 +29,9 @@ jQuery(function($) {
 
             IO.init();                                                          // Init socket.io
 
-            $.getJSON("levels/wallcomem.json", null, function(cfg) {            // Retrieve current level
+            var levelUri = $.urlParam("level") || "levels/demo.json";
+
+            $.getJSON(levelUri, null, function(cfg) {                           // Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
 
                 App.initCrafty();                                               // Init crafty
@@ -38,7 +40,7 @@ jQuery(function($) {
 
                 IO.emit('hostCreateNewGame');                                   // Join a game
 
-                App.initEdition();
+                $.Edit.init();
 
                 App.toggleDebug(true);
             });
@@ -53,16 +55,14 @@ jQuery(function($) {
                     IO.emit('heartBeat');
                 }, 5000);
 
-                $(".wallo-admin").append("<a href='pad.html?gameId=" + data.gameId + "' target='_blank'>Pad</a>")
-                	.append("<div id='gameId'>gameId = " + data.gameId + "</div>");
+                $(document).trigger("newGameCreated", [data]);                  // Trigger a global event (listened by editor)
             });
 
             IO.on('heartBeat', function(data) {
                 $.each(App.players, function(id, player) {                      // checking for each players on host and each player received from server if they still exist
-                    //console.log("Screen.heartBeat()");
                     if (id.indexOf("DEBUG") === -1 &&
-                        $.inArray(id, data) === -1) {                          // if the player doews not exist in the returned value 
-                        console.log(player);
+                        $.inArray(id, data) === -1) {                           // if the player doews not exist in the returned value 
+                        console.log("Screen.heartBeat(): idle player removed: " + player);
                         player.destroy();                                       // Destroy the player entity
                         delete App.players[id];                                 // and delete this client from the players array
                     }
@@ -84,6 +84,7 @@ jQuery(function($) {
 
             $("body").keydown(function(e) {                                     // Keyboard events
                 switch (e.keyCode) {
+                    case 191:
                     case 192:                                                   // §: Debug
                         App.toggleDebug();
                         break;
@@ -112,21 +113,12 @@ jQuery(function($) {
                         }
                 }
             });
-
-            var stats = new Stats();                                            // Initialize fps counter
-            stats.setMode(0);                                                   // 0: fps, 1: ms
-            document.body.appendChild(stats.domElement);
-            stats.begin();
-            Crafty.bind("RenderScene", function() {
-                stats.end();
-                stats.begin();
-            });
         },
-        resetPlayer: function(data){
-        	console.log(data[0].obj)
-        	data[0].obj.body.SetLinearVelocity(new b2Vec2(0,0));									// Reset velocity 
-        	data[0].obj.setPosition(App.cfg.player);                                      			// Destroy the player entity
-		},
+        resetPlayer: function(player) {
+            console.log("App.resetPlayer()", player);
+            player.body.SetLinearVelocity(new b2Vec2(0, 0));									// Reset velocity 
+            player.attr(App.cfg.player);                                        // Reset the player position
+        },
         setState: function(newState) {
             if (App.state === newState)
                 return;
@@ -174,7 +166,6 @@ jQuery(function($) {
          *                Crafty               *
          * *********************************** */
         initCrafty: function() {
-            $("body").width(App.cfg.width).height(App.cfg.height);
             Crafty.init(App.cfg.width, App.cfg.height, $(".wallo-crafty").get(0));// Init crafty
             Crafty.canvas.init();
             Crafty.box2D.init(0, 10, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
@@ -182,7 +173,7 @@ jQuery(function($) {
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
 
             $.each($.App.cfg.entities, function(i, p) {                         // Add entities from config file
-                var entity = Crafty.e(p.components).setConfig(p);
+                var entity = Crafty.e(p.components).attr(p);
                 entity.cfgObject = p;
             });
 
@@ -190,7 +181,7 @@ jQuery(function($) {
         },
         addPlayer: function(cfg) {
             App.players[cfg.socketId] = Crafty.e("Player, WebsocketController")
-                .setPosition(App.cfg.player);
+                .attr(App.cfg.player);
 
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
@@ -198,10 +189,11 @@ jQuery(function($) {
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e("Player, Keyboard").setPosition(App.cfg.player);
+                App.players.DEBUG = Crafty.e("Player, Keyboard")
+                    .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
-                App.players.DEBUG = null;
+                delete App.players.DEBUG;
             }
         },
         showCountdown: function() {
@@ -216,7 +208,7 @@ jQuery(function($) {
                 .box2d($.extend(cfg, {
                     shape: [[0, 0], [w, 0], [w, 10], [0, 10]]
                 }))
-                .setPosition({x: App.cfg.player.x - w / 200, y: App.cfg.player.y - h / 200})
+                .attr({x: App.cfg.player.x - w / 200, y: App.cfg.player.y - h / 200})
                 .addFixture($.extend(cfg, {
                     shape: [[0, 0], [10, 0], [10, h], [0, h]]
                 }))
@@ -228,7 +220,7 @@ jQuery(function($) {
                 }));
 
             $.each(App.players, function(i, p) {                                // Bring all players to starting position
-                p.setPosition(App.cfg.player);
+                App.resetPlayer(p);
             });
 
             var countDown = App.cfg.countdownDuration,
@@ -247,57 +239,6 @@ jQuery(function($) {
         setCfg: function(cfg) {
             $.extend(App.cfg, cfg);
         },
-        /* *************************************
-         *                Edition              *
-         * *********************************** */
-        initEdition: function() {
-            $("body").prepend('<div class="wallo-edit"><div class="wallo-edit-dd"></div></div>');
-
-            YUI().use("dd-drag", "resize", "event-mouseenter", function(Y) {
-                var node = Y.one(".wallo-edit-dd"),
-                    drag = new Y.DD.Drag({node: node}),
-                    resize = new Y.Resize({node: node}),
-                    isDragging = false,
-                    toggleIsDragging = function() {
-                        isDragging = !isDragging;
-                    };
-
-                drag.on(["drag:start", "drag:end"], toggleIsDragging);
-                drag.on(["drag:drag", "drag:end"], App.savePositions);
-
-                resize.on(["resize:start", "resize:end"], toggleIsDragging);
-                resize.on(["resize:resize", "resize:end"], App.savePositions);
-
-                node.after("mouseleave", function() {
-                    if (!isDragging) {
-                        App.hideEdition();
-                    }
-                });
-            });
-        },
-        showEdition: function(entity) {
-            $('.wallo-edit').show();
-            $('.wallo-edit-dd').css("left", entity.x)
-                .css("top", entity.y)
-                .width(entity.w)
-                .height(entity.h);
-
-            $('.wallo-edit-dd')[0].currentEntity = entity;
-        },
-        hideEdition: function() {
-            $('.wallo-edit').hide();
-        },
-        savePositions: function() {
-            var node = $('.wallo-edit-dd'),
-                cfg = {
-                    x: node.position().left,
-                    y: node.position().top,
-                    w: node.width(),
-                    h: node.height()
-                };
-            node[0].currentEntity.setConfig(cfg);
-            $.extend(node[0].currentEntity.cfgObject, cfg);
-        },
         toggleDebug: function(val) {
             this.debug = val || !this.debug;
 
@@ -310,6 +251,9 @@ jQuery(function($) {
             Crafty.box2D.ShowBox2DDebug = this.debug;
             Crafty.box2D.debugCanvas.getContext('2d')
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
+        },
+        getPadUrl: function() {
+            return  "/pad.html?gameId=" + IO.gameId;
         }
     };
     $.App = App;                                                                // Set up global reference

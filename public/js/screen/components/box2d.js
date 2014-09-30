@@ -24,10 +24,19 @@ Crafty.c("Box2D", {
      */
     fixtures: null,
     init: function() {
-        this.requires("2D");
+        this.requires("2D")
+            .bind("Change", this.____attr);
 
         if (!Crafty.box2D.world) {
             Crafty.box2D.init(0, 10, 55, true);
+        }
+    },
+    ____attr: function(keys) {
+        if (this.body && (keys.x || keys.y)) {
+            this.updatePosition();
+        }
+        if (this.fixtures && (keys.w || keys.h)) {
+            this.updateSize();
         }
     },
     /**@
@@ -275,22 +284,17 @@ Crafty.c("Box2D", {
             this.body.DestroyFixture(this.fixtures[i]);
         }
     },
-    setPosition: function(pos) {
+    updatePosition: function(pos) {
         this.body.SetAwake(true);                                               // Wakes the body up if its sleeping
-        this.body.SetPosition(new b2Vec2(pos.x / Crafty.box2D.PTM_RATIO, pos.y / Crafty.box2D.PTM_RATIO));
+        this.body.SetPosition(new b2Vec2(this.x / Crafty.box2D.PTM_RATIO, this.y / Crafty.box2D.PTM_RATIO));
         return this;
     },
-    setSize: function(size) {
+    updateSize: function() {
         this.fixtures[0].m_shape.SetAsOrientedBox(
             (this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO,
             new b2Vec2((this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO)
             );
         return this;
-    },
-    setConfig: function(cfg) {
-        return this.attr(cfg)
-            .setSize(cfg)
-            .setPosition(cfg);
     }
 });
 
