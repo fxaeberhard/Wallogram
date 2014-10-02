@@ -34,9 +34,8 @@ Crafty.c("ColoredPlatform", {
  */
 Crafty.c("Target", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.requires("2D, Canvas, Box2D, Color, MouseHover")                   // allows the entity to be drawn as a colored box
+        this.requires("2D, Box2D, MouseHover")                                  // allows the entity to be drawn as a colored box
             .attr({w: 30, h: 30})                                               // set width and height
-            .color("red")                                                       // set color
             .box2d({
                 bodyType: 'static',
                 density: 1.0,
@@ -56,9 +55,8 @@ Crafty.c("Target", {
  */
 Crafty.c("OutOfBounds", {
     init: function() {
-        this.requires("2D, Canvas, Box2D, Color, MouseHover")
+        this.requires("2D, Box2D, MouseHover")
             .attr({w: 3000, h: 30})
-            .color("red")
             .box2d({
                 bodyType: "static",
                 density: 1.0,

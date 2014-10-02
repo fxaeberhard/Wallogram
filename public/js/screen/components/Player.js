@@ -49,7 +49,12 @@ Crafty.c("Player", {
                     //console.log("EnterFrame(): jumping");
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
                     //this.body.m_linearVelocity.y = 0;
-                    body.ApplyImpulse(new b2Vec2(0, 500), body.GetWorldCenter());//Applys and impulse to the player. (Makes it jump)
+                    console.log(body);
+                    body.ApplyImpulse(											// Applys and impulse to the player. (Makes it jump)
+                    	new b2Vec2(0, 500),
+                    	body.GetWorldCenter()
+                    );
+                    console.log(body);
                     this.animate("jump");
                     this.onground = false;
                 }
