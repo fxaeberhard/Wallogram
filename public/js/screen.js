@@ -123,16 +123,14 @@ jQuery(function($) {
             if (App.state === newState)
                 return;
 
+            $(document).trigger("stateChange", [newState, App.state]);
+
             console.log("Screen.setState(" + newState + ")");
 
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
                     this.walls.destroy();
                     clearTimeout(App.countdownHandler);
-                    break;
-
-                case "run":
-                    clearInterval(App.timerHandler);
                     break;
 
                 case "win":
@@ -147,14 +145,10 @@ jQuery(function($) {
                     break;
 
                 case "run":                                                     // Play
-                    var startTime = new Date().getTime();
-                    App.timerHandler = setInterval(function() {
-                        $(".screen-msg").text($.HHMMSS(new Date().getTime() - startTime));
-                    }, 53);
+                    App.startTime = new Date().getTime();
                     break;
 
                 case "win":                                                     // Somebody reach the goal
-                    $(".screen-msg").html("Final time<br />" + $(".screen-msg").html());
                     App.restartHandler = setTimeout(function() {
                         App.setState("countdown");
                     }, 10000);
@@ -166,7 +160,8 @@ jQuery(function($) {
          *                Crafty               *
          * *********************************** */
         initCrafty: function() {
-            Crafty.init(App.cfg.width, App.cfg.height, $(".wallo-crafty").get(0));// Init crafty
+            Crafty.init(App.cfg.width, App.cfg.height,
+                $(".wallo-crafty").get(0));                                     // Init crafty
             Crafty.canvas.init();
             Crafty.box2D.init(0, 10, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
 
@@ -204,6 +199,7 @@ jQuery(function($) {
                     friction: 10,
                     restitution: 0
                 };
+
             this.walls = Crafty.e("2D, Canvas, Box2D")
                 .box2d($.extend(cfg, {
                     shape: [[0, 0], [w, 0], [w, 10], [0, 10]]
@@ -217,7 +213,7 @@ jQuery(function($) {
                 }))
                 .addFixture($.extend(cfg, {
                     shape: [[0, (h - 10)], [w, (h - 10)], [w, h], [0, h]]
-                }));
+                }));                                                            // Add a box to limit players moves until they can move
 
             $.each(App.players, function(i, p) {                                // Bring all players to starting position
                 App.resetPlayer(p);
@@ -225,7 +221,7 @@ jQuery(function($) {
 
             var countDown = App.cfg.countdownDuration,
                 step = function() {
-                    $(".screen-msg").text(countDown);
+                    $(".wallo-crafty .Timer").text(countDown);
                     if (countDown === 0) {
                         App.setState("run");
                     } else {
@@ -233,8 +229,7 @@ jQuery(function($) {
                     }
                     countDown--;
                 };
-            $(".screen-msg").text("Ready");
-            App.countdownHandler = setTimeout(step, 1000);                      // Show count down
+            App.countdownHandler = setTimeout(step, 1000);                      // Show countdown
         },
         setCfg: function(cfg) {
             $.extend(App.cfg, cfg);
@@ -261,3 +256,17 @@ jQuery(function($) {
     App.init();                                                                 // Init
 
 }($));
+
+var oldAttr = Crafty.prototype.attr;
+Crafty.prototype.attr = function(key) {
+    if (arguments.length === 1 && typeof key === "object") {
+        if (key.url
+            && (this.has("WalloImage") || this.has("Image"))) {
+            this.image(key.url);
+        }
+        if (key.color && this.has("Color")) {
+            this.color(key.color);
+        }
+    }
+    return oldAttr.apply(this, arguments);
+};

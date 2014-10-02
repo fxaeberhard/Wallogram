@@ -5,17 +5,46 @@
     },
     "width": 600,
     "height": 400,
+    "countdownDuration": 5,
     "entities": [{
             "components": "Platform",
-            "x": 10,
-            "y": 5
+            "x": 40,
+            "y": 200
         }, {
-            "components": "Platform",
-            "x": 3,
-            "y": 10
+            "components": "ColoredPlatform",
+            "color": "pink",
+            "x": 150,
+            "y": 200
+        }, {
+            "components": "QR",
+            "x": 508,
+            "y": 12,
+            "w": 80,
+            "h": 80
         }, {
             "components": "Target",
-            "x": 11,
-            "y": 3
+            "x": 293,
+            "y": 145,
+            "w": 43,
+            "h": 48
+        }, {
+            "components": "WalloImage, Platform",
+            "url": "assets/mario-platform.png",
+            "x": 269,
+            "y": 197,
+            "w": 90,
+            "h": 30
+        }, {
+            "components": "Timer",
+            "x": 145,
+            "y": 6,
+            "w": 317,
+            "h": 82
+        }, {
+            "components": "OutOfBounds",
+            "x": 0,
+            "y": 300,
+            "w": 600,
+            "h": 10
         }]
 }
