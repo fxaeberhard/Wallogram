@@ -62,12 +62,15 @@ Crafty.c("Player", {
                     this.onground = false;
                 }
                 
-				if(forceX != 0){												// Apply moving force if forceX exist
-					body.ApplyForce(
-						new b2Vec2(forceX, 0),
-						body.GetWorldCenter()
-					)
-				}
+                if(velocity.x != 0 && !this.onground && !(this.isDown('RIGHT_ARROW') || this.isDown('LEFT_ARROW'))){
+                	console.log("hello")
+	                forceX = -velocity.x * 10;
+				}			
+				body.ApplyForce(												// Apply moving force
+					new b2Vec2(forceX, 0),
+					body.GetWorldCenter()
+				)
+				
             })
             
             .onContact("Box2D", function(fixtures) {
