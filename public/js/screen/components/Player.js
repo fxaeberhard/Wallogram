@@ -34,31 +34,42 @@ Crafty.c("Player", {
                 userData: "foot"
             })
             .bind("EnterFrame", function() {
-                var body = this.body;                                           // Get the var body from the child.
+                var body = this.body;
+                var velocity =  body.GetLinearVelocity()
+			    var forceX = 0;                                         
                 if (!this.sideContact && this.isDown('LEFT_ARROW')) {           // If right arrow is down
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    body.m_linearVelocity.x = -5;                               // Adds to the linearVelocity of the box.
+                    if(velocity.x > -3) {										// set force to 500 if velocity isn't too high
+						forceX = -500;
+					}
                     this.flip();
                 }
                 if (!this.sideContact && this.isDown('RIGHT_ARROW')) {          // If right arrow is down
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    body.m_linearVelocity.x = 5;                                // Adds to the linearVelocity of the box.
+                    if(velocity.x < 3) {										// set force to 500 if velocity isn't too high
+						forceX = 500;
+					}
                     this.unflip();
                 }
                 if (this.onground && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
                     //console.log("EnterFrame(): jumping");
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    //this.body.m_linearVelocity.y = 0;
-                    console.log(body);
-                    body.ApplyImpulse(											// Applys and impulse to the player. (Makes it jump)
-                    	new b2Vec2(0, 500),
-                    	body.GetWorldCenter()
-                    );
-                    console.log(body);
+                    body.ApplyImpulse(											// Apply upward impulse
+						new b2Vec2(0,-40),
+						body.GetWorldCenter()
+					)
                     this.animate("jump");
                     this.onground = false;
                 }
+                
+				if(forceX != 0){												// Apply moving force if forceX exist
+					body.ApplyForce(
+						new b2Vec2(forceX, 0),
+						body.GetWorldCenter()
+					)
+				}
             })
+            
             .onContact("Box2D", function(fixtures) {
 
                 var onGround = $.arrayFind(fixtures, function(i, f) {
