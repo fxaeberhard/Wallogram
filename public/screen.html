@@ -19,21 +19,35 @@
 
         <!-- Markup -->
         <div class="wallo-page">
-            <div class="wallo-play wallo-u">
+            <div class="wallo-edit wallo-u">
+                <div data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected">Preview</div>
+                <div data-target="#tab-source" class="wallo-tab-link">Source</div>
+
+                <div class="wallo-edit-content">
+                    <span class="wallo-key">§</span> Show/hide edition<br />
+                    <span class="wallo-key">1</span> Reset<br />
+                    <span class="wallo-key">2</span> Add debug player<br />
+                    <span class="wallo-key">3</span> Fullscreen<br /><br />
+                </div>
+            </div>
+
+            <div id="tab-play" class="wallo-u wallo-tab wallo-tab-selected">
                 <div class="wallo-crafty"></div>
             </div>
-            <div class="wallo-edit wallo-u">
-                <div class="wallo-edit-content">§: Show/hide edition<br />1: Reset<br />2: Debug player<br />3: Output config<br />4: Fullscreen<br /><br /></div>
+
+            <div id="tab-source" class="wallo-u wallo-tab">
+                <div id="editor"></div>
             </div>
         </div>
 
         <!-- Libraries -->
+        <script src="libs/jquery-2.1.1.min.js"></script>
         <script src="libs/Box2dWeb-2.1.a.3.min.js"></script>  
         <script src="libs/crafty-min.js"></script>
-        <script src="libs/stats.min.js"></script>
-        <script src="libs/jquery-2.1.1.min.js"></script>
-        <script src="libs/yui3/build/yui/yui-min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+        <script src="libs/stats.min.js"></script>
+        <script src="libs/yui3/build/yui/yui-min.js"></script>
+        <script src="libs/ace/ace.js"></script>
 
         <!-- Sources -->
         <script src="js/screen/sprites.js"></script>

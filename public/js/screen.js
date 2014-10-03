@@ -164,6 +164,7 @@ jQuery(function($) {
                 $(".wallo-crafty").get(0));                                     // Init crafty
             Crafty.canvas.init();
             Crafty.box2D.init(0, 10, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
+            Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
 
@@ -174,8 +175,17 @@ jQuery(function($) {
 
             App.addDebugPlayer();
         },
+        resetCrafty: function() {
+            Crafty.stop();                                                      // Destroy crafty
+            Crafty("*").destroy();
+            $(".wallo-crafty").empty();
+            App.players = {};
+
+            App.initCrafty();                                                   // Init crafty
+            App.toggleDebug(App.debug);                                         // to force refresh
+        },
         addPlayer: function(cfg) {
-            App.players[cfg.socketId] = Crafty.e("Player, WebsocketController")
+            App.players[cfg.socketId] = Crafty.e("WalloBot, WebsocketController")
                 .attr(App.cfg.player);
 
             if ($.size(App.players) === 1) {
@@ -184,7 +194,7 @@ jQuery(function($) {
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e("Player, Keyboard")
+                App.players.DEBUG = Crafty.e("WalloBot, Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
@@ -235,17 +245,17 @@ jQuery(function($) {
             $.extend(App.cfg, cfg);
         },
         toggleDebug: function(val) {
-            this.debug = val || !this.debug;
+            App.debug = val || !App.debug;
 
-            $("body").toggleClass("wallo-debugmode")
-                .toggleClass("wallo-stdmode");
+            $("body").toggleClass("wallo-debugmode", App.debug)
+                .toggleClass("wallo-stdmode", !App.debug);
 
-            if (!Crafty.box2D.debugCanvas) {
-                Crafty.box2D.showDebugInfo();                                   // Start the Box2D debugger
-            }
-            Crafty.box2D.ShowBox2DDebug = this.debug;
+            Crafty.box2D.ShowBox2DDebug = App.debug;
             Crafty.box2D.debugCanvas.getContext('2d')
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
+            if (this.debug) {
+                Crafty.stage.x = 300;
+            }
         },
         getPadUrl: function() {
             return  "/pad.html?gameId=" + IO.gameId;
