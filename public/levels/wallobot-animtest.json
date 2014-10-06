@@ -1,0 +1,34 @@
+{
+    "player": {
+        "components": "SlowBigWalloBot",
+        "x": 10,
+        "y": 5
+    },
+    "width": 600,
+    "height": 400,
+    "countdownDuration": 5,
+    "entities": [{
+            "components": "ColoredPlatform",
+            "color": "pink",
+            "x": 363,
+            "y": 124,
+            "w": 76,
+            "h": 142
+        },
+        {
+            "components": "ColoredPlatform",
+            "color": "pink",
+            "x": 57,
+            "y": 257,
+            "w": 307,
+            "h": 27
+        },
+        {
+            "components": "ColoredPlatform",
+            "color": "pink",
+            "x": 7,
+            "y": 126,
+            "w": 51,
+            "h": 143
+        }]
+}

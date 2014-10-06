@@ -13,9 +13,9 @@ Crafty.c("Player", {
         this.currentDir = 0;
         this.requires("2D, Canvas, Box2D")                                      // Requirements
             .bind("EnterFrame", function() {
-                var body = this.body;
-                var velocity = body.GetLinearVelocity()
-                var forceX = 0;
+                var body = this.body,
+                    velocity = body.GetLinearVelocity(),
+                    forceX = 0;
                 if (!this.sideContact && this.isDown('LEFT_ARROW')) {           // If right arrow is down
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
                     if (velocity.x > -3) {										// set force to 500 if velocity isn't too high
@@ -34,7 +34,7 @@ Crafty.c("Player", {
                     //console.log("EnterFrame(): jumping");
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
                     body.ApplyImpulse(// Apply upward impulse
-                        new b2Vec2(0, -40),
+                        new b2Vec2(0, this.JUMPFORCE),
                         body.GetWorldCenter()
                         )
                     this.animate("jump");
@@ -130,6 +130,7 @@ Crafty.c("WebsocketController", {
  */
 Crafty.c("Mannequin", {
     ANIMSPEED: 800,
+    JUMPFORCE: -40,
     /**
      * 
      */
@@ -149,9 +150,6 @@ Crafty.c("Mannequin", {
             })
             .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
-                density: 1.0,
-                friction: 0.2,
-                restitution: 0,
                 shape: [[this.w / 3, this.w - 5], [2 * this.w / 3, this.w - 5], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
                 isSensor: true,
                 userData: "foot"
@@ -166,19 +164,20 @@ Crafty.c("Mannequin", {
  * 
  */
 Crafty.c("WalloBot", {
-    ANIMSPEED: 8000,
+    ANIMSPEED: 800,
+    JUMPFORCE: -80,
     /**
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("Player, WalloBotSprite, SpriteAnimation")                // Requirements
-            .attr({x: 100, w: 150, h: 150})                                     // Set width and height
+            .attr({x: 100, w: 80, h: 80})                                     // Set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2], [7, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
             .animate("idle", -1)                                                 // Run idle animation
             .box2d({
-                bodyType: 'static',
+                bodyType: 'dynamic',
                 density: 1.0,
                 friction: 0.2,
                 restitution: 0.1,
@@ -186,9 +185,6 @@ Crafty.c("WalloBot", {
             })
             .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
-                density: 1.0,
-                friction: 0.2,
-                restitution: 0,
                 shape: [[this.w / 3, this.w - 5], [2 * this.w / 3, this.w - 5], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
                 isSensor: true,
                 userData: "foot"
@@ -203,6 +199,7 @@ Crafty.c("WalloBot", {
  */
 Crafty.c("SlowBigWalloBot", {
     ANIMSPEED: 8000,
+    JUMPFORCE: -100,
     /**
      * 
      */
@@ -214,7 +211,7 @@ Crafty.c("SlowBigWalloBot", {
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2], [7, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
             .animate("idle", -1)                                                 // Run idle animation
             .box2d({
-                bodyType: 'static',
+                bodyType: 'dynamic',
                 density: 1.0,
                 friction: 0.2,
                 restitution: 0.1,
@@ -222,9 +219,6 @@ Crafty.c("SlowBigWalloBot", {
             })
             .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
-                density: 1.0,
-                friction: 0.2,
-                restitution: 0,
                 shape: [[this.w / 3, this.w - 5], [2 * this.w / 3, this.w - 5], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
                 isSensor: true,
                 userData: "foot"

@@ -184,7 +184,7 @@ jQuery(function($) {
             App.toggleDebug(App.debug);                                         // to force refresh
         },
         addPlayer: function(cfg) {
-            App.players[cfg.socketId] = Crafty.e("WalloBot, WebsocketController")
+            App.players[cfg.socketId] = Crafty.e(App.cfg.player.components + ", WebsocketController")
                 .attr(App.cfg.player);
 
             if ($.size(App.players) === 1) {
@@ -193,7 +193,7 @@ jQuery(function($) {
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e("WalloBot, Keyboard")
+                App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
