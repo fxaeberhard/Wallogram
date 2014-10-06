@@ -97,11 +97,8 @@ jQuery(function($) {
                         App.addDebugPlayer();
                         break;
 
-                    case 51:
-                        var wnd = window.open("about:blank", "", "_blank");     // 3: Open current cfg in a blank frame
-                        wnd.document.write(JSON.stringify(App.cfg));
 
-                    case 52:                                                    // 4: Full screen
+                    case 51:                                                    // 3: Full screen
                         var isFullScreen = (document.fullScreenElement && document.fullScreenElement !== null) || document.mozFullScreen || document.webkitIsFullScreen,
                             cfs = document.exitFullscreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || document.msExitFullscreen,
                             el = document.documentElement,
@@ -111,13 +108,15 @@ jQuery(function($) {
                         } else {
                             rfs.call(el, Element.ALLOW_KEYBOARD_INPUT);
                         }
+                        break
+
+
+                    case 52:
+                        var wnd = window.open("about:blank", "", "_blank");     // 4: Open current cfg in a blank frame
+                        wnd.document.write(JSON.stringify(App.cfg));
+                        break;
                 }
             });
-        },
-        resetPlayer: function(player) {
-            console.log("App.resetPlayer()", player);
-            player.body.SetLinearVelocity(new b2Vec2(0, 0));									// Reset velocity 
-            player.attr(App.cfg.player);                                        // Reset the player position
         },
         setState: function(newState) {
             if (App.state === newState)
@@ -200,6 +199,11 @@ jQuery(function($) {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;
             }
+        },
+        resetPlayer: function(player) {
+            console.log("App.resetPlayer()", player);
+            player.body.SetLinearVelocity(new b2Vec2(0, 0));			// Reset velocity 
+            player.attr(App.cfg.player);                                        // Reset the player position
         },
         showCountdown: function() {
             var w = 200, h = 200, //                                            // Append a box to limit players moves
