@@ -32,6 +32,62 @@ Crafty.c("ColoredPlatform", {
 /**
  * 
  */
+Crafty.c("MovingPlatform", {
+    init: function() {                                                         // init function is automatically run when entity with this component is created
+       	var Xdirection = Ydirection = xSpeed = ySpeed = 0;
+        this.requires("2D, Box2D, MouseHover, Canvas, Color")                   				
+            .attr({
+            	w: 100, 
+            	h: 20,
+            	x1: 200,
+            	y1: 200,
+	            x2: 300,
+	            y2: 200,
+	            time: 2
+            })
+            .box2d({
+                bodyType: 'kinematic',
+                density: 1.0,
+                friction: 100,
+                restitution: 0,
+                shape: "box"
+            })
+            .color("blue")
+            .bind("EnterFrame", function() {									// runs everyframe of the game
+            	var body = this.body,
+            		ratio = Crafty.box2D.PTM_RATIO,
+					Xposition = body.m_xf.position.x*ratio,
+					Yposition = body.m_xf.position.y*ratio
+            	
+            	if(xSpeed == 0 || ySpeed == 0){												// set respective speed for each direction
+					var fps = Crafty.timer.FPS(),
+						x = this.x1 - this.x2,
+						y = this.y1 - this.y2
+	            	
+	            	xSpeed = x / (this.time * fps)
+	            	ySpeed = y / (this.time * fps)
+            	}
+            	
+            	Xdirection = (Xdirection == 0) ? xSpeed : Xdirection;			// if direction is not set, give it positive value of speed
+				if(Xposition < this.x1 || Xposition > this.x2){					// if it reaches one of the bounderies(x1, x2) it switches direction
+            		Xdirection = -Xdirection;
+            	}
+				
+				Ydirection = (Ydirection == 0) ? ySpeed : Ydirection;			// if direction is not set, give it positive value of speed
+				if(Yposition < this.y1 || Yposition > this.y2){					// if it reaches one of the bounderies(y1, y2) it switches direction
+            		Ydirection = -Ydirection;
+            	}
+				
+				
+				var velocity = new b2Vec2(Xdirection, Ydirection)
+				body.SetLinearVelocity(velocity)
+            });
+    }
+});
+
+/**
+ * 
+ */
 Crafty.c("Target", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("2D, Box2D, MouseHover")                                  // allows the entity to be drawn as a colored box

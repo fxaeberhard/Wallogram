@@ -167,7 +167,7 @@ jQuery(function($) {
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
 
-            $.each($.App.cfg.entities, function(i, p) {                         // Add entities from config file
+            $.each($.App.cfg.entities, function(i, p) {                        // Add entities from config file
                 var entity = Crafty.e(p.components).attr(p);
                 entity.cfgObject = p;
             });
