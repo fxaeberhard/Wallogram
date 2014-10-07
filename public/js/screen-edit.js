@@ -13,7 +13,8 @@ jQuery(function($) {
          *
          */
         init: function() {
-            $("body").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"></div></div>');
+            $("#tab-play").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"></div></div>');
+
             YUI().use("dd-drag", "dd-constrain", "resize", "event-mouseenter", function(Y) {
                 var node = Y.one(".wallo-edit-dd"),
                     drag = new Y.DD.Drag({node: node}),
@@ -22,22 +23,27 @@ jQuery(function($) {
                     toggleIsDragging = function() {
                         isDragging = !isDragging;
                     };
+
                 drag.plug(Y.Plugin.DDConstrained, {constrain2node: '.wallo-crafty'});
                 drag.on(["drag:start", "drag:end"], toggleIsDragging);
                 drag.on(["drag:drag", "drag:end"], Edit.savePositions);
+
                 resize.plug(Y.Plugin.ResizeConstrained, {constrain: '.wallo-crafty'});
                 resize.on(["resize:start", "resize:end"], toggleIsDragging);
                 resize.on(["resize:resize", "resize:end"], Edit.savePositions);
+
                 node.after("mouseleave", function() {
                     if (!isDragging) {
                         Edit.hideEdition();
                     }
                 });
             });
+
             $(document).bind("newGameCreated", function() {
                 var padUrl = $.App.getPadUrl();
-                $(".wallo-edit-content").append("Pad: <a href='" + padUrl + "' target='_blank'>" + padUrl + "</a>");
+                $(".wallo-edit-content").prepend("Pad: <a href='" + padUrl + "' target='_blank'>" + padUrl + "</a><br /> <br />");
             });
+
             var stats = new Stats();                                            // Initialize fps counter
             stats.setMode(0);                                                   // 0: fps, 1: ms
             $(".wallo-edit-content").append(stats.domElement);
@@ -45,6 +51,44 @@ jQuery(function($) {
             Crafty.bind("RenderScene", function() {
                 stats.end();
                 stats.begin();
+            });
+
+            var editor;
+            $(".wallo-tab-link").bind("click", function() {                     // Add tab selection support
+                $(".wallo-tab-linkselected").removeClass("wallo-tab-linkselected");
+                $(this).addClass("wallo-tab-linkselected");
+
+                $(".wallo-tab-selected").removeClass("wallo-tab-selected");
+                $(this.dataset.target).addClass("wallo-tab-selected");
+
+                switch (this.dataset.target) {
+                    case "#tab-source":
+                        if (!editor) {
+                            editor = ace.edit("editor");
+                            editor.getSession().setMode("ace/mode/json");
+                            //editor.setTheme("ace/theme/chrome");
+                            editor.getSession().on('change', function(e) {
+                                if (editor.curOp && editor.curOp.command.name) {// Check the change is a user input and not a programtical change
+                                    try {
+                                        $.App.setCfg(JSON.parse(editor.getValue()));
+                                    } catch (e) {
+                                        console.error("Unable to parse source", e);
+                                    }
+                                }
+                            });
+                        }
+                        editor.focus();                                         //To focus the ace editor
+
+                        setTimeout(function() {
+                        }, 1000);
+                        editor.setValue(JSON.stringify($.App.cfg, null, '\t'));
+                        editor.gotoLine(0, 0);
+                        break;
+
+                    case "#tab-play":
+                        $.App.resetCrafty();
+                        break;
+                }
             });
         },
         showEdition: function(entity) {
@@ -61,8 +105,8 @@ jQuery(function($) {
         savePositions: function() {
             var node = $('.wallo-edit-dd'),
                 cfg = {
-                    x: node.offset().left,
-                    y: node.offset().top,
+                    x: node.position().left,
+                    y: node.position().top,
                     w: node.width(),
                     h: node.height()
                 };

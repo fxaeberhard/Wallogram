@@ -8,3 +8,7 @@
 Crafty.sprite(128, 128, 'assets/mannequin.png', {
     MannequinSprite: [0, 0]
 });
+
+Crafty.sprite(128, 128, 'assets/wallobot-1024.png', {
+    WalloBotSprite: [0, 0]
+});

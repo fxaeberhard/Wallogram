@@ -15,7 +15,6 @@ html {
 body {
     font-family: Arial;
     margin: 0;
-    background: black;
     height: 100%;
     overflow: hidden;
     /*background: url(../assets/murheigvd.jpg);*/
@@ -33,14 +32,14 @@ body {
     *letter-spacing: normal;
     *word-spacing: -0.43em;
     text-rendering: optimizespeed;
-    font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+    /*font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;*/
     display: -webkit-flex;
     -webkit-flex-flow: row wrap;
     display: -ms-flexbox;                                                       /* IE10 uses display: flexbox */
     -ms-flex-flow: row wrap;
 }
 .wallo-debugmode .wallo-page {
-    padding-right: 300px;
+    padding-left: 300px;
 }
 .wallo-u {
     display: inline-block;
@@ -50,10 +49,6 @@ body {
     vertical-align: top;
     text-rendering: auto;
 }
-.wallo-play {
-    overflow: auto;
-    width: 100%;
-}
 .wallo-debugmode .wallo-crafty {
     border-right: 1px dashed white;
     border-bottom: 1px dashed white;
@@ -62,27 +57,35 @@ body {
     z-index: 150;
 }
 .wallo-edit {
-    width: 299px;
+    width: 300px;
     height: 100%;
-    margin-right: -300px;
-    border-left: 1px solid white;
-    color: white;
+    margin-left: -300px;
     font-size: 0.9em;
+    background: #fafafa;
+    padding-top: .9em;
 }
 .wallo-edit-content {
-    padding: 0.9em;
-}
-.wallo-edit a {
-    color: white;
-}
-
-#stats {
     position: fixed;
     bottom: .9em;
-    right: .9em;
+    left: .9em;
+    font-size: 0.7em;
 }
+.wallo-edit-content .wallo-key {
+    border: 1px solid black;
+    padding: 2px 4px 2px 3px;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    display: inline-block;
+    border-radius: 3px;
+    width: 8px;
+    text-align: center;
+}
+
 #stats #fps {
-    background: black !important;
+    background: white !important;
+}
+#stats #fpsText {
+    color: black !important;
 }
 
 .wallo-edit-overlay {
@@ -103,4 +106,43 @@ body {
 .wallo-stdmode .wallo-edit,
 .wallo-stdmode .wallo-edit-overlay {
     display: none !important;
+}
+
+.wallo-tab-link {
+    display: block;
+    padding: 0.4em .9em;
+    text-decoration: none;
+    cursor: pointer;
+}
+.wallo-tab-link:hover {
+    background: lightgray;
+}
+.wallo-tab-linkselected {
+    background: black;
+    color: white;
+}
+.wallo-tab {
+    display: none;
+}
+.wallo-tab-selected {
+    display: block;
+}
+#tab-play {
+    overflow: auto;
+    width: 100%;
+    background: black;
+}
+#tab-source {
+    width: 100%;
+    height: 100%;
+}
+#editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 300px;
+}
+.ace_gutter {
+    background: #fafafa !important;
 }

@@ -97,11 +97,8 @@ jQuery(function($) {
                         App.addDebugPlayer();
                         break;
 
-                    case 51:
-                        var wnd = window.open("about:blank", "", "_blank");     // 3: Open current cfg in a blank frame
-                        wnd.document.write(JSON.stringify(App.cfg));
 
-                    case 52:                                                    // 4: Full screen
+                    case 51:                                                    // 3: Full screen
                         var isFullScreen = (document.fullScreenElement && document.fullScreenElement !== null) || document.mozFullScreen || document.webkitIsFullScreen,
                             cfs = document.exitFullscreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || document.msExitFullscreen,
                             el = document.documentElement,
@@ -111,13 +108,15 @@ jQuery(function($) {
                         } else {
                             rfs.call(el, Element.ALLOW_KEYBOARD_INPUT);
                         }
+                        break
+
+
+                    case 52:
+                        var wnd = window.open("about:blank", "", "_blank");     // 4: Open current cfg in a blank frame
+                        wnd.document.write(JSON.stringify(App.cfg));
+                        break;
                 }
             });
-        },
-        resetPlayer: function(player) {
-            console.log("App.resetPlayer()", player);
-            player.body.SetLinearVelocity(new b2Vec2(0, 0));									// Reset velocity 
-            player.attr(App.cfg.player);                                        // Reset the player position
         },
         setState: function(newState) {
             if (App.state === newState)
@@ -164,6 +163,7 @@ jQuery(function($) {
                 $(".wallo-crafty").get(0));                                     // Init crafty
             Crafty.canvas.init();
             Crafty.box2D.init(0, 10, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
+            Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
 
@@ -174,8 +174,17 @@ jQuery(function($) {
 
             App.addDebugPlayer();
         },
+        resetCrafty: function() {
+            Crafty.stop();                                                      // Destroy crafty
+            Crafty("*").destroy();
+            $(".wallo-crafty").empty();
+            App.players = {};
+
+            App.initCrafty();                                                   // Init crafty
+            App.toggleDebug(App.debug);                                         // to force refresh
+        },
         addPlayer: function(cfg) {
-            App.players[cfg.socketId] = Crafty.e("Player, WebsocketController")
+            App.players[cfg.socketId] = Crafty.e(App.cfg.player.components + ", WebsocketController")
                 .attr(App.cfg.player);
 
             if ($.size(App.players) === 1) {
@@ -184,12 +193,17 @@ jQuery(function($) {
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e("Player, Keyboard")
+                App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;
             }
+        },
+        resetPlayer: function(player) {
+            console.log("App.resetPlayer()", player);
+            player.body.SetLinearVelocity(new b2Vec2(0, 0));			// Reset velocity 
+            player.attr(App.cfg.player);                                        // Reset the player position
         },
         showCountdown: function() {
             var w = 200, h = 200, //                                            // Append a box to limit players moves
@@ -235,17 +249,17 @@ jQuery(function($) {
             $.extend(App.cfg, cfg);
         },
         toggleDebug: function(val) {
-            this.debug = val || !this.debug;
+            App.debug = val || !App.debug;
 
-            $("body").toggleClass("wallo-debugmode")
-                .toggleClass("wallo-stdmode");
+            $("body").toggleClass("wallo-debugmode", App.debug)
+                .toggleClass("wallo-stdmode", !App.debug);
 
-            if (!Crafty.box2D.debugCanvas) {
-                Crafty.box2D.showDebugInfo();                                   // Start the Box2D debugger
-            }
-            Crafty.box2D.ShowBox2DDebug = this.debug;
+            Crafty.box2D.ShowBox2DDebug = App.debug;
             Crafty.box2D.debugCanvas.getContext('2d')
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
+            if (this.debug) {
+                Crafty.stage.x = 300;
+            }
         },
         getPadUrl: function() {
             return  "/pad.html?gameId=" + IO.gameId;
