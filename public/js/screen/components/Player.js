@@ -62,8 +62,9 @@ Crafty.c("Player", {
                     this.onground = false;
                 }
                 
-                if(velocity.x != 0 && !this.onground && !(this.isDown('RIGHT_ARROW') || this.isDown('LEFT_ARROW'))){
-                	console.log("hello")
+                if(velocity.x != 0 && !this.onground && 
+                	!(this.isDown('RIGHT_ARROW') 
+                	  || this.isDown('LEFT_ARROW'))){
 	                forceX = -velocity.x * 10;
 				}			
 				body.ApplyForce(												// Apply moving force
