@@ -11,22 +11,26 @@ Crafty.c("Player", {
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.currentDir = 0;
-        this.requires("2D, Canvas, Box2D")                                      // Requirements
+        this.requires("2D, Canvas, Box2D")										// Requirements
+			.attr({
+				accX: 0,
+				accY: 0
+			})
             .bind("EnterFrame", function() {
                 var body = this.body,
                     velocity = body.GetLinearVelocity(),
                     forceX = 0;
                 if (!this.sideContact && this.isDown('LEFT_ARROW')) {           // If right arrow is down
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    if (velocity.x > -3) {										// set force to 500 if velocity isn't too high
-                        forceX = -500;
+                    if (velocity.x > -5) {										// set force to 500 if velocity isn't too high
+                        forceX = -500 + body.m_userData.accX;
                     }
                     this.flip();
                 }
                 if (!this.sideContact && this.isDown('RIGHT_ARROW')) {          // If right arrow is down
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    if (velocity.x < 3) {										// set force to 500 if velocity isn't too high
-                        forceX = 500;
+                    if (velocity.x < 5) {										// set force to 500 if velocity isn't too high
+                        forceX = 500 + body.m_userData.accX;
                     }
                     this.unflip();
                 }
@@ -175,7 +179,7 @@ Crafty.c("WalloBot", {
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("Player, WalloBotSprite, SpriteAnimation")                // Requirements
-            .attr({x: 100, w: 80, h: 80})                                     // Set width and height
+            .attr({x: 100, w: 80, h: 80})                                       // Set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2], [7, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells

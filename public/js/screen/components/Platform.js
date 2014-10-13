@@ -77,8 +77,21 @@ Crafty.c("MovingPlatform", {
 				if(Yposition < this.y1 || Yposition > this.y2){					// if it reaches one of the bounderies(y1, y2) it switches direction
             		Ydirection = -Ydirection;
             	}
-				
-				
+            	
+				var accX, accY;
+				//console.log(body);
+				if(body.m_contactList){											// if moving plateform touches a sprite add an acceleration to compensate for movement
+
+					accX = body.m_contactList.other.m_mass*body.m_contactList.other.m_linearVelocity.x*3
+					body.m_contactList.other.m_userData.accX = accX
+					
+					accY = body.m_contactList.other.m_mass*body.m_contactList.other.m_linearVelocity.y*3
+					body.m_contactList.other.m_userData.accY = accY
+					
+					console.log(accY + " : " + accX);
+				}else{
+					accX = accY = 0;
+				}
 				var velocity = new b2Vec2(Xdirection, Ydirection)
 				body.SetLinearVelocity(velocity)
             });
