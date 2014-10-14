@@ -184,7 +184,8 @@ jQuery(function($) {
             App.toggleDebug(App.debug);                                         // to force refresh
         },
         addPlayer: function(cfg) {
-            App.players[cfg.socketId] = Crafty.e(App.cfg.player.components + ", WebsocketController")
+            // This currently force new players to be mannequin
+            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
                 .attr(App.cfg.player);
 
             if ($.size(App.players) === 1) {
@@ -192,6 +193,7 @@ jQuery(function($) {
             }
         },
         addDebugPlayer: function() {
+            console.log(App.cfg.player.components)
             if (!App.players.DEBUG) {
                 App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Keyboard")
                     .attr(App.cfg.player);

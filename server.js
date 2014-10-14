@@ -1,5 +1,17 @@
 var io, socket;
+//Define all the colors and their sprites for players
+green = {'colorCode':'91cc70','sprites':'MannequinSpriteGreen'};
+orange = {'colorCode':'db953b','sprites':'MannequinSpriteOrange'};
+pink = {'colorCode':'dd6eaf','sprites':'MannequinSpritePink'};
+red = {'colorCode':'e75d58','sprites':'MannequinSpriteRed'};
+violet = {'colorCode':'bf60e3','sprites':'MannequinSpriteViolet'};
+cyan = {'colorCode':'64dec3','sprites':'MannequinSpriteCyan'};
+blue = {'colorCode':'608ce6','sprites':'MannequinSpriteBlue'};
+yellow = {'colorCode':'decb21','sprites':'MannequinSpriteYellow'};
 
+playersColors = [green,orange,pink,red,violet,cyan,blue,yellow]
+
+usedSprites = [] // Only used to know wich colors are already used on the platform
 /**
  * This function is called by index.js to initialize a new game instance.
  *
@@ -75,13 +87,30 @@ function playerJoinGame(data) {
         // attach the socket id to the data object.
         data.mySocketId = sock.id;
 
+        // Choose random color
+        var randomColor = Math.floor(Math.random() * playersColors.length); 
+        // Check if the random color is already assigned
+        while (usedSprites.indexOf(randomColor)> -1 && usedSprites.length < playersColors.length) {
+            randomColor = Math.floor(Math.random() * playersColors.length)
+        }
+
         // Join the room
         sock.join(data.gameId);
 
         console.log('Player ' + data.playerName + ' joining game: ' + data.gameId);
 
-        // Emit an event notifying the clients that the player has joined the room.
-        io.sockets.in("host-" + data.gameId).emit('playerJoinedRoom', data);
+        if(usedSprites.length < playersColors.length){
+            data.playerSprites = playersColors[randomColor].sprites
+            // Emit an event notifying the clients that the player has joined the room.
+            io.sockets.in("host-" + data.gameId).emit('playerJoinedRoom', data);
+            // Emit the player's color to the pad.
+            io.to(data.mySocketId).emit('colorAssigned',playersColors[randomColor].colorCode)
+
+            usedSprites.push(randomColor);
+        }else{
+            //All the colors are used
+            io.to(data.mySocketId).emit('complete','Sorry! All the colors are already assigned')
+        }
 
     } else {
         // Otherwise, send an error message back to the player.
