@@ -12,11 +12,24 @@
             "x": 40,
             "y": 200
         }, {
-            "components": "ColoredPlatform",
+            "components": "Falling",
             "color": "red",
             "x": 150,
             "y": 200
-        }, {
+        },
+        {
+			"components": "ColoredPlatform",
+			"color": "pink",
+			"x": 190,
+			"y": 339,
+			"w": 100,
+			"h": 20
+		}, {
+			"components": "ColoredPlatform",
+			"color": "red",
+			"x": 770,
+			"y": 340
+		}, {
 	        "components": "MovingPlatform",
 	        "color": "blue",
 	        "x": 400,
@@ -25,7 +38,7 @@
 	        "y1": 200,
 	        "x2": 600,
 	        "y2": 300,
-	        "time": 1
+	        "time": 2.5
         }, {
             "components": "QR",
             "x": 508,
@@ -33,12 +46,12 @@
             "w": 80,
             "h": 80
         }, {
-            "components": "Target",
-            "x": 223,
-            "y": 1,
-            "w": 43,
-            "h": 48
-        }, {
+			"components": "Target",
+			"x": 797,
+			"y": 283,
+			"w": 43,
+			"h": 45
+		}, {
             "components": "WalloImage, Platform",
             "url": "assets/mario-platform.png",
             "x": 269,

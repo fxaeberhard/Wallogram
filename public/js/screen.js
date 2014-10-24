@@ -162,7 +162,7 @@ jQuery(function($) {
             Crafty.init(App.cfg.width, App.cfg.height,
                 $(".wallo-crafty").get(0));                                     // Init crafty
             Crafty.canvas.init();
-            Crafty.box2D.init(0, 10, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
+            Crafty.box2D.init(0, 20, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
             Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene

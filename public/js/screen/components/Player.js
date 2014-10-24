@@ -10,40 +10,98 @@ Crafty.c("Player", {
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.currentDir = 0;
+        this.currentDir = 0,
+        this.previousPos = 0;
         this.requires("2D, Canvas, Box2D")										// Requirements
-			.attr({
-				accX: 0,
-				accY: 0
-			})
             .bind("EnterFrame", function() {
                 var body = this.body,
                     velocity = body.GetLinearVelocity(),
-                    forceX = 0;
-                if (!this.sideContact && this.isDown('LEFT_ARROW')) {           // If right arrow is down
-                    body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    if (velocity.x > -5) {										// set force to 500 if velocity isn't too high
-                        forceX = -500 + body.m_userData.accX;
-                    }
-                    this.flip();
-                }
-                if (!this.sideContact && this.isDown('RIGHT_ARROW')) {          // If right arrow is down
-                    body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    if (velocity.x < 5) {										// set force to 500 if velocity isn't too high
-                        forceX = 500 + body.m_userData.accX;
-                    }
-                    this.unflip();
-                }
-                if (this.onground && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
+                    forceX = 0,
+                    landingV;
+                //console.log(velocity.x);
+                
+                if (!this.sideContact && this.isDown('LEFT_ARROW')) {									// If right arrow is down
+	                if (velocity.x > -this.TOPSPEED + 1){	     					// If player is still under topspeed (accelerating)
+	                    body.SetAwake(true);                                        // Wakes the body up if its sleeping
+	                    if (velocity.x > -this.TOPSPEED) {							// set force to 500 if velocity isn't too high
+	                        forceX = -this.WALKFORCE;
+						}
+	                    this.flip();
+	                    //console.log("left: "+velocity.x)
+		            } else if(velocity.x <= -this.TOPSPEED + 1 && velocity.x >= -this.TOPSPEED){	// If palyer is in topspeed than fix velocity to topspeed
+			            body.SetLinearVelocity(new b2Vec2(-this.TOPSPEED, velocity.y))
+		            }
+		        }
+		        
+	            if (!this.sideContact && this.isDown('RIGHT_ARROW')){									// If right arrow is down
+	                if ( velocity.x < this.TOPSPEED - 1 ){       					// If player is still under topspeed (accelerating)
+	                    body.SetAwake(true);                                        // Wakes the body up if its sleeping
+	                    if (velocity.x < this.TOPSPEED) {							// set force to 500 if velocity isn't too high
+	                        forceX = this.WALKFORCE;
+	                    }
+	                    this.unflip();
+	                    //console.log("right: "+velocity.x)
+		            } else if(velocity.x >= this.TOPSPEED - 1 && velocity.x <= this.TOPSPEED){ // If palyer is in topspeed than fix velocity to topspeed
+			            body.SetLinearVelocity(new b2Vec2(this.TOPSPEED, velocity.y))
+		            }
+		        }
+		        
+		        if (velocity.x < 0 && !this.isDown('LEFT_ARROW')){					// If velocity is smaller than 0 and left arrow isn't pressed decrease speed
+			        if (velocity.x <= -1) {											// If velocity is smaller or equal to 0 decrease by walkforce else bring it to 0
+				        forceX = this.WALKFORCE
+					}else{
+						body.SetLinearVelocity(new b2Vec2(0, velocity.y))
+					}
+		        }
+		        if (velocity.x > 0 && !this.isDown('RIGHT_ARROW')) {				// If velocity is bigger than 0 and right arrow isn't pressed decrease speed
+		        	if(velocity.x >= 1){											// If velocity is bigger or equal to 0 decrease by walkforce else bring it to 0
+			        	forceX = -this.WALKFORCE
+		        	} else {
+			        	body.SetLinearVelocity(new b2Vec2(0, velocity.y))
+		        	}
+		        }
+		        
+		        if(this.body.m_contactList && this.body.m_contactList.other.m_userData.name == "movingPlat"){
+		        	var contactObject = this.body.m_contactList.other,
+		        		xPosition = contactObject.GetPosition().x,
+						playerPosition = this.body.GetPosition(),
+						diffPos;
+		        		
+		        		if(this.previousPos == 0){
+			        		this.previousPos = xPosition
+			        		diffPos = 0
+		        		} else {
+			        		diffPos = xPosition - this.previousPos
+			        		this.previousPos = xPosition
+		        		}
+						
+					console.log(xPosition)
+		        	this.body.SetPosition(new b2Vec2(playerPosition.x + diffPos, playerPosition.y))
+		        	this.currentPos = xPosition
+		        	//console.log(this.body.m_contactList.other);
+		        }
+		        
+                if (this.onground && !this.sideContact && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
                     //console.log("EnterFrame(): jumping");
                     body.SetAwake(true);                                        // Wakes the body up if its sleeping
-                    body.ApplyImpulse(// Apply upward impulse
+                    body.ApplyImpulse(											// Apply upward impulse
                         new b2Vec2(0, this.JUMPFORCE),
                         body.GetWorldCenter()
-                        )
+                    )
                     this.animate("jump");
                     this.onground = false;
                 }
+	            if(!this.isDown('SPACE') 										// apply force downward when jump button is released
+            	  && !this.isDown('UP_ARROW')
+            	  && !this.isDown('A') 
+            	  && !this.onground && body.m_linearVelocity.y < this.DOWNFORCELIMIT){
+	                 body.ApplyImpulse(
+	                 	new b2Vec2(0, this.DOWNFORCE),
+	                 	body.GetWorldCenter()
+	                 )
+	             this.previousPos = 0;											// reset previous position to zero on release of jump. (can't use on press of button because it is too early.)
+	            }
+	
                 if(velocity.x != 0 && !this.onground && 
                 	!(this.isDown('RIGHT_ARROW') 
                 	  || this.isDown('LEFT_ARROW'))){
@@ -60,18 +118,31 @@ Crafty.c("Player", {
             .onContact("Box2D", function(fixtures) {
                 var onGround = $.arrayFind(fixtures, function(i, f) {
                     return f.contact.fixtureA.m_userData === "foot";
+                }),
+					leftTouch = $.arrayFind(fixtures, function(i, f) {
+                    return f.contact.fixtureA.m_userData === "left";
+                }),
+					rightTouch = $.arrayFind(fixtures, function(i, f) {
+                    return f.contact.fixtureA.m_userData === "right";
                 });
+                if(leftTouch){
+					console.log(leftTouch.contact.fixtureA.m_userData);
+				}
                 if (onGround) {
                     if (!this.onground
-                        && this.body.m_linearVelocity.y <= 1.5 && this.body.m_linearVelocity.y >= -1.5) {
+                    && this.body.m_linearVelocity.y <= 3 
+                    && this.body.m_linearVelocity.y >= -3) {
                         //console.log("Screen.onContact(): ground hit");
                         this.onground = true;
                         this.run(this.currentDir);
                     }
-                    this.sideContact = false;
-                } else {
-                    this.sideContact = true;
-                }
+                    if(leftTouch || rightTouch){
+	                    console.log("wowowow");
+	                    this.sideContact = true;
+                    } else {
+                    	this.sideContact = false;
+					}
+                } 
                 return;
                 if (onGround) {
                     if (!this.onground) {
@@ -138,7 +209,11 @@ Crafty.c("WebsocketController", {
  */
 Crafty.c("Mannequin", {
     ANIMSPEED: 800,
-    JUMPFORCE: -40,
+    JUMPFORCE: -100,
+    WALKFORCE: 170,
+    DOWNFORCELIMIT: 16,
+    DOWNFORCE: 20,
+    TOPSPEED: 16,
     /**
      * 
      */
@@ -151,7 +226,7 @@ Crafty.c("Mannequin", {
             .animate("idle", -1)                                                // Run idle animation
             .box2d({
                 bodyType: 'dynamic',
-                density: 1.0,
+                density: 1,
                 friction: 0.2,
                 restitution: 0.1,
                 shape: [[this.w / 3, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w - 2], [this.w / 3, this.w - 2]]
@@ -173,7 +248,11 @@ Crafty.c("Mannequin", {
  */
 Crafty.c("WalloBot", {
     ANIMSPEED: 800,
-    JUMPFORCE: -80,
+    JUMPFORCE: -450,
+    WALKFORCE: 600,
+    DOWNFORCELIMIT: 16,
+    DOWNFORCE: 20,
+    TOPSPEED: 10,
     /**
      * 
      */
@@ -186,17 +265,31 @@ Crafty.c("WalloBot", {
             .animate("idle", -1)                                                 // Run idle animation
             .box2d({
                 bodyType: 'dynamic',
-                density: 1.0,
-                friction: 0.2,
-                restitution: 0.1,
-                shape: [[this.w / 3, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w], [this.w / 3, this.w]]
+                density: 4,
+                friction: 0,
+                restitution: 0,
+                shape: [[this.w / 3, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
+                userData: "body"
             })
             .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
                 shape: [[this.w / 3, this.w - 5], [2 * this.w / 3, this.w - 5], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
                 isSensor: true,
                 userData: "foot"
+            })
+            .addFixture({//                                                     // Add left sensor
+                bodyType: 'dynamic',
+                shape: [[this.w / 3, this.w / 4], [ (this.w / 3) + 5, this.w / 4], [(this.w / 3) + 5 , this.w - 5], [this.w / 3, this.w - 5]],
+                isSensor: true,
+                userData: "left"
+            })
+            .addFixture({//                                                     // Add right sensor
+                bodyType: 'dynamic',
+                shape: [[ (2 * this.w / 3) - 5, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w - 5], [(2 * this.w / 3) - 5, this.w - 5]],
+                isSensor: true,
+                userData: "right"
             });
+            
 
         this.body.SetFixedRotation(true);
     }
@@ -208,6 +301,7 @@ Crafty.c("WalloBot", {
 Crafty.c("SlowBigWalloBot", {
     ANIMSPEED: 8000,
     JUMPFORCE: -100,
+    WALKFORCE: 170,
     /**
      * 
      */

@@ -8,10 +8,10 @@
 Crafty.c("Platform", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("2D, Box2D, MouseHover")                                  // allows the entity to be drawn as a colored box
-            .attr({w: 100, h: 20})                                              // set width and height
+            .attr({w: 100, h: 20,})                         					// set width and height
             .box2d({
                 bodyType: 'static',
-                density: 1.0,
+                density: 0.2,
                 friction: 10,
                 restitution: 0,
                 shape: "box"
@@ -43,12 +43,13 @@ Crafty.c("MovingPlatform", {
             	y1: 200,
 	            x2: 300,
 	            y2: 200,
-	            time: 2
+	            time: 2,
+	            name: "movingPlat"
             })
             .box2d({
                 bodyType: 'kinematic',
                 density: 1.0,
-                friction: 100,
+                friction: 10,
                 restitution: 0,
                 shape: "box"
             })
@@ -59,7 +60,7 @@ Crafty.c("MovingPlatform", {
 					Xposition = body.m_xf.position.x*ratio,
 					Yposition = body.m_xf.position.y*ratio
             	
-            	if(xSpeed == 0 || ySpeed == 0){												// set respective speed for each direction
+            	if(xSpeed == 0 || ySpeed == 0){									// set respective speed for each direction
 					var fps = Crafty.timer.FPS(),
 						x = this.x1 - this.x2,
 						y = this.y1 - this.y2
@@ -78,23 +79,24 @@ Crafty.c("MovingPlatform", {
             		Ydirection = -Ydirection;
             	}
             	
-				var accX, accY;
-				//console.log(body);
-				if(body.m_contactList){											// if moving plateform touches a sprite add an acceleration to compensate for movement
-
-					accX = body.m_contactList.other.m_mass*body.m_contactList.other.m_linearVelocity.x*3
-					body.m_contactList.other.m_userData.accX = accX
-					
-					accY = body.m_contactList.other.m_mass*body.m_contactList.other.m_linearVelocity.y*3
-					body.m_contactList.other.m_userData.accY = accY
-					
-					console.log(accY + " : " + accX);
-				}else{
-					accX = accY = 0;
-				}
+				
 				var velocity = new b2Vec2(Xdirection, Ydirection)
 				body.SetLinearVelocity(velocity)
-            });
+            })
+            .onContact("Player", function(contact) {							// if moving plateform touches a sprit add an acceleration to compensate for movement
+
+            	/*
+var body = contact[0].obj.body, accX, accY;							
+        	    accX = body.m_mass * body.m_linearVelocity.x*3
+				body.m_userData.accX = accX
+				
+				accY = body.m_mass * body.m_linearVelocity.y*3
+				body.m_userData.accY = accY
+*/
+				
+				//console.log(accY)
+
+	        });
     }
 });
 
@@ -253,8 +255,16 @@ Crafty.c('MouseHover', {
 Crafty.c("Falling", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
 //        this.requires("Platform, Gravity")
-//            .gravity("Solid")                                                   // the player will stop falling if it hits anything with a component of Solid
-//            .gravityConst(1);                                                   // determines speed of falling
+//            .gravity("Solid")                                                 // the player will stop falling if it hits anything with a component of Solid
+//            .gravityConst(1);                                                 // determines speed of falling
+    	this.requires("ColoredPlatform, Gravity")
+    		.onContact("Player", function(contact) {
+				var body = this.body;
+				if(body.GetType() == 0){
+					body.SetType(2)
+				}
+	        })
+
     },
     handle: function() {                                                        // happens each frame of animation
         this.y += this.dx;                                                      // move platform by speed sideways
