@@ -254,25 +254,66 @@ Crafty.c('MouseHover', {
  */
 Crafty.c("Falling", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
-//        this.requires("Platform, Gravity")
-//            .gravity("Solid")                                                 // the player will stop falling if it hits anything with a component of Solid
-//            .gravityConst(1);                                                 // determines speed of falling
+		var counter, counter2, isDown = false, xOrigin, yOrigin,
+			multiplier = 50, contactName, ratio = Crafty.box2D.PTM_RATIO;
     	this.requires("ColoredPlatform, Gravity")
-    		.onContact("Player", function(contact) {
-				var body = this.body;
-				if(body.GetType() == 0){
-					body.SetType(2)
-				}
-	        })
-
-    },
-    handle: function() {                                                        // happens each frame of animation
-        this.y += this.dx;                                                      // move platform by speed sideways
-        this.antigravity();
-//        this.gravity();
-        //   if (this.y > 0)
-//            this.x -= 705;                                                      // wrap around from right side
-//        if (this.x < -100)
-//            this.x += 705;                                                      // wrap around from left side
+    		.attr({
+	    		fallTime: 2,
+	    		recoverTime: 5,
+	    		active: false,
+	    		touching: false,
+	    		name: "falling"
+    		})
+    		.bind("EnterFrame", function() {
+    			var body = this.body
+    			if(!isDown){													// checks if platforme is down
+	    			if(!xOrigin && !yOrigin){									// set origine location if they are not set yet
+						xOrigin = this.x;
+		    			yOrigin = this.y;
+	    			}
+	    			
+	    			if (!counter && counter != 0) {								// set counter if it doesn't exist
+		    			counter = this.fallTime * multiplier;
+		    			counter2 = this.recoverTime * multiplier;
+	    			}
+	    			
+	    			if(this.body.GetContactList() != null){						// check if there is contact with anything
+						contactName = this.body.GetContactList().contact.m_fixtureA.m_userData;
+					} else {
+						contactName = "";
+					}
+					if(contactName == "foot" || contactName == "body"){ 		// if contact exist check if it is with a wallobot
+		    			if (counter == 0) {
+			    			body.SetType(2)
+			    			isDown = true
+			    			console.log("falling")
+			    			counter2 = this.recoverTime * multiplier;
+		    			} else {
+			    			counter--;
+		    			}
+					} else if(counter < this.fallTime *multiplier){				// if not contact and counter is smaller than top time than increment
+			    		counter++;
+					}
+					
+					if(counter % multiplier == 0){								// show counter in console 
+		    			console.log("falling in: "+counter/multiplier)
+	    			}
+	    		} else {
+		    		if (counter2 == 0) {										// if counter = to 0 reset platform otherwise decrement counter
+					    body.SetType(0)
+						body.SetPosition(new b2Vec2(xOrigin/ratio, yOrigin/ratio));
+						body.SetAngle(0)
+						isDown = false
+						console.log("reset")
+						counter = this.fallTime * multiplier;
+				    } else {
+					    counter2--;
+				    }
+				    
+				    if(counter2 % multiplier == 0){								// show counter in console 
+					    console.log("reseting in "+counter2/multiplier)
+				    }
+	    		}
+			})
     }
 });

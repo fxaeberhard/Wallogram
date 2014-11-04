@@ -75,7 +75,6 @@ Crafty.c("Player", {
 			        		this.previousPos = xPosition
 		        		}
 						
-					console.log(xPosition)
 		        	this.body.SetPosition(new b2Vec2(playerPosition.x + diffPos, playerPosition.y))
 		        	this.currentPos = xPosition
 		        	//console.log(this.body.m_contactList.other);
@@ -120,13 +119,13 @@ Crafty.c("Player", {
                     return f.contact.fixtureA.m_userData === "foot";
                 }),
 					leftTouch = $.arrayFind(fixtures, function(i, f) {
-                    return f.contact.fixtureA.m_userData === "left";
+                    return f.contact.fixtureA.m_userData === "leftSide";
                 }),
 					rightTouch = $.arrayFind(fixtures, function(i, f) {
-                    return f.contact.fixtureA.m_userData === "right";
+                    return f.contact.fixtureA.m_userData === "rightSide";
                 });
                 if(leftTouch){
-					console.log(leftTouch.contact.fixtureA.m_userData);
+					//console.log(leftTouch.contact.fixtureA.m_userData);
 				}
                 if (onGround) {
                     if (!this.onground
@@ -137,7 +136,6 @@ Crafty.c("Player", {
                         this.run(this.currentDir);
                     }
                     if(leftTouch || rightTouch){
-	                    console.log("wowowow");
 	                    this.sideContact = true;
                     } else {
                     	this.sideContact = false;
@@ -281,13 +279,13 @@ Crafty.c("WalloBot", {
                 bodyType: 'dynamic',
                 shape: [[this.w / 3, this.w / 4], [ (this.w / 3) + 5, this.w / 4], [(this.w / 3) + 5 , this.w - 5], [this.w / 3, this.w - 5]],
                 isSensor: true,
-                userData: "left"
+                userData: "leftSide"
             })
             .addFixture({//                                                     // Add right sensor
                 bodyType: 'dynamic',
                 shape: [[ (2 * this.w / 3) - 5, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w - 5], [(2 * this.w / 3) - 5, this.w - 5]],
                 isSensor: true,
-                userData: "right"
+                userData: "rightSide"
             });
             
 
