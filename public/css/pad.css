@@ -31,7 +31,7 @@ body {
     height: 100%;
     width: 20%;
     background: #ff7769 url(../assets/simplepad-left.png) no-repeat center center;
-    background-size: 45%;
+    background-size: 100%;
 }
 .yui3-wallogram-pad .pad-button-right-arrow {
     top: 0;
@@ -39,7 +39,7 @@ body {
     left: 20%;
     width: 20%;
     background: #c73b44 url(../assets/simplepad-right.png) no-repeat center center;
-    background-size: 45%
+    background-size: 100%
 }
 
 .yui3-wallogram-pad .pad-button-a {
@@ -48,7 +48,7 @@ body {
     width: 40%;
     right: 0;
     background: #ffe050 url(../assets/simplepad-jump.png) no-repeat center center;
-    background-size: 60%;
+    background-size: 100%;
 }
 /** NES Pad **/
 .yui3-wallogram-pad-nes {    

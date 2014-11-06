@@ -101,6 +101,7 @@ function playerJoinGame(data) {
 
         if(usedSprites.length < playersColors.length){
             data.playerSprites = playersColors[randomColor].sprites
+            console.log(data)
             // Emit an event notifying the clients that the player has joined the room.
             io.sockets.in("host-" + data.gameId).emit('playerJoinedRoom', data);
             // Emit the player's color to the pad.

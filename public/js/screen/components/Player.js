@@ -207,15 +207,15 @@ Crafty.c("WebsocketController", {
  */
 Crafty.c("Mannequin", {
     ANIMSPEED: 800,
-    JUMPFORCE: -100,
-    WALKFORCE: 170,
-    DOWNFORCELIMIT: 16,
-    DOWNFORCE: 20,
-    TOPSPEED: 16,
+    JUMPFORCE: -80,
+    WALKFORCE: 400,
+    DOWNFORCELIMIT: 10,
+    DOWNFORCE: 15,
+    TOPSPEED: 6,
     /**
      * 
      */
-    init: function() {                                                          // init function is automatically run when entity with this component is created
+        init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("SpriteAnimation")               // Requirements
             .attr({x: 100, w: 64, h: 64})                                       // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
@@ -224,16 +224,29 @@ Crafty.c("Mannequin", {
             .animate("idle", -1)                                                // Run idle animation
             .box2d({
                 bodyType: 'dynamic',
-                density: 1,
+                density: 1.0,
                 friction: 0.2,
                 restitution: 0.1,
-                shape: [[this.w / 3, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w - 2], [this.w / 3, this.w - 2]]
+                shape: [[this.w / 3, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w - 2], [this.w / 3, this.w - 2]],
+                userData: "body"
             })
             .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
                 shape: [[this.w / 3, this.w - 5], [2 * this.w / 3, this.w - 5], [2 * this.w / 3, this.w], [this.w / 3, this.w]],
                 isSensor: true,
                 userData: "foot"
+            })
+            .addFixture({//                                                     // Add left sensor
+                bodyType: 'dynamic',
+                shape: [[this.w / 3, this.w / 4], [ (this.w / 3) + 5, this.w / 4], [(this.w / 3) + 5 , this.w - 5], [this.w / 3, this.w - 5]],
+                isSensor: true,
+                userData: "leftSide"
+            })
+            .addFixture({//                                                     // Add right sensor
+                bodyType: 'dynamic',
+                shape: [[ (2 * this.w / 3) - 5, this.w / 4], [2 * this.w / 3, this.w / 4], [2 * this.w / 3, this.w - 5], [(2 * this.w / 3) - 5, this.w - 5]],
+                isSensor: true,
+                userData: "rightSide"
             });
 
         this.body.SetFixedRotation(true);
