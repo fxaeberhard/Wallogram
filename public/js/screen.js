@@ -184,18 +184,18 @@ jQuery(function($) {
             App.toggleDebug(App.debug);                                         // to force refresh
         },
         addPlayer: function(cfg) {
+	        console.log(App.cfg.player)
             // This currently force new players to be mannequin
             App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
                 .attr(App.cfg.player);
-
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
             }
         },
         addDebugPlayer: function() {
-            console.log(App.cfg.player.components)
+            console.log(App.cfg.player)
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Keyboard")
+                App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Player, Mannequin, Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();

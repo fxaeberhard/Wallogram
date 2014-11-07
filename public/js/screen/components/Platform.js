@@ -82,21 +82,7 @@ Crafty.c("MovingPlatform", {
 				
 				var velocity = new b2Vec2(Xdirection, Ydirection)
 				body.SetLinearVelocity(velocity)
-            })
-            .onContact("Player", function(contact) {							// if moving plateform touches a sprit add an acceleration to compensate for movement
-
-            	/*
-var body = contact[0].obj.body, accX, accY;							
-        	    accX = body.m_mass * body.m_linearVelocity.x*3
-				body.m_userData.accX = accX
-				
-				accY = body.m_mass * body.m_linearVelocity.y*3
-				body.m_userData.accY = accY
-*/
-				
-				//console.log(accY)
-
-	        });
+            });
     }
 });
 
@@ -295,9 +281,11 @@ Crafty.c("Falling", {
 			    		counter++;
 					}
 					
+/*
 					if(counter % multiplier == 0){								// show counter in console 
 		    			console.log("falling in: "+counter/multiplier)
 	    			}
+*/
 	    		} else {
 		    		if (counter2 == 0) {										// if counter = to 0 reset platform otherwise decrement counter
 					    body.SetType(0)
@@ -310,9 +298,11 @@ Crafty.c("Falling", {
 					    counter2--;
 				    }
 				    
+/*
 				    if(counter2 % multiplier == 0){								// show counter in console 
 					    console.log("reseting in "+counter2/multiplier)
 				    }
+*/
 	    		}
 			})
     }
