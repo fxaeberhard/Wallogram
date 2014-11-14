@@ -32,8 +32,10 @@ Crafty.sprite(128, 128, 'assets/mannequin_red.png', {
 Crafty.sprite(128, 128, 'assets/mannequin_violet.png', {
     MannequinSpriteViolet: [0, 0]
 });
-
 Crafty.sprite(128, 128, 'assets/wallobot-1024.png', {
     WalloBotSprite: [0, 0]
+});
+Crafty.sprite(200, 40, 'assets/breakingAnim.png', {
+	breakingPlateforme: [0, 0]
 });
 

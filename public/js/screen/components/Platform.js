@@ -242,7 +242,7 @@ Crafty.c("Falling", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
 		var counter, counter2, isDown = false, xOrigin, yOrigin,
 			multiplier = 50, contactName, ratio = Crafty.box2D.PTM_RATIO;
-    	this.requires("ColoredPlatform, Gravity")
+    	this.requires("ColoredPlatform, Gravity, breakingPlateforme, SpriteAnimation")
     		.attr({
 	    		fallTime: 2,
 	    		recoverTime: 5,
@@ -250,6 +250,8 @@ Crafty.c("Falling", {
 	    		touching: false,
 	    		name: "falling"
     		})
+    		.reel("breaking", this.fallTime * 1000, 0, 0, 6 )
+    		.reel("idle", this.fallTime * 1000, 0, 0, 1 )
     		.bind("EnterFrame", function() {
     			var body = this.body
     			if(!isDown){													// checks if platforme is down
@@ -272,13 +274,17 @@ Crafty.c("Falling", {
 		    			if (counter == 0) {
 			    			body.SetType(2)
 			    			isDown = true
-			    			console.log("falling")
 			    			counter2 = this.recoverTime * multiplier;
 		    			} else {
 			    			counter--;
 		    			}
+						if(!this.isPlaying("breaking") && body.GetType() != 2){	// if breaking animation is not playing yet then start it.
+							console.log("breaking")
+							this.animate("breaking");
+						}
 					} else if(counter < this.fallTime *multiplier){				// if not contact and counter is smaller than top time than increment
-			    		counter++;
+			    		counter = this.fallTime * multiplier;
+			    		this.animate("idle", -1)
 					}
 					
 /*
@@ -291,8 +297,8 @@ Crafty.c("Falling", {
 					    body.SetType(0)
 						body.SetPosition(new b2Vec2(xOrigin/ratio, yOrigin/ratio));
 						body.SetAngle(0)
+						this.animate("idle", -1)
 						isDown = false
-						console.log("reset")
 						counter = this.fallTime * multiplier;
 				    } else {
 					    counter2--;
