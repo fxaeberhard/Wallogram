@@ -199,9 +199,11 @@ jQuery(function($) {
             }
         },
         resetPlayer: function(player) {
+	        setTimeout(function() {												// Set 3 second Delay before reseting
+		        player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
+				player.attr(App.cfg.player);                                    // Reset the player position
+			}, 3000);
             console.log("App.resetPlayer()", player);
-            player.body.SetLinearVelocity(new b2Vec2(0, 0));			// Reset velocity 
-            player.attr(App.cfg.player);                                        // Reset the player position
         },
         showCountdown: function() {
             var w = 200, h = 200, //                                            // Append a box to limit players moves

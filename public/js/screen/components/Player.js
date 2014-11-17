@@ -18,7 +18,6 @@ Crafty.c("Player", {
                     velocity = body.GetLinearVelocity(),
                     forceX = 0,
                     landingV;
-                console.log(this.sideContact + " : " + this.onground);
                 
                 if ((!this.sideContact || this.onground) && this.isDown('LEFT_ARROW')) {									// If right arrow is down
 	                if (velocity.x > -this.TOPSPEED + 1){	     					// If player is still under topspeed (accelerating)
