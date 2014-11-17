@@ -65,7 +65,7 @@ body {
     padding-top: .9em;
 }
 .wallo-edit-buttons {
-    padding: 0 1em;
+    padding: 0 1em .5em;
 }
 .wallo-edit-content {
     position: absolute;
