@@ -82,37 +82,33 @@ jQuery(function($) {
                 App.players[data.socketId].onPadEvent(data);
             });
 
+            $(".button-reset").bind("click", function() {
+                $.App.setState("countdown");
+            });
+            $(".button-fullscreen").bind("click", $.toggleFullscreen);          // Toggle fullscreen button
+
             $("body").keydown(function(e) {                                     // Keyboard events
+                console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
                 switch (e.keyCode) {
                     case 191:
                     case 192:                                                   // §: Debug
                         App.toggleDebug();
                         break;
 
-                    case 49:                                                    // 1: Restart game
+                    case 82:                                                    // r: Restart game
                         App.setState("countdown");
                         break;
 
-                    case 50:                                                    // 2: Add a debug player w/ keyboard
+                    case 49:                                                    // 1: Add a debug player w/ keyboard
                         App.addDebugPlayer();
                         break;
 
-
-                    case 51:                                                    // 3: Full screen
-                        var isFullScreen = (document.fullScreenElement && document.fullScreenElement !== null) || document.mozFullScreen || document.webkitIsFullScreen,
-                            cfs = document.exitFullscreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || document.msExitFullscreen,
-                            el = document.documentElement,
-                            rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-                        if (isFullScreen) {
-                            cfs.call(document);                                 //Exits full-screen mode and returns to the document view.
-                        } else {
-                            rfs.call(el, Element.ALLOW_KEYBOARD_INPUT);
-                        }
+                    case 70:                                                    // f: full screen
+                        $.toggleFullscreen();
                         break
 
-
-                    case 52:
-                        var wnd = window.open("about:blank", "", "_blank");     // 4: Open current cfg in a blank frame
+                    case 50:
+                        var wnd = window.open("about:blank", "", "_blank");     // 2: Open current cfg in a blank frame
                         wnd.document.write(JSON.stringify(App.cfg));
                         break;
                 }
@@ -167,7 +163,7 @@ jQuery(function($) {
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
 
-            $.each($.App.cfg.entities, function(i, p) {                        // Add entities from config file
+            $.each($.App.cfg.entities, function(i, p) {                         // Add entities from config file
                 var entity = Crafty.e(p.components).attr(p);
                 entity.cfgObject = p;
             });
@@ -185,7 +181,7 @@ jQuery(function($) {
         },
         addPlayer: function(cfg) {
             // This currently force new players to be mannequin
-            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
+            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites + ", Player, Mannequin, WebsocketController")
                 .attr(App.cfg.player);
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
@@ -201,10 +197,10 @@ jQuery(function($) {
             }
         },
         resetPlayer: function(player) {
-	        setTimeout(function() {												// Set 3 second Delay before reseting
-		        player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
-				player.attr(App.cfg.player);                                    // Reset the player position
-			}, 3000);
+            setTimeout(function() {												// Set 3 second Delay before reseting
+                player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
+                player.attr(App.cfg.player);                                    // Reset the player position
+            }, 3000);
             console.log("App.resetPlayer()", player);
         },
         killEnemy: function(enemy){
@@ -262,9 +258,9 @@ jQuery(function($) {
             Crafty.box2D.ShowBox2DDebug = App.debug;
             Crafty.box2D.debugCanvas.getContext('2d')
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
-            if (this.debug) {
-                Crafty.stage.x = 300;
-            }
+            //if (this.debug) {
+            //    Crafty.stage.x = 0;
+            //}
         },
         getPadUrl: function() {
             return  "/pad.html?gameId=" + IO.gameId;

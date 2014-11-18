@@ -39,7 +39,7 @@ body {
     -ms-flex-flow: row wrap;
 }
 .wallo-debugmode .wallo-page {
-    padding-left: 300px;
+    padding-right: 300px;
 }
 .wallo-u {
     display: inline-block;
@@ -59,15 +59,18 @@ body {
 .wallo-edit {
     width: 300px;
     height: 100%;
-    margin-left: -300px;
+    margin-right: -300px;
     font-size: 0.9em;
     background: #fafafa;
     padding-top: .9em;
 }
+.wallo-edit-buttons {
+    padding: 0 1em .5em;
+}
 .wallo-edit-content {
-    position: fixed;
-    bottom: .9em;
-    left: .9em;
+    position: absolute;
+    bottom: 0;
+    padding: 1em;
     font-size: 0.7em;
 }
 .wallo-edit-content .wallo-key {
@@ -82,10 +85,10 @@ body {
 }
 
 #stats #fps {
-    background: white !important;
+    /*background: white !important;*/
 }
 #stats #fpsText {
-    color: black !important;
+    /*color: black !important;*/
 }
 
 .wallo-edit-overlay {
@@ -101,7 +104,15 @@ body {
     background-color: rgba(200, 200, 200, 0.5);
     cursor: move;
 }
-
+.wallo-edit-overlay .wallo-edit-destroy {
+    width: 23px;
+    height: 24px;
+    background: white url(../assets/edit-icons.png) no-repeat 3px -770px;
+    float: right;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 12px;
+}
 .wallo-stdmode #stats,
 .wallo-stdmode .wallo-edit,
 .wallo-stdmode .wallo-edit-overlay {

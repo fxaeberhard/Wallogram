@@ -19,15 +19,31 @@
 
         <!-- Markup -->
         <div class="wallo-page">
+
+            <div id="tab-play" class="wallo-u wallo-tab wallo-tab-selected">
+                <div class="wallo-crafty"></div>
+            </div>
+
+            <div id="tab-source" class="wallo-u wallo-tab">
+                <div id="editor"></div>
+            </div>
+
             <div class="wallo-edit wallo-u">
+
+                <div class="wallo-edit-buttons">
+                    <button class="button-play" title="Shortcut: p" disabled>Play</button>
+                    <button class="button-stop" title="Shortcut: s" disabled>Stop</button>
+                    <button class="button-reset" title="Shortcut: r">Reset</button>
+                    <button class="button-fullscreen" title="Shortcut: f">Fullscreen</button>
+                </div>
+
                 <div data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected">Preview</div>
                 <div data-target="#tab-source" class="wallo-tab-link">Source</div>
 
                 <div class="wallo-edit-content">
                     <span class="wallo-key">§</span> Show/hide edition<br />
-                    <span class="wallo-key">1</span> Reset<br />
-                    <span class="wallo-key">2</span> Add debug player<br />
-                    <span class="wallo-key">3</span> Fullscreen<br /><br />
+                    <span class="wallo-key">1</span> Add debug player<br />
+                    <span class="wallo-key">2</span> Export level<br /><br />
                 </div>
             </div>
 
@@ -58,6 +74,7 @@
         <script src="js/screen/components/Platform.js"></script>
         <!-- <script src="js/screen/components/TintSprite.js"></script> -->
         <script src="js/io.js"></script>
+        <script src="js/util.js"></script>
         <script src="js/screen-edit.js"></script>
         <script src="js/screen.js"></script>
 

@@ -8,14 +8,14 @@
 jQuery(function($) {
     'use strict';
 
-    var Edit = {
+    var currentEntity, Edit = {
         /**
          *
          */
         init: function() {
-            $("#tab-play").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"></div></div>');
+            $("#tab-play").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"><div class="wallo-edit-destroy"></div></div></div>');
 
-            YUI().use("dd-drag", "dd-constrain", "resize", "event-mouseenter", function(Y) {
+            YUI().use("dd-drag", "dd-constrain", "resize", "event-mouseenter", function(Y) {// Add move & resize support
                 var node = Y.one(".wallo-edit-dd"),
                     drag = new Y.DD.Drag({node: node}),
                     resize = new Y.Resize({node: node}),
@@ -37,6 +37,10 @@ jQuery(function($) {
                         Edit.hideEdition();
                     }
                 });
+            });
+
+            $(".wallo-edit-destroy").bind("click", function() {
+                Edit.destroyEntity();
             });
 
             $(document).bind("newGameCreated", function() {
@@ -97,7 +101,7 @@ jQuery(function($) {
                 .css("top", entity.y)
                 .width(entity.w)
                 .height(entity.h);
-            $('.wallo-edit-dd')[0].currentEntity = entity;
+            currentEntity = entity;
         },
         hideEdition: function() {
             $('.wallo-edit-overlay').hide();
@@ -110,8 +114,24 @@ jQuery(function($) {
                     w: node.width(),
                     h: node.height()
                 };
-            node[0].currentEntity.attr(cfg);
-            $.extend(node[0].currentEntity.cfgObject, cfg);
+            currentEntity.attr(cfg);
+            $.extend(currentEntity.cfgObject, cfg);
+            Edit.saveConfig();
+        },
+        destroyEntity: function() {
+            $.arrayFind($.App.cfg.entities, function(i, e) {
+                if (e === currentEntity.cfgObject) {
+                    $.App.cfg.entities.splice(i, 1);
+                    return true;
+                }
+            });
+            currentEntity.destroy();
+            currentEntity = null;
+            Edit.hideEdition();
+            Edit.saveConfig();
+        },
+        saveCfg: function() {
+            // TODO
         }
     };
     $.Edit = Edit;                                                              // Set up global reference
