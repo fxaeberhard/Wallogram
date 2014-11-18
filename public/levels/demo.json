@@ -23,7 +23,7 @@
 			"color": "pink",
 			"x": 190,
 			"y": 339,
-			"w": 100,
+			"w": 300,
 			"h": 20
 		}, {
 			"components": "ColoredPlatform",
@@ -71,5 +71,9 @@
             "y": 580,
             "w": 1200,
             "h": 10
+        }, {
+	        "components": "Hotdog",
+	        "x": 50,
+	        "y": 100
         }]
 }

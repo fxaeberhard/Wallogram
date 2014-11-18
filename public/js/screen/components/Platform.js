@@ -122,6 +122,9 @@ Crafty.c("OutOfBounds", {
                 isSensor: true,
                 shape: "box"
             })
+            .onContact("Enemy", function(contacts){
+	            $.App.killEnemy(contacts[0].obj)
+            })
             .onContact("Player", function(contacts) {
                 $.App.resetPlayer(contacts[0].obj);
             });
@@ -215,7 +218,7 @@ Crafty.c("Timer", {
 });
 
 /**
- *
+ * 
  */
 Crafty.c('MouseHover', {
     init: function() {

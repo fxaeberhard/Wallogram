@@ -118,7 +118,10 @@ Crafty.c("Player", {
                 }),
 					rightTouch = $.arrayFind(fixtures, function(i, f) {
                     return f.contact.fixtureA.m_userData === "rightSide";
-                });
+                }),
+                	bodyTouch = $.arrayFind(fixtures, function(i, f) {
+	                return f.contact.fixtureA.m_userData === "body"
+                	})
                 if(leftTouch){
 					//console.log(leftTouch.contact.fixtureA.m_userData);
 				}
@@ -211,7 +214,7 @@ Crafty.c("Mannequin", {
     /**
      * 
      */
-        init: function() {                                                          // init function is automatically run when entity with this component is created
+    init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("SpriteAnimation")               // Requirements
             .attr({x: 100, w: 64, h: 64})                                       // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation

@@ -184,7 +184,6 @@ jQuery(function($) {
             App.toggleDebug(App.debug);                                         // to force refresh
         },
         addPlayer: function(cfg) {
-	        console.log(App.cfg.player)
             // This currently force new players to be mannequin
             App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
                 .attr(App.cfg.player);
@@ -193,7 +192,6 @@ jQuery(function($) {
             }
         },
         addDebugPlayer: function() {
-            console.log(App.cfg.player)
             if (!App.players.DEBUG) {
                 App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Player, Mannequin, Keyboard")
                     .attr(App.cfg.player);
@@ -208,6 +206,9 @@ jQuery(function($) {
 				player.attr(App.cfg.player);                                    // Reset the player position
 			}, 3000);
             console.log("App.resetPlayer()", player);
+        },
+        killEnemy: function(enemy){
+	        enemy.destroy()
         },
         showCountdown: function() {
             var w = 200, h = 200, //                                            // Append a box to limit players moves
