@@ -104,7 +104,15 @@ body {
     background-color: rgba(200, 200, 200, 0.5);
     cursor: move;
 }
-
+.wallo-edit-overlay .wallo-edit-destroy {
+    width: 23px;
+    height: 24px;
+    background: white url(../assets/edit-icons.png) no-repeat 3px -770px;
+    float: right;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 12px;
+}
 .wallo-stdmode #stats,
 .wallo-stdmode .wallo-edit,
 .wallo-stdmode .wallo-edit-overlay {

@@ -180,7 +180,7 @@ jQuery(function($) {
             App.toggleDebug(App.debug);                                         // to force refresh
         },
         addPlayer: function(cfg) {
-            console.log(App.cfg.player)
+            console.log(App.cfg.player);
             // This currently force new players to be mannequin
             App.players[cfg.socketId] = Crafty.e(cfg.playerSprites + ", Player, Mannequin, WebsocketController")
                 .attr(App.cfg.player);
@@ -189,7 +189,7 @@ jQuery(function($) {
             }
         },
         addDebugPlayer: function() {
-            console.log(App.cfg.player)
+            console.log(App.cfg.player);
             if (!App.players.DEBUG) {
                 App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Player, Mannequin, Keyboard")
                     .attr(App.cfg.player);
@@ -199,10 +199,10 @@ jQuery(function($) {
             }
         },
         resetPlayer: function(player) {
-	        setTimeout(function() {												// Set 3 second Delay before reseting
-		        player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
-				player.attr(App.cfg.player);                                    // Reset the player position
-			}, 3000);
+            setTimeout(function() {												// Set 3 second Delay before reseting
+                player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
+                player.attr(App.cfg.player);                                    // Reset the player position
+            }, 3000);
             console.log("App.resetPlayer()", player);
         },
         showCountdown: function() {
@@ -257,9 +257,9 @@ jQuery(function($) {
             Crafty.box2D.ShowBox2DDebug = App.debug;
             Crafty.box2D.debugCanvas.getContext('2d')
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
-            if (this.debug) {
-                Crafty.stage.x = 300;
-            }
+            //if (this.debug) {
+            //    Crafty.stage.x = 0;
+            //}
         },
         getPadUrl: function() {
             return  "/pad.html?gameId=" + IO.gameId;
