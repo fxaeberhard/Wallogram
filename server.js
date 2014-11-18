@@ -78,6 +78,14 @@ function playerJoinGame(data) {
 
     // A reference to the player's Socket.IO socket object
     var sock = this;
+    
+    sock.on('disconnect', function(){
+        //When a player disconnect, we should "release" his color
+        var index = usedSprites.indexOf(data.playerSpritesColorIndex);
+        if (index > -1) {
+            usedSprites.splice(index, 1);
+        }
+    });
 
     // Look up the room ID in the Socket.IO manager object.
     var room = gameSocket.adapter.rooms[data.gameId];
@@ -101,6 +109,7 @@ function playerJoinGame(data) {
 
         if(usedSprites.length < playersColors.length){
             data.playerSprites = playersColors[randomColor].sprites
+            data.playerSpritesColorIndex = randomColor; // This property is used to manage colors
             console.log(data)
             // Emit an event notifying the clients that the player has joined the room.
             io.sockets.in("host-" + data.gameId).emit('playerJoinedRoom', data);
@@ -110,7 +119,7 @@ function playerJoinGame(data) {
             usedSprites.push(randomColor);
         }else{
             //All the colors are used
-            io.to(data.mySocketId).emit('complete','Sorry! All the colors are already assigned')
+            io.to(data.mySocketId).emit('complete','Sorry! All the colors are already assigned. Try to reload the page!')
         }
 
     } else {
