@@ -11,7 +11,7 @@ router.get('/pad', function(req, res) {
 });
 
 router.get('/screen', function(req, res) {
-  res.render('screen', { title: 'Wallogram - Pad', bodyClass: 'wallo-stdmode' });
+  res.render('screen', { title: 'Wallogram - Screen', bodyClass: 'wallo-stdmode' });
 });
 
 module.exports = router;

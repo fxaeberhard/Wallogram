@@ -172,3 +172,6 @@ body {
 .ace_gutter {
     background: #fafafa !important;
 }
+.wallo-edit-content span{
+    display: block;
+}
