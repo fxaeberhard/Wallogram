@@ -1,20 +1,6 @@
-doctype html
-html(lang="en")
-head
-  meta(charset="utf-8")
+extends layout
 
-  // Ensure that everything scales appropriately on a mobile device 
-  meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0")
-
-  // Let's borrow a cool looking Font from Google 
-  link(href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css')
-
-  link(href="css/styles.css" rel="stylesheet")
-head
-
-body
-
-
+block content
   #content-template
     // This is where the templates defined below will be used
 
@@ -30,15 +16,14 @@ body
 
     // This screen appears when a user clicks "CREATE" on the Title Screen 
     script(id="create-game-template" type="text/template")
-      .createGameWrapper
+      div(class="createGameWrapper")
         div(class="info") Open this site on your mobile device:
         div(id="gameURL" class="infoBig") Error!
-
         div(class="info") Then click strongJOIN/strong and br enter the following Game ID:
         div(id="spanNewGameCode" class="gameId") Error!
         button(id="startLevel" class="btn") Go to level/button
         div id="playersWaiting"
-        
+
     // This scrreen appears when a player clicks "JOIN" on the Title Screen 
     script(id="join-game-template" type="text/template")
       div(class="joinGameWrapper")
