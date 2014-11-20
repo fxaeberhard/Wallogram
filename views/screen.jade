@@ -1,0 +1,57 @@
+extends layout
+
+block content
+	// Markup 
+	div(class="wallo-page")
+
+		div(id="tab-play" class="wallo-u wallo-tab wallo-tab-selected")
+			div(class="wallo-crafty")
+
+
+		div(id="tab-source" class="wallo-u wallo-tab")
+			div(id="editor")
+
+		div(class="wallo-edit wallo-u")
+
+			div(class="wallo-edit-buttons")
+				button(class="button-play" title="Shortcut: p") disabledPlay
+				button(class="button-stop" title="Shortcut: s") disabledStop
+				button(class="button-reset" title="Shortcut: r") Reset
+				button(class="button-fullscreen" title="Shortcut: f") Fullscreen
+
+			div(data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected") Preview
+			div(data-target="#tab-source" class="wallo-tab-link") Source
+
+			div(class="wallo-edit-content")
+				span(class="wallo-key") § Show/hide edition
+				span(class="wallo-key") 1 Add debug player
+				span(class="wallo-key") 2 Export level
+
+			div(id="tab-play" class="wallo-u wallo-tab wallo-tab-selected")
+				div(class="wallo-crafty")    
+
+			div(id="tab-source" class="wallo-u wallo-tab")
+				div(id="editor")
+
+
+
+	// Libraries 
+	script(src="libs/jquery-2.1.1.min.js")
+	script(src="libs/Box2dWeb-2.1.a.3.min.js")
+	script(src="libs/crafty-min.js")
+	script(src="/socket.io/socket.io.js")
+	script(src="libs/stats.min.js")
+	script(src="libs/yui3/build/yui/yui-min.js")
+	script(src="libs/ace/ace.js")
+
+	// Sources 
+	script(src="js/screen/sprites.js")
+	//script(src="js/screen/scenes/demo.js")
+	script(src="js/screen/components/box2d.js")
+	script(src="js/screen/components/Player.js")
+	script(src="js/screen/components/Platform.js")
+	// script(src="js/screen/components/TintSprite.js")
+	script(src="js/io.js")
+	script(src="js/util.js")
+	script(src="js/screen-edit.js")
+	script(src="js/screen.js")
