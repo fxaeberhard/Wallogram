@@ -116,7 +116,7 @@ jQuery(function($) {
                 };
             currentEntity.attr(cfg);
             $.extend(currentEntity.cfgObject, cfg);
-            Edit.saveConfig();
+            Edit.save();
         },
         destroyEntity: function() {
             $.arrayFind($.App.cfg.entities, function(i, e) {
@@ -128,9 +128,9 @@ jQuery(function($) {
             currentEntity.destroy();
             currentEntity = null;
             Edit.hideEdition();
-            Edit.saveConfig();
+            Edit.save();
         },
-        saveCfg: function() {
+        save: function() {
             // TODO
         }
     };

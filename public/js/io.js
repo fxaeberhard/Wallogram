@@ -15,10 +15,13 @@ jQuery(function($) {
          * to the Socket.IO server
          */
         init: function() {
-            IO.socket = io.connect();
+            var socket = io.connect();
 
-            IO.socket.on('connected', IO.onConnected);
-            IO.socket.on('error', IO.error);
+            socket.on('connected', IO.onConnected);
+            socket.on('error', IO.error);
+            socket.on('disconnect', IO.onDisconnect);
+
+            IO.socket = socket;
         },
         /**
          * The client is successfully connected!
@@ -26,6 +29,11 @@ jQuery(function($) {
         onConnected: function() {
             console.log("IO.onConnected(id: " + IO.socket.io.engine.id + ")");
             IO.id = IO.socket.io.engine.id;
+            $(".wallo-connectionindicator").toggleClass("wallo-disconnected", false);
+        },
+        onDisconnect: function() {
+            console.log("IO.onDisconnect()");
+            $(".wallo-connectionindicator").toggleClass("wallo-disconnected", true);
         },
         /**
          * An error has occurred.
