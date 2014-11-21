@@ -29,11 +29,11 @@ jQuery(function($) {
         onConnected: function() {
             console.log("IO.onConnected(id: " + IO.socket.io.engine.id + ")");
             IO.id = IO.socket.io.engine.id;
-            $(".wallo-connectionindicator").toggleClass("wallo-disconnected", false);
+            $("body").toggleClass("wallo-socketio-connected", true);
         },
         onDisconnect: function() {
             console.log("IO.onDisconnect()");
-            $(".wallo-connectionindicator").toggleClass("wallo-disconnected", true);
+            $("body").toggleClass("wallo-socketio-connected", false);
         },
         /**
          * An error has occurred.
