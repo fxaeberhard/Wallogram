@@ -5,6 +5,10 @@
  * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
  * Licensed under the MIT License
  */
+ 
+ /*
+  * Players
+  */
 Crafty.sprite(128, 128, 'assets/mannequin.png', {
     MannequinSprite: [0, 0]
 });
@@ -37,5 +41,11 @@ Crafty.sprite(128, 128, 'assets/wallobot-1024.png', {
 });
 Crafty.sprite(200, 40, 'assets/breakingAnim.png', {
 	breakingPlateforme: [0, 0]
+});
+/*
+ * Enemy
+ */
+Crafty.sprite(128, 128, 'assets/enemy.png',{
+	HotdogSprite: [0, 0]
 });
 
