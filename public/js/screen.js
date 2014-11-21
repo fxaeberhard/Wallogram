@@ -29,7 +29,7 @@ jQuery(function($) {
 
             IO.init();                                                          // Init socket.io
 
-            var levelUri = $.urlParam("level") || "levels/demo.json";
+            var levelUri = $.urlParam("level") || "levels/demo2.json";
 
             $.getJSON(levelUri, null, function(cfg) {                           // Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
@@ -37,7 +37,9 @@ jQuery(function($) {
                 App.initCrafty();                                               // Init crafty
 
                 App.bindEvents();                                               // Bind game events
-
+				
+				App.SetB2dListener();
+				
                 IO.emit('hostCreateNewGame');                                   // Join a game
 
                 $.Edit.init();
@@ -88,7 +90,7 @@ jQuery(function($) {
             $(".button-fullscreen").bind("click", $.toggleFullscreen);          // Toggle fullscreen button
 
             $("body").keydown(function(e) {                                     // Keyboard events
-                console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
+                //console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
                 switch (e.keyCode) {
                     case 191:
                     case 192:                                                   // §: Debug
@@ -98,7 +100,11 @@ jQuery(function($) {
                     case 82:                                                    // r: Restart game
                         App.setState("countdown");
                         break;
-
+                        
+					case 51:													// 3: Restart game as well
+						App.setState("countdown");
+                        break;
+                        
                     case 49:                                                    // 1: Add a debug player w/ keyboard
                         App.addDebugPlayer();
                         break;
@@ -113,6 +119,58 @@ jQuery(function($) {
                         break;
                 }
             });
+        },
+        SetB2dListener: function() {											// Initiate contact listener
+	        var contactListener = new b2ContactListener
+			
+			
+			/*
+			 * Begin Contact Listener
+			 */
+			 
+			contactListener.BeginContact = function(contact){
+				var fixtures = [];												// create array of the two Entity in contact
+				fixtures.push(contact.GetFixtureA())							
+				fixtures.push(contact.GetFixtureB())
+				
+				$.each(fixtures, function(i, f){
+					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity starting Contact is Player
+						var player = f.GetBody().GetUserData()					// Get relevent enemy
+						player.BeginContact(fixtures, i);						// Send both fixtures
+					}
+					if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity starting Contact is Enemy
+						var enemy = f.GetBody().GetUserData()					// Get relevent enemy
+						enemy.BeginContact(fixtures, i);						// Send both fixtures
+					}
+					
+				})
+			}
+			
+			
+			
+			
+			/*
+			 * End contact listener
+			 */
+			contactListener.EndContact = function(contact){
+				var fixtures = [];
+				fixtures.push(contact.GetFixtureA())
+				fixtures.push(contact.GetFixtureB())
+				
+				$.each(fixtures, function(i, f){
+					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
+						var player = f.GetBody().GetUserData()
+						player.EndContact(fixtures, i);
+					}
+					if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity ending Contact is Enemy
+						var enemy = f.GetBody().GetUserData()
+						enemy.EndContact(fixtures, i);
+					}
+					
+				})
+			}
+			
+			$.App.world.SetContactListener(contactListener);
         },
         setState: function(newState) {
             if (App.state === newState)
@@ -160,6 +218,8 @@ jQuery(function($) {
             Crafty.canvas.init();
             Crafty.box2D.init(0, 20, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
             Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
+            
+            App.world = Crafty.box2D.world
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
 
@@ -167,7 +227,6 @@ jQuery(function($) {
                 var entity = Crafty.e(p.components).attr(p);
                 entity.cfgObject = p;
             });
-
             App.addDebugPlayer();
         },
         resetCrafty: function() {
@@ -195,13 +254,6 @@ jQuery(function($) {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;
             }
-        },
-        resetPlayer: function(player) {
-            setTimeout(function() {												// Set 3 second Delay before reseting
-                player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
-                player.attr(App.cfg.player);                                    // Reset the player position
-            }, 3000);
-            console.log("App.resetPlayer()", player);
         },
         killEnemy: function(enemy){
 	        enemy.destroy()
@@ -231,7 +283,7 @@ jQuery(function($) {
                 }));                                                            // Add a box to limit players moves until they can move
 
             $.each(App.players, function(i, p) {                                // Bring all players to starting position
-                App.resetPlayer(p);
+                p.die()
             });
 
             var countDown = App.cfg.countdownDuration,

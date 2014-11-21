@@ -126,7 +126,9 @@ Crafty.c("OutOfBounds", {
 	            $.App.killEnemy(contacts[0].obj)
             })
             .onContact("Player", function(contacts) {
-                $.App.resetPlayer(contacts[0].obj);
+	            if( contacts[0].obj.dead != true) {
+	            	contacts[0].obj.reset()
+	            }
             });
     }
 });
@@ -282,7 +284,6 @@ Crafty.c("Falling", {
 			    			counter--;
 		    			}
 						if(!this.isPlaying("breaking") && body.GetType() != 2){	// if breaking animation is not playing yet then start it.
-							console.log("breaking")
 							this.animate("breaking");
 						}
 					} else if(counter < this.fallTime *multiplier){				// if not contact and counter is smaller than top time than increment
