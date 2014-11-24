@@ -116,15 +116,17 @@ Crafty.c("Player", {
                 }
             })
             .bind("KeyDown", function() {
-                if (this.isDown('LEFT_ARROW')) {
-                    this.run(-1);
-                }
-                if (this.isDown('RIGHT_ARROW')) {
-                    this.run(1);
-                }
-                if (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A')){
-	                this.animate("jump");
-                }
+	            if(this.has("Keyboard") || this.has("WebsocketController")){
+	                if (this.isDown('LEFT_ARROW')) {
+	                    this.run(-1);
+	                }
+	                if (this.isDown('RIGHT_ARROW')) {
+	                    this.run(1);
+	                }
+	                if (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A')){
+		                this.animate("jump");
+	                }
+	            }
             })
             .bind("KeyUp", function() {
                 if (!this.isDown('LEFT_ARROW')
@@ -169,6 +171,7 @@ Crafty.c("Player", {
     },
     hit: function(enemy) {
 	    if(this.ko != true) {												// If player is not ko than action can start
+		    this.alpha = 0.5;
 		    this.ko = true;													// set ko to true so it doesn't happen more than once
 		    var player = this,
 		    	playerB2D = this.body,
@@ -220,7 +223,7 @@ Crafty.c("Player", {
                 } else {
 		            player.idle();
 	            }  
-	                                    
+	            player.alpha = 1;                    
 	        }, 2000);
 	    }
     },
