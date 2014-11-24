@@ -7,19 +7,18 @@
  */
 Crafty.c("Enemy", {
 	init: function() {  																			// init function is automatically run when entity with this component is created
-		this.dead = false
-		this.rightTouch = false
-		this.leftTouch = false
-		this.footTouch = false                               
+		this.dead = this.rightTouch = this.leftTouch = this.footTouch = false 
+		                           
         this.requires("2D, Canvas, Box2D")
     	.bind("EnterFrame", function() {
     		var body = this.body,
     			velocity = body.GetLinearVelocity(),
     			forceX
-    		if(this.isPlaying("idle")){
-        		this.run(1);
-        		body.SetLinearVelocity(new b2Vec2(2, velocity.y))
-    		}
+    		
+    		if (this.runOnce != true) {
+	    		this.runOnce()
+    		}	
+    		
     		if (velocity.x != 0 && this.dead && this.leftTouch == false && this.rightTouch == false){			// slow down to a stop when dead
         		if (velocity.x < 0){
 				    forceX = -velocity.x
@@ -36,11 +35,42 @@ Crafty.c("Enemy", {
             }            
     	})
     },
+    runOnce: function() {
+	    this.originX = this._x;
+	    this.originY = this._y;
+	    if (this.direction == "left") {																	// set initial direction
+		    this.flip()
+			this.animate("run", -1)
+			this.body.SetLinearVelocity(new b2Vec2(-2, 0))
+	    } else {
+		    this.animate("run", -1)
+			this.body.SetLinearVelocity(new b2Vec2(2, 0))
+	    }
+	    this.runOnce = true;
+    },
     run: function(dir) {
         this.currentDir = dir;
         var body = this.body;
         this.animate((dir) ? "run" : "idle", -1);
         return this;
+    },
+    reset: function() {
+		var enemy = this;
+	    this.reseting = true;
+	    setTimeout(function() {										
+			enemy.attr({"components": "Hotdog", "x": enemy.originX, "y": enemy.originY})				// Reset the player position
+            enemy.dead = false;
+            enemy.reseting = false;
+            if (enemy.direction == "left") {															// set initial direction
+	            enemy.flip()																	
+			    enemy.animate("run", -1)
+				enemy.body.SetLinearVelocity(new b2Vec2(-2, 0))
+		    } else {
+			    enemy.animate("run", -1)
+				enemy.body.SetLinearVelocity(new b2Vec2(2, 0))
+		    }
+        }, 2000);																						// Set 3 second Delay before reseting
+        //console.log("App.resetPlayer()", this);
     },
     BeginContact: function(fixtures, index){															// Contact listener relating an Enemy entity
 		var index2,

@@ -29,7 +29,7 @@ jQuery(function($) {
 
             IO.init();                                                          // Init socket.io
 
-            var levelUri = $.urlParam("level") || "levels/demo2.json";
+            var levelUri = $.urlParam("level") || "levels/wallcomem.json";
 
             $.getJSON(levelUri, null, function(cfg) {                           // Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
@@ -43,8 +43,9 @@ jQuery(function($) {
                 IO.emit('hostCreateNewGame');                                   // Join a game
 
                 $.Edit.init();
-
+                
                 App.toggleDebug(true);
+
             });
         },
         bindEvents: function() {
@@ -130,17 +131,22 @@ jQuery(function($) {
 			 
 			contactListener.BeginContact = function(contact){
 				var fixtures = [];												// create array of the two Entity in contact
-				fixtures.push(contact.GetFixtureA())							
+				
+				fixtures.push(contact.GetFixtureA())
 				fixtures.push(contact.GetFixtureB())
 				
 				$.each(fixtures, function(i, f){
-					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity starting Contact is Player
-						var player = f.GetBody().GetUserData()					// Get relevent enemy
-						player.BeginContact(fixtures, i);						// Send both fixtures
+					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
+						var player = f.GetBody().GetUserData()
+						player.BeginContact(fixtures, i);
 					}
-					if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity starting Contact is Enemy
-						var enemy = f.GetBody().GetUserData()					// Get relevent enemy
+					if (f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity starting Contact is Enemy
+						var enemy = f.GetBody().GetUserData();					// Get relevent enemy
 						enemy.BeginContact(fixtures, i);						// Send both fixtures
+					}
+					if (f.GetBody().GetUserData().components == "OutOfBounds") {
+						var platform = f.GetBody().GetUserData();
+						platform.BeginContact(fixtures, i);
 					}
 					
 				})
@@ -228,6 +234,7 @@ jQuery(function($) {
                 entity.cfgObject = p;
             });
             App.addDebugPlayer();
+
         },
         resetCrafty: function() {
             Crafty.stop();                                                      // Destroy crafty
@@ -240,21 +247,22 @@ jQuery(function($) {
         },
         addPlayer: function(cfg) {
             // This currently force new players to be mannequin
-            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites + ", Player, Mannequin, WebsocketController")
+            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
                 .attr(App.cfg.player);
+
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
             }
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e(App.cfg.player.components + ", Player, Mannequin, Keyboard")
+                App.players.DEBUG = Crafty.e(App.cfg.player.components + ",Player, Mannequin, Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;
             }
-        },
+        },        
         killEnemy: function(enemy){
 	        enemy.destroy()
         },
@@ -283,7 +291,7 @@ jQuery(function($) {
                 }));                                                            // Add a box to limit players moves until they can move
 
             $.each(App.players, function(i, p) {                                // Bring all players to starting position
-                p.die()
+                p.reset()
             });
 
             var countDown = App.cfg.countdownDuration,

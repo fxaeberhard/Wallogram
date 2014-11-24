@@ -123,13 +123,29 @@ Crafty.c("OutOfBounds", {
                 shape: "box"
             })
             .onContact("Enemy", function(contacts){
-	            $.App.killEnemy(contacts[0].obj)
+	            console.log("hello")
+	            contacts[0].obj.reset()
             })
-            .onContact("Player", function(contacts) {
+            .onContact("Box2d", function(contacts) {
+	           	console.log("hello")
 	            if( contacts[0].obj.dead != true) {
 	            	contacts[0].obj.reset()
 	            }
             });
+    },
+    BeginContact: function(fixtures, index) {
+	    var index2
+		
+		if(index == 1) {																				// If index is 1 than index two is 0 and vice versa
+			index2 = 0;
+		}else {
+			index2 = 1;
+		}
+		if(fixtures[index2].GetBody().GetUserData().reseting != true){
+			fixtures[index2].GetBody().GetUserData().reset()
+		}
+	    
+	    
     }
 });
 

@@ -20,7 +20,11 @@ Crafty.c("Player", {
                     velocity = body.GetLinearVelocity(),
                     forceX = 0,
                     landingV
-                    
+                  
+                if (this.runOnce != true) {
+		    		this.runOnce()
+	    		}	
+                 
                 /*
 	             * This replaces box2d friction since it does not work well for plateformer (when character lands velocity drops to zero to go back up)
 	             */
@@ -118,6 +122,9 @@ Crafty.c("Player", {
                 if (this.isDown('RIGHT_ARROW')) {
                     this.run(1);
                 }
+                if (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A')){
+	                this.animate("jump");
+                }
             })
             .bind("KeyUp", function() {
                 if (!this.isDown('LEFT_ARROW')
@@ -126,6 +133,11 @@ Crafty.c("Player", {
                 }
             });
 
+    },
+    runOnce: function() {
+	    this.originX = this._x;
+	    this.originY = this._y;
+	    this.runOnce = true;
     },
     idle: function() {
         if (this.onground) {
@@ -145,11 +157,13 @@ Crafty.c("Player", {
     },
     reset: function() {
 		var player = this;
+		this.reseting = true;
 	    this.dead = true;
 	    setTimeout(function() {												// Set 3 second Delay before reseting
             player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
             player.attr($.App.cfg.player);									// Reset the player position
-            player.dead = false;                                    
+            player.dead = false;
+            player.reseting = false;                                    
         }, 2000);
         console.log("App.resetPlayer()", this);
     },
@@ -218,20 +232,32 @@ Crafty.c("Player", {
 		}else {
 			index2 = 1;
 		}
-		
 		this.sensorCheck(fixtures[index].GetUserData(), true)
-		
-		if(this.onground == true){											// If Players sensor is foot set onground to true
-			this.run()
-		}
+
 		
 		if(this.rightTouch || this.leftTouch){ 								// If Players sensor is either side set sideContact to true
 	    	this.sideContact = true;
 		}
 		
-		if(fixtures[index].GetUserData() == "foot"
-		&& fixtures[index2].GetBody().GetUserData().name == "movingPlat") {
-			this.onMovingPlatform = true
+		if (fixtures[index].GetUserData() == "foot"){
+			if (fixtures[index2].GetBody().GetUserData().name == "movingPlat") {
+				this.onMovingPlatform = true
+			}
+			console.log("foot")
+			if (this.isPlaying("jump")){
+				if (this.isDown('LEFT_ARROW')) {
+                    this.run(-1);
+                } else if (this.isDown('RIGHT_ARROW')) {
+                    this.run(1);
+                } else {
+	                this.idle()
+                }
+				
+			}
+		}
+		
+		if(fixtures[index2].GetBody().GetUserData().components == "Target"){
+			$.App.setState("win")
 		}
 		
     },
@@ -265,7 +291,6 @@ Crafty.c("Player", {
 			break;
 			case "foot":
 				this.onground = value;
-				console.log("foot : "+value)
 			break;
 			case "body":
 				this.bodyTouch = value;
@@ -304,12 +329,12 @@ Crafty.c("Mannequin", {
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.requires("Player, Mannequin, SpriteAnimation")               // Requirements
+        this.requires("SpriteAnimation")               // Requirements
             .attr({x: 100, w: 64, h: 64, name: "player"})                       // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
-            .animate("idle", -1)                                                // Run idle animation
+            .animate("idle", -1)                                             // Run idle animation
             .box2d({
                 bodyType: 'dynamic',
                 density: 3.0,

@@ -8,7 +8,15 @@
     "height": 600,
     "countdownDuration": 5,
     "entities": [
-        {
+	    {
+	        "components": "Hotdog",
+	        "x": 50,
+	        "y": 100
+        }, {
+	        "components": "Hotdog",
+	        "x": 50,
+	        "y": 100
+        }, {
 			"components": "ColoredPlatform",
 			"color": "pink",
 			"x": 1,
@@ -75,9 +83,5 @@
             "y": 580,
             "w": 1200,
             "h": 10
-        }, {
-	        "components": "Hotdog",
-	        "x": 50,
-	        "y": 100
-        }]
+        }, ]
 }
