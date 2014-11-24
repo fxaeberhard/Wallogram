@@ -157,17 +157,20 @@ Crafty.c("Player", {
 	    }
         return this;
     },
-    reset: function() {
-		var player = this;
+    die: function() {
+	    var player = this;
 		this.reseting = true;
 	    this.dead = true;
-	    setTimeout(function() {												// Set 3 second Delay before reseting
-            player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
-            player.attr($.App.cfg.player);									// Reset the player position
-            player.dead = false;
-            player.reseting = false;                                    
-        }, 2000);
-        console.log("App.resetPlayer()", this);
+	    setTimeout(function() {											// Set 2 seconds delay before reseting
+			player.reset();
+		}, 2000);	
+    },
+    reset: function() {									
+        this.body.SetLinearVelocity(new b2Vec2(0, 0));					// Reset velocity 
+        this.attr($.App.cfg.player);									// Reset the player position
+        this.dead = false;
+        this.reseting = false;                                    
+		console.log("Player.reset()", this);
     },
     hit: function(enemy) {
 	    if(this.ko != true) {												// If player is not ko than action can start

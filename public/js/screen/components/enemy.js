@@ -38,14 +38,7 @@ Crafty.c("Enemy", {
     runOnce: function() {
 	    this.originX = this._x;
 	    this.originY = this._y;
-	    if (this.direction == "left") {																	// set initial direction
-		    this.flip()
-			this.animate("run", -1)
-			this.body.SetLinearVelocity(new b2Vec2(-2, 0))
-	    } else {
-		    this.animate("run", -1)
-			this.body.SetLinearVelocity(new b2Vec2(2, 0))
-	    }
+	    this.setDirection();
 	    this.runOnce = true;
     },
     run: function(dir) {
@@ -54,23 +47,31 @@ Crafty.c("Enemy", {
         this.animate((dir) ? "run" : "idle", -1);
         return this;
     },
-    reset: function() {
-		var enemy = this;
+    die: function() {
+	    var enemy = this;
 	    this.reseting = true;
-	    setTimeout(function() {										
-			enemy.attr({"components": "Hotdog", "x": enemy.originX, "y": enemy.originY})				// Reset the player position
-            enemy.dead = false;
-            enemy.reseting = false;
-            if (enemy.direction == "left") {															// set initial direction
-	            enemy.flip()																	
-			    enemy.animate("run", -1)
-				enemy.body.SetLinearVelocity(new b2Vec2(-2, 0))
-		    } else {
-			    enemy.animate("run", -1)
-				enemy.body.SetLinearVelocity(new b2Vec2(2, 0))
-		    }
-        }, 2000);																						// Set 3 second Delay before reseting
-        //console.log("App.resetPlayer()", this);
+	    clearTimeout(this.deathReset)
+	    setTimeout(function() {
+		    enemy.reset()
+		}, 1000);																						// Set 3 second Delay before reseting
+
+    },
+    reset: function() {								
+		this.attr({"components": "Hotdog", "x": this.originX, "y": this.originY})				// Reset the player position
+        this.dead = false;
+        this.reseting = false;
+        this.setDirection();
+        console.log("Enemy.reset()", this);
+    },
+    setDirection: function() {
+	    if (this.direction == "left") {																	// set initial direction
+		    this.flip()
+			this.animate("run", -1)
+			this.body.SetLinearVelocity(new b2Vec2(-2, 0))
+	    } else {
+		    this.animate("run", -1)
+			this.body.SetLinearVelocity(new b2Vec2(2, 0))
+	    }
     },
     BeginContact: function(fixtures, index){															// Contact listener relating an Enemy entity
 		var index2,
@@ -87,9 +88,13 @@ Crafty.c("Enemy", {
 		
 		if (fixtures[index2].GetBody().GetUserData().name == "player" && this.dead == false ){ 			// If other entity is a player and the enemy is not dead
 			if(fixtures[index].GetUserData() == "top"){													// If player gets in contact with top sensor, enemy dies
+				var player = this
 				this.animate("die");
 				body.SetLinearVelocity(new b2Vec2(0, velocity.y))
 				this.dead = true;
+				this.deathReset = setTimeout(function() {
+					player.die();
+				}, 20000)
 			}
 			
 		if(this.leftTouch || this.rightTouch || this.footTouch){  										// If player gets in contact with any side or bottom
