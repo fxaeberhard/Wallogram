@@ -61,14 +61,14 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 25px;
-    background: green;
+    background: red;
     position: absolute;
     top: 1em;
     right: .8em;
     border: 1px solid gray;
 }
-.wallo-disconnected {
-    background: red;
+.wallo-socketio-connected .wallo-connectionindicator {
+    background: green;
 }
 
 .wallo-edit {
