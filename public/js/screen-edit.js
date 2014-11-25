@@ -57,8 +57,8 @@ jQuery(function($) {
                 stats.begin();
             });
 
-            $('.wallo-load-platforms').on('click','a',function(){
-                $.Edit.loadPlatform()
+            $('.wallo-load-platlevels').on('click','a',function(){
+                $.Edit.loadLevel()
             })
 
             $('.wallo-edit-buttons').on('click','.button-save',function(){
@@ -131,7 +131,7 @@ jQuery(function($) {
             $.ajax({
                 type: 'PUT',
                 data: JSON.stringify($.App.cfg),
-                url: '/platforms/updatePlatform',
+                url: '/levels/updateLevel',
                 dataType: 'JSON',
                 contentType: 'application/json'
             }).done(function( response ) {

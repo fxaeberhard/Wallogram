@@ -10,7 +10,7 @@ var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost:27017/wallo", {native_parser:true});
 
 var routes = require('./routes/index');
-var platforms = require('./routes/platforms');
+var levels = require('./routes/levels');
 
 // Create a new instance of Express
 var app = express();
@@ -32,7 +32,7 @@ app.use(function(req,res,next){
     next();
 });
 app.use('/', routes);
-app.use('/platforms',platforms);
+app.use('/levels',levels);
 
 // Create a Node.js based http server on port 8080
 var server = require('http').Server(app).listen(8080, function(){

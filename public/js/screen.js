@@ -32,7 +32,7 @@ jQuery(function($) {
             // var levelUri = $.urlParam("level") || "levels/demo.json";
             var levelUri;
             if ($.urlParam('level')) {
-                levelUri = "/platforms/getPlatform?level="+$.urlParam('level')
+                levelUri = "/levels/getLevels?name="+$.urlParam('name')
             }else{
                 levelUri = "levels/demo.json"
             }
