@@ -17,10 +17,19 @@ router.post('/addLevel', function(req, res) {
  */
 router.get('/getLevel', function(req, res) {
     var db = req.db;
-    var level = req.params.level;
-    console.log("############")
-    db.collection('levels').find({name:"test"}).toArray(function (err, items) {
+    var level = req.query.level;
+    console.log(req.query.level)
+    db.collection('levels').find({name:level}).toArray(function (err, items) {
         res.json(items[0]);
+    });
+});
+
+
+router.get('/getAllLevels', function(req, res) {
+    var db = req.db;
+    var level = req.params.name;
+    db.collection('levels').find().toArray(function (err, items) {
+        res.json(items);
     });
 });
 
