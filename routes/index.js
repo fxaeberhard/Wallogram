@@ -14,4 +14,8 @@ router.get('/screen', function(req, res) {
   res.render('screen', { title: 'Wallogram - Screen', bodyClass: 'wallo-stdmode' });
 });
 
+router.get('/lobby', function(req, res) {
+  res.render('lobby', { title: 'Wallogram - Lobby'});
+});
+
 module.exports = router;

@@ -1,4 +1,5 @@
 {
+    "name":"default",
     "player": {
         "components": "MannequinSprite",
         "x": 10,
@@ -32,7 +33,7 @@
 			"y": 340
 		}, {
 	        "components": "MovingPlatform",
-	        "color": "blue",
+	        "color": "red",
 	        "x": 400,
 	        "y": 200,
 	        "x1": 400,
