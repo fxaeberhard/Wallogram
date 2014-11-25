@@ -175,3 +175,7 @@ body {
 .wallo-edit-content span{
     display: block;
 }
+.wallo-edit-buttons button{
+    font-size: 0.7em;
+    margin-right:3px;
+}

@@ -1,10 +1,16 @@
 // Import the Express module
 var express = require('express');
+var bodyParser = require('body-parser');
 
 // Import the 'path' module (packaged with Node.js)
 var path = require('path');
 
+//database
+var mongo = require('mongoskin');
+var db = mongo.db("mongodb://localhost:27017/wallo", {native_parser:true});
+
 var routes = require('./routes/index');
+var platforms = require('./routes/platforms');
 
 // Create a new instance of Express
 var app = express();
@@ -16,10 +22,17 @@ app.set('view engine', 'jade');
 
 // Import the Anagrammatix game file.
 var game = require('./server');
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname,'public')));
 
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 app.use('/', routes);
+app.use('/platforms',platforms);
 
 // Create a Node.js based http server on port 8080
 var server = require('http').Server(app).listen(8080, function(){
