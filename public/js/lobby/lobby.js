@@ -27,24 +27,22 @@ jQuery(function($) {
 			$.getJSON("/levels/new.json", null, function(newLevel){
 				newLevel.name = $('.levelName input').val()
 				$.ajax({
-	                type: 'POST',
-	                data: JSON.stringify(newLevel),
-	                url: '/levels/addLevel',
-	                dataType: 'JSON',
-	                contentType: 'application/json'
-	            }).done(function( response ) {
-	                // Check for successful (blank) response
-	                if (response.msg === '') {
-	                    console.log('It seems that the party is created and stored')
-	                    window.location.replace("/screen?level="+newLevel.name);
-	                }
-	                else {
-
-	                    // If something goes wrong, alert the error message that our service returned
-	                    alert('Error: ' + response.msg);
-
-	                }
-	            });
+          type: 'POST',
+          data: JSON.stringify(newLevel),
+          url: '/levels/addLevel',
+          dataType: 'JSON',
+          contentType: 'application/json'
+        }).done(function( response ) {
+          // Check for successful (blank) response
+          if (response.msg === '') {
+            console.log('It seems that the party is created and stored')
+            window.location.replace("/screen?level="+newLevel.name);
+          }
+          else {
+            // If something goes wrong, alert the error message that our service returned
+            alert('Error: ' + response.msg);
+          }
+        });
 			})
 		}
 	}
