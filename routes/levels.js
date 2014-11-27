@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongo = require('mongoskin');
 /*
  * POST to levels.
  */
@@ -27,7 +28,6 @@ router.get('/getLevel', function(req, res) {
 
 router.get('/getAllLevels', function(req, res) {
     var db = req.db;
-    var level = req.params.name;
     db.collection('levels').find().toArray(function (err, items) {
         res.json(items);
     });
@@ -39,6 +39,20 @@ router.get('/getAllLevels', function(req, res) {
 router.put('/updateLevel', function(req, res) {
     var db = req.db;
     db.collection('levels').update({name:req.body.name},{$set:{player: req.body.player,width: req.body.width,height: req.body.height,countdownDuration: req.body.countdownDuration,entities: req.body.entities}}, function(err, result){
+        res.send(
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
+
+
+/*
+ * DELETE to levels.
+ */
+router.delete('/deleteLevel/:id', function(req, res) {
+    var db = req.db;
+    var id = req.params.id
+    db.collection('levels').remove({_id: mongo.helper.toObjectID(id)}, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
