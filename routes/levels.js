@@ -52,7 +52,8 @@ router.put('/updateLevel', function(req, res) {
 router.delete('/deleteLevel/:id', function(req, res) {
     var db = req.db;
     var id = req.params.id
-    db.collection('levels').remove({_id: mongo.helper.toObjectID(id)}, function(err, result){
+    console.log('DELETE '+id)
+    db.collection('levels').remove({_id: mongo.helper.toObjectID(id)}, function(err){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
