@@ -45,6 +45,16 @@ router.put('/updateLevel', function(req, res) {
     });
 });
 
+router.put('/renameLevel/:id', function(req, res) {
+    var db = req.db;
+    var id = req.params.id;
+    db.collection('levels').update({_id: mongo.helper.toObjectID(id)},{$set:{name: req.body.name}}, function(err, result){
+        res.send(
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
+
 
 /*
  * DELETE to levels.
