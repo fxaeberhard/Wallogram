@@ -9,6 +9,6 @@ How to build
 =======================
 * Install node.js
 * Install mongodb
-  * Create "wallo" with a collection named "levels" database
+  * Create **wallo** database with a collection named **levels**
 * Run npm install
 * Run node run_server.js
