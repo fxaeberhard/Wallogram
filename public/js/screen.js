@@ -31,12 +31,10 @@ jQuery(function($) {
 
             var levelUri;
             if ($.urlParam('level')) {
-                console.log($.urlParam('level'))
                 levelUri = "/levels/getLevel?level="+$.urlParam('level')
             }else{
                 levelUri = "levels/demo.json"
             }
-            console.log(levelUri)
             $.getJSON(levelUri,function(cfg) {                           // Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
 

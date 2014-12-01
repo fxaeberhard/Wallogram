@@ -126,8 +126,6 @@ jQuery(function($) {
             Edit.save();
         },
         save: function() {
-            console.log($.App.cfg)
-            console.log(JSON.stringify($.App.cfg))
             $.ajax({
                 type: 'PUT',
                 data: JSON.stringify($.App.cfg),
@@ -137,8 +135,7 @@ jQuery(function($) {
             }).done(function( response ) {
                 // Check for successful (blank) response
                 if (response.msg === '') {
-
-                    console.log('everything is ok')
+                    console.log('level saved')
                 }
                 else {
 
