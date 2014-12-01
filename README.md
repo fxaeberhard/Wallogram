@@ -8,5 +8,7 @@ Distributed under the MIT License.
 How to build
 =======================
 * Install node.js
+* Install mongodb
+  * Create "wallo" with a collection named "levels" database
 * Run npm install
 * Run node run_server.js
