@@ -131,7 +131,9 @@ Crafty.c("OutOfBounds", {
 		}else {
 			index2 = 1;
 		}
-		if(fixtures[index2].GetBody().GetUserData().reseting != true){
+		if(fixtures[index2].GetBody().GetUserData().reseting != true 
+		&& fixtures[index2].GetBody().GetUserData().name == "hotdog" 
+		|| fixtures[index2].GetBody().GetUserData().name == "player"){
 			fixtures[index2].GetBody().GetUserData().die()
 		}
 	    
