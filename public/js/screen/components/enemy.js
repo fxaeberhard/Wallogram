@@ -75,6 +75,7 @@ Crafty.c("Enemy", {
     },
     BeginContact: function(fixtures, index){															// Contact listener relating an Enemy entity
 		var index2,
+			player = this,
 			body = this.body,
 			velocity = body.GetLinearVelocity();
 		
@@ -88,12 +89,39 @@ Crafty.c("Enemy", {
 		
 		if (fixtures[index2].GetBody().GetUserData().name == "player" && this.dead == false ){ 			// If other entity is a player and the enemy is not dead
 			if(fixtures[index].GetUserData() == "top"){													// If player gets in contact with top sensor, enemy dies
-				var player = this
+				var enemy = this,
+					fix = [],
+					position = body.GetPosition()
+					fixLoop = body.GetFixtureList()
 				this.animate("die");
+				for(var i = 0; i < body.m_fixtureCount;  i++){
+					fix.push(fixLoop)
+					fixLoop = fixLoop.GetNext()
+				}
+
+				var fixture = $.arrayFind(fix, function(i, f) {
+                    return f.m_userData === "body";
+                })
+                
+                //console.log(fixture)
+				//fixture.Destroy()
+				
+				/*
+body.CreateFixture({bodyType: 'dynamic',
+					                density: 2.0,
+					                friction: 0,
+					                restitution: 0,
+					                shape: [[this.w / 4, this.w / 10], 
+					                		[3 * this.w / 22, this.w / 10], 
+					                		[4 * this.w / 4, 11 * this.w / 12], 
+					                		[this.w / 4, 11 * this.w / 12]],
+					                userData: "body"})
+*/
+					                
 				body.SetLinearVelocity(new b2Vec2(0, velocity.y))
 				this.dead = true;
 				this.deathReset = setTimeout(function() {
-					player.die();
+					enemy.die();
 				}, 20000)
 			}
 			

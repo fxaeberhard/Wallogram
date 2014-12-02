@@ -65,7 +65,7 @@ Crafty.c("Player", {
 			            }
 			        }
 			        
-			        if(this.onMovingPlatform){											// If on moving plate, compensate movement.
+			        if (this.onMovingPlatform){											// If on moving plate, compensate movement.
 			        	var contactObject = this.body.m_contactList.other,
 			        		PlateformPos = contactObject.GetPosition(),
 							playerPosition = this.body.GetPosition(),
@@ -174,8 +174,7 @@ Crafty.c("Player", {
     },
     hit: function(enemy) {
 	    if(this.ko != true) {												// If player is not ko than action can start
-		    this.alpha = 0.5;
-		    this.ko = true;													// set ko to true so it doesn't happen more than once
+		    
 		    var player = this,
 		    	playerB2D = this.body,
 		    	enemy = enemy.body,
@@ -193,7 +192,9 @@ Crafty.c("Player", {
 					50*(playerCenter.x - enemyCenter.x),
 					-Math.abs(2*(playerCenter.y - enemyCenter.y))
 				);
-
+			this.alpha = 0.5;
+		    this.ko = true;													// set ko to true so it doesn't happen more than once
+			
 			if (this.has("Keyboard")) {
 				this.removeComponent("Keyboard")
 				this.controlleComp = "Keyboard"	
@@ -249,7 +250,6 @@ Crafty.c("Player", {
 			if (fixtures[index2].GetBody().GetUserData().name == "movingPlat") {
 				this.onMovingPlatform = true
 			}
-			console.log("foot")
 			if (this.isPlaying("jump")){
 				if (this.isDown('LEFT_ARROW')) {
                     this.run(-1);

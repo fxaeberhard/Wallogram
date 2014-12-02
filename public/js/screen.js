@@ -44,7 +44,8 @@ jQuery(function($) {
 
                 $.Edit.init();
                 
-                App.toggleDebug(true);
+                App.toggleDebug();
+                App.toggleDebug();§
 
             });
         },
@@ -131,7 +132,6 @@ jQuery(function($) {
 			 
 			contactListener.BeginContact = function(contact){
 				var fixtures = [];												// create array of the two Entity in contact
-				
 				fixtures.push(contact.GetFixtureA())
 				fixtures.push(contact.GetFixtureB())
 				
@@ -233,7 +233,7 @@ jQuery(function($) {
                 var entity = Crafty.e(p.components).attr(p);
                 entity.cfgObject = p;
             });
-            App.addDebugPlayer();
+            //App.addDebugPlayer();
 
         },
         resetCrafty: function() {
