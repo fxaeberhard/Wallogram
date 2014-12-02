@@ -49,7 +49,6 @@ jQuery(function($) {
                 $.Edit.init();
                 
                 App.toggleDebug();
-                App.toggleDebug();§
 
             });
         },
