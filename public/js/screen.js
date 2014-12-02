@@ -29,9 +29,13 @@ jQuery(function($) {
 
             IO.init();                                                          // Init socket.io
 
-            var levelUri = $.urlParam("level") || "levels/wallcomem.json";
-
-            $.getJSON(levelUri, null, function(cfg) {                           // Retrieve current level
+            var levelUri;
+            if ($.urlParam('level')) {
+                levelUri = "/levels/getLevel?level="+$.urlParam('level')
+            }else{
+                levelUri = "levels/demo.json"
+            }
+            $.getJSON(levelUri,function(cfg) {                           // Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
 
                 App.initCrafty();                                               // Init crafty

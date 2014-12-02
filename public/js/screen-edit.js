@@ -57,6 +57,13 @@ jQuery(function($) {
                 stats.begin();
             });
 
+            $('.wallo-load-platlevels').on('click','a',function(){
+                $.Edit.loadLevel()
+            })
+
+            $('.wallo-edit-buttons').on('click','.button-save',function(){
+                $.Edit.save()
+            })
             var editor;
             $(".wallo-tab-link").bind("click", function() {                     // Add tab selection support
                 $(".wallo-tab-linkselected").removeClass("wallo-tab-linkselected");
@@ -106,18 +113,6 @@ jQuery(function($) {
         hideEdition: function() {
             $('.wallo-edit-overlay').hide();
         },
-        savePositions: function() {
-            var node = $('.wallo-edit-dd'),
-                cfg = {
-                    x: node.position().left,
-                    y: node.position().top,
-                    w: node.width(),
-                    h: node.height()
-                };
-            currentEntity.attr(cfg);
-            $.extend(currentEntity.cfgObject, cfg);
-            Edit.save();
-        },
         destroyEntity: function() {
             $.arrayFind($.App.cfg.entities, function(i, e) {
                 if (e === currentEntity.cfgObject) {
@@ -131,7 +126,24 @@ jQuery(function($) {
             Edit.save();
         },
         save: function() {
-            // TODO
+            $.ajax({
+                type: 'PUT',
+                data: JSON.stringify($.App.cfg),
+                url: '/levels/updateLevel',
+                dataType: 'JSON',
+                contentType: 'application/json'
+            }).done(function( response ) {
+                // Check for successful (blank) response
+                if (response.msg === '') {
+                    console.log('level saved')
+                }
+                else {
+
+                    // If something goes wrong, alert the error message that our service returned
+                    alert('Error: ' + response.msg);
+
+                }
+            });
         }
     };
     $.Edit = Edit;                                                              // Set up global reference
