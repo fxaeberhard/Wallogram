@@ -139,15 +139,13 @@ jQuery(function($) {
 				fixtures.push(contact.GetFixtureB())
 				
 				$.each(fixtures, function(i, f){
-					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
+					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity starting Contact is Player
 						var player = f.GetBody().GetUserData()
 						player.BeginContact(fixtures, i);
-					}
-					if (f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity starting Contact is Enemy
+					} else if (f.GetBody().GetUserData().name == "hotdog"){		// If one of the entity starting Contact is Enemy
 						var enemy = f.GetBody().GetUserData();					// Get relevent enemy
 						enemy.BeginContact(fixtures, i);						// Send both fixtures
-					}
-					if (f.GetBody().GetUserData().components == "OutOfBounds") {
+					} else if (f.GetBody().GetUserData().components == "OutOfBounds") {
 						var platform = f.GetBody().GetUserData();
 						platform.BeginContact(fixtures, i);
 					}
@@ -170,8 +168,7 @@ jQuery(function($) {
 					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
 						var player = f.GetBody().GetUserData()
 						player.EndContact(fixtures, i);
-					}
-					if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity ending Contact is Enemy
+					} else if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity ending Contact is Enemy
 						var enemy = f.GetBody().GetUserData()
 						enemy.EndContact(fixtures, i);
 					}
