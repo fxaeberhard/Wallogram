@@ -194,7 +194,10 @@ jQuery(function($) {
 
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
-                    this.walls.destroy();
+		            $.each(App.gate, function(i,ent){
+		                ent.destroy();
+		            })
+                    //this.walls.destroy();
                     clearTimeout(App.countdownHandler);
                     break;
 
@@ -236,13 +239,20 @@ jQuery(function($) {
             App.world = Crafty.box2D.world
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
-
-            $.each($.App.cfg.entities, function(i, p) {                         // Add entities from config file
-                var entity = Crafty.e(p.components).attr(p);
-                entity.cfgObject = p;
-            });
+			
+			App.initEntities($.App.cfg.entities)
+           
             //App.addDebugPlayer();
 
+        },
+        initEntities: function(entities){
+	         var ents = [];
+	         $.each(entities, function(i, p) {                         // Add entities from config file
+                var entity = Crafty.e(p.components).attr(p);
+                entity.cfgObject = p;
+                ents.push(entity)
+            });
+            return ents;
         },
         resetCrafty: function() {
             Crafty.stop();                                                      // Destroy crafty
@@ -277,28 +287,41 @@ jQuery(function($) {
 	        enemy.destroy()
         },
         showCountdown: function() {
-            var w = 200, h = 200, //                                            // Append a box to limit players moves
-                cfg = {
-                    bodyType: 'static',
-                    density: 1.0,
-                    friction: 10,
-                    restitution: 0
-                };
-
-            this.walls = Crafty.e("2D, Canvas, Box2D")
-                .box2d($.extend(cfg, {
-                    shape: [[0, 0], [w, 0], [w, 10], [0, 10]]
-                }))
-                .attr({x: App.cfg.player.x - w / 200, y: App.cfg.player.y - h / 200})
-                .addFixture($.extend(cfg, {
-                    shape: [[0, 0], [10, 0], [10, h], [0, h]]
-                }))
-                .addFixture($.extend(cfg, {
-                    shape: [[(w - 10), 0], [w, 0], [w, h], [(w - 10), h]]
-                }))
-                .addFixture($.extend(cfg, {
-                    shape: [[0, (h - 10)], [w, (h - 10)], [w, h], [0, h]]
-                }));                                                            // Add a box to limit players moves until they can move
+            var w = 200, h = 200, x = App.cfg.player.x, y = App.cfg.player.y, thick = 10,					// Append a box to limit players moves
+            
+            entities = [{
+							"components": "ColoredPlatform",
+							"color": "pink",
+							"x": x-(w/2)+thick,
+							"y": y-(h/2),
+							"w": w-thick,
+							"h": thick
+						},{
+							"components": "ColoredPlatform",
+							"color": "pink",
+							"x": x+(w/2),
+							"y": y-(h/2),
+							"w": thick,
+							"h": h
+						},
+						{
+							"components": "ColoredPlatform",
+							"color": "pink",
+							"x": x-(w/2)+thick,
+							"y": y+(h/2)-thick,
+							"w": w-thick,
+							"h": thick
+						},{
+							"components": "ColoredPlatform",
+							"color": "pink",
+							"x": x-(w/2),
+							"y": y-(h/2),
+							"w": thick,
+							"h": h
+						}]
+				
+				
+			App.gate = App.initEntities(entities)								// Add a box to limit players moves until they can move
 
             $.each(App.players, function(i, p) {                                // Bring all players to starting position
                 p.reset()
