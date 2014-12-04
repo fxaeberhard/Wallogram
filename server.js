@@ -26,6 +26,7 @@ exports.initGame = function(sio, socket) {
     // Host Events
     gameSocket.on('hostCreateNewGame', hostCreateNewGame);
     gameSocket.on('heartBeat', hostHeartbeat);
+    gameSocket.on('addScore', addScore)
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
@@ -62,6 +63,11 @@ function hostHeartbeat(data) {
     io.sockets.in(data.socketId).emit('heartBeat', keys);                       // gameSocket.nsp.connected
 }
 
+function addScore(player) {
+	console.log("player?",player)
+	console.log("socketttt",player.id)
+	io.to(player.id).emit("addScoreToController", player.score)
+}
 /* *****************************
  *                           *
  *     PLAYER FUNCTIONS      *
@@ -114,6 +120,7 @@ function playerJoinGame(data) {
             // Emit an event notifying the clients that the player has joined the room.
             io.sockets.in("host-" + data.gameId).emit('playerJoinedRoom', data);
             // Emit the player's color to the pad.
+            console.log("socketttt",data.mySocketId)
             io.to(data.mySocketId).emit('colorAssigned',playersColors[randomColor].colorCode)
 
             usedSprites.push(randomColor);

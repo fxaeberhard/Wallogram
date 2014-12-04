@@ -11,6 +11,7 @@ Crafty.c("Player", {
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.leftTouch = [], this.rightTouch = [], /* this.bodyTouch = [] ,*/ this.onground = [],
+        this.score = 0,
         this.onMovingPlatform = false;
         var currentDir = 0,
         	prevPlatPos = {x: 0, y: 0};
@@ -166,8 +167,8 @@ Crafty.c("Player", {
 		}, 2000);	
     },
     reset: function() {									
-        this.body.SetLinearVelocity(new b2Vec2(0, 0));					// Reset velocity 
-        this.attr($.App.cfg.player);									// Reset the player position
+        this.body.SetLinearVelocity(new b2Vec2(0, 0));						// Reset velocity 
+        this.attr({"x":$.App.cfg.player.x,"y":$.App.cfg.player.y});			// Reset the player position
         this.dead = false;
         this.reseting = false;                                    
 		//console.log("Player.reset()", this);
@@ -244,8 +245,8 @@ Crafty.c("Player", {
 			
 			this.setDir(this)
 		}
-		if(fixtures[index2].GetBody().GetUserData().components == "Target"){
-			$.App.setState("win")
+		if(fixtures[index2].GetBody().GetUserData().components == "Target" && $.App.playing != false){
+			$.App.win(fixtures[index].GetBody().GetUserData())
 		}
     },
     EndContact: function(fixtures, index){
@@ -297,13 +298,9 @@ Crafty.c("Player", {
 			break;
 			case "foot":
 				if(value == true) {
-					console.log("add in",this.onground)
 					this.onground.push(1);
-					console.log("add out",this.onground)
 				} else if(this.onground.length != 0){
-					console.log("remove in",this.onground)
 					this.onground.pop()
-					console.log("remove out",this.onground)
 				}
 			break;
 /*
@@ -316,6 +313,9 @@ Crafty.c("Player", {
 			break;
 */
 		}
+    },
+    addData: function(data){
+	    this.socketId = data.socketId
     }
 });
 

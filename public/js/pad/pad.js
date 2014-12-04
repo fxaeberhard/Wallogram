@@ -20,7 +20,10 @@ YUI.add("wallogram-pad", function(Y) {
                 node.position = b;
                 cb.append(node);
             });
-
+			
+			node = Y.Node.create('<div class="info-box">score: <span>0</span></div>')
+			cb.append(node);
+			
             this.fitPad();
 
             //cb.append(Y.JSON.stringify(Y.UA));
@@ -178,4 +181,10 @@ YUI.add("wallogram-pad", function(Y) {
         }
     });
     Y.namespace("Wallogram").Pad = Pad;
+});
+$(document).ready(function() {
+    $.IO.on('addScoreToController', function(score) {
+	    console.log("yuppp", score)
+        $('.info-box span').html(score)
+    })
 });

@@ -18,7 +18,7 @@ jQuery(function($) {
             player: {x: 10, y: 5},
             width: 600,
             height: 400,
-            countdownDuration: 5,
+            countdownDuration: 1,
             entities: []
         },
         /**
@@ -178,6 +178,12 @@ jQuery(function($) {
 			
 			$.App.world.SetContactListener(contactListener);
         },
+        win: function(player) {
+	        $.App.setState("win")
+			player.score ++
+			console.log(player.socketId ,player.score)
+	        IO.emit('addScore', {"id": player.socketId, "score": player.score}); 
+        },
         setState: function(newState) {
             if (App.state === newState)
                 return;
@@ -205,12 +211,14 @@ jQuery(function($) {
 
                 case "run":                                                     // Play
                     App.startTime = new Date().getTime();
+                    App.playing = true;
                     break;
 
                 case "win":                                                     // Somebody reach the goal
                     App.restartHandler = setTimeout(function() {
                         App.setState("countdown");
-                    }, 10000);
+                    }, 1000);
+                    App.playing = false;
                     break;
             }
             App.state = newState;
@@ -248,7 +256,9 @@ jQuery(function($) {
         addPlayer: function(cfg) {
             // This currently force new players to be mannequin
             App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
-                .attr(App.cfg.player);
+                .attr(App.cfg.player)
+                
+                App.players[cfg.socketId].addData(cfg);													// add player specific data
 
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
