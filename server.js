@@ -1,15 +1,4 @@
 var io, socket;
-//Define all the colors and their sprites for players
-green = {'colorCode':'91cc70','sprites':'MannequinSpriteGreen'};
-orange = {'colorCode':'db953b','sprites':'MannequinSpriteOrange'};
-pink = {'colorCode':'dd6eaf','sprites':'MannequinSpritePink'};
-red = {'colorCode':'e75d58','sprites':'MannequinSpriteRed'};
-violet = {'colorCode':'bf60e3','sprites':'MannequinSpriteViolet'};
-cyan = {'colorCode':'64dec3','sprites':'MannequinSpriteCyan'};
-blue = {'colorCode':'608ce6','sprites':'MannequinSpriteBlue'};
-yellow = {'colorCode':'decb21','sprites':'MannequinSpriteYellow'};
-
-playersColors = [green,orange,pink,red,violet,cyan,blue,yellow]
 
 usedSprites = [] // Only used to know wich colors are already used on the platform
 /**
@@ -26,7 +15,9 @@ exports.initGame = function(sio, socket) {
     // Host Events
     gameSocket.on('hostCreateNewGame', hostCreateNewGame);
     gameSocket.on('heartBeat', hostHeartbeat);
-    gameSocket.on('addScore', addScore)
+    gameSocket.on('addScore', addScore);
+    gameSocket.on('colorSelected', colorSelected);
+    gameSocket.on('roomFull', roomFull);
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
@@ -68,6 +59,20 @@ function addScore(player) {
 	console.log("socketttt",player.id)
 	io.to(player.id).emit("addScoreToController", player.score)
 }
+
+function colorSelected(data) {
+	if(data.colorIndex != undefined){
+		console.log(data)
+		// Emit an event notifying the clients that the player has joined the room.
+	    io.sockets.in(data.gameId).emit('playerJoinedRoom', data);
+	    
+	    // Emit the player's color to the pad.
+        io.to(data.mySocketId).emit('colorAssigned',data.colorCode)
+	} else {
+        //All the colors are used
+        io.to(data.mySocketId).emit('complete','Sorry! All the colors are already assigned. Try to reload the page!')
+    }
+}
 /* *****************************
  *                           *
  *     PLAYER FUNCTIONS      *
@@ -81,66 +86,38 @@ function addScore(player) {
  */
 function playerJoinGame(data) {
     //console.log('Player ' + data.playerName + 'attempting to join game: ' + data.gameId );
-
     // A reference to the player's Socket.IO socket object
     var sock = this;
-    
-    sock.on('disconnect', function(){
-        //When a player disconnect, we should "release" his color
-        var index = usedSprites.indexOf(data.playerSpritesColorIndex);
-        if (index > -1) {
-            usedSprites.splice(index, 1);
-        }
-    });
 
     // Look up the room ID in the Socket.IO manager object.
     var room = gameSocket.adapter.rooms[data.gameId];
 
     // If the room exists...
     if (room != undefined) {
+	    
+	    data.mySocketId = sock.id;
+	    
         // attach the socket id to the data object.
-        data.mySocketId = sock.id;
-
-        // Choose random color
-        var randomColor = Math.floor(Math.random() * playersColors.length); 
-        // Check if the random color is already assigned
-        while (usedSprites.indexOf(randomColor)> -1 && usedSprites.length < playersColors.length) {
-            randomColor = Math.floor(Math.random() * playersColors.length)
-        }
-
         // Join the room
         sock.join(data.gameId);
-
         console.log('Player ' + data.playerName + ' joining game: ' + data.gameId);
-
-        if(usedSprites.length < playersColors.length){
-            data.playerSprites = playersColors[randomColor].sprites
-            data.playerSpritesColorIndex = randomColor; // This property is used to manage colors
-            console.log(data)
-            // Emit an event notifying the clients that the player has joined the room.
-            io.sockets.in("host-" + data.gameId).emit('playerJoinedRoom', data);
-            // Emit the player's color to the pad.
-            console.log("socketttt",data.mySocketId)
-            io.to(data.mySocketId).emit('colorAssigned',playersColors[randomColor].colorCode)
-
-            usedSprites.push(randomColor);
-        }else{
-            //All the colors are used
-            io.to(data.mySocketId).emit('complete','Sorry! All the colors are already assigned. Try to reload the page!')
-        }
-
+        // Emit an event notifying the clients that the player has joined the room.
+		io.sockets.in(data.gameId).emit('playerSelectColor', data)
+		
     } else {
         // Otherwise, send an error message back to the player.
-        this.emit('error', {message: "This room does not exist."});
+         io.sockets.in(data.gameId).emit('error', {message: "This room does not exist."});
     }
 }
-
+function roomFull() {
+	console.log("room full")
+}
 /**
  * 
  * @param {type} data
  */
 function padEvent(data) {
-    console.log("padEvent", data, data.gameId);
+    //console.log("padEvent", data, data.gameId);
     io.sockets.in("host-" + data.gameId).emit('padEvent', data);
 }
 

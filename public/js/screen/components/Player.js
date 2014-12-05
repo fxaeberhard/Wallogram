@@ -349,7 +349,7 @@ Crafty.c("Mannequin", {
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.requires("Player, Mannequin, SpriteAnimation")               		// Requirements
+        this.requires("Player, SpriteAnimation")               						// Requirements
             .attr({x: 100, w: 64, h: 64, name: "player"})                       // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)

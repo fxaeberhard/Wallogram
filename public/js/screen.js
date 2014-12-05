@@ -5,11 +5,12 @@
  * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
  * Licensed under the MIT License
  */
+
 jQuery(function($) {
     'use strict';
 
     var IO = $.IO, App;
-
+	
     App = {
         /* *************************************
          *                Setup                *
@@ -36,7 +37,9 @@ jQuery(function($) {
                 levelUri = "levels/demo.json"
             }
             $.getJSON(levelUri,function(cfg) {                           // Retrieve current level
-                App.setCfg(cfg);                                                // Update game cfg
+                App.setCfg(cfg);                                               // Update game cfg
+
+				App.setColors();
 
                 App.initCrafty();                                               // Init crafty
 
@@ -49,8 +52,10 @@ jQuery(function($) {
                 $.Edit.init();
                 
                 App.toggleDebug();
-
+				
             });
+            
+         														// Set sprite color based on sprite of level   
         },
         bindEvents: function() {
             IO.on('newGameCreated', function(data) {                            // When the game is created
@@ -75,12 +80,14 @@ jQuery(function($) {
                     }
                 });
             });
-
-            IO.on('playerJoinedRoom', function(data) {                          // As a player joins the game, instantiate a crafty entity
-                console.log("Screen.playerJoinedRoom()", data);
-                App.addPlayer(data);
+			IO.on('playerSelectColor', function(data) {
+				App.playerSetup(data)
+			})
+            IO.on('playerJoinedRoom', function(data) {
+	            //console.log("Screen.playerJoinedRoom()", data);
+				App.addPlayer(data);                          
+                
             });
-
             IO.on('padEvent', function(data) {                                  // Forward pad events to the target crafty entity
                 //console.log("Screen.padEvent", data);
                 if (!App.players[data.socketId]) {
@@ -181,8 +188,7 @@ jQuery(function($) {
         win: function(player) {
 	        $.App.setState("win")
 			player.score ++
-			console.log(player.socketId ,player.score)
-	        IO.emit('addScore', {"id": player.socketId, "score": player.score}); 
+	        IO.emit('addScore', {"id": player.mySocketId, "score": player.score}); 
         },
         setState: function(newState) {
             if (App.state === newState)
@@ -197,7 +203,6 @@ jQuery(function($) {
 		            $.each(App.gate, function(i,ent){
 		                ent.destroy();
 		            })
-                    //this.walls.destroy();
                     clearTimeout(App.countdownHandler);
                     break;
 
@@ -214,14 +219,14 @@ jQuery(function($) {
 
                 case "run":                                                     // Play
                     App.startTime = new Date().getTime();
-                    App.playing = true;
+                    App.playing = true
                     break;
 
                 case "win":                                                     // Somebody reach the goal
                     App.restartHandler = setTimeout(function() {
                         App.setState("countdown");
                     }, 1000);
-                    App.playing = false;
+					App.playing = false
                     break;
             }
             App.state = newState;
@@ -241,7 +246,7 @@ jQuery(function($) {
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
 			
 			App.initEntities($.App.cfg.entities)
-           
+			
             //App.addDebugPlayer();
 
         },
@@ -263,20 +268,38 @@ jQuery(function($) {
             App.initCrafty();                                                   // Init crafty
             App.toggleDebug(App.debug);                                         // to force refresh
         },
+        playerSetup: function(data){
+	        App.usedSprites = [];
+	        // Choose random color
+	        var randomColor = Math.floor(Math.random() * App.playerColors.length); 
+	        // Check if the random color is already assigned
+	        while (App.usedSprites.indexOf(randomColor)> -1 && App.usedSprites.length < App.playerColors.length) {
+	            randomColor = Math.floor(Math.random() * App.playerColors.length)
+        	}
+        	if(App.usedSprites.length < App.playerColors.length){
+	            data.colorIndex = randomColor; // This property is used to manage colors
+	            data.colorCode = App.playerColors[data.colorIndex].colorCode
+				
+	            App.usedSprites.push(randomColor);
+	            IO.emit('colorSelected', data);
+			} else {
+				IO.emit('roomFull')
+			}
+        },
         addPlayer: function(cfg) {
-            // This currently force new players to be mannequin
-            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
+			cfg.playerSprites = App.playerColors[cfg.colorIndex].sprites
+            App.players[cfg.mySocketId] = Crafty.e(cfg.playerSprites + ", "+ App.playerColors[cfg.colorIndex].component+", WebsocketController")
                 .attr(App.cfg.player)
-                
-                App.players[cfg.socketId].addData(cfg);													// add player specific data
-
+                App.players[cfg.mySocketId].extend(cfg);													// add player specific data
+				
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
+                this.playing = false
             }
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e(App.cfg.player.components + ",Player, Mannequin, Keyboard")
+                App.players.DEBUG = Crafty.e(App.cfg.player.components + ",Player , Mannequin, Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
@@ -341,6 +364,12 @@ jQuery(function($) {
         },
         setCfg: function(cfg) {
             $.extend(App.cfg, cfg);
+        },
+        setColors: function() {
+			App.playerColors = []
+        	$.each(playerColors[App.cfg.player.components], function(i, color){
+        		App.playerColors.push(color)
+        	})
         },
         toggleDebug: function(val) {
             App.debug = val || !App.debug;

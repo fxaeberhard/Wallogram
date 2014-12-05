@@ -182,9 +182,3 @@ YUI.add("wallogram-pad", function(Y) {
     });
     Y.namespace("Wallogram").Pad = Pad;
 });
-$(document).ready(function() {
-    $.IO.on('addScoreToController', function(score) {
-	    console.log("yuppp", score)
-        $('.info-box span').html(score)
-    })
-});

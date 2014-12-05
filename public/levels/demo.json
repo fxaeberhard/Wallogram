@@ -1,7 +1,7 @@
 {
     "name":"default",
     "player": {
-        "components": "WalloBot",
+        "components": "MannequinSprite",
         "x": 100,
         "y": 100
     },
