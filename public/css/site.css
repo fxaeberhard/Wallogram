@@ -17,6 +17,10 @@ fieldset {
     margin: 0;
     padding: 0;
 }
+li {
+    list-style: none;
+}
+
 .ui-dialog {
     background: white;
 }
