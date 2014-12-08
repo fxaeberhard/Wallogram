@@ -1,12 +1,18 @@
 extends layout
 
+block head
+	link(rel="stylesheet" type="text/css" href="css/screen.css")
+	link(rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css")
+
 block content
 	// Markup 
 	div(class="wallo-page")
 
 		div(id="tab-play" class="wallo-u wallo-tab wallo-tab-selected")
-			div(class="wallo-crafty")
+			div(class="wallo-play")
+				div(class="wallo-crafty")
 
+			div(class="wallo-edit-toolbar")
 
 		div(id="tab-source" class="wallo-u wallo-tab")
 			div(id="editor")
@@ -14,13 +20,11 @@ block content
 		div(class="wallo-edit wallo-u")
 
 			div(class="wallo-edit-buttons")
-				button(class="button-play" title="Shortcut: p") disabledPlay
-				button(class="button-stop" title="Shortcut: s") disabledStop
-				button(class="button-reset" title="Shortcut: r") Reset
-				button(class="button-fullscreen" title="Shortcut: f") Fullscreen
-				button(class="button-save") Save
-
-
+				button(class="button-play fa fa-play fa-lg" title="Shortcut: p" disabled)
+				button(class="button-stop fa fa-pause fa-lg" title="Shortcut: s" disabled)
+				button(class="button-reset  fa fa-stop fa-lg" title="Shortcut: r")
+				button(class="button-fullscreen fa fa-expand fa-lg" title="Shortcut: f")
+				button(class="button-save fa fa-save fa-lg")
 
 			div(data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected") Preview
 			div(data-target="#tab-source" class="wallo-tab-link") Source
@@ -43,12 +47,15 @@ block content
 
 	// Libraries 
 	script(src="libs/jquery-2.1.1.min.js")
+	script(src="libs/underscore-min.js")
 	script(src="libs/Box2dWeb-2.1.a.3.min.js")
 	script(src="libs/crafty-min.js")
 	script(src="/socket.io/socket.io.js")
 	script(src="libs/stats.min.js")
 	script(src="libs/yui3/build/yui/yui-min.js")
+	script(src="libs/inputex/src/loader.js")
 	script(src="libs/ace/ace.js")
+	script(src="libs/jquery-ui/jquery-ui.min.js")
 
 	// Sources 
 	script(src="js/screen/sprites.js")

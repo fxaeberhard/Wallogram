@@ -1,0 +1,54 @@
+
+body { background-color: white; margin: 0; padding: 0; font-family:"Trebuchet MS",Helvetica,Arial,Verdana; font-size: 13px; }
+
+p { font-size: 13px; }
+ul li { font-size: 13px; }
+img { border: 0;}
+
+#headbar { background-image: url(title-bg.png); height: 160px; margin: 0; padding: 0; }
+
+.pageWidth { width: 900px; position: relative; margin: auto; }
+
+#titleContainer { padding-top: 50px;}
+#titleContainer h1 { margin: 0; font-family: cursive; font-size: 25px;}
+#titleContainer p {  font-family: cursive;font-size: 15px;}
+
+.navigation {  position: absolute; margin: 6px 0 0 0; top: 0; left: 0; padding: 0; }
+.navigation li { margin: 0; display: inline; margin-right: 30px;}
+.navigation li a { color: #999999; text-decoration: none; font-size: 14px; }
+.navigation li a:hover { color: #cccc33; text-decoration: underline; }
+
+#titleContainer .links { position: absolute; top: 50px; right: 130px; font-size: 90%; line-height: 30px; }
+
+.layout { width: 900px; text-align: left; }
+.layout td.left { width: 55%;}
+.layout td.right { width: 45%;}
+.layout td.left, .layout td.right { padding: 15px; vertical-align: top;}
+
+
+.downloadBox {
+   -moz-border-radius: 10px; 
+   -webkit-border-radius: 10px; 
+   border-radius: 10px; 
+   padding: 10px;  
+   border: 3px solid #EEEEEE; 
+   -moz-box-shadow: 5px 5px 5px #888; 
+   -webkit-box-shadow: 5px 5px 5px #888; 
+   box-shadow: 5px 5px 5px #888;
+}
+
+p.title { font-weight: bold; font-size: 22px; }
+ul.starlist { list-style-image: url(star.png); }
+
+
+
+#examplesList ul li { list-style: square; }
+#examplesList a { text-decoration: none; }
+#examplesList a:hover { text-decoration: underline; }
+
+#examplesList { width: 850px;}
+#examplesList td { vertical-align:top; width: 33%; padding: 20px;}
+
+#examplesList h3 { border-bottom: 1px solid #D9D9D9; color: #666666;}
+
+.footer { font-size: 8pt; color: #999999; background-color: #222222; border-top: 2px solid black; padding: 10px; margin-top: 20px; position: relative; }

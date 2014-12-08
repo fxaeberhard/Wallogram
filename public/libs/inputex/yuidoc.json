@@ -1,0 +1,16 @@
+{
+    "name": "InputEx",
+    "description": "InputEx - form and fields framework for YUI3",
+    "version": "3.1.0",
+    "url": "http://neyric.github.com/inputex",
+    "options": {
+        "linkNatives": "true",
+        "attributesEmit": "true",
+        "paths": [ "./src" ],
+        "outdir": "./api",
+        
+        "external": {
+             "data": "http://yuilibrary.com/yui/docs/api/data.json"
+         }
+    }
+}
