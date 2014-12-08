@@ -299,7 +299,8 @@ jQuery(function($) {
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-                App.players.DEBUG = Crafty.e(App.cfg.player.components + ",Player , Mannequin, Keyboard")
+	            console.log("something", App.playerColors[0].sprites + ", "+ App.playerColors[0].component)
+                App.players.DEBUG = Crafty.e(App.playerColors[0].sprites + ", "+ App.playerColors[0].component +",  Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
