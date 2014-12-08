@@ -107,6 +107,22 @@ Crafty.c("Target", {
     }
 });
 
+Crafty.c("Spawner", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("2D, Box2D, MouseHover")                                  
+            .attr({w: 60, h: 60})                                               // set width and height based on player
+            .box2d({
+                bodyType: 'static',
+                density: 1.0,
+                friction: 10,
+                restitution: 0,
+                isSensor: true,
+                shape: "box"
+            })
+    }
+});
+
+
 /**
  * 
  */

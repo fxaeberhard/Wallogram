@@ -291,7 +291,7 @@ jQuery(function($) {
             App.players[cfg.mySocketId] = Crafty.e(cfg.playerSprites + ", "+ App.playerColors[cfg.colorIndex].component+", WebsocketController")
                 .attr(App.cfg.player)
                 App.players[cfg.mySocketId].extend(cfg);													// add player specific data
-				
+				console.log(App.cfg.player)
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
                 this.playing = false
@@ -364,6 +364,12 @@ jQuery(function($) {
             App.countdownHandler = setTimeout(step, 1000);                      // Show countdown
         },
         setCfg: function(cfg) {
+			$.each(cfg.entities, function(i,entity){
+				if(entity.components == "Spawner"){
+					cfg.player.x = entity.x
+					cfg.player.y = entity.y
+				}
+			})
             $.extend(App.cfg, cfg);
         },
         setColors: function() {
