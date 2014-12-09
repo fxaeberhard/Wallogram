@@ -38,7 +38,8 @@ body {
     -ms-flex-flow: row wrap;
 }
 .wallo-debugmode .wallo-page {
-    padding-right: 300px;
+    /*padding-right: 300px;*/
+    padding-left: 300px;
 }
 .wallo-u {
     display: inline-block;
@@ -63,8 +64,9 @@ body {
     background: red;
     position: absolute;
     top: 1em;
-    right: .8em;
+    right: 2.2em;
     border: 1px solid gray;
+    z-index: 1;
 }
 .wallo-socketio-connected .wallo-connectionindicator {
     background: green;
@@ -73,13 +75,17 @@ body {
 .wallo-edit {
     width: 300px;
     height: 100%;
-    margin-right: -300px;
+    /*margin-right: -300px;*/
     font-size: 0.9em;
     background: #fafafa;
-    padding-top: .9em;
+    position:absolute;
+    left: 0px;
 }
 .wallo-edit-buttons {
-    padding: 0 1em .5em;
+    padding: 1em 1em .5em;
+}
+.button-close {
+    float: right;
 }
 .wallo-edit-content {
     position: absolute;
@@ -156,6 +162,7 @@ body {
     overflow: auto;
     width: 100%;
     background: black;
+    position: relative;
 }
 #tab-source {
     width: 100%;
@@ -183,6 +190,7 @@ body {
     /*background: #fafafa;*/
     left: 10px;
     right: 310px;
+    z-index: 1001;
 }
 .wallo-thumb {
     /*margin: 5px;*/

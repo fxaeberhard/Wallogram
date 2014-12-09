@@ -31,23 +31,23 @@ jQuery(function($) {
 
             var levelUri;
             if ($.urlParam('level')) {
-                levelUri = "/levels/getLevel?level="+$.urlParam('level')
-            }else{
-                levelUri = "levels/demo.json"
+                levelUri = "/levels/getLevel?level=" + $.urlParam('level');
+            } else {
+                levelUri = "levels/demo.json";
             }
-            $.getJSON(levelUri,function(cfg) {                           // Retrieve current level
+            $.getJSON(levelUri, function(cfg) {                           // Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
 
                 App.initCrafty();                                               // Init crafty
 
                 App.bindEvents();                                               // Bind game events
-				
-				App.SetB2dListener();
-				
+
+                App.SetB2dListener();
+
                 IO.emit('hostCreateNewGame');                                   // Join a game
 
                 $.Edit.init();
-                
+
                 App.toggleDebug(true);
 
             });
@@ -105,11 +105,11 @@ jQuery(function($) {
                     case 82:                                                    // r: Restart game
                         App.setState("countdown");
                         break;
-                        
-					case 51:													// 3: Restart game as well
-						App.setState("countdown");
+
+                    case 51:							// 3: Restart game as well
+                        App.setState("countdown");
                         break;
-                        
+
                     case 49:                                                    // 1: Add a debug player w/ keyboard
                         App.addDebugPlayer();
                         break;
@@ -125,62 +125,62 @@ jQuery(function($) {
                 }
             });
         },
-        SetB2dListener: function() {											// Initiate contact listener
-	        var contactListener = new b2ContactListener
-			
-			
-			/*
-			 * Begin Contact Listener
-			 */
-			 
-			contactListener.BeginContact = function(contact){
-				var fixtures = [];												// create array of the two Entity in contact
-				
-				fixtures.push(contact.GetFixtureA())
-				fixtures.push(contact.GetFixtureB())
-				
-				$.each(fixtures, function(i, f){
-					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
-						var player = f.GetBody().GetUserData()
-						player.BeginContact(fixtures, i);
-					}
-					if (f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity starting Contact is Enemy
-						var enemy = f.GetBody().GetUserData();					// Get relevent enemy
-						enemy.BeginContact(fixtures, i);						// Send both fixtures
-					}
-					if (f.GetBody().GetUserData().components == "OutOfBounds") {
-						var platform = f.GetBody().GetUserData();
-						platform.BeginContact(fixtures, i);
-					}
-					
-				})
-			}
-			
-			
-			
-			
-			/*
-			 * End contact listener
-			 */
-			contactListener.EndContact = function(contact){
-				var fixtures = [];
-				fixtures.push(contact.GetFixtureA())
-				fixtures.push(contact.GetFixtureB())
-				
-				$.each(fixtures, function(i, f){
-					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
-						var player = f.GetBody().GetUserData()
-						player.EndContact(fixtures, i);
-					}
-					if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity ending Contact is Enemy
-						var enemy = f.GetBody().GetUserData()
-						enemy.EndContact(fixtures, i);
-					}
-					
-				})
-			}
-			
-			$.App.world.SetContactListener(contactListener);
+        SetB2dListener: function() {						// Initiate contact listener
+            var contactListener = new b2ContactListener
+
+
+            /*
+             * Begin Contact Listener
+             */
+
+            contactListener.BeginContact = function(contact) {
+                var fixtures = [];												// create array of the two Entity in contact
+
+                fixtures.push(contact.GetFixtureA())
+                fixtures.push(contact.GetFixtureB())
+
+                $.each(fixtures, function(i, f) {
+                    if (f.GetBody().GetUserData().name == "player") {				// If one of the entity ending Contact is Player
+                        var player = f.GetBody().GetUserData()
+                        player.BeginContact(fixtures, i);
+                    }
+                    if (f.GetBody().GetUserData().name == "hotdog") {				// If one of the entity starting Contact is Enemy
+                        var enemy = f.GetBody().GetUserData();					// Get relevent enemy
+                        enemy.BeginContact(fixtures, i);						// Send both fixtures
+                    }
+                    if (f.GetBody().GetUserData().components == "OutOfBounds") {
+                        var platform = f.GetBody().GetUserData();
+                        platform.BeginContact(fixtures, i);
+                    }
+
+                })
+            }
+
+
+
+
+            /*
+             * End contact listener
+             */
+            contactListener.EndContact = function(contact) {
+                var fixtures = [];
+                fixtures.push(contact.GetFixtureA())
+                fixtures.push(contact.GetFixtureB())
+
+                $.each(fixtures, function(i, f) {
+                    if (f.GetBody().GetUserData().name == "player") {				// If one of the entity ending Contact is Player
+                        var player = f.GetBody().GetUserData()
+                        player.EndContact(fixtures, i);
+                    }
+                    if (f.GetBody().GetUserData().name == "hotdog") {				// If one of the entity ending Contact is Enemy
+                        var enemy = f.GetBody().GetUserData()
+                        enemy.EndContact(fixtures, i);
+                    }
+
+                })
+            }
+
+            $.App.world.SetContactListener(contactListener);
         },
         setState: function(newState) {
             if (App.state === newState)
@@ -228,7 +228,7 @@ jQuery(function($) {
             Crafty.canvas.init();
             Crafty.box2D.init(0, 20, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
             Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
-            
+
             App.world = Crafty.box2D.world
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
@@ -251,7 +251,7 @@ jQuery(function($) {
         },
         addPlayer: function(cfg) {
             // This currently force new players to be mannequin
-            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites+", Player, Mannequin, WebsocketController")
+            App.players[cfg.socketId] = Crafty.e(cfg.playerSprites + ", Player, Mannequin, WebsocketController")
                 .attr(App.cfg.player);
 
             if ($.size(App.players) === 1) {
@@ -266,9 +266,9 @@ jQuery(function($) {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;
             }
-        },        
-        killEnemy: function(enemy){
-	        enemy.destroy()
+        },
+        killEnemy: function(enemy) {
+            enemy.destroy();
         },
         showCountdown: function() {
             var w = 200, h = 200, //                                            // Append a box to limit players moves
@@ -295,7 +295,7 @@ jQuery(function($) {
                 }));                                                            // Add a box to limit players moves until they can move
 
             $.each(App.players, function(i, p) {                                // Bring all players to starting position
-                p.reset()
+                p.reset();
             });
 
             var countDown = App.cfg.countdownDuration,
@@ -345,6 +345,9 @@ Crafty.prototype.attr = function(key) {
         }
         if (key.color && this.has("Color")) {
             this.color(key.color);
+        }
+        if (key.text && this.has("Text")) {
+            this.text(key.color);
         }
     }
     return oldAttr.apply(this, arguments);

@@ -16,7 +16,11 @@ jQuery(function($) {
             QR: {
                 thumbClass: "fa fa-qrcode fa-4x",
                 form: [{
-                        name: "target"
+                        name: "bgcolor",
+                        label: "Background"
+                    }, {
+                        name: "bgcolor",
+                        label: "Foreground"
                     }],
                 value: {
                     type: "QR",
@@ -27,6 +31,10 @@ jQuery(function($) {
             },
             Image: {
                 thumbClass: "fa fa-file-image-o fa-4x",
+                form: [{
+                        name: "target",
+                        label: "url"
+                    }],
                 value: {
                     type: "Image",
                     components: "WalloImage, Platform",
@@ -37,6 +45,10 @@ jQuery(function($) {
             },
             Color: {
                 thumbClass: "fa fa-file-video-o fa-4x",
+                form: [{
+                        name: "color",
+                        label: "Color"
+                    }],
                 value: {
                     type: "Color",
                     components: "ColoredPlatform",
@@ -46,13 +58,15 @@ jQuery(function($) {
             Text: {
                 thumbClass: "fa fa-font fa-4x",
                 form: [{
-                        name: "content",
-                        type: "tinymce"
+                        label: "Text",
+                        name: "text",
+                        type: "text"
+                            // type: "tinymce"
                     }],
                 value: {
                     type: "Text",
-                    components: "Text",
-                    color: "red",
+                    components: "WalloText",
+                    text: "<font style='color:white'>red</font>09",
                     x: 770,
                     y: 340
                 }
@@ -106,10 +120,14 @@ jQuery(function($) {
                 stats.begin();
             });
 
-            $('.wallo-load-platlevels').on('click', 'a', $.Edit.loadLevel);
+            $('.wallo-load-platlevels').on('click', 'a', Edit.loadLevel);
 
             $('.wallo-edit-buttons').on('click', '.button-save', Edit.save);
-
+            
+            $(".button-close").on("click", function () {
+                $.App.toggleDebug();
+            });
+            
             var editor;
             $(".wallo-tab-link").bind("click", function() {                     // Add tab selection support
                 $(".wallo-tab-linkselected").removeClass("wallo-tab-linkselected");
@@ -146,25 +164,12 @@ jQuery(function($) {
             });
 
             _.each(TOOLBAR, function(i) {
-                var div = $(".wallo-edit-toolbar").append("<div class='wallo-thumb " + i.thumbClass + "' data-type='" + i.value.type + "'></div>");
+                $(".wallo-edit-toolbar").append("<div class='wallo-thumb " + i.thumbClass + "' data-type='" + i.value.type + "'></div>");
             });
 
             $(".wallo-edit-toolbar div").draggable({
                 opacity: 0.7,
-                helper: "clone",
-//                start: function() {
-////                    counts[ 0 ]++;
-////                    updateCounterStatus($start_counter, counts[ 0 ]);
-//                },
-//                drag: function() {
-////                    counts[ 1 ]++;
-////                    updateCounterStatus($drag_counter, counts[ 1 ]);
-//                },
-//                stop: function(e) {
-////                    counts[ 2 ]++;
-////                    updateCounterStatus($stop_counter, counts[ 2 ]);
-//                    console.log(e);
-//                }
+                helper: "clone"
             });
             $(".wallo-play").droppable({
                 drop: function(e, ui) {
@@ -180,8 +185,6 @@ jQuery(function($) {
                     entity.cfgObject = cfg;
                 }
             });
-
-//            $("#draggable2").draggable({opacity: 0.7, helper: "clone"});
         },
         showEdition: function(entity) {
             $('.wallo-edit-overlay').show();
@@ -207,7 +210,7 @@ jQuery(function($) {
             //Edit.save();
         },
         showEditForm: function() {
-            var dialog = $('<div id="MyDialog"></div>').dialog({
+            var dialog = $('<div></div>').dialog({
                 title: "Edit",
                 modal: true,
                 buttons: [{
@@ -223,10 +226,7 @@ jQuery(function($) {
             });
             var cfg = {
                 type: "group",
-                fields: [{
-                        name: "name",
-                        type: "string"
-                    }],
+                fields: TOOLBAR[currentEntity.cfgObject.type].form,
                 parentEl: dialog.get(0)
             };
             YUI().use("inputex", function(Y) {

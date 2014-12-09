@@ -6,6 +6,9 @@ block head
 
 block content
 	// Markup 
+
+	div(class="wallo-connectionindicator")
+
 	div(class="wallo-page")
 
 		div(id="tab-play" class="wallo-u wallo-tab wallo-tab-selected")
@@ -25,6 +28,7 @@ block content
 				button(class="button-reset  fa fa-stop fa-lg" title="Shortcut: r")
 				button(class="button-fullscreen fa fa-expand fa-lg" title="Shortcut: f")
 				button(class="button-save fa fa-save fa-lg")
+				button(class="button-close fa fa-close fa-lg")
 
 			div(data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected") Preview
 			div(data-target="#tab-source" class="wallo-tab-link") Source
@@ -43,8 +47,6 @@ block content
 			div(id="tab-source" class="wallo-u wallo-tab")
 				div(id="editor")
 
-
-
 	// Libraries 
 	script(src="libs/jquery-2.1.1.min.js")
 	script(src="libs/underscore-min.js")
@@ -56,6 +58,7 @@ block content
 	script(src="libs/inputex/src/loader.js")
 	script(src="libs/ace/ace.js")
 	script(src="libs/jquery-ui/jquery-ui.min.js")
+	script(src="libs/tinymce/tinymce.min.js")
 
 	// Sources 
 	script(src="js/screen/sprites.js")
