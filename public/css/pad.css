@@ -50,6 +50,16 @@ body {
     background: #ffe050 url(../assets/simplepad-jump.png) no-repeat center center;
     background-size: 100%;
 }
+.yui3-wallogram-pad .info-box{
+	position: absolute;
+	text-align: center;
+	background: rgba(255, 255, 255, 0.60);
+	margin: 20px 0px;
+	padding: 10px 0px;
+	left: 40%;
+	right: 40%;
+	width: 20%;
+}
 /** NES Pad **/
 .yui3-wallogram-pad-nes {    
     background: url(../assets/nespad_back.png) no-repeat;
@@ -94,4 +104,8 @@ body {
     left: 79%;
     width: 12%;
     height: 26%;
+}
+.info-box{
+	left: 26%;
+	right
 }

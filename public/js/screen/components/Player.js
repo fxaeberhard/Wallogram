@@ -10,7 +10,9 @@ Crafty.c("Player", {
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.leftTouch = this.rightTouch = this.bodyTouch = this.onground = this.onMovingPlatform = false;
+        this.leftTouch = [], this.rightTouch = [], /* this.bodyTouch = [] ,*/ this.onground = [],
+        this.score = 0,
+        this.onMovingPlatform = false;
         var currentDir = 0,
         	prevPlatPos = {x: 0, y: 0};
         this.requires("2D, Canvas, Box2D")										// Requirements
@@ -24,11 +26,10 @@ Crafty.c("Player", {
                 if (this.runOnce != true) {
 		    		this.runOnce()
 	    		}	
-                 
                 /*
 	             * This replaces box2d friction since it does not work well for plateformer (when character lands velocity drops to zero to go back up)
 	             */
-                if ((this.has("Keyboard") || this.has("WebsocketController")) || this.onground){// If velocity is smaller than 0 and left arrow isn't pressed decrease speed
+                if ((this.has("Keyboard") || this.has("WebsocketController"))){			// If velocity is smaller than 0 and left arrow isn't pressed decrease speed
 			        if (velocity.x <= -1 && !this.isDown('LEFT_ARROW')) {											// If velocity is smaller or equal to 0 decrease by walkforce else bring it to 0
 				        forceX = this.WALKFORCE
 					}else if(velocity.x >= 1 && !this.isDown('RIGHT_ARROW')){											// If velocity is bigger or equal to 0 decrease by walkforce else bring it to 0
@@ -39,7 +40,7 @@ Crafty.c("Player", {
 		        }
 		        
 	            if(this.has("Keyboard") || this.has("WebsocketController")){			// If it has Keyboad or WebsocketController component than set controles
-	                if (this.isDown('LEFT_ARROW')) {					// If right arrow is down
+	                if (this.isDown('LEFT_ARROW')) {									// If right arrow is down
 		                if (velocity.x > -this.TOPSPEED + 1){	     					// If player is still under topspeed (accelerating)
 		                    body.SetAwake(true);                                        // Wakes the body up if its sleeping
 		                    if (velocity.x > -this.TOPSPEED) {							// set force to 500 if velocity isn't too high
@@ -65,7 +66,7 @@ Crafty.c("Player", {
 			            }
 			        }
 			        
-			        if(this.onMovingPlatform){											// If on moving plate, compensate movement.
+			        if (this.onMovingPlatform){											// If on moving plate, compensate movement.
 			        	var contactObject = this.body.m_contactList.other,
 			        		PlateformPos = contactObject.GetPosition(),
 							playerPosition = this.body.GetPosition(),
@@ -80,7 +81,7 @@ Crafty.c("Player", {
 			        	this.body.SetPosition(new b2Vec2(playerPosition.x + diffPos.x, playerPosition.y))
 			        }
 			        
-	                if (this.onground && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
+	                if (this.onground.length > 0 && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
 	                    //console.log("EnterFrame(): jumping");
 	                    body.SetAwake(true);                                        // Wakes the body up if its sleeping
 	                    body.ApplyImpulse(											// Apply upward impulse
@@ -88,12 +89,12 @@ Crafty.c("Player", {
 	                        body.GetWorldCenter()
 	                    )
 	                    this.animate("jump");
-	                    this.onground = false;
 	                }
 		            if(!this.isDown('SPACE') 										// apply force downward when jump button is released
 	            	  && !this.isDown('UP_ARROW')
 	            	  && !this.isDown('A') 
-	            	  && !this.onground && body.m_linearVelocity.y < this.DOWNFORCELIMIT){
+	            	  && this.onground.length == 0 
+	            	  && body.m_linearVelocity.y < this.DOWNFORCELIMIT){
 		                 body.ApplyImpulse(
 		                 	new b2Vec2(0, this.DOWNFORCE),
 		                 	body.GetWorldCenter()
@@ -101,9 +102,9 @@ Crafty.c("Player", {
 		             this.prevPlatPos = {x: 0, y: 0};								// reset previous position to zero on release of jump. (can't use on press of button because it is too early.)
 		            }
 		
-	                if(velocity.x != 0 && !this.onground && 
-	                	!(this.isDown('RIGHT_ARROW') 
-	                	  || this.isDown('LEFT_ARROW'))){
+	                if(velocity.x != 0 && !this.onground.lenght == 0
+	                && !(this.isDown('RIGHT_ARROW') 
+					|| this.isDown('LEFT_ARROW'))){
 		                forceX = -velocity.x * 10;
 					}			
 	            }
@@ -116,15 +117,17 @@ Crafty.c("Player", {
                 }
             })
             .bind("KeyDown", function() {
-                if (this.isDown('LEFT_ARROW')) {
-                    this.run(-1);
-                }
-                if (this.isDown('RIGHT_ARROW')) {
-                    this.run(1);
-                }
-                if (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A')){
-	                this.animate("jump");
-                }
+	            if(this.has("Keyboard") || this.has("WebsocketController")){
+	                if (this.isDown('LEFT_ARROW')) {
+	                    this.run(-1);
+	                }
+	                if (this.isDown('RIGHT_ARROW')) {
+	                    this.run(1);
+	                }
+	                if (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A')){
+		                this.animate("jump");
+	                }
+	            }
             })
             .bind("KeyUp", function() {
                 if (!this.isDown('LEFT_ARROW')
@@ -140,7 +143,7 @@ Crafty.c("Player", {
 	    this.runOnce = true;
     },
     idle: function() {
-        if (this.onground) {
+        if (this.onground.length > 0) {
             this.animate("idle", -1);
         }
         this.currentDir = 0;
@@ -149,27 +152,30 @@ Crafty.c("Player", {
     run: function(dir) {
 	    if(this.has("Keyboard") || this.has("WebsocketController")){
 	        this.currentDir = dir;
-	        if (this.onground) {
+	        if (this.onground.length > 0) {
 	            this.animate((dir) ? "run" : "idle", -1);
 	        }
 	    }
         return this;
     },
-    reset: function() {
-		var player = this;
+    die: function() {
+	    var player = this;
 		this.reseting = true;
 	    this.dead = true;
-	    setTimeout(function() {												// Set 3 second Delay before reseting
-            player.body.SetLinearVelocity(new b2Vec2(0, 0));				// Reset velocity 
-            player.attr($.App.cfg.player);									// Reset the player position
-            player.dead = false;
-            player.reseting = false;                                    
-        }, 2000);
-        console.log("App.resetPlayer()", this);
+	    setTimeout(function() {											// Set 2 seconds delay before reseting
+			player.reset();
+		}, 2000);	
+    },
+    reset: function() {									
+        this.body.SetLinearVelocity(new b2Vec2(0, 0));						// Reset velocity 
+        this.attr({"x":$.App.cfg.player.x,"y":$.App.cfg.player.y});			// Reset the player position
+        this.dead = false;
+        this.reseting = false;                                    
+		//console.log("Player.reset()", this);
     },
     hit: function(enemy) {
 	    if(this.ko != true) {												// If player is not ko than action can start
-		    this.ko = true;													// set ko to true so it doesn't happen more than once
+		    
 		    var player = this,
 		    	playerB2D = this.body,
 		    	enemy = enemy.body,
@@ -187,7 +193,9 @@ Crafty.c("Player", {
 					50*(playerCenter.x - enemyCenter.x),
 					-Math.abs(2*(playerCenter.y - enemyCenter.y))
 				);
-
+			this.alpha = 0.5;
+		    this.ko = true;													// set ko to true so it doesn't happen more than once
+			
 			if (this.has("Keyboard")) {
 				this.removeComponent("Keyboard")
 				this.controlleComp = "Keyboard"	
@@ -212,15 +220,8 @@ Crafty.c("Player", {
 	        setTimeout(function() {											// Set 3 second Delay before reseting
 	            player.ko = false;
 	            player.addComponent(player.controlleComp)  
-	            
-	            if (player.isDown('LEFT_ARROW')) {
-                    player.run(-1);
-                } else if (player.isDown('RIGHT_ARROW')) {
-                    player.run(1);
-                } else {
-		            player.idle();
-	            }  
-	                                    
+				player.setDir(player)	            
+	            player.alpha = 1;                    
 	        }, 2000);
 	    }
     },
@@ -233,33 +234,20 @@ Crafty.c("Player", {
 			index2 = 1;
 		}
 		this.sensorCheck(fixtures[index].GetUserData(), true)
-
 		
-		if(this.rightTouch || this.leftTouch){ 								// If Players sensor is either side set sideContact to true
+		if(this.rightTouch.length > 0 || this.leftTouch.length > 0){ 								// If Players sensor is either side set sideContact to true
 	    	this.sideContact = true;
 		}
-		
 		if (fixtures[index].GetUserData() == "foot"){
 			if (fixtures[index2].GetBody().GetUserData().name == "movingPlat") {
 				this.onMovingPlatform = true
 			}
-			console.log("foot")
-			if (this.isPlaying("jump")){
-				if (this.isDown('LEFT_ARROW')) {
-                    this.run(-1);
-                } else if (this.isDown('RIGHT_ARROW')) {
-                    this.run(1);
-                } else {
-	                this.idle()
-                }
-				
-			}
+			
+			this.setDir(this)
 		}
-		
-		if(fixtures[index2].GetBody().GetUserData().components == "Target"){
-			$.App.setState("win")
+		if(fixtures[index2].GetBody().GetUserData().components == "Target" && $.App.playing != false){
+			$.App.win(fixtures[index].GetBody().GetUserData())
 		}
-		
     },
     EndContact: function(fixtures, index){
 	    var index2;
@@ -272,7 +260,7 @@ Crafty.c("Player", {
 	    
 	    this.sensorCheck(fixtures[index].GetUserData(), false)
 	    
-	    if(!this.rightTouch && !this.leftTouch){ 							// If players sensor that lost contact is either said said sideContact to false
+	    if(this.rightTouch.length == 0 && this.leftTouch.length == 0){ 							// If players sensor that lost contact is either said said sideContact to false
 	    	this.sideContact = false;
 		}
 		
@@ -281,21 +269,53 @@ Crafty.c("Player", {
 			this.onMovingPlatform = false;
 		}
     },
+    setDir: function(player) {
+	    if (player.isDown('LEFT_ARROW')) {
+            player.run(-1);
+        } else if (player.isDown('RIGHT_ARROW')) {
+            player.run(1);
+        } else {
+            player.idle();
+            
+        }  
+
+    },
     sensorCheck: function(fixtureName, value) {
 	    switch(fixtureName){
 			case "leftSide":
-				this.leftTouch = value;
+				if(value == true) {
+					this.leftTouch.push(value);	
+				} else if(this.leftTouch.length != 0){
+					this.leftTouch.pop()
+				}
 			break;
 			case "rightSide":
-				this.rightTouch = value;
+				if(value == true) {
+					this.rightTouch.push(value);	
+				} else if(this.rightTouch.length != 0){
+					this.rightTouch.pop()
+				}
 			break;
 			case "foot":
-				this.onground = value;
+				if(value == true) {
+					this.onground.push(1);
+				} else if(this.onground.length != 0){
+					this.onground.pop()
+				}
 			break;
+/*
 			case "body":
-				this.bodyTouch = value;
+				if(value == true) if(this.bodyTouch.length != 0){
+					this.bodyTouch.push(1);	
+				} else {
+					this.bodyTouch.pop()
+				}
 			break;
+*/
 		}
+    },
+    addData: function(data){
+	    this.socketId = data.socketId
     }
 });
 
@@ -320,7 +340,7 @@ Crafty.c("WebsocketController", {
  */
 Crafty.c("Mannequin", {
     ANIMSPEED: 800,
-    JUMPFORCE: -260,
+    JUMPFORCE: -100,
     WALKFORCE: 400,
     DOWNFORCELIMIT: 5,
     DOWNFORCE: 10,
@@ -329,7 +349,7 @@ Crafty.c("Mannequin", {
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.requires("SpriteAnimation")               // Requirements
+        this.requires("Player, SpriteAnimation")               						// Requirements
             .attr({x: 100, w: 64, h: 64, name: "player"})                       // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
@@ -348,10 +368,10 @@ Crafty.c("Mannequin", {
             })
             .addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
-                shape: [[(this.w / 3)+5, this.w - 2], 
-                		[(2 * this.w / 3)-5, this.w - 2], 
-                		[(2 * this.w / 3)-5, this.w + 3], 
-                		[(this.w / 3)+5, this.w + 3]],
+                shape: [[(this.w / 3)+2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w + 3], 
+                		[(this.w / 3)+2, this.w + 3]],
                 isSensor: true,
                 userData: "foot"
             })

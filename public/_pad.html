@@ -41,7 +41,7 @@
                     'widget-position', 'widget-position-align', 'array-extras',
                     'wallogram-pad', function(Y) {                              // Fetch dependencies
                         var pad = new Y.Wallogram.Pad().render();               // Init pad;
-
+						console.log("hiiii")
                         $.IO.emit('playerJoinGame', {
                             playerName: 'anon'
                         });                                                     // Send the gameId and playerName to the server

@@ -122,16 +122,6 @@ Crafty.c("OutOfBounds", {
                 isSensor: true,
                 shape: "box"
             })
-            .onContact("Enemy", function(contacts){
-	            console.log("hello")
-	            contacts[0].obj.reset()
-            })
-            .onContact("Box2d", function(contacts) {
-	           	console.log("hello")
-	            if( contacts[0].obj.dead != true) {
-	            	contacts[0].obj.reset()
-	            }
-            });
     },
     BeginContact: function(fixtures, index) {
 	    var index2
@@ -141,8 +131,10 @@ Crafty.c("OutOfBounds", {
 		}else {
 			index2 = 1;
 		}
-		if(fixtures[index2].GetBody().GetUserData().reseting != true){
-			fixtures[index2].GetBody().GetUserData().reset()
+		if(fixtures[index2].GetBody().GetUserData().reseting != true 
+		&& fixtures[index2].GetBody().GetUserData().name == "hotdog" 
+		|| fixtures[index2].GetBody().GetUserData().name == "player"){
+			fixtures[index2].GetBody().GetUserData().die()
 		}
 	    
 	    
