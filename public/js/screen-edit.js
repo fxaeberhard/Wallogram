@@ -17,10 +17,12 @@ jQuery(function($) {
                 thumbClass: "fa fa-qrcode fa-4x",
                 form: [{
                         name: "bgcolor",
-                        label: "Background"
+                        label: "Background",
+                        type: "color"
                     }, {
                         name: "bgcolor",
-                        label: "Foreground"
+                        label: "Foreground",
+                        type: "color"
                     }],
                 value: {
                     type: "QR",
@@ -32,27 +34,43 @@ jQuery(function($) {
             Image: {
                 thumbClass: "fa fa-file-image-o fa-4x",
                 form: [{
-                        name: "target",
-                        label: "url"
+                        name: "image",
+                        label: "Image"
                     }],
                 value: {
                     type: "Image",
                     components: "WalloImage, Platform",
-                    url: "assets/mario-platform.png",
+                    image: "assets/mario-platform.png",
                     w: 90,
                     h: 100
                 }
             },
             Color: {
-                thumbClass: "fa fa-file-video-o fa-4x",
+                thumbClass: "fa fa-square-o fa-4x",
                 form: [{
                         name: "color",
-                        label: "Color"
+                        label: "Color",
+                        type: "color"
                     }],
                 value: {
                     type: "Color",
                     components: "ColoredPlatform",
-                    color: "red"
+                    color: "white",
+                    w: 50,
+                    h: 50
+                }
+            },
+            Video: {
+                thumbClass: "fa fa-file-video-o fa-4x",
+                form: [{
+                        name: "url",
+                        type: "url"
+                    }],
+                value: {
+                    type: "Video",
+                    components: "Video",
+                    w: 50,
+                    h: 50
                 }
             },
             Text: {
