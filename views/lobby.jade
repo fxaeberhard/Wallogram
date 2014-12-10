@@ -1,6 +1,19 @@
 extends layout
-
+block head
+	link(rel="stylesheet" type='text/css' href="css/lobby.css")
 block content
+	.container
+		nav
+			ul
+				li About us
+				li Team
+				li Pricing
+				li Contact
+		.lobby
+			.history
+				p Hello
+			.played
+				p World
 	a(href="/signout") Log out 
 	br
 	br
