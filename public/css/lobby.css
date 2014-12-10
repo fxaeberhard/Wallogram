@@ -1029,30 +1029,29 @@ hr {
   }
 }
 .lobby {
-  color: red;
   margin-left: -15px;
   margin-right: -15px;
 }
-.history {
+.lobby .history {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 768px) {
-  .history {
+  .lobby .history {
     float: left;
     width: 50%;
   }
 }
-.played {
+.lobby .played {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 768px) {
-  .played {
+  .lobby .played {
     float: left;
     width: 50%;
   }
