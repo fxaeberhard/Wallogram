@@ -329,7 +329,14 @@ Crafty.c("Falling", {
 Crafty.c("WalloText", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("2D, DOM, Text, MouseHover")
-            .attr({w: 100, h: 20})
-            .text("xx0000");
+            .attr({w: 100, h: 20});
     }
 });
+
+Crafty.c("Invisible", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("2D, DOM, MouseHover")
+            .attr({w: 100, h: 20});
+    }
+});
+

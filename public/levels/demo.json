@@ -55,7 +55,7 @@
 			"h": 45
 		}, {
             "components": "WalloImage, Platform",
-            "url": "assets/mario-platform.png",
+            "image": "assets/mario-platform.png",
             "x": 269,
             "y": 100,
             "w": 90,

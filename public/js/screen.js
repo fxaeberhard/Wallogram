@@ -9,8 +9,9 @@
 jQuery(function($) {
     'use strict';
 
-    var IO = $.IO, App;
-	
+    var PADURL = "/pad",
+        IO = $.IO, App;
+
     App = {
         /* *************************************
          *                Setup                *
@@ -36,7 +37,7 @@ jQuery(function($) {
             } else {
                 levelUri = "levels/demo.json";
             }
-            $.getJSON(levelUri, function(cfg) {                           // Retrieve current level
+            $.getJSON(levelUri, function(cfg) {                                 // Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
 
                 App.initCrafty();                                               // Init crafty
@@ -50,10 +51,9 @@ jQuery(function($) {
                 $.Edit.init();
 
                 App.toggleDebug(true);
-
             });
-            
-         														// Set sprite color based on sprite of level   
+
+            // Set sprite color based on sprite of level   
         },
         bindEvents: function() {
             IO.on('newGameCreated', function(data) {                            // When the game is created
@@ -78,13 +78,13 @@ jQuery(function($) {
                     }
                 });
             });
-			IO.on('playerSelectColor', function(data) {
-				App.playerSetup(data)
-			})
+            IO.on('playerSelectColor', function(data) {
+                App.playerSetup(data);
+            });
             IO.on('playerJoinedRoom', function(data) {
-	            //console.log("Screen.playerJoinedRoom()", data);
-				App.addPlayer(data);                          
-                
+                //console.log("Screen.playerJoinedRoom()", data);
+                App.addPlayer(data);
+
             });
             IO.on('padEvent', function(data) {                                  // Forward pad events to the target crafty entity
                 //console.log("Screen.padEvent", data);
@@ -94,10 +94,10 @@ jQuery(function($) {
                 App.players[data.socketId].onPadEvent(data);
             });
 
-            $(".button-reset").bind("click", function() {
-                $.App.setState("countdown");
+            $(".button-reset").click(function() {
+                App.setState("countdown");
             });
-            $(".button-fullscreen").bind("click", $.toggleFullscreen);          // Toggle fullscreen button
+            $(".button-fullscreen").click($.toggleFullscreen);            // Toggle fullscreen button
 
             $("body").keydown(function(e) {                                     // Keyboard events
                 //console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
@@ -108,10 +108,7 @@ jQuery(function($) {
                         break;
 
                     case 82:                                                    // r: Restart game
-                        App.setState("countdown");
-                        break;
-
-                    case 51:							// 3: Restart game as well
+                    case 51:							// 3: "
                         App.setState("countdown");
                         break;
 
@@ -131,22 +128,20 @@ jQuery(function($) {
             });
         },
         SetB2dListener: function() {						// Initiate contact listener
-            var contactListener = new b2ContactListener
-
+            var contactListener = new b2ContactListener;
 
             /*
              * Begin Contact Listener
              */
-
             contactListener.BeginContact = function(contact) {
                 var fixtures = [];												// create array of the two Entity in contact
 
-                fixtures.push(contact.GetFixtureA())
-                fixtures.push(contact.GetFixtureB())
+                fixtures.push(contact.GetFixtureA());
+                fixtures.push(contact.GetFixtureB());
 
                 $.each(fixtures, function(i, f) {
                     if (f.GetBody().GetUserData().name == "player") {				// If one of the entity ending Contact is Player
-                        var player = f.GetBody().GetUserData()
+                        var player = f.GetBody().GetUserData();
                         player.BeginContact(fixtures, i);
                     }
                     if (f.GetBody().GetUserData().name == "hotdog") {				// If one of the entity starting Contact is Enemy
@@ -157,40 +152,36 @@ jQuery(function($) {
                         var platform = f.GetBody().GetUserData();
                         platform.BeginContact(fixtures, i);
                     }
+                });
 
-                })
-            }
+                /*
+                 * End contact listener
+                 */
+                contactListener.EndContact = function(contact) {
+                    var fixtures = [];
+                    fixtures.push(contact.GetFixtureA());
+                    fixtures.push(contact.GetFixtureB());
 
+                    $.each(fixtures, function(i, f) {
+                        if (f.GetBody().GetUserData().name == "player") {				// If one of the entity ending Contact is Player
+                            var player = f.GetBody().GetUserData();
+                            player.EndContact(fixtures, i);
+                        }
+                        if (f.GetBody().GetUserData().name == "hotdog") {				// If one of the entity ending Contact is Enemy
+                            var enemy = f.GetBody().GetUserData();
+                            enemy.EndContact(fixtures, i);
+                        }
 
+                    });
+                };
+            };
 
-
-            /*
-             * End contact listener
-             */
-            contactListener.EndContact = function(contact) {
-                var fixtures = [];
-                fixtures.push(contact.GetFixtureA())
-                fixtures.push(contact.GetFixtureB())
-
-                $.each(fixtures, function(i, f) {
-                    if (f.GetBody().GetUserData().name == "player") {				// If one of the entity ending Contact is Player
-                        var player = f.GetBody().GetUserData()
-                        player.EndContact(fixtures, i);
-                    }
-                    if (f.GetBody().GetUserData().name == "hotdog") {				// If one of the entity ending Contact is Enemy
-                        var enemy = f.GetBody().GetUserData()
-                        enemy.EndContact(fixtures, i);
-                    }
-
-                })
-            }
-
-            $.App.world.SetContactListener(contactListener);
+            Crafty.box2D.world.SetContactListener(contactListener);
         },
         win: function(player) {
-	        $.App.setState("win")
-			player.score ++
-	        IO.emit('addScore', {"id": player.mySocketId, "score": player.score}); 
+            App.setState("win");
+            player.score++;
+            IO.emit('addScore', {"id": player.mySocketId, "score": player.score});
         },
         setState: function(newState) {
             if (App.state === newState)
@@ -202,9 +193,9 @@ jQuery(function($) {
 
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
-		            $.each(App.gate, function(i,ent){
-		                ent.destroy();
-		            })
+                    $.each(App.gate, function(i, ent) {
+                        ent.destroy();
+                    });
                     clearTimeout(App.countdownHandler);
                     break;
 
@@ -221,14 +212,14 @@ jQuery(function($) {
 
                 case "run":                                                     // Play
                     App.startTime = new Date().getTime();
-                    App.playing = true
+                    App.playing = true;
                     break;
 
                 case "win":                                                     // Somebody reach the goal
                     App.restartHandler = setTimeout(function() {
                         App.setState("countdown");
                     }, 1000);
-					App.playing = false
+                    App.playing = false;
                     break;
             }
             App.state = newState;
@@ -242,22 +233,19 @@ jQuery(function($) {
             Crafty.canvas.init();
             Crafty.box2D.init(0, 20, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
             Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
+            Crafty.box2D.ShowBox2DDebug = false;
 
-            App.world = Crafty.box2D.world
+            App.initEntities(App.cfg.entities);
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
-			
-			App.initEntities($.App.cfg.entities)
-			
             //App.addDebugPlayer();
-
         },
-        initEntities: function(entities){
-	         var ents = [];
-	         $.each(entities, function(i, p) {                         // Add entities from config file
+        initEntities: function(entities) {
+            var ents = [];
+            $.each(entities, function(i, p) {                                   // Add entities from config file
                 var entity = Crafty.e(p.components).attr(p);
-                entity.cfgObject = p;
-                ents.push(entity)
+                entity.cfg = p;
+                ents.push(entity);
             });
             return ents;
         },
@@ -270,23 +258,23 @@ jQuery(function($) {
             App.initCrafty();                                                   // Init crafty
             App.toggleDebug(App.debug);                                         // to force refresh
         },
-        playerSetup: function(data){
-	        App.usedSprites = [];
-	        // Choose random color
-	        var randomColor = Math.floor(Math.random() * App.playerColors.length); 
-	        // Check if the random color is already assigned
-	        while (App.usedSprites.indexOf(randomColor)> -1 && App.usedSprites.length < App.playerColors.length) {
-	            randomColor = Math.floor(Math.random() * App.playerColors.length)
-        	}
-        	if(App.usedSprites.length < App.playerColors.length){
-	            data.colorIndex = randomColor; // This property is used to manage colors
-	            data.colorCode = App.playerColors[data.colorIndex].colorCode
-				
-	            App.usedSprites.push(randomColor);
-	            IO.emit('colorSelected', data);
-			} else {
-				IO.emit('roomFull')
-			}
+        playerSetup: function(data) {
+            App.usedSprites = [];
+            // Choose random color
+            var randomColor = Math.floor(Math.random() * App.playerColors.length);
+            // Check if the random color is already assigned
+            while (App.usedSprites.indexOf(randomColor) > -1 && App.usedSprites.length < App.playerColors.length) {
+                randomColor = Math.floor(Math.random() * App.playerColors.length);
+            }
+            if (App.usedSprites.length < App.playerColors.length) {
+                data.colorIndex = randomColor; // This property is used to manage colors
+                data.colorCode = App.playerColors[data.colorIndex].colorCode;
+
+                App.usedSprites.push(randomColor);
+                IO.emit('colorSelected', data);
+            } else {
+                IO.emit('roomFull');
+            }
         },
         addPlayer: function(cfg) {
             // This currently force new players to be mannequin
@@ -295,13 +283,13 @@ jQuery(function($) {
 
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
-                this.playing = false
+                this.playing = false;
             }
         },
         addDebugPlayer: function() {
             if (!App.players.DEBUG) {
-	            console.log("something", App.playerColors[0].sprites + ", "+ App.playerColors[0].component)
-                App.players.DEBUG = Crafty.e(App.playerColors[0].sprites + ", "+ App.playerColors[0].component +",  Keyboard")
+                console.log("something", App.playerColors[0].sprites + ", " + App.playerColors[0].component);
+                App.players.DEBUG = Crafty.e(App.playerColors[0].sprites + ", " + App.playerColors[0].component + ",  Keyboard")
                     .attr(App.cfg.player);
             } else {
                 App.players.DEBUG.destroy();
@@ -312,41 +300,41 @@ jQuery(function($) {
             enemy.destroy();
         },
         showCountdown: function() {
-            var w = 200, h = 200, x = App.cfg.player.x, y = App.cfg.player.y, thick = 10,					// Append a box to limit players moves
-            
-            entities = [{
-							"components": "ColoredPlatform",
-							"color": "pink",
-							"x": x-(w/2)+thick,
-							"y": y-(h/2),
-							"w": w-thick,
-							"h": thick
-						},{
-							"components": "ColoredPlatform",
-							"color": "pink",
-							"x": x+(w/2),
-							"y": y-(h/2),
-							"w": thick,
-							"h": h
-						},
-						{
-							"components": "ColoredPlatform",
-							"color": "pink",
-							"x": x-(w/2)+thick,
-							"y": y+(h/2)-thick,
-							"w": w-thick,
-							"h": thick
-						},{
-							"components": "ColoredPlatform",
-							"color": "pink",
-							"x": x-(w/2),
-							"y": y-(h/2),
-							"w": thick,
-							"h": h
-						}]
-				
-				
-			App.gate = App.initEntities(entities)								// Add a box to limit players moves until they can move
+            var w = 200, h = 200, x = App.cfg.player.x, y = App.cfg.player.y, thick = 10, // Append a box to limit players moves
+
+                entities = [{
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x - (w / 2) + thick,
+                        "y": y - (h / 2),
+                        "w": w - thick,
+                        "h": thick
+                    }, {
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x + (w / 2),
+                        "y": y - (h / 2),
+                        "w": thick,
+                        "h": h
+                    },
+                    {
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x - (w / 2) + thick,
+                        "y": y + (h / 2) - thick,
+                        "w": w - thick,
+                        "h": thick
+                    }, {
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x - (w / 2),
+                        "y": y - (h / 2),
+                        "w": thick,
+                        "h": h
+                    }];
+
+
+            App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
 
             $.each(App.players, function(i, p) {                                // Bring all players to starting position
                 p.reset();
@@ -368,10 +356,10 @@ jQuery(function($) {
             $.extend(App.cfg, cfg);
         },
         setColors: function() {
-			App.playerColors = []
-        	$.each(playerColors[App.cfg.player.components], function(i, color){
-        		App.playerColors.push(color)
-        	})
+            App.playerColors = [];
+            $.each(playerColors[App.cfg.player.components], function(i, color) {
+                App.playerColors.push(color);
+            });
         },
         toggleDebug: function(val) {
             App.debug = val || !App.debug;
@@ -379,15 +367,17 @@ jQuery(function($) {
             $("body").toggleClass("wallo-debugmode", App.debug)
                 .toggleClass("wallo-stdmode", !App.debug);
 
-            Crafty.box2D.ShowBox2DDebug = App.debug;
+            if (this.debug) {
+                Crafty.stage.x = $("#tab-play").position().left;
+            }
+        },
+        toggleDebugCanvas: function() {
+            Crafty.box2D.ShowBox2DDebug = !Crafty.box2D.ShowBox2DDebug;
             Crafty.box2D.debugCanvas.getContext('2d')
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
-            //if (this.debug) {
-            //    Crafty.stage.x = 0;
-            //}
         },
         getPadUrl: function() {
-            return  "/pad.html?gameId=" + IO.gameId;
+            return  PADURL + "?gameId=" + IO.gameId;
         }
     };
     $.App = App;                                                                // Set up global reference
@@ -399,15 +389,23 @@ jQuery(function($) {
 var oldAttr = Crafty.prototype.attr;
 Crafty.prototype.attr = function(key) {
     if (arguments.length === 1 && typeof key === "object") {
-        if (key.url
+        var that = this,
+            fn = function(name) {
+                if (_.isString(that[name])) {
+                    that[name] = key[name];
+                } else {
+                    that[name](key[name]);
+                }
+            };
+        if (key.image
             && (this.has("WalloImage") || this.has("Image"))) {
-            this.image(key.url);
+            fn("image");
         }
         if (key.color && this.has("Color")) {
-            this.color(key.color);
+            fn("color");
         }
         if (key.text && this.has("Text")) {
-            this.text(key.color);
+            fn("text");
         }
     }
     return oldAttr.apply(this, arguments);

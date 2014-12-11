@@ -27,3 +27,15 @@ li {
 .ui-widget-overlay {
     background: rgba(0, 0, 0, 0.6);
 }
+.ui-menu {
+    background: white;
+    border: 1px solid black;
+    z-index: 100;
+}
+.ui-menu .ui-menu-item {
+    padding: 0.5em 2em 0.5em 0.5em !important;
+}
+.ui-menu .ui-state-focus,.ui-menu .ui-state-active {
+    margin: 0 !important;
+    background: lightgray;
+}
