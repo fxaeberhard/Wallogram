@@ -7,10 +7,54 @@ block content
 		include partials/nav
 		.container
 			.lobby
-				.history
-					p Hello
-				.played
-					p World
+				.header
+					.profile
+						img(src="assets/user-profile-picture.jpg" alt="user-picture")
+						.infos
+							h2 My profile
+							dl
+								dt username
+								dd camel113
+								dt mail
+								dd adrienbigler@gmail.com
+								dt country
+								dd Switzerland
+							.update-infos
+								a(href="#")
+									i(class="fa fa-pencil-square-o")
+								a(href="#")
+									i(class="fa fa-camera")
+					.games
+						.wrapper
+							.wallogames-logo
+								img(src="assets/wallo-games-logo.jpg")
+							.default-games
+								div(class="game-one game")
+									img(src="assets/default-game-sample.gif")
+									h3 Game one
+									div(class="action play")
+										i(class="fa fa-play")	Play
+									div(class="action edit")
+										i(class="fa fa-pencil-square-o")	Edit
+								div(class="game-two game")
+									img(src="assets/default-game-sample.gif")
+									h3 Game two
+									div(class="action play")
+										i(class="fa fa-play")	Play
+									div(class="action edit")
+										i(class="fa fa-pencil-square-o")	Edit
+								div(class="game-three game")
+									img(src="assets/default-game-sample.gif")
+									h3 Game three
+									div(class="action play")
+										i(class="fa fa-play")	Play
+									div(class="action edit")
+										i(class="fa fa-pencil-square-o")	Edit
+				.content
+					.history
+						p Hello
+					.played
+						p World
 			a(href="/signout") Log out 
 			br
 			br

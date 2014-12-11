@@ -37,6 +37,12 @@ jQuery(function($) {
                 $('.nav-container-right .user-settings ul').toggle()
                 $('.nav-container-right a.toggle-settings i').toggle()
             })
+            $('body').on('mouseenter','.games .default-games .game',function(){
+                $(this).addClass('game-selected')
+            })
+            $('body').on('mouseleave','.games .default-games .game',function(){
+                $(this).removeClass('game-selected')
+            })
         }, 
         initUI : function () {
             $('.wallo-load-levels ul').empty();
