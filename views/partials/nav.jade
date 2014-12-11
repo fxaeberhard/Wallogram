@@ -1,6 +1,42 @@
-nav
-  ul
-    li About us
-    li Team
-    li Pricing
-    li Contact
+.nav-container-left
+  h1
+    a(href="#")
+    img(src="assets/logo-beta.jpg" alt="Wallogram")
+  .buttons
+    a
+      i(class="fa fa-bars")
+      i(class="fa fa-times")
+    a
+      i(class="fa fa-gamepad")
+  nav
+    ul
+      li 
+        a(href="#") About us
+      li 
+        a(href="#") Team
+      li 
+        a(href="#") Pricing
+      li 
+        a(href="#") Contact
+.nav-container-right
+  .user-settings
+    .user-name
+      i(class="fa fa-user")
+      h2 Utilisateur_Name
+      a(class="toggle-settings")
+        i(class="fa fa-caret-down")
+        i(class="fa fa-caret-up")
+    ul
+      li
+        a(href="#") Edit my profile
+      li
+        a(href="#") Account's settings
+      li
+        a(href="#") Disconnect
+    
+  .language-setting
+    a(href="#" class="current-language") EN
+      i(class="fa fa-angle-down")
+    a(href="#" class="") FR
+    a(href="#" class="") DE
+

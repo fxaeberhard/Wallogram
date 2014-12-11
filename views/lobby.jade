@@ -3,22 +3,23 @@ block head
 	link(rel="stylesheet" type='text/css' href="css/lobby.css")
 	link(rel="stylesheet" type='text/css' href="font-awesome/css/font-awesome.min.css")
 block content
-	include partials/nav
-	.container
-		.lobby
-			.history
-				p Hello
-			.played
-				p World
-	a(href="/signout") Log out 
-	br
-	br
-	a(id="newLevel" href="#" class="fa fa-plus-circle fa-2x")
-	.levelName
-		input(type="text")
-		button create
-	.wallo-load-levels
-		ul
+	.wrapper
+		include partials/nav
+		.container
+			.lobby
+				.history
+					p Hello
+				.played
+					p World
+			a(href="/signout") Log out 
+			br
+			br
+			a(id="newLevel" href="#" class="fa fa-plus-circle fa-2x")
+			.levelName
+				input(type="text")
+				button create
+			.wallo-load-levels
+				ul
 
 	script(src="libs/jquery-2.1.1.min.js")
 	script(src="js/lobby/lobby.js")

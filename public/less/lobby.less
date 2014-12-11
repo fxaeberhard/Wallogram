@@ -1,6 +1,18 @@
+@nav-height: 107px;
+@main-gray: #c9c9c9;
+@light-gray: #f4f4f4;
+@dark-gray: #7f7f7f;
+@very-dark-gray: #414042; // :-)
+@main-size: 1.5em;
+@font-face { font-family: bebas; src: url('BebasNeue.otf'); } 
 @import "bootstrap/bootstrap.less";
+@import "nav.less";
 
-.lobby{ 
+body{
+  background-color: @main-gray;
+  font-family: bebas;
+}
+.lobby{
   .make-row();
   .history{
     .make-sm-column(6);
@@ -8,4 +20,7 @@
   .played{
     .make-sm-column(6);
   }
+}
+.container{
+  margin-top: @nav-height;
 }

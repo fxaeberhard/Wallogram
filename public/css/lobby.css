@@ -1,3 +1,7 @@
+@font-face {
+  font-family: bebas;
+  src: url('BebasNeue.otf');
+}
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1028,6 +1032,143 @@ hr {
     display: none !important;
   }
 }
+a {
+  color: black;
+}
+a:hover {
+  text-decoration: none;
+  color: black;
+}
+.nav-container-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.nav-container-left h1 {
+  margin: 0;
+  float: left;
+}
+.nav-container-left h1 img {
+  width: 130px;
+  height: 107px;
+}
+.nav-container-left .buttons {
+  float: left;
+}
+.nav-container-left .buttons a {
+  padding: 7px 14px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  height: 53.5px;
+  font-size: 2em;
+  display: block;
+}
+.nav-container-left .buttons a:first-child {
+  border-bottom: 1px #f4f4f4 solid;
+  cursor: pointer;
+}
+.nav-container-left .buttons .fa-times {
+  display: none;
+}
+.nav-container-left nav {
+  float: left;
+  display: none;
+  background-color: #f4f4f4;
+  font-size: 1.6em;
+  height: 53.5px;
+}
+.nav-container-left nav ul {
+  margin: 0;
+  padding: 0;
+}
+.nav-container-left nav ul li {
+  display: inline-block;
+  padding: 12px 40px;
+}
+.nav-container-left nav ul li a:hover {
+  border-bottom: 5px solid;
+}
+.nav-container-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+.nav-container-right .user-settings {
+  float: left;
+  margin-right: 41px;
+  background-color: black;
+}
+.nav-container-right .user-settings ul {
+  padding-left: 0;
+  margin: 0;
+  display: none;
+}
+.nav-container-right .user-settings ul li {
+  margin: 0;
+  padding: 5px 0 5px 20px;
+}
+.nav-container-right .user-settings ul li:hover {
+  background-color: #414042;
+  cursor: pointer;
+}
+.nav-container-right .user-settings ul li:first-child {
+  padding-top: 10px;
+}
+.nav-container-right .user-settings ul a {
+  font-size: 1.5em;
+  color: white;
+}
+.nav-container-right .user-name {
+  height: 53.5px;
+  background-color: #f4f4f4;
+  padding: 12px 0 12px 20px;
+}
+.nav-container-right .user-name i {
+  font-size: 1.3em;
+}
+.nav-container-right .user-name .fa-caret-up {
+  display: none;
+}
+.nav-container-right .user-name h2 {
+  margin-left: 10px;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: inline-block;
+}
+.nav-container-right .user-name a.toggle-settings {
+  background-color: #f4f4f4;
+  cursor: pointer;
+  padding: 16px 18px 13px 18px;
+  font-size: 1.5em;
+  border-left: 2px #7f7f7f solid;
+  margin-left: 10px;
+}
+.nav-container-right .language-setting {
+  height: 53.5px;
+  float: left;
+  font-size: 1.5em;
+}
+.nav-container-right .language-setting a {
+  display: block;
+  padding: 10px 20px;
+  background-color: #f4f4f4;
+  color: black;
+}
+.nav-container-right .language-setting a.current-language {
+  color: white;
+  background-color: black;
+}
+.nav-container-right .language-setting a.current-language i {
+  display: block;
+  line-height: 4px;
+  text-align: center;
+}
+body {
+  background-color: #c9c9c9;
+  font-family: bebas;
+}
 .lobby {
   margin-left: -15px;
   margin-right: -15px;
@@ -1055,4 +1196,7 @@ hr {
     float: left;
     width: 50%;
   }
+}
+.container {
+  margin-top: 107px;
 }
