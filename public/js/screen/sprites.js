@@ -8,6 +8,7 @@
  
  /*
   * Players
+  * Mannequin
   */
 Crafty.sprite(128, 128, 'assets/mannequin.png', {
     MannequinSprite: [0, 0]
@@ -36,8 +37,36 @@ Crafty.sprite(128, 128, 'assets/mannequin_red.png', {
 Crafty.sprite(128, 128, 'assets/mannequin_violet.png', {
     MannequinSpriteViolet: [0, 0]
 });
-Crafty.sprite(128, 128, 'assets/wallobot-1024.png ', {
-    WalloBotSprite: [0, 0]
+/*
+ *Wallobot
+ */
+
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-blue.png ', {
+    WalloBotSpriteBlue: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-dark_blue.png ', {
+    WalloBotSpriteDarkBlue: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-orange.png ', {
+    WalloBotSpriteOrange: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-red.png ', {
+    WalloBotSpriteRed: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-violet.png ', {
+    WalloBotSpriteViolet: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-yellow.png ', {
+    WalloBotSpriteYellow: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-green.png ', {
+    WalloBotSpriteGreen: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-dark_green.png ', {
+    WalloBotSpriteDarkGreen: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/player/wallobot-pink.png ', {
+    WalloBotSpritePink: [0, 0]
 });
 
 /*

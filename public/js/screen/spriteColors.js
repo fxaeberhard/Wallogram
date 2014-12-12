@@ -45,7 +45,47 @@ playerColors["MannequinSprite"] = [{
 }];
 playerColors["WalloBotSprite"] = [{
 	'color': 'blue',
-	'colorCode': '6699FF',
-	'sprites':'WalloBotSprite',
+	'colorCode': '33a9e0',
+	'sprites':'WalloBotSpriteBlue',
+	'component':'WalloBot'
+}, {
+	'color': 'darkblue',
+	'colorCode': '0062e1',
+	'sprites':'WalloBotSpriteDarkBlue',
+	'component':'WalloBot'
+}, {
+	'color': 'orange',
+	'colorCode': 'f79d06',
+	'sprites':'WalloBotSpriteOrange',
+	'component':'WalloBot'
+}, {
+	'color': 'red',
+	'colorCode': 'fc5e21',
+	'sprites':'WalloBotSpriteRed',
+	'component':'WalloBot'
+}, {
+	'color': 'pink',
+	'colorCode': 'ff33bd',
+	'sprites':'WalloBotSpritePink',
+	'component':'WalloBot'
+}, {
+	'color': 'violet',
+	'colorCode': '7e42e1',
+	'sprites':'WalloBotSpriteViolet',
+	'component':'WalloBot'
+}, {
+	'color': 'green',
+	'colorCode': '00da18',
+	'sprites':'WalloBotSpriteGreen',
+	'component':'WalloBot'
+}, {
+	'color': 'darkgreen',
+	'colorCode': '007e12',
+	'sprites':'WalloBotSpriteDarkGreen',
+	'component':'WalloBot'
+}, {
+	'color': 'yellow',
+	'colorCode': 'e8cb00',
+	'sprites':'WalloBotSpriteYellow',
 	'component':'WalloBot'
 }]
