@@ -204,7 +204,17 @@ Crafty.c("WalloImage", {
         });
     }
 });
-
+Crafty.c("fixImage", {
+    init: function() {
+        this.requires("2D, Canvas")
+            .attr({
+	            x: 0,
+	            y: 0,
+                w: $.App.cfg.width,
+                h: $.App.cfg.height
+            });
+    }
+});
 /**
  * 
  */
@@ -263,81 +273,399 @@ Crafty.c('MouseHover', {
     //    document.body.style.cursor = "default";
     //}
 });
+Crafty.c("Lab_Porte", {
+    init: function() {
+        this.requires("2D, Canvas, MouseHover, lab_porte, Box2D")
+            .bind("EnterFrame", function() {
+				if(this.initiated != true){
+					this.setupBox2D()
+				}
 
+	            
+            })
+    },
+    setupBox2D: function() {
+	    this.box2d({
+                bodyType: 'static',
+                shape: [[this.w * (11 / 236), this.h * (309 / 361)], 
+                		[this.w * (227 / 236), this.h * (309 / 361)], 
+                		[this.w * (227 / 236), this.h * (349 / 361)], 
+                		[this.w * (11 / 236), this.h * (349 / 361)]],
+                userData: "plat"
+            })
+        this.initiated = true
+    }
+})
+Crafty.c("AnimatedPlatform", {
+    init: function() {
+        this.requires("2D, Canvas, MouseHover, SpriteAnimation")
+    },
+});
+
+Crafty.c("Gyrophare", {
+    init: function() {
+        this.requires("AnimatedPlatform, lab_gyrophare")
+            .attr({
+                animSpeed: 800,
+                animLength: 1,
+                isSensor: true
+            })
+            .reel("anim", this.animSpeed, 0, 0, 9)
+            .reel("idle", this.animSpeed, 0, 0, 1)
+            .bind("EnterFrame", function() {
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
+				}
+	            
+            })
+    }
+});
+Crafty.c("Chimie", {
+    init: function() {
+        this.requires("AnimatedPlatform, lab_chimie, Box2D")
+            .attr({
+                animSpeed: 1500,
+                animLength: 1,
+                isSensor: true
+            })
+            .reel("anim", this.animSpeed, 0, 0, 51)
+            .reel("idle", this.animSpeed, 0, 0, 1)
+            .bind("EnterFrame", function() {
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
+					this.setupBox2D()
+				}
+				
+            })
+    },
+    setupBox2D: function() {
+	    this.box2d({
+                bodyType: 'static',
+                shape: [[this.w * (10 / 134), this.h * (129 / 160)], 
+                		[this.w * (125 / 134), this.h * (129 / 160)], 
+                		[this.w * (125 / 134), this.h * (137 / 160)], 
+                		[this.w * (10 / 134), this.h * (137 / 160)]],
+                
+                userData: "plat"
+            })
+    }
+});
+Crafty.c("Jauge", {
+    init: function() {
+        this.requires("AnimatedPlatform, lab_jauge, Box2D")
+            .attr({
+                animSpeed: 2500,
+                animLength: 1,
+                isSensor: true
+            })
+            .reel("anim", this.animSpeed, 0, 0, 78)
+            .reel("idle", this.animSpeed, 0, 0, 1)
+            .bind("EnterFrame", function() {
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
+					this.setupBox2D()				
+				}
+	            
+            })
+    },
+    setupBox2D: function() {
+	    this.box2d({
+                bodyType: 'static',
+                shape: [[this.w * (5 / 182), this.h * (5 / 152)], 
+                		[this.w * (175 / 182), this.h * (5 / 152)], 
+                		[this.w * (175 / 182), this.h * (151 / 152)], 
+                		[this.w * (5 / 182), this.h * (151 / 152)]],
+                userData: "plat"
+            })
+    }
+});
+Crafty.c("Serrure", {
+    init: function() {
+        this.requires("AnimatedPlatform, lab_serrure")
+            .attr({
+                animSpeed: 2500,
+                animLength: 1,
+                isSensor: true
+            })
+            .reel("anim", this.animSpeed, 0, 0, 74)
+            .reel("idle", this.animSpeed, 0, 0, 1)
+            .bind("EnterFrame", function() {
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
+				}
+	            
+            })
+    }
+});
+Crafty.c("Ventilo", {
+    init: function() {
+        this.requires("AnimatedPlatform, lab_ventilo")
+            .attr({
+                animSpeed: 300,
+                animLength: 1,
+                isSensor: true
+            })
+            .reel("anim", this.animSpeed, 0, 0, 4)
+            .reel("idle", this.animSpeed, 0, 0, 1)
+            .bind("EnterFrame", function() {
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
+				}
+	            
+            })
+    }
+});
+
+
+Crafty.c("Serveur", {
+    init: function() {
+        this.requires("AnimatedPlatform, lab_serveur, Box2D")
+            .attr({
+                animSpeed: 9000,
+                animLength: 1,
+                isSensor: true
+            })
+            .reel("anim", this.animSpeed, 0, 0, 9)
+            .reel("idle", this.animSpeed, 0, 0, 1)
+            .bind("EnterFrame", function() {
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
+					this.setupBox2D()				}
+	            
+            })
+    },
+    setupBox2D: function() {
+	    this.box2d({
+                bodyType: 'static',
+                shape: [[this.w * (11 / 236), this.h * (309 / 361)], 
+                		[this.w * (227 / 236), this.h * (309 / 361)], 
+                		[this.w * (227 / 236), this.h * (346 / 361)], 
+                		[this.w * (11 / 236), this.h * (346 / 361)]],
+                userData: "plat"
+            })
+    }
+})
 /**
  * 
  */
 Crafty.c("Falling", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
-		var counter, counter2, isDown = false, xOrigin, yOrigin,
-			multiplier = 50, contactName, ratio = Crafty.box2D.PTM_RATIO;
-    	this.requires("ColoredPlatform, Gravity, breakingPlateforme, SpriteAnimation")
+		this.isDown = false;
+		var counter, counter2,
+			multiplier = 50, ratio = Crafty.box2D.PTM_RATIO;
+    	this.requires("AnimatedPlatform, Box2D")
     		.attr({
+	    		w: 100,
+	    		h: 20,
 	    		fallTime: 2,
+	    		breaking: 30,
+	    		idle: 1,
 	    		recoverTime: 5,
+	    		animSpeed: 800,
 	    		active: false,
 	    		touching: false,
 	    		name: "falling"
     		})
-    		.reel("breaking", this.fallTime * 1000, 0, 0, 6 )
-    		.reel("idle", this.fallTime * 1000, 0, 0, 1 )
+    		.reel("breaking", (this.fallTime * 1000), 0, 0, this.breaking )
+    		.reel("idle", this.fallTime * 1000, 0, 0, this.idle )
     		.bind("EnterFrame", function() {
     			var body = this.body
-    			if(!isDown){													// checks if platforme is down
-	    			if(!xOrigin && !yOrigin){									// set origine location if they are not set yet
-						xOrigin = this.x;
-		    			yOrigin = this.y;
-	    			}
-	    			
-	    			if (!counter && counter != 0) {								// set counter if it doesn't exist
-		    			counter = this.fallTime * multiplier;
-		    			counter2 = this.recoverTime * multiplier;
-	    			}
-	    			
-	    			if(this.body.GetContactList() != null){						// check if there is contact with anything
-						contactName = this.body.GetContactList().contact.m_fixtureA.m_userData;
-					} else {
-						contactName = "";
-					}
-					if(contactName == "foot" || contactName == "body"){ 		// if contact exist check if it is with a wallobot
-		    			if (counter == 0) {
+    			if (this.runOnce != true) {
+		    		this.setOrigin()
+		    		this.setCounters(multiplier)
+	    		}	
+	    		if(this.touching == true){
+		    		if(this.isDown == false ){					// checks if platforme is down											
+						if (this.counter == 0) {
 			    			body.SetType(2)
-			    			isDown = true
-			    			counter2 = this.recoverTime * multiplier;
+			    			this.isDown = true
 		    			} else {
-			    			counter--;
-		    			}
-						if(!this.isPlaying("breaking") && body.GetType() != 2){	// if breaking animation is not playing yet then start it.
-							this.animate("breaking");
+			    			this.counter --;
 						}
-					} else if(counter < this.fallTime *multiplier){				// if not contact and counter is smaller than top time than increment
-			    		counter = this.fallTime * multiplier;
-			    		this.animate("idle", -1)
-					}
-					
-/*
-					if(counter % multiplier == 0){								// show counter in console 
-		    			console.log("falling in: "+counter/multiplier)
-	    			}
-*/
-	    		} else {
-		    		if (counter2 == 0) {										// if counter = to 0 reset platform otherwise decrement counter
+						
+						if(this.counter % multiplier == 0){								// show counter in console 
+			    			console.log("falling in: "+this.counter/multiplier)
+		    			}
+		    			
+					}	
+	    		} else if (this.touching == false){
+		    		this.counter = this.fallTime * multiplier;						// reset fall counter
+		    		if (this.counter2 == 0) {										// if counter = to 0 reset platform otherwise decrement counter
+			    		this.counter2 = this.recoverTime * multiplier;
 					    body.SetType(0)
-						body.SetPosition(new b2Vec2(xOrigin/ratio, yOrigin/ratio));
+						body.SetPosition(new b2Vec2(this.xOrigin/ratio, this.yOrigin/ratio));
 						body.SetAngle(0)
 						this.animate("idle", -1)
-						isDown = false
-						counter = this.fallTime * multiplier;
-				    } else {
-					    counter2--;
+						this.isDown = false
+						console.log("recovered")
+				    } else if (this.isDown == true){
+					    this.counter2--;
 				    }
-				    
-/*
-				    if(counter2 % multiplier == 0){								// show counter in console 
-					    console.log("reseting in "+counter2/multiplier)
-				    }
-*/
+					
+					if(this.counter2 % multiplier == 0 && this.counter2 != this.recoverTime * multiplier){								// show counter in console 
+		    			console.log("recovering in: "+this.counter2/multiplier)
+	    			}
 	    		}
 			})
-    }
+	},
+	setOrigin: function() {
+		this.runOnce = true
+		this.xOrigin = this.x;
+		this.yOrigin = this.y;
+		this.wOrigin = this.w;
+		this.hOrigin = this.h;
+	},
+	setCounters: function(multiplier) {
+		this.counter = this.fallTime * multiplier;
+		this.counter2 = this.recoverTime * multiplier;
+	},
+	BeginContact: function(fixtures, index) {
+		var index2, body = this.body
+	
+		if(index == 1) {																				// If index is 1 than index two is 0 and vice versa
+			index2 = 0;
+		}else {
+			index2 = 1;
+		}
+		
+		if(fixtures[index2].GetBody().GetUserData().name == "hotdog" 
+		|| fixtures[index2].GetBody().GetUserData().name == "player"){
+			if (!this.touching){
+				this.touching = true
+				if(!this.isPlaying("breaking") && body.GetType() != 2){									// if breaking animation is not playing yet then start it.
+					this.animate("breaking");
+				}
+			}
+		}
+	},
+	EndContact: function(fixtures, index) {
+		var index2
+	
+		if(index == 1) {																				// If index is 1 than index two is 0 and vice versa
+			index2 = 0;
+		}else {
+			index2 = 1;
+		}
+		if(fixtures[index2].GetBody().GetUserData().name == "hotdog" 
+		|| fixtures[index2].GetBody().GetUserData().name == "player"){
+			this.touching = false
+			fixtures[index].GetBody().GetUserData().animate("idle", -1)
+		}
+		
+	}
 });
+Crafty.c("Standard_Falling", {
+    init: function() {
+	    
+        this.requires("Falling")
+            .attr({
+                animSpeed: 1000,
+                animLength: 1,
+                isSensor: true
+            })
+            .reel("anim", this.animSpeed, 0, 0, 76)
+            .reel("idle", this.animSpeed, 0, 0, 1)
+            .bind("EnterFrame", function() {
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
+					this.setupBox2D()				}
+	            
+            })
+    },
+    setupBox2D: function() {
+	    this.box2d({
+                bodyType: 'static',
+                density: 0.2,
+                friction: 10,
+                restitution: 0,
+                shape: "box"
+            })
+    }
+})
+Crafty.c("Lab_Falling_platform", {
+	
+    init: function() {
+        this.requires("Falling, lab_plateforme_tombe")
+            .attr({
+                animSpeed: 1000,
+                animLength: 1,
+            })
+            .bind("EnterFrame", function() {
+				if(this.initiated != true){
+					this.setupBox2D()
+				}
+	            
+            })
+    },
+    setupBox2D: function() {
+	    this.box2d({
+                bodyType: 'static',
+                friction: 0,
+                restitution: 0,
+                shape: [[this.w * (10 / 336), this.h * (48 / 196)], 
+                		[this.w * (325 / 336), this.h * (48 / 196)], 
+                		[this.w * (325 / 336), this.h * (183 / 196)], 
+                		[this.w * (10 / 336), this.h * (183 / 196)]],
+                userData: "plat"
+            })
+		this.initiated = true;
+    }
+
+})
+Crafty.c("Lab_Falling_hook", {
+	
+    init: function() {
+        this.requires("2D, Canvas, lab_fix_plateforme_tombe,")
+	        .attr({
+	                "x": 23,
+	                "y": 23,
+	                "w": 23,
+	                "h": 23
+	            })
+        }
+})
+
+Crafty.c("Lab_Falling", {
+    init: function() {
+	    
+        this.requires("2D, Canvas, MouseHover, Lab_Falling_platform")
+            .attr({
+                z: 3
+            })
+            .bind("EnterFrame", function() {
+				if(!this.added){
+					this.create()
+				}
+				if($.App.debug && !this.isDown && (this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin)){
+					this.resetPosition()
+				}
+
+	            
+            })
+    },
+    create: function() {
+	    this.wScaleRatio =  336 / this.w
+		this.hScaleRatio = 	196 / this.h
+	    console.log(this.w, this.scaleRatio)
+	    this.hookLeft = Crafty.e("Lab_Falling_hook").attr({"x": this.x + (54 / this.wScaleRatio) ,
+										   "y": this.y + (24 / this.hScaleRatio),
+										   "w": 23 / this.wScaleRatio,
+										   "h": 23 / this.hScaleRatio,
+										   "z": 2
+											})
+		this.hookRight = Crafty.e("Lab_Falling_hook").attr({"x": this.x +  (253 / this.wScaleRatio),
+										   "y": this.y + (24 / this.hScaleRatio),
+										   "w": 23 / this.wScaleRatio,
+										   "h": 23 / this.hScaleRatio,
+										   "z": 2
+										})
+		this.added = true
+    },
+    resetPosition: function(){
+	    this.hookRight.destroy()
+	    this.hookLeft.destroy()
+	    this.create()
+	    this.setOrigin()
+    }
+})
+

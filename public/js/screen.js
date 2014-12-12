@@ -34,9 +34,9 @@ jQuery(function($) {
             if ($.urlParam('level')) {
                 levelUri = "/levels/getLevel?level="+$.urlParam('level')
             }else{
-                levelUri = "levels/demo.json"
+                levelUri = "levels/lab.json"
             }
-            $.getJSON(levelUri,function(cfg) {                           // Retrieve current level
+            $.getJSON(levelUri,function(cfg) {                           	// Retrieve current level
                 App.setCfg(cfg);                                               // Update game cfg
 
 				App.setColors();
@@ -155,6 +155,9 @@ jQuery(function($) {
 					} else if (f.GetBody().GetUserData().components == "OutOfBounds") {
 						var platform = f.GetBody().GetUserData();
 						platform.BeginContact(fixtures, i);
+					} else if(f.GetBody().GetUserData().name == "falling") {
+						var platform = f.GetBody().GetUserData();
+						platform.BeginContact(fixtures, i);
 					}
 					
 				})
@@ -178,8 +181,10 @@ jQuery(function($) {
 					} else if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity ending Contact is Enemy
 						var enemy = f.GetBody().GetUserData()
 						enemy.EndContact(fixtures, i);
+					} else if(f.GetBody().GetUserData().name == "falling") {
+						var platform = f.GetBody().GetUserData();
+						platform.EndContact(fixtures, i);
 					}
-					
 				})
 			}
 			
@@ -244,6 +249,18 @@ jQuery(function($) {
             App.world = Crafty.box2D.world
 
             //Crafty.scene($.urlParam("scene") || "demo");                      // Instantiate the scene
+			if($.App.cfg.background){											// Add background image
+				var bgImg = $('<img/>'),
+					fgImg = $('<img/>')
+				
+				fgImg.attr({"src": $.App.cfg.foreground,
+							"id": "game-foreground"
+					})
+				bgImg.attr({"src": $.App.cfg.background,
+							"id": "game-background"		
+					})
+				$('.wallo-play .wallo-crafty').append(bgImg).append(fgImg)							
+			}
 			
 			App.initEntities($.App.cfg.entities)
 			
@@ -405,7 +422,7 @@ var oldAttr = Crafty.prototype.attr;
 Crafty.prototype.attr = function(key) {
     if (arguments.length === 1 && typeof key === "object") {
         if (key.url
-            && (this.has("WalloImage") || this.has("Image"))) {
+            && (this.has("WalloImage") || this.has("Image") )) {
             this.image(key.url);
         }
         if (key.color && this.has("Color")) {

@@ -43,7 +43,7 @@ playerColors["MannequinSprite"] = [{
 	'sprites':'MannequinSpriteYellow',
 	'component': 'Mannequin'
 }];
-playerColors["wallobotSprite"] = [{
+playerColors["WalloBotSprite"] = [{
 	'color': 'blue',
 	'colorCode': '6699FF',
 	'sprites':'WalloBotSprite',

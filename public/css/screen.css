@@ -24,6 +24,9 @@ body {
     text-align: center;
     color: white;
 }
+.wallo-crafty canvas {
+	z-index: 2;
+}
 .wallo-page {
     height: 100%;
     position: relative;
@@ -194,4 +197,12 @@ body {
 }
 .ui-draggable-dragging {
     cursor: -webkit-grabbing;cursor: -moz-grabbing;
+}
+#game-background{
+	z-index: 1;
+	position: absolute;
+}
+#game-foreground{
+	z-index: 101;
+	position: absolute;
 }
