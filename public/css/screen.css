@@ -210,7 +210,23 @@ div.inputEx-Group div.inputEx-label {
 .colorpicker {
     z-index: 101;    
 }
+.form-text {
+    width: 100%;
+}
 
+/* Crafty components */
 .wallo-debugmode .wallo-crafty .Invisible.obj {
     border: 1px dashed white;
+}
+.WalloText {
+    color: white;
+    font-size: inherit !important;
+}
+.wallo-debugmode .Video .dummy {
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

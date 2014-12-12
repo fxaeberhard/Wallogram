@@ -65,30 +65,41 @@ YUI.add("inputex-rte", function(Y) {
             RTEField.superclass.renderComponent.call(this);
             Y.once("domready", function() {
                 this.editor = new tinymce.Editor(this.el.id, {
+                    selector: "textarea",
+                    theme: "modern",
                     plugins: [
-                        "autolink autoresize link image lists code media table contextmenu paste advlist textcolor"
-                            //textcolor wordcount autosave advlist charmap print preview hr anchor pagebreak spellchecker directionality
+                        "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                        "searchreplace wordcount visualblocks visualchars code fullscreen media nonbreaking",
+                        "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
                     ],
-                    toolbar1: "bold italic bullist | link image media code addToolbarButton",
-                    toolbar2: "forecolor backcolor underline alignleft aligncenter alignright alignjustify table",
-                    toolbar3: "fontselect fontsizeselect styleselect",
+                    toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect | bullist numlist | outdent indent | removeformat",
+                    toolbar2: "image media code | forecolor backcolor | subscript superscript | charmap | ltr rtl",
+//                    plugins: [
+//                        "autolink link image lists code media table contextmenu paste advlist textcolor"
+//                            //"autoresize"
+//                            //textcolor wordcount autosave advlist charmap print preview hr anchor pagebreak spellchecker directionality
+//                    ],
+//                    toolbar1: "bold italic bullist | link image media code addToolbarButton",
+//                    toolbar2: "forecolor backcolor underline alignleft aligncenter alignright alignjustify table",
+//                    toolbar3: "fontselect fontsizeselect styleselect",
                     // formatselect removeformat underline unlink forecolor backcolor anchor previewfontselect fontsizeselect styleselect spellchecker template
                     // contextmenu: "link image inserttable | cell row column deletetable | formatselect forecolor",
                     menubar: false,
                     statusbar: false,
                     relative_urls: false,
                     toolbar_items_size: 'small',
-                    hidden_tootlbar: [2, 3],
+//                    hidden_tootlbar: [2, 3],
 //                    file_browser_callback: this.onFileBrowserClick,
                     setup: Y.bind(function(editor) {
                         editor.on('change', Y.bind(this.fireUpdatedEvt, this));
                         this.editor = editor;
                     }, this),
                     image_advtab: true,
-                    autoresize_min_height: 35,
-                    autoresize_max_height: 500,
+                    height: 300,
+//                    autoresize_min_height: 35,
+//                    autoresize_max_height: 500,
                     content_css: [
-//                        "/css/-inputex-rte.css"
+                        "css/tinymce.css"
                     ],
                     style_formats: [{// Style formats
                             title: 'Title 1',

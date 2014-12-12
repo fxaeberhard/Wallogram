@@ -11,6 +11,7 @@
  */
 body {
     font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
 }
 fieldset {
     border: none;
@@ -20,7 +21,9 @@ fieldset {
 li {
     list-style: none;
 }
-
+p {
+    margin: 0;
+}
 .ui-dialog {
     background: white;
 }

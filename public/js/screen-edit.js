@@ -10,6 +10,8 @@ jQuery(function($) {
 
     YUI_config.groups.inputex.base = "libs/inputEx/src/";
     YUI_config.groups.inputex.filter = "raw";
+    YUI_config.groups.inputex.modules['inputex-rte'].requires = ['inputex-field', 'inputex-textarea'];
+    YUI_config.groups.inputex.modules['inputex-color'].requires = ['inputex-field'];
 
     var currentEntity,
         TOOLBAR = {
@@ -24,7 +26,7 @@ jQuery(function($) {
                 value: {
                     type: "Color",
                     components: "ColoredPlatform",
-                    color: "white",
+                    color: "red",
                     w: 100,
                     h: 100
                 }
@@ -32,11 +34,7 @@ jQuery(function($) {
             Invisible: {
                 thumbClass: "fa fa-square-o fa-4x",
                 label: "Invisible platform",
-                form: [{
-                        name: "color",
-                        label: "Color",
-                        type: "color"
-                    }],
+                form: [],
                 value: {
                     type: "Invisible",
                     components: "Invisible",
@@ -62,28 +60,30 @@ jQuery(function($) {
                 thumbClass: "fa fa-file-video-o fa-4x",
                 form: [{
                         name: "url",
+                        label: "Url",
                         type: "url"
                     }],
                 value: {
                     type: "Video",
                     components: "Video",
-                    w: 50,
-                    h: 50
+                    url: "http://www.youtube.com/watch?v=xhrBDcQq2DM",
+                    w: 320,
+                    h: 280
                 }
             },
             Text: {
                 thumbClass: "fa fa-font fa-4x",
                 form: [{
-                        label: "Text",
                         name: "text",
-                        type: "html"
+                        type: "html",
+                        className: "inputEx-Field form-text"
                     }],
                 value: {
                     type: "Text",
                     components: "WalloText",
-                    text: "<font style='color:white'>Ipsem lorum</font>",
-                    w: 100,
-                    h: 50
+                    text: "Ipsem lorum",
+                    w: 200,
+                    h: 80
                 }
             },
             QR: {
@@ -102,8 +102,8 @@ jQuery(function($) {
                     components: "QR",
                     w: 80,
                     h: 80,
-                    background: "white",
-                    foreground: "black"
+                    foreground: "#000000",
+                    background: "#ffffff"
                 }
             }
         },
@@ -230,7 +230,7 @@ jQuery(function($) {
                             scriptEditor = ace.edit("scripteditor");
                             scriptEditor.getSession().setMode("ace/mode/javascript");
                             //editor.setTheme("ace/theme/chrome");
-                            scriptEditor.getSesfsion().on('change', function(e) {
+                            scriptEditor.getSession().on('change', function(e) {
                                 //if (scriptEditor.curOp && scriptEditor.curOp.command.name) {// Check the change is a user input and not a programtical change
                                 if (doUpdate) {
                                 }
@@ -305,15 +305,17 @@ jQuery(function($) {
         showEditForm: function() {
             var form,
                 dialog = $('<div></div>').dialog({
-                title: "Edit",
+                //title: "Edit",
                 modal: true,
-                width: 500,
+                width: 700,
+                position: {
+                    my: "center top",
+                    at: "center top+75"
+                },
                 buttons: [{
                         text: "Save",
                         click: function() {
-                            var cfg = form.getValue();
-                            $.extend(currentEntity.cfg, cfg);
-                            currentEntity.attr(cfg);
+                            $.App.updateEntityCfg(currentEntity, form.getValue());
                             $(this).dialog("close");
                         }
                     }, {

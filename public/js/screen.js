@@ -228,8 +228,7 @@ jQuery(function($) {
          *                Crafty               *
          * *********************************** */
         initCrafty: function() {
-            Crafty.init(App.cfg.width, App.cfg.height,
-                $(".wallo-crafty").get(0));                                     // Init crafty
+            Crafty.init(App.cfg.width, App.cfg.height, $(".wallo-crafty").get(0));// Init crafty
             Crafty.canvas.init();
             Crafty.box2D.init(0, 20, 16, true);                                 // Init the box2d world, gx = 0, gy = 10, pixeltometer = 32
             Crafty.box2D.showDebugInfo();                                       // Start the Box2D debugger
@@ -241,13 +240,19 @@ jQuery(function($) {
             //App.addDebugPlayer();
         },
         initEntities: function(entities) {
-            var ents = [];
-            $.each(entities, function(i, p) {                                   // Add entities from config file
-                var entity = Crafty.e(p.components).attr(p);
-                entity.cfg = p;
-                ents.push(entity);
+            var ret = _.map(entities, function(cfg) {                           // Add entities from config file
+                var entity = Crafty.e(cfg.components).attr(cfg);
+                entity.cfg = cfg;
+                return entity;
             });
-            return ents;
+            return ret;
+        },
+        updateEntityCfg: function(entity, newCfg) {
+            var cfg = entity.cfg;
+            $.extend(cfg, newCfg);
+            entity.destroy();
+            var e = Crafty.e(cfg.components).attr(cfg);
+            e.cfg = cfg;
         },
         resetCrafty: function() {
             Crafty.stop();                                                      // Destroy crafty
@@ -255,7 +260,8 @@ jQuery(function($) {
             $(".wallo-crafty").empty();
             App.players = {};
 
-            App.initCrafty();                                                   // Init crafty
+            App.initCrafty();                                                   // Render entities
+
             App.toggleDebug(App.debug);                                         // to force refresh
         },
         playerSetup: function(data) {
@@ -389,23 +395,23 @@ jQuery(function($) {
 var oldAttr = Crafty.prototype.attr;
 Crafty.prototype.attr = function(key) {
     if (arguments.length === 1 && typeof key === "object") {
-        var that = this,
-            fn = function(name) {
-                if (_.isString(that[name])) {
-                    that[name] = key[name];
-                } else {
-                    that[name](key[name]);
-                }
-            };
-        if (key.image
-            && (this.has("WalloImage") || this.has("Image"))) {
-            fn("image");
+        if (key.image && (this.has("WalloImage") || this.has("Image"))) {
+            this.image(key.image);
         }
         if (key.color && this.has("Color")) {
-            fn("color");
+            this.color(key.color);
         }
         if (key.text && this.has("Text")) {
-            fn("text");
+            this.text(key.text);
+        }
+        if (key.background && this.has("QR")) {
+            this.background(key.background);
+        }
+        if (key.foreground && this.has("QR")) {
+            this.foreground(key.foreground);
+        }
+        if (key.url && this.has("Video")) {
+            this.url(key.url);
         }
     }
     return oldAttr.apply(this, arguments);
