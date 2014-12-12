@@ -1,0 +1,74 @@
+{
+    "player": {
+        "components": "WalloBotSprite",
+        "x": 100,
+        "y": 100
+    },
+    "width": 1920,
+    "height": 1080,
+    "countdownDuration": 5,
+	"entities": [{
+		"components": "fixImage, lab_background",
+		"z": 1
+	},
+	{
+		"components": "fixImage, lab_foreground",
+		"z": 200
+	},
+	{
+		"components": "Gyrophare",
+		"x": 1754,
+		"y": 0,
+		"w": 116,
+		"h": 120,
+		"z": 201
+	},
+	{
+		"components": "Chimie",
+		"x": 1228,
+		"y": 476,
+		"w": 162,
+		"h": 170,
+		"z": 100
+	},
+	{
+		"components": "Jauge",
+		"x": 30,
+		"y": 722,
+		"w": 190,
+		"h": 142,
+		"z": 100
+	},
+	{
+		"components": "Serveur",
+		"x": 592,
+		"y": 328,
+		"w": 236,
+		"h": 362,
+		"z": 100
+	},
+	{
+		"components": "Ventilo",
+		"x": 1100,
+		"y": 138,
+		"w": 202,
+		"h": 204,
+		"z": 100
+	},
+	{
+		"components": "Lab_Falling",
+		"x": 306,
+		"y": 690,
+		"w": 146,
+		"h": 92,
+		"z": 100
+	},
+	{
+		"components": "Lab_Porte",
+		"x": 900,
+		"y": 596,
+		"w": 242,
+		"h": 342,
+		"z": 100
+	}]
+}
