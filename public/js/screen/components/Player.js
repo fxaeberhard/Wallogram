@@ -407,10 +407,10 @@ Crafty.c("Mannequin", {
  */
 Crafty.c("WalloBot", {
     ANIMSPEED: 800,
-    JUMPFORCE: -450,
-    WALKFORCE: 600,
-    DOWNFORCELIMIT: 16,
-    DOWNFORCE: 20,
+    JUMPFORCE: -150,
+    WALKFORCE: 500,
+    DOWNFORCELIMIT: 6,
+    DOWNFORCE: 12,
     TOPSPEED: 10,
     HEIGHT: 80,
     /**
@@ -434,12 +434,12 @@ Crafty.c("WalloBot", {
                 		[this.w / 3, this.w]],
                 userData: "body"
             })
-            .addFixture({//                                                     // Add feet sensor
+			.addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
-                shape: [[this.w / 3, this.w - 5], 
-                		[2 * this.w / 3, this.w - 5], 
-                		[2 * this.w / 3, this.w], 
-                		[this.w / 3, this.w]],
+                shape: [[(this.w / 3)+2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w + 3], 
+                		[(this.w / 3)+2, this.w + 3]],
                 isSensor: true,
                 userData: "foot"
             })
