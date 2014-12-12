@@ -28,6 +28,17 @@ body{
     .make-sm-column(8);
   }
 }
+.my-wall{
+  .content{
+    .make-row();
+    .created{
+      .make-sm-column(6);
+    }
+    .played{
+      .make-sm-column(6);
+    }
+  }
+}
 .container{
   margin-top: (@nav-height+40px);
 }
@@ -36,108 +47,234 @@ a{
     text-decoration: none;
   }
 }
-.header{
-  .profile{
-    color: white;
-    padding: 8px !important;
-    background-color: black;
-    img{
-      width: 50%;
-      float: left;
-    }
-    .infos{
-      float: left;
-      margin-left: 10px;
-      h2{
-        margin: 0;
-        padding: 0;
-        font-size: 1.8em;
+.lobby{
+  .header{
+    .profile{
+      color: white;
+      padding: 8px !important;
+      background-color: black;
+      img{
+        width: 50%;
+        float: left;
       }
-      dl{
-        font-family: 'HelveticaNeueLTS';
-        dt{
-          display: none;
+      .infos{
+        float: left;
+        margin-left: 10px;
+        h2{
+          margin: 0;
+          padding: 0;
+          font-size: 1.8em;
         }
-        dd{
-          margin-left: 0;
-          &:first-of-type{
-            font-weight: bold;
+        dl{
+          font-family: 'HelveticaNeueLTS';
+          dt{
+            display: none;
+          }
+          dd{
+            margin-left: 0;
+            &:first-of-type{
+              font-weight: bold;
+            }
           }
         }
+        .update-infos{
+            font-size: 1.4em;
+            letter-spacing: 15px;
+            a{
+              color: white;
+            }
+          }
       }
-      .update-infos{
-          font-size: 1.4em;
-          letter-spacing: 15px;
-          a{
+    }
+    .games{
+      padding-right: 0;
+      .wrapper{
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background-color: white;
+        overflow: auto;
+      }
+      .wallogames-logo{
+        width: 25%;
+        float: left;
+        img{
+        }
+      }
+      .default-games{
+        float: left;
+        border-left: 2px black;
+        width: 75%;
+        .game{
+          float: left;
+          width: 33%;
+          text-align: center;
+          margin-top: 12px;
+          img{
+            max-width: 120px;
+            display: inline-block;
+            border-bottom: 40px white solid;
+            border-left: 5px white solid;
+            border-top: 5px white solid;
+            border-right: 5px white solid;
+          }
+          h3{
+            padding: 0;
+            margin-top: -30px;
+          }
+          .action{
+            display: none;
+          }
+        }
+        .game-selected{
+          position: relative;
+          img{
+            border-color: black;
+          }
+          h3{
             color: white;
           }
+          .action{
+            display: block;
+            position: absolute;
+            left: 50%;
+            width: 60px;
+            height: 35px;
+            margin-left: -30px;
+            background-color: white;
+            padding-top: 8px;
+            cursor: pointer;
+          }
+          .play{
+            top:20px;
+          }
+          .edit{
+            top: 65px;
+          }
         }
+      }
+    } 
+  }
+  .my-wall{
+    margin-top: 20px;
+    .header{
+      background-color: black;
+      color: white;
+      img{
+        display: inline-block;
+        margin: 0 0.7em;
+      }
+      h3{
+        font-size: 1.4em;
+        margin: 0.5em 0;
+        display: inline-block;
+      }
+    }
+    .content{
+      background-color: white;
+    }
+    .created,.played{
+      padding-right: 0;
+      background-color: white;
+    }
+    .row{
+      margin: 20px 0;
+    }
+    .created{
+      .new{
+        width: 40%;
+        background-color: @main-gray;
+        padding: 5px;
+        cursor: pointer;
+        color: @dark-gray;
+        i{
+          margin-left: 20px;
+        }
+        span{
+          margin-left: 30px;
+        }
+        .levelName{
+          display: inline-block;
+          margin-left: 10px;
+          input{
+            background-color: @main-gray;
+            border: none;
+            border-bottom: 1px solid @light-gray;
+            &:focus{
+              outline: none;
+            }
+          }
+          button{
+            margin-left: 10px;
+          }
+        }
+      }
+      .wallo-load-levels{
+        .level{
+          img{
+            float: left;
+            width: 60px;
+            margin-right: 10px;
+          }
+          .buttons{
+            border-top: 1px solid @light-gray;
+            a{
+              margin: 5px 20px 0 5px;
+              color: @main-gray;
+              &:last-of-type{
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .played{
+      border-left: 1px black solid;
+      .games-played{
+        article{
+          img{
+            float: left;
+            width: 70px;
+            margin-right: 10px;
+          }
+          .buttons{
+            border-bottom: 1px solid @light-gray;
+            margin-bottom: 5px;
+            a{
+              margin: 0px 20px 10px 5px;
+              color: @main-gray;
+              &:last-of-type{
+                margin-right: 5px;
+              }
+            }
+          }
+          .last-score{
+            clear: left;
+            p{
+              padding-top: 6px;
+              span{
+                color: white;
+                background-color: black;
+                padding: 2px 4px;
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .level-infos, .game-infos{
+      float: left;
+      h5{
+        font-size: 1em;
+        margin: 0;
+      }
+      span{
+        display: block;
+        font-family: "HelveticaNeueLTS";
+        color: @main-gray;
+        font-size: 0.7em;
+      }
     }
   }
-  .games{
-    .wrapper{
-      padding-top: 8px;
-      padding-bottom: 8px;
-      background-color: white;
-      overflow: auto;
-    }
-    .wallogames-logo{
-      width: 25%;
-      float: left;
-      img{
-      }
-    }
-    .default-games{
-      float: left;
-      border-left: 2px black;
-      width: 75%;
-      .game{
-        float: left;
-        width: 33%;
-        text-align: center;
-        margin-top: 12px;
-        img{
-          max-width: 120px;
-          display: inline-block;
-          border-bottom: 40px white solid;
-          border-left: 5px white solid;
-          border-top: 5px white solid;
-          border-right: 5px white solid;
-        }
-        h3{
-          padding: 0;
-          margin-top: -30px;
-        }
-        .action{
-          display: none;
-        }
-      }
-      .game-selected{
-        position: relative;
-        img{
-          border-color: black;
-        }
-        h3{
-          color: white;
-        }
-        .action{
-          display: block;
-          position: absolute;
-          left: 50%;
-          width: 60px;
-          height: 35px;
-          margin-left: -30px;
-          background-color: white;
-          padding-top: 8px;
-          cursor: pointer;
-        }
-        .play{
-          top:20px;
-        }
-        .edit{
-          top: 65px;
-        }
-      }
-    }
-  } 
 }

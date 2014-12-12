@@ -786,7 +786,9 @@ hr {
 .row:before,
 .row:after,
 .header:before,
-.header:after {
+.header:after,
+.my-wall .content:before,
+.my-wall .content:after {
   content: " ";
   display: table;
 }
@@ -794,7 +796,8 @@ hr {
 .container:after,
 .container-fluid:after,
 .row:after,
-.header:after {
+.header:after,
+.my-wall .content:after {
   clear: both;
 }
 .center-block {
@@ -1206,71 +1209,102 @@ body {
     width: 66.66666667%;
   }
 }
+.my-wall .content {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.my-wall .content .created {
+  position: relative;
+  min-height: 1px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+@media (min-width: 768px) {
+  .my-wall .content .created {
+    float: left;
+    width: 50%;
+  }
+}
+.my-wall .content .played {
+  position: relative;
+  min-height: 1px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+@media (min-width: 768px) {
+  .my-wall .content .played {
+    float: left;
+    width: 50%;
+  }
+}
 .container {
   margin-top: 147px;
 }
 a:hover {
   text-decoration: none;
 }
-.header .profile {
+.lobby .header .profile {
   color: white;
   padding: 8px !important;
   background-color: black;
 }
-.header .profile img {
+.lobby .header .profile img {
   width: 50%;
   float: left;
 }
-.header .profile .infos {
+.lobby .header .profile .infos {
   float: left;
   margin-left: 10px;
 }
-.header .profile .infos h2 {
+.lobby .header .profile .infos h2 {
   margin: 0;
   padding: 0;
   font-size: 1.8em;
 }
-.header .profile .infos dl {
+.lobby .header .profile .infos dl {
   font-family: 'HelveticaNeueLTS';
 }
-.header .profile .infos dl dt {
+.lobby .header .profile .infos dl dt {
   display: none;
 }
-.header .profile .infos dl dd {
+.lobby .header .profile .infos dl dd {
   margin-left: 0;
 }
-.header .profile .infos dl dd:first-of-type {
+.lobby .header .profile .infos dl dd:first-of-type {
   font-weight: bold;
 }
-.header .profile .infos .update-infos {
+.lobby .header .profile .infos .update-infos {
   font-size: 1.4em;
   letter-spacing: 15px;
 }
-.header .profile .infos .update-infos a {
+.lobby .header .profile .infos .update-infos a {
   color: white;
 }
-.header .games .wrapper {
+.lobby .header .games {
+  padding-right: 0;
+}
+.lobby .header .games .wrapper {
   padding-top: 8px;
   padding-bottom: 8px;
   background-color: white;
   overflow: auto;
 }
-.header .games .wallogames-logo {
+.lobby .header .games .wallogames-logo {
   width: 25%;
   float: left;
 }
-.header .games .default-games {
+.lobby .header .games .default-games {
   float: left;
   border-left: 2px black;
   width: 75%;
 }
-.header .games .default-games .game {
+.lobby .header .games .default-games .game {
   float: left;
   width: 33%;
   text-align: center;
   margin-top: 12px;
 }
-.header .games .default-games .game img {
+.lobby .header .games .default-games .game img {
   max-width: 120px;
   display: inline-block;
   border-bottom: 40px white solid;
@@ -1278,23 +1312,23 @@ a:hover {
   border-top: 5px white solid;
   border-right: 5px white solid;
 }
-.header .games .default-games .game h3 {
+.lobby .header .games .default-games .game h3 {
   padding: 0;
   margin-top: -30px;
 }
-.header .games .default-games .game .action {
+.lobby .header .games .default-games .game .action {
   display: none;
 }
-.header .games .default-games .game-selected {
+.lobby .header .games .default-games .game-selected {
   position: relative;
 }
-.header .games .default-games .game-selected img {
+.lobby .header .games .default-games .game-selected img {
   border-color: black;
 }
-.header .games .default-games .game-selected h3 {
+.lobby .header .games .default-games .game-selected h3 {
   color: white;
 }
-.header .games .default-games .game-selected .action {
+.lobby .header .games .default-games .game-selected .action {
   display: block;
   position: absolute;
   left: 50%;
@@ -1305,9 +1339,126 @@ a:hover {
   padding-top: 8px;
   cursor: pointer;
 }
-.header .games .default-games .game-selected .play {
+.lobby .header .games .default-games .game-selected .play {
   top: 20px;
 }
-.header .games .default-games .game-selected .edit {
+.lobby .header .games .default-games .game-selected .edit {
   top: 65px;
+}
+.lobby .my-wall {
+  margin-top: 20px;
+}
+.lobby .my-wall .header {
+  background-color: black;
+  color: white;
+}
+.lobby .my-wall .header img {
+  display: inline-block;
+  margin: 0 0.7em;
+}
+.lobby .my-wall .header h3 {
+  font-size: 1.4em;
+  margin: 0.5em 0;
+  display: inline-block;
+}
+.lobby .my-wall .content {
+  background-color: white;
+}
+.lobby .my-wall .created,
+.lobby .my-wall .played {
+  padding-right: 0;
+  background-color: white;
+}
+.lobby .my-wall .row {
+  margin: 20px 0;
+}
+.lobby .my-wall .created .new {
+  width: 40%;
+  background-color: #c9c9c9;
+  padding: 5px;
+  cursor: pointer;
+  color: #7f7f7f;
+}
+.lobby .my-wall .created .new i {
+  margin-left: 20px;
+}
+.lobby .my-wall .created .new span {
+  margin-left: 30px;
+}
+.lobby .my-wall .created .new .levelName {
+  display: inline-block;
+  margin-left: 10px;
+}
+.lobby .my-wall .created .new .levelName input {
+  background-color: #c9c9c9;
+  border: none;
+  border-bottom: 1px solid #f4f4f4;
+}
+.lobby .my-wall .created .new .levelName input:focus {
+  outline: none;
+}
+.lobby .my-wall .created .new .levelName button {
+  margin-left: 10px;
+}
+.lobby .my-wall .created .wallo-load-levels .level img {
+  float: left;
+  width: 60px;
+  margin-right: 10px;
+}
+.lobby .my-wall .created .wallo-load-levels .level .buttons {
+  border-top: 1px solid #f4f4f4;
+}
+.lobby .my-wall .created .wallo-load-levels .level .buttons a {
+  margin: 5px 20px 0 5px;
+  color: #c9c9c9;
+}
+.lobby .my-wall .created .wallo-load-levels .level .buttons a:last-of-type {
+  margin-right: 5px;
+}
+.lobby .my-wall .played {
+  border-left: 1px black solid;
+}
+.lobby .my-wall .played .games-played article img {
+  float: left;
+  width: 70px;
+  margin-right: 10px;
+}
+.lobby .my-wall .played .games-played article .buttons {
+  border-bottom: 1px solid #f4f4f4;
+  margin-bottom: 5px;
+}
+.lobby .my-wall .played .games-played article .buttons a {
+  margin: 0px 20px 10px 5px;
+  color: #c9c9c9;
+}
+.lobby .my-wall .played .games-played article .buttons a:last-of-type {
+  margin-right: 5px;
+}
+.lobby .my-wall .played .games-played article .last-score {
+  clear: left;
+}
+.lobby .my-wall .played .games-played article .last-score p {
+  padding-top: 6px;
+}
+.lobby .my-wall .played .games-played article .last-score p span {
+  color: white;
+  background-color: black;
+  padding: 2px 4px;
+  margin-left: 5px;
+}
+.lobby .my-wall .level-infos,
+.lobby .my-wall .game-infos {
+  float: left;
+}
+.lobby .my-wall .level-infos h5,
+.lobby .my-wall .game-infos h5 {
+  font-size: 1em;
+  margin: 0;
+}
+.lobby .my-wall .level-infos span,
+.lobby .my-wall .game-infos span {
+  display: block;
+  font-family: "HelveticaNeueLTS";
+  color: #c9c9c9;
+  font-size: 0.7em;
 }

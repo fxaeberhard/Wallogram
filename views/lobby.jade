@@ -50,20 +50,75 @@ block content
 										i(class="fa fa-play")	Play
 									div(class="action edit")
 										i(class="fa fa-pencil-square-o")	Edit
-				.content
-					.history
-						p Hello
-					.played
-						p World
-			a(href="/signout") Log out 
-			br
-			br
-			a(id="newLevel" href="#" class="fa fa-plus-circle fa-2x")
-			.levelName
-				input(type="text")
-				button create
-			.wallo-load-levels
-				ul
+				.my-wall
+					.header
+						img(src="assets/small-wall.png" alt="my-wall")
+						h3 My Wall
+					.content
+						.created
+							h4 My latest games
+							.new
+								i(id="newLevel" class="fa fa-plus")
+								span create a new game
+								.levelName
+									input(type="text")
+									button create
+							.wallo-load-levels
+						.played
+							h4 Latest game I played
+							.games-played
+								.row
+									article(class="col-md-6")
+										img(src="assets/default-game-sample.gif")
+										.game-infos
+											.buttons
+												a(class="fa fa-refresh" href="#")
+												a(class="fa fa-comment" href="#")
+												a(class="fa fa-share-square-o" href="#")
+											h5 Nom jeu
+											span Nom créateur
+										.last-score
+											p My last score
+												span 40'000
+									article(class="col-md-6")
+										img(src="assets/default-game-sample.gif")
+										.game-infos
+											.buttons
+												a(class="fa fa-refresh" href="#")
+												a(class="fa fa-comment" href="#")
+												a(class="fa fa-share-square-o" href="#")
+											h5 Nom jeu
+											span Nom créateur
+										.last-score
+											p My last score
+												span 40'000
+								.row
+									article(class="col-md-6")
+										img(src="assets/default-game-sample.gif")
+										.game-infos
+											.buttons
+												a(class="fa fa-refresh" href="#")
+												a(class="fa fa-comment" href="#")
+												a(class="fa fa-share-square-o" href="#")
+											h5 Nom jeu
+											span Nom créateur
+										.last-score
+											p My last score
+												span 40'000
+									article(class="col-md-6")
+										img(src="assets/default-game-sample.gif")
+										.game-infos
+											.buttons
+												a(class="fa fa-refresh" href="#")
+												a(class="fa fa-comment" href="#")
+												a(class="fa fa-share-square-o" href="#")
+											h5 Nom jeu
+											span Nom créateur
+										.last-score
+											p My last score
+												span 40'000
 
+				
+			//- a(href="/signout") Log out 
 	script(src="libs/jquery-2.1.1.min.js")
 	script(src="js/lobby/lobby.js")

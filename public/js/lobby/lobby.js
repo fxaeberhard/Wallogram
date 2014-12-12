@@ -10,8 +10,12 @@ jQuery(function($) {
         },
         initActions: function () {            
             $('.levelName').hide();
-            $('body').on('click','#newLevel',function(){
-                $('.levelName').show()
+            $('body').on('click','.new',function(e){
+                e.preventDefault();
+                $('.new input').select();
+                $('.new span').toggle()
+                $('.levelName').toggle()
+                $(this).unbind(e)
             })
             $('body').on('click','.levelName button',function(){
                 if($('.levelName input').val() != ''){
@@ -48,7 +52,13 @@ jQuery(function($) {
             $('.wallo-load-levels ul').empty();
             $.getJSON("/levels/getAllLevels", null, function(levels){
                 $.each(levels,function(key,value){
-                    $('.wallo-load-levels ul').append('<li id="'+value._id+'"><a class="levelTreatment name" href="/screen?level='+value.name+'">'+value.name+'</a><a href="#" class="levelTreatment delete">&nbsp;delete</a><a href="#" class="levelTreatment rename">&nbsp;rename</a></li>')
+                    console.log(key,value.name)
+                    if(key%2 == 0 || key == 0){
+                        $('.wallo-load-levels').append('<div class="row"><article class="col-md-6 level" id="'+value._id+'"><img src="assets/default-game-sample.gif" alt="level thumbnail"/><div class="level-infos"><h5>'+value.name+'</h5><span>3 hours ago</span><div class="buttons"><a class="levelTreatment name fa fa-play" href="/screen?level='+value.name+'"></a><a href="#" class="levelTreatment rename fa fa-pencil-square-o"></a><a href="#" class="fa fa-share-square-o"></a><a href="#" class="levelTreatment delete fa fa-trash"></a></div></div></article></div>')
+                    }else{
+                        $('.wallo-load-levels .row:last-child').append('<article class="col-md-6 level" id="'+value._id+'"><img src="assets/default-game-sample.gif" alt="level thumbnail"/><div class="level-infos"><h5>'+value.name+'</h5><span>3 hours ago</span><div class="buttons"><a class="levelTreatment name fa fa-play" href="/screen?level='+value.name+'"></a><a href="#" class="levelTreatment rename fa fa-pencil-square-o"></a><a href="#" class="fa fa-share-square-o"></a><a href="#" class="levelTreatment delete fa fa-trash"></a></div></div></article>')
+                    }
+                    
                 })
             })
         },
