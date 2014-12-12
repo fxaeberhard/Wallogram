@@ -1,8 +1,9 @@
 {
     "player": {
-        "components": "WalloBotSprite",
+        "components": "MannequinSprite",
         "x": 100,
-        "y": 100
+        "y": 100,
+        "z": 150
     },
     "width": 1920,
     "height": 1080,

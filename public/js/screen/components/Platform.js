@@ -8,7 +8,7 @@
 Crafty.c("Platform", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("2D, Box2D, MouseHover")                                  // allows the entity to be drawn as a colored box
-            .attr({w: 100, h: 20,})                         					// set width and height
+            .attr({w: 100, h: 20})                         					// set width and height
             .box2d({
                 bodyType: 'static',
                 density: 0.2,
@@ -162,12 +162,7 @@ Crafty.c("OutOfBounds", {
  */
 Crafty.c("QR", {
     init: function() {
-        var padUrl = $.App.getPadUrl();
         this.requires("2D, DOM, MouseHover")
-            .css({
-                background: "url(http://chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=" + encodeURIComponent(padUrl) + ") 0 0",
-                "background-size": "100% 100%"
-            })
             .attr({
                 w: 80,
                 h: 80,
@@ -176,6 +171,29 @@ Crafty.c("QR", {
         // Same, using image component
         //this.requires("2D, DOM, Image,  MouseHover")
         //    .image("http://chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=" + encodeURIComponent(padUrl))
+        this._foreground = "000000";
+        this._background = "ffffff";
+    },
+    background: function(color) {
+        this._background = color;
+        this.sync();
+    },
+    foreground: function(color) {
+        this._foreground = color;
+        this.sync();
+    },
+    sync: function() {
+        var padUrl = $.App.getPadUrl();
+        this.css({
+            // background: "url(//chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=" + encodeURIComponent(padUrl) + ") 0 0",
+            background: "url(//qrickit.com/api/qr?fgdcolor=" + this._foreground.replace("#", "")
+                + "&bgdcolor=" + this._background.replace("#", "")
+                + "&qrsize=170&t=p&e=m&d=" + encodeURIComponent(padUrl) + ") 0 0",
+            //background: "url(//api.qrserver.com/v1/create-qr-code/?size=170x170&fgcolor=" + this._foreground.replace("#", "")
+            //    + "&bgcolor=" + this._background.replace("#", "")
+            //    + "&data=" + encodeURIComponent(padUrl) + ") 0 0",
+            "background-size": "100% 100%"
+        });
     }
 });
 
@@ -554,6 +572,7 @@ Crafty.c("Falling", {
 		
 	}
 });
+
 Crafty.c("Standard_Falling", {
     init: function() {
 	    
@@ -668,4 +687,34 @@ Crafty.c("Lab_Falling", {
 	    this.setOrigin()
     }
 })
+
+Crafty.c("WalloText", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("2D, DOM, Text, MouseHover")
+            .attr({w: 100, h: 20});
+    }
+});
+
+Crafty.c("Invisible", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("2D, DOM, MouseHover")
+            .attr({w: 100, h: 20});
+    }
+});
+
+Crafty.c("Video", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("2D, DOM, MouseHover")
+            .attr({w: 150, h: 80});
+    },
+    url: function(url) {
+
+        if (url.indexOf("youtube.com") > -1) {
+            var id = url.match(/v=(...........)/)[1];
+            $(this._element).html('<div class="dummy"></div><iframe width="100%" height="100%" src="//www.youtube.com/embed/' + id
+                + '?rel=0&amp;controls=0&amp;showinfo=0&loop=1&modestbranding=1&autoplay=1&fs=0" frameborder="0" ></iframe>');
+        }
+
+    }
+});
 

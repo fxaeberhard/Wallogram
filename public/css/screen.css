@@ -41,7 +41,8 @@ body {
     -ms-flex-flow: row wrap;
 }
 .wallo-debugmode .wallo-page {
-    padding-right: 300px;
+    /*padding-right: 300px;*/
+    padding-left: 300px;
 }
 .wallo-u {
     display: inline-block;
@@ -66,8 +67,9 @@ body {
     background: red;
     position: absolute;
     top: 1em;
-    right: .8em;
+    right: 2.2em;
     border: 1px solid gray;
+    z-index: 1;
 }
 .wallo-socketio-connected .wallo-connectionindicator {
     background: green;
@@ -76,29 +78,23 @@ body {
 .wallo-edit {
     width: 300px;
     height: 100%;
-    margin-right: -300px;
+    /*margin-right: -300px;*/
     font-size: 0.9em;
     background: #fafafa;
-    padding-top: .9em;
+    position:absolute;
+    left: 0px;
 }
 .wallo-edit-buttons {
-    padding: 0 1em .5em;
+    padding: 1em;
 }
-.wallo-edit-content {
+.button-close {
+    float: right;
+}
+.wallo-tab-footer {
     position: absolute;
     bottom: 0;
     padding: 1em;
     font-size: 0.7em;
-}
-.wallo-edit-content .wallo-key {
-    border: 1px solid black;
-    padding: 2px 4px 2px 3px;
-    margin-top: 3px;
-    margin-bottom: 0px;
-    display: inline-block;
-    border-radius: 3px;
-    width: 8px;
-    text-align: center;
 }
 
 #stats #fps {
@@ -112,8 +108,8 @@ body {
     position: absolute;
     top: 0px;
     width:1000px;
-    height: 1000px;
-    z-index: 1000;
+    height: 100%;
+    z-index: 95;
     display: none;
 }
 .wallo-edit-dd {
@@ -121,18 +117,25 @@ body {
     background-color: rgba(200, 200, 200, 0.5);
     cursor: move;
 }
+
+.wallo-edit-overlay .wallo-edit-menu {
+    padding: 0.2em 0em;
+}
 .wallo-edit-overlay .wallo-edit-destroy,
 .wallo-edit-overlay .wallo-edit-editentity  {
     background: white;
     float: right;
     cursor: pointer;
     border-radius: 12px;
-    margin: 8px 8px 6px 0px;
     padding: 6px 4px 5px 5px;
+    margin: 0.2em 0.4em 0 0;
+    display: inline-block;
 }
+
 .wallo-stdmode #stats,
 .wallo-stdmode .wallo-edit,
-.wallo-stdmode .wallo-edit-overlay {
+.wallo-stdmode .wallo-edit-overlay,
+.wallo-stdmode .wallo-edit-toolbar {
     display: none !important;
 }
 
@@ -159,25 +162,21 @@ body {
     overflow: auto;
     width: 100%;
     background: black;
+    position: relative;
 }
-#tab-source {
-    width: 100%;
-    height: 100%;
-}
-#editor {
+#tab-source, #editor,
+#tab-script, #scripteditor {
     width: 100%;
     height: 100%;
 }
 .ace_gutter {
     background: #fafafa !important;
 }
-.wallo-edit-content span{
-    display: block;
-}
 .wallo-edit-buttons button{
     /*font-size: 0.7em;*/
     margin-right:3px;
     padding: 5px 6px 4px;
+    vertical-align: top;
 }
 
 .wallo-edit-toolbar {
@@ -186,6 +185,7 @@ body {
     /*background: #fafafa;*/
     left: 10px;
     right: 310px;
+    z-index: 99;
 }
 .wallo-thumb {
     /*margin: 5px;*/
@@ -198,6 +198,7 @@ body {
 .ui-draggable-dragging {
     cursor: -webkit-grabbing;cursor: -moz-grabbing;
 }
+<<<<<<< HEAD
 #game-background{
 	z-index: 1;
 	position: absolute;
@@ -206,3 +207,40 @@ body {
 	z-index: 101;
 	position: absolute;
 }
+=======
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: url("../libs/jquery-ui/ui-icons_222222_256x240.png");    
+}
+.ui-icon-gripsmall-diagonal-se {
+    background-position: -64px -224px;
+}
+
+/* Edit form styles */ 
+div.inputEx-Group div.inputEx-label {
+    width: 100px !important;
+}
+
+.colorpicker {
+    z-index: 101;    
+}
+.form-text {
+    width: 100%;
+}
+
+/* Crafty components */
+.wallo-debugmode .wallo-crafty .Invisible.obj {
+    border: 1px dashed white;
+}
+.WalloText {
+    color: white;
+    font-size: inherit !important;
+}
+.wallo-debugmode .Video .dummy {
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+>>>>>>> 0096c702d6ae5c7d52fb7a97ac0bb90ea466f234
