@@ -12173,7 +12173,7 @@ Crafty.extend({
 
             Crafty.stage.elem.appendChild(Crafty.stage.inner);
             Crafty.stage.inner.style.position = "absolute";
-            Crafty.stage.inner.style.zIndex = "1";
+            Crafty.stage.inner.style.zIndex = "300";
             Crafty.stage.inner.style.transformStyle = "preserve-3d"; // Seems necessary for Firefox to preserve zIndexes?
 
             //css style

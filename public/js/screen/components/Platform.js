@@ -239,8 +239,13 @@ Crafty.c("fixImage", {
 Crafty.c("Timer", {
     init: function() {
         this.requires("2D, DOM, Text, MouseHover")
+        	.attr({
+	        	"x": 100,
+	        	"y": 100,
+	        	"color": "green"
+        	})
             .css({
-                color: "white"
+                color: this.color
             });
 
         var that = this, timerHandler;

@@ -1,75 +1,101 @@
 {
-    "player": {
-        "components": "WalloBotSprite",
-        "x": 100,
-        "y": 100,
-        "z": 150
-    },
-    "width": 1920,
-    "height": 1080,
-    "countdownDuration": 5,
-	"entities": [{
-		"components": "fixImage, lab_background",
-		"z": 1
+	"player": {
+		"components": "WalloBotSprite",
+		"x": 100,
+		"y": 100,
+		"z": 150
 	},
-	{
-		"components": "fixImage, lab_foreground",
-		"z": 200
-	},
-	{
-		"components": "Gyrophare",
-		"x": 1754,
-		"y": 0,
-		"w": 116,
-		"h": 120,
-		"z": 201
-	},
-	{
-		"components": "Chimie",
-		"x": 1228,
-		"y": 476,
-		"w": 162,
-		"h": 170,
-		"z": 100
-	},
-	{
-		"components": "Jauge",
-		"x": 30,
-		"y": 722,
-		"w": 190,
-		"h": 142,
-		"z": 100
-	},
-	{
-		"components": "Serveur",
-		"x": 592,
-		"y": 328,
-		"w": 236,
-		"h": 362,
-		"z": 100
-	},
-	{
-		"components": "Ventilo",
-		"x": 1100,
-		"y": 138,
-		"w": 202,
-		"h": 204,
-		"z": 100
-	},
-	{
-		"components": "Lab_Falling",
-		"x": 306,
-		"y": 690,
-		"w": 146,
-		"h": 92,
-		"z": 100
-	},
-	{
-		"components": "Lab_Porte",
-		"x": 900,
-		"y": 596,
-		"w": 242,
-		"h": 342,
-		"z": 100
-	}]
+	"width": 1920,
+	"height": 1080,
+	"countdownDuration": 5,
+	"entities": [
+		{
+			"components": "Timer",
+			"color": "green",
+			"x": 653.9977416992188,
+			"y": 195.99285888671875,
+			"w": 387,
+			"h": 71,
+			"z": 300
+		},
+		{
+			"components": "Target",
+			"x": 1785,
+			"y": 216,
+			"w": 44,
+			"h": 46
+		},
+		{
+			"components": "fixImage, lab_background",
+			"z": 1
+		},
+		{
+			"components": "fixImage, lab_foreground",
+			"z": 200
+		},
+		{
+			"components": "Gyrophare",
+			"x": 1754,
+			"y": 0,
+			"w": 116,
+			"h": 120,
+			"z": 201
+		},
+		{
+			"components": "Chimie",
+			"x": 1239,
+			"y": 468,
+			"w": 162,
+			"h": 170,
+			"z": 100
+		},
+		{
+			"components": "Jauge",
+			"x": 30,
+			"y": 722,
+			"w": 190,
+			"h": 142,
+			"z": 100
+		},
+		{
+			"components": "Serveur",
+			"x": 626.994140625,
+			"y": 329.9783935546875,
+			"w": 236,
+			"h": 362,
+			"z": 100
+		},
+		{
+			"components": "Ventilo",
+			"x": 1116,
+			"y": 216,
+			"w": 202,
+			"h": 204,
+			"z": 100
+		},
+		{
+			"components": "Ventilo",
+			"x": 1346,
+			"y": 218,
+			"w": 202,
+			"h": 204,
+			"z": 100
+		},
+		{
+			"components": "Lab_Falling",
+			"x": 350,
+			"y": 678,
+			"w": 146,
+			"h": 92,
+			"z": 100
+		},
+		{
+			"components": "Lab_Porte",
+			"x": 900,
+			"y": 596,
+			"w": 242,
+			"h": 342,
+			"z": 100
+		}
+	]
 }

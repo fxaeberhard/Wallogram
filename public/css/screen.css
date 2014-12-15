@@ -9,6 +9,7 @@
  * @fileoverview
  * @author Francois-Xavier Aeberhard <fx@red-agent.com>
  */
+@font-face { font-family: counter; src: url('font/citaro_voor_dubbele_hoogte_breed.ttf'); }
 html {
     height: 100%;
 }
@@ -19,8 +20,9 @@ body {
     /*background: url(../assets/murheigvd.jpg);*/
 }
 .wallo-crafty .Timer {
-    font-size: 2em !important;
+    font-size: 4em !important;
     font-weight: bold !important;
+    font-family: counter !important;
     text-align: center;
     color: white;
 }
