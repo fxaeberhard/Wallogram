@@ -670,7 +670,6 @@ Crafty.c("Lab_Falling", {
     create: function() {
 	    this.wScaleRatio =  336 / this.w
 		this.hScaleRatio = 	196 / this.h
-	    console.log(this.w, this.scaleRatio)
 	    this.hookLeft = Crafty.e("Lab_Falling_hook").attr({"x": this.x + (54 / this.wScaleRatio) ,
 										   "y": this.y + (24 / this.hScaleRatio),
 										   "w": 23 / this.wScaleRatio,

@@ -39,7 +39,7 @@ jQuery(function($) {
             }
             $.getJSON(levelUri,function(cfg) {                           	// Retrieve current level
                 App.setCfg(cfg);                                               // Update game cfg
-
+				
 				App.setColors();
 
                 App.initCrafty();                                               // Init crafty
@@ -244,6 +244,8 @@ jQuery(function($) {
             Crafty.box2D.ShowBox2DDebug = false;
 
             App.initEntities(App.cfg.entities);
+            App.setOutOfBound();											// Add OutOfBound box
+            
             App.addDebugPlayer();
         },
         initEntities: function(entities) {
@@ -253,6 +255,35 @@ jQuery(function($) {
                 return entity;
             });
             return ret;
+        },
+        setOutOfBound: function() {
+	        var entities = [{
+                        "components": "OutOfBounds",
+                        "x": - 10,
+                        "y": - 30,
+                        "w": App.cfg.width + 20,
+                        "h": 20
+                    }, {
+                        "components": "OutOfBounds",
+                        "x": App.cfg.width + 30,
+                        "y":  - 10,
+                        "w": 20,
+                        "h": App.cfg.height + 30
+                    }, {
+                        "components": "OutOfBounds",
+                        "x": - 30,
+                        "y": App.cfg.height + 10,
+                        "w": App.cfg.width + 20,
+                        "h": 20
+                    }, {
+                        "components": "OutOfBounds",
+                        "x": - 30,
+                        "y": - 30,
+                        "w": 20,
+                        "h": App.cfg.height + 60
+                    }];
+                    
+			App.outOfBound = App.initEntities(entities);
         },
         updateEntityCfg: function(entity, newCfg) {
             var cfg = entity.cfg;
