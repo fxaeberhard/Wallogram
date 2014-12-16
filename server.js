@@ -55,22 +55,19 @@ function hostHeartbeat(data) {
 }
 
 function addScore(player) {
-	console.log("player?",player)
-	console.log("socketttt",player.id)
-	io.to(player.id).emit("addScoreToController", player.score)
+    console.log("player?", player)
+    console.log("socketttt", player.id)
+    io.to(player.id).emit("addScoreToController", player.score)
 }
 
 function colorSelected(data) {
-	if(data.colorIndex != undefined){
-		console.log(data)
-		// Emit an event notifying the clients that the player has joined the room.
-	    io.sockets.in(data.gameId).emit('playerJoinedRoom', data);
-	    
-	    // Emit the player's color to the pad.
-        io.to(data.mySocketId).emit('colorAssigned',data.colorCode)
-	} else {
+    if (data.colorIndex != undefined) {
+        console.log(data)
+        // Emit the player's color to the pad.
+        io.to(data.mySocketId).emit('colorAssigned', data.colorCode)
+    } else {
         //All the colors are used
-        io.to(data.mySocketId).emit('complete','Sorry! All the colors are already assigned. Try to reload the page!')
+        io.to(data.mySocketId).emit('complete', 'Sorry! All the colors are already assigned. Try to reload the page!')
     }
 }
 /* *****************************
@@ -94,23 +91,23 @@ function playerJoinGame(data) {
 
     // If the room exists...
     if (room != undefined) {
-	    
-	    data.mySocketId = sock.id;
-	    
+
+        data.mySocketId = sock.id;
+
         // attach the socket id to the data object.
         // Join the room
         sock.join(data.gameId);
         console.log('Player ' + data.playerName + ' joining game: ' + data.gameId);
         // Emit an event notifying the clients that the player has joined the room.
-		io.sockets.in(data.gameId).emit('playerSelectColor', data)
-		
+        io.sockets.in(data.gameId).emit('playerJoinedRoom', data)
+
     } else {
         // Otherwise, send an error message back to the player.
-         io.sockets.in(data.gameId).emit('error', {message: "This room does not exist."});
+        io.sockets.in(data.gameId).emit('error', {message: "This room does not exist."});
     }
 }
 function roomFull() {
-	console.log("room full")
+    console.log("room full")
 }
 /**
  * 
