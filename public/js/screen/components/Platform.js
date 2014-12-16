@@ -269,7 +269,7 @@ Crafty.c("Timer", {
                     break;
 
                 case "win":                                                     // Somebody reached the goal
-                    that.text("Final time<br />" + that.text());
+                    that.text(that.text());
                     break;
             }
         });

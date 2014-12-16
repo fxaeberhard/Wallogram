@@ -227,7 +227,7 @@ jQuery(function($) {
                 case "win":                                                     // Somebody reach the goal
                     App.restartHandler = setTimeout(function() {
                         App.setState("countdown");
-                    }, 1000);
+                    }, 5000);
                     App.playing = false;
                     break;
             }
