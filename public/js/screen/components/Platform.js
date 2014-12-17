@@ -35,7 +35,7 @@ Crafty.c("ColoredPlatform", {
 Crafty.c("MovingPlatform", {
     init: function() {                                                         // init function is automatically run when entity with this component is created
        	var Xdirection = Ydirection = xSpeed = ySpeed = 0;
-        this.requires("2D, Box2D, MouseHover, Canvas, Color")                   				
+        this.requires("2D, Box2D, MouseHover, Canvas")                   				
             .attr({
             	w: 100, 
             	h: 20,
@@ -46,15 +46,8 @@ Crafty.c("MovingPlatform", {
 	            time: 2,
 	            name: "movingPlat"
             })
-            .box2d({
-                bodyType: 'kinematic',
-                density: 1.0,
-                friction: 10,
-                restitution: 0,
-                shape: "box"
-            })
-            .color("blue")
             .bind("EnterFrame", function() {									// runs everyframe of the game
+            	console.log(this)
             	var body = this.body,
             		ratio = Crafty.box2D.PTM_RATIO,
 					Xposition = body.m_xf.position.x*ratio,
@@ -84,6 +77,19 @@ Crafty.c("MovingPlatform", {
 				body.SetLinearVelocity(velocity)
             });
     }
+});
+Crafty.c("Standard_MovingPlatform", {
+	init: function() { 
+		this.requires("MovingPlatform, Color")
+			.color("blue")
+			.box2d({
+	                bodyType: 'kinematic',
+	                density: 1.0,
+	                friction: 10,
+	                restitution: 0,
+	                shape: "box"
+	            })
+	}
 });
 
 /**
@@ -239,8 +245,13 @@ Crafty.c("fixImage", {
 Crafty.c("Timer", {
     init: function() {
         this.requires("2D, DOM, Text, MouseHover")
+        	.attr({
+	        	"x": 100,
+	        	"y": 100,
+	        	"color": "white"
+        	})
             .css({
-                color: "white"
+                color: this.color
             });
 
         var that = this, timerHandler;
@@ -264,7 +275,7 @@ Crafty.c("Timer", {
                     break;
 
                 case "win":                                                     // Somebody reached the goal
-                    that.text("Final time<br />" + that.text());
+                    that.text(that.text());
                     break;
             }
         });
@@ -294,24 +305,13 @@ Crafty.c('MouseHover', {
 Crafty.c("Lab_Porte", {
     init: function() {
         this.requires("2D, Canvas, MouseHover, lab_porte, Box2D")
-            .bind("EnterFrame", function() {
-				if(this.initiated != true){
-					this.setupBox2D()
-				}
-
-	            
-            })
-    },
-    setupBox2D: function() {
-	    this.box2d({
+        	.box2d({
                 bodyType: 'static',
-                shape: [[this.w * (11 / 236), this.h * (309 / 361)], 
-                		[this.w * (227 / 236), this.h * (309 / 361)], 
-                		[this.w * (227 / 236), this.h * (349 / 361)], 
-                		[this.w * (11 / 236), this.h * (349 / 361)]],
                 userData: "plat"
             })
-        this.initiated = true
+            .updateSize = function(){																//Override update size function
+			    return sizeChange(this, ({"top":293, "right": 230, "bottom": 330, "left": 11}))
+			}
     }
 })
 Crafty.c("AnimatedPlatform", {
@@ -346,26 +346,21 @@ Crafty.c("Chimie", {
                 animLength: 1,
                 isSensor: true
             })
+            .box2d({
+                bodyType: 'static',
+                userData: "plat"
+            })
             .reel("anim", this.animSpeed, 0, 0, 51)
             .reel("idle", this.animSpeed, 0, 0, 1)
             .bind("EnterFrame", function() {
 				if(!this.isPlaying("anim")){
 					this.animate("anim",-1)
-					this.setupBox2D()
 				}
-				
             })
-    },
-    setupBox2D: function() {
-	    this.box2d({
-                bodyType: 'static',
-                shape: [[this.w * (10 / 134), this.h * (129 / 160)], 
-                		[this.w * (125 / 134), this.h * (129 / 160)], 
-                		[this.w * (125 / 134), this.h * (137 / 160)], 
-                		[this.w * (10 / 134), this.h * (137 / 160)]],
-                
-                userData: "plat"
-            })
+			.updateSize = function(){																//Override update size function
+			    return sizeChange(this, ({"top":129, "right": 125, "bottom": 137, "left": 10}))
+			}
+
     }
 });
 Crafty.c("Jauge", {
@@ -376,25 +371,20 @@ Crafty.c("Jauge", {
                 animLength: 1,
                 isSensor: true
             })
+            .box2d({
+                bodyType: 'static',
+                userData: "plat"
+            })
             .reel("anim", this.animSpeed, 0, 0, 78)
             .reel("idle", this.animSpeed, 0, 0, 1)
             .bind("EnterFrame", function() {
 				if(!this.isPlaying("anim")){
-					this.animate("anim",-1)
-					this.setupBox2D()				
-				}
-	            
+					this.animate("anim",-1)			
+				} 
             })
-    },
-    setupBox2D: function() {
-	    this.box2d({
-                bodyType: 'static',
-                shape: [[this.w * (5 / 182), this.h * (5 / 152)], 
-                		[this.w * (175 / 182), this.h * (5 / 152)], 
-                		[this.w * (175 / 182), this.h * (151 / 152)], 
-                		[this.w * (5 / 182), this.h * (151 / 152)]],
-                userData: "plat"
-            })
+            .updateSize = function(){																//Override update size function
+			    return sizeChange(this, ({"top":5, "right": 175, "bottom": 151, "left": 5}))
+			}
     }
 });
 Crafty.c("Serrure", {
@@ -443,24 +433,21 @@ Crafty.c("Serveur", {
                 animLength: 1,
                 isSensor: true
             })
+            .box2d({
+                bodyType: 'static',
+                userData: "plat_serveur"
+            })
+
             .reel("anim", this.animSpeed, 0, 0, 9)
             .reel("idle", this.animSpeed, 0, 0, 1)
             .bind("EnterFrame", function() {
 				if(!this.isPlaying("anim")){
 					this.animate("anim",-1)
-					this.setupBox2D()				}
-	            
+				}  
             })
-    },
-    setupBox2D: function() {
-	    this.box2d({
-                bodyType: 'static',
-                shape: [[this.w * (11 / 236), this.h * (309 / 361)], 
-                		[this.w * (227 / 236), this.h * (309 / 361)], 
-                		[this.w * (227 / 236), this.h * (346 / 361)], 
-                		[this.w * (11 / 236), this.h * (346 / 361)]],
-                userData: "plat"
-            })
+            .updateSize = function(){																//Override update size function
+			    return sizeChange(this, ({"top":307, "right": 227, "bottom": 346, "left": 11}))
+			}
     }
 })
 /**
@@ -471,7 +458,7 @@ Crafty.c("Falling", {
 		this.isDown = false;
 		var counter, counter2,
 			multiplier = 50, ratio = Crafty.box2D.PTM_RATIO;
-    	this.requires("AnimatedPlatform, Box2D")
+    	this.requires("AnimatedPlatform")
     		.attr({
 	    		w: 100,
 	    		h: 20,
@@ -576,7 +563,7 @@ Crafty.c("Falling", {
 Crafty.c("Standard_Falling", {
     init: function() {
 	    
-        this.requires("Falling")
+        this.requires("Falling, Box2D")
             .attr({
                 animSpeed: 1000,
                 animLength: 1,
@@ -584,55 +571,43 @@ Crafty.c("Standard_Falling", {
             })
             .reel("anim", this.animSpeed, 0, 0, 76)
             .reel("idle", this.animSpeed, 0, 0, 1)
-            .bind("EnterFrame", function() {
-				if(!this.isPlaying("anim")){
-					this.animate("anim",-1)
-					this.setupBox2D()				}
-	            
-            })
-    },
-    setupBox2D: function() {
-	    this.box2d({
+            .box2d({
                 bodyType: 'static',
                 density: 0.2,
                 friction: 10,
                 restitution: 0,
                 shape: "box"
             })
-    }
-})
-Crafty.c("Lab_Falling_platform", {
-	
-    init: function() {
-        this.requires("Falling, lab_plateforme_tombe")
-            .attr({
-                animSpeed: 1000,
-                animLength: 1,
-            })
             .bind("EnterFrame", function() {
-				if(this.initiated != true){
-					this.setupBox2D()
+				if(!this.isPlaying("anim")){
+					this.animate("anim",-1)
 				}
 	            
             })
     },
     setupBox2D: function() {
-	    this.box2d({
+	    this
+    }
+})
+Crafty.c("Lab_Falling_platform", {
+	
+    init: function() {
+        this.requires("Falling, lab_plateforme_tombe, Box2D")
+            .box2d({
                 bodyType: 'static',
+                density: 1.0,
                 friction: 0,
                 restitution: 0,
-                shape: [[this.w * (10 / 336), this.h * (48 / 196)], 
-                		[this.w * (325 / 336), this.h * (48 / 196)], 
-                		[this.w * (325 / 336), this.h * (183 / 196)], 
-                		[this.w * (10 / 336), this.h * (183 / 196)]],
-                userData: "plat"
+                userData: "plat_fall"
             })
-		this.initiated = true;
+            .updateSize = function(){																//Override update size function
+			    return sizeChange(this, ({"top":47, "right": 325, "bottom": 183, "left": 10}))
+			}
+
     }
 
 })
 Crafty.c("Lab_Falling_hook", {
-	
     init: function() {
         this.requires("2D, Canvas, lab_fix_plateforme_tombe,")
 	        .attr({
@@ -665,18 +640,19 @@ Crafty.c("Lab_Falling", {
     create: function() {
 	    this.wScaleRatio =  336 / this.w
 		this.hScaleRatio = 	196 / this.h
-	    console.log(this.w, this.scaleRatio)
-	    this.hookLeft = Crafty.e("Lab_Falling_hook").attr({"x": this.x + (54 / this.wScaleRatio) ,
-										   "y": this.y + (24 / this.hScaleRatio),
-										   "w": 23 / this.wScaleRatio,
-										   "h": 23 / this.hScaleRatio,
-										   "z": 2
+	    this.hookLeft = Crafty.e("Lab_Falling_hook").attr({
+		    								"x": this.x + (54 / this.wScaleRatio) ,
+										    "y": this.y + (24 / this.hScaleRatio),
+										    "w": 23 / this.wScaleRatio,
+										    "h": 23 / this.hScaleRatio,
+										    "z": 2
 											})
-		this.hookRight = Crafty.e("Lab_Falling_hook").attr({"x": this.x +  (253 / this.wScaleRatio),
-										   "y": this.y + (24 / this.hScaleRatio),
-										   "w": 23 / this.wScaleRatio,
-										   "h": 23 / this.hScaleRatio,
-										   "z": 2
+		this.hookRight = Crafty.e("Lab_Falling_hook").attr({
+											"x": this.x +  (253 / this.wScaleRatio),
+										    "y": this.y + (24 / this.hScaleRatio),
+										    "w": 23 / this.wScaleRatio,
+										    "h": 23 / this.hScaleRatio,
+										    "z": 2
 										})
 		this.added = true
     },
@@ -687,7 +663,69 @@ Crafty.c("Lab_Falling", {
 	    this.setOrigin()
     }
 })
-
+Crafty.c("Lab_Target", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("Canvas, lab_tuyeau, MouseHover")                         // allows the entity to be drawn as a colored box
+            .attr({w: 86, h: 242})                                              // set width and height
+			.bind("EnterFrame", function() {
+				if(!this.added){
+					this.setOrigin()
+					this.create()
+				}
+				if($.App.debug && (this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin)){
+					this.resetPosition()
+				}
+			})
+    },
+    setOrigin: function() {
+	    this.xOrigin = this.x;
+	    this.yOrigin = this.y;
+	    this.wOrigin = this.w;
+	    this.hOrigin = this.h;
+    },
+    create: function() {
+	    this.wScaleRatio =  86 / this.w
+		this.hScaleRatio = 	242 / this.h
+	    this.target = Crafty.e("Target").attr({
+		    					"x": this.x + (25 / this.wScaleRatio),
+		    					"y": this.y + (290 / this.hScaleRatio),
+		    					"w": 30 / this.wScaleRatio,
+		    					"h": 30 / this.hScaleRatio
+	    })
+	    this.added = true
+    },
+    resetPosition: function(){
+	    this.target.destroy()
+	    this.create()
+	    this.setOrigin()
+    }
+});
+Crafty.c("Lab_MovingPlatform", {
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("MovingPlatform, lab_plateforme1")                         	// allows the entity to be drawn as a colored box
+			.box2d({
+                bodyType: 'static',
+                friction: 0,
+                restitution: 0,
+                userData: "plat"
+            })
+			.bind("EnterFrame", function() {
+				if(!this.added){
+					this.setupBox2D()
+					console.log(this.body)
+					this.setOrigin()
+					this.create()
+					
+				}
+				if($.App.debug && (this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin)){
+					this.resetPosition()
+				}
+			})
+            .updateSize = function(){																//Override update size function
+			    return sizeChange(this, ({"top":8, "right": 146, "bottom": 66, "left": 8}))
+			}
+    }
+});
 Crafty.c("WalloText", {
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("2D, DOM, Text, MouseHover")
@@ -718,3 +756,27 @@ Crafty.c("Video", {
     }
 });
 
+function sizeChange(platform, boxPos){
+	var PTM_RATIO = Crafty.box2D.PTM_RATIO;
+    platform.fixtures[0].m_shape.SetAsArray([
+	    new b2Vec2((platform.w * (boxPos.left / platform.__tile)) / PTM_RATIO, (platform.h * (boxPos.top / platform.__tileh)) / PTM_RATIO),
+        new b2Vec2((platform.w * (boxPos.right / platform.__tile)) / PTM_RATIO, (platform.h * (boxPos.top / platform.__tileh)) / PTM_RATIO),
+        new b2Vec2((platform.w * (boxPos.right / platform.__tile)) / PTM_RATIO, (platform.h * (boxPos.bottom / platform.__tileh)) / PTM_RATIO),
+        new b2Vec2((platform.w * (boxPos.left / platform.__tile)) / PTM_RATIO, (platform.h * (boxPos.bottom / platform.__tileh)) / PTM_RATIO)],
+        4
+    );
+	return platform;
+}
+
+/*
+{
+			"components": "Lab_MovingPlatform",
+			"x": 1400,
+			"y": 300,
+			"x1": 1400,
+        	"y1": 300,
+            "x2": 1500,
+            "y2": 500,
+            "time": 2	
+		},
+*/

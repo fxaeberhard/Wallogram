@@ -219,7 +219,7 @@ jQuery(function($) {
                 case "win":                                                     // Somebody reach the goal
                     App.restartHandler = setTimeout(function() {
                         App.setState("countdown");
-                    }, 1000);
+                    }, 5000);
                     App.playing = false;
                     break;
             }
@@ -236,15 +236,47 @@ jQuery(function($) {
             Crafty.box2D.ShowBox2DDebug = false;
 
             App.initEntities(App.cfg.entities);
+            App.setOutOfBound();											// Add OutOfBound box
+            
             App.addDebugPlayer();
         },
         initEntities: function(entities) {
             var ret = _.map(entities, function(cfg) {                           // Add entities from config file
+                console.log(cfg)
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
                 return entity;
             });
             return ret;
+        },
+        setOutOfBound: function() {
+	        var entities = [{
+                        "components": "OutOfBounds",
+                        "x": - 10,
+                        "y": - 30,
+                        "w": App.cfg.width + 20,
+                        "h": 20
+                    }, {
+                        "components": "OutOfBounds",
+                        "x": App.cfg.width + 30,
+                        "y":  - 10,
+                        "w": 20,
+                        "h": App.cfg.height + 30
+                    }, {
+                        "components": "OutOfBounds",
+                        "x": - 30,
+                        "y": App.cfg.height + 10,
+                        "w": App.cfg.width + 20,
+                        "h": 20
+                    }, {
+                        "components": "OutOfBounds",
+                        "x": - 30,
+                        "y": - 30,
+                        "w": 20,
+                        "h": App.cfg.height + 60
+                    }];
+                    
+			App.outOfBound = App.initEntities(entities);
         },
         updateEntityCfg: function(entity, newCfg) {
             var cfg = entity.cfg;
