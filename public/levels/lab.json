@@ -19,13 +19,6 @@
 			"z": 300
 		},
 		{
-			"components": "Target",
-			"x": 1785,
-			"y": 216,
-			"w": 44,
-			"h": 46
-		},
-		{
 			"components": "fixImage, lab_background",
 			"z": 1
 		},
@@ -96,6 +89,14 @@
 			"w": 242,
 			"h": 342,
 			"z": 100
+		},
+		{
+			"components": "Lab_Target",
+			"x": 1500,
+			"y": 200,
+			"w": 86,
+			"h": 242,
+			"z": 160
 		}
 	]
 }

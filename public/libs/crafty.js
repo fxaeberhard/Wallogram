@@ -4801,7 +4801,7 @@ Crafty.fn = Crafty.prototype = {
             if (typeof key === "string") {
                 return this[key];
             }
-
+			
             //extend if object
             this.extend(key);
             this.trigger("Change", key); //trigger change event

@@ -81,7 +81,7 @@ Crafty.sprite(241, 342, 'assets/lab/porte.png', {
 Crafty.sprite(134, 160, 'assets/lab/sprite_chimie.png', {
 	lab_chimie: [0, 0]
 });
-Crafty.sprite(134, 134, 'assets/lab/sprite_gyrophare.png', {
+Crafty.sprite(160, 160, 'assets/lab/sprite_gyrophare.png', {
 	lab_gyrophare: [0, 0]
 });
 Crafty.sprite(182, 153, 'assets/lab/sprite_jauge.png', {
@@ -93,7 +93,7 @@ Crafty.sprite(236, 361, 'assets/lab/sprite_serveur.png', {
 Crafty.sprite(202, 204, 'assets/lab/sprite_ventilo.png', {
 	lab_ventilo: [0, 0]
 });
-Crafty.sprite(336, 204, 'assets/lab/sprite_plateforme_tombe.png', {
+Crafty.sprite(336, 196, 'assets/lab/sprite_plateforme_tombe.png', {
 	lab_plateforme_tombe: [0, 0]
 });
 Crafty.sprite(23, 23, 'assets/lab/fixation_plateforme_tombe.png', {
@@ -104,6 +104,15 @@ Crafty.sprite(1920, 1080, 'assets/lab/wallobot_fond.png', {
 });
 Crafty.sprite(1920, 1080, 'assets/lab/wallobot_avant.png', {
 	lab_foreground: [0, 0]
+});
+Crafty.sprite(86, 242, 'assets/lab/tuyeau.png ', {
+    lab_tuyeau: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/sprite_plateforme1.png ', {
+    lab_plateforme1: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/lab/sprite_plateforme2.png ', {
+    lab_plateforme2: [0, 0]
 });
 
 /*
