@@ -91,9 +91,20 @@
 			"z": 100
 		},
 		{
+			"components": "Lab_MovingPlatform",
+			"x": 1384,
+			"y": 596,
+			"w": 154,
+			"h": 74,
+			"xDiff": 0,
+			"yDiff": 380,
+			"time": 2,
+			"z": 100
+		},
+		{
 			"components": "Lab_Target",
-			"x": 1500,
-			"y": 200,
+			"x": 1762,
+			"y": 46,
 			"w": 86,
 			"h": 242,
 			"z": 160

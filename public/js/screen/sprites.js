@@ -108,10 +108,10 @@ Crafty.sprite(1920, 1080, 'assets/lab/wallobot_avant.png', {
 Crafty.sprite(86, 242, 'assets/lab/tuyeau.png ', {
     lab_tuyeau: [0, 0]
 });
-Crafty.sprite(128, 128, 'assets/lab/sprite_plateforme1.png ', {
+Crafty.sprite(153, 73, 'assets/lab/sprite_plateforme1.png ', {
     lab_plateforme1: [0, 0]
 });
-Crafty.sprite(128, 128, 'assets/lab/sprite_plateforme2.png ', {
+Crafty.sprite(138, 65, 'assets/lab/sprite_plateforme2.png ', {
     lab_plateforme2: [0, 0]
 });
 

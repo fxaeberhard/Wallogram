@@ -286,7 +286,6 @@ Crafty.c("Box2D", {
             (this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO,
             new b2Vec2((this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO)
             );
-            console.log("here we g0",this.fixtures[0].m_shape)
         return this;
     }
 });

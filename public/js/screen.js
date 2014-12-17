@@ -250,7 +250,6 @@ jQuery(function($) {
         },
         initEntities: function(entities) {
             var ret = _.map(entities, function(cfg) {                           // Add entities from config file
-                console.log(cfg)
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
                 return entity;
