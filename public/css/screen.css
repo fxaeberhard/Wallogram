@@ -26,9 +26,6 @@ body {
     text-align: center;
     color: white;
 }
-.wallo-crafty canvas {
-	z-index: 2;
-}
 .wallo-page {
     height: 100%;
     position: relative;

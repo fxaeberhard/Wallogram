@@ -243,13 +243,25 @@ Crafty.c('MouseHover', {
 });
 Crafty.c("Lab_Porte", {
 	init: function() {
-		this.requires("2D, Canvas, MouseHover, lab_porte, Box2D")
+		this.requires("2D, Canvas, MouseHover, Box2D, lab_porte")
 			.box2d({
 				bodyType: 'static',
 				userData: "plat"
 			})
 			.updateSize = function(){																//Override update size function
 				   return sizeChange(this, ({"top":293, "right": 230, "bottom": 330, "left": 11}))
+			}
+	}
+})
+Crafty.c("Lab_Platform", {
+	init: function() {
+		this.requires("2D, Canvas, MouseHover, Box2D, lab_plateforme1")
+			.box2d({
+				bodyType: 'static',
+				userData: "plat"
+			})
+			.updateSize = function(){																//Override update size function
+				   return sizeChange(this, ({"top":47, "right": 325, "bottom": 183, "left": 10}))
 			}
 	}
 })
@@ -340,7 +352,6 @@ Crafty.c("Serrure", {
 				if(!this.isPlaying("anim")){
 					this.animate("anim",-1)
 				}
-				 
 			})
 	}
 });
@@ -376,7 +387,6 @@ Crafty.c("Serveur", {
 				bodyType: 'static',
 				userData: "plat_serveur"
 			})
-
 			.reel("anim", this.animSpeed, 0, 0, 9)
 			.reel("idle", this.animSpeed, 0, 0, 1)
 			.bind("EnterFrame", function() {
@@ -521,7 +531,6 @@ Crafty.c("Standard_Falling", {
 				if(!this.isPlaying("anim")){
 					this.animate("anim",-1)
 				}
-				 
 			})
 	},
 	setupBox2D: function() {
@@ -560,7 +569,6 @@ Crafty.c("Lab_Falling_hook", {
 
 Crafty.c("Lab_Falling", {
 	init: function() {
-		 
 		this.requires("2D, Canvas, MouseHover, Lab_Falling_platform")
 			.attr({
 				z: 3
@@ -572,8 +580,6 @@ Crafty.c("Lab_Falling", {
 				if($.App.debug && !this.isDown && (this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin)){
 					this.resetPosition()
 				}
-
-				 
 			})
 	},
 	create: function() {
@@ -626,10 +632,10 @@ Crafty.c("Lab_Target", {
 		 this.wScaleRatio =	 86 / this.w
 		this.hScaleRatio = 	242 / this.h
 		 this.target = Crafty.e("Target").attr({
-			  					"x": this.x + (25 / this.wScaleRatio),
-			  					"y": this.y + (290 / this.hScaleRatio),
-			  					"w": 30 / this.wScaleRatio,
-			  					"h": 30 / this.hScaleRatio
+								"x": this.x + (25 / this.wScaleRatio),
+								"y": this.y + (290 / this.hScaleRatio),
+								"w": 30 / this.wScaleRatio,
+								"h": 30 / this.hScaleRatio
 		 })
 		 this.added = true
 	},
@@ -644,8 +650,7 @@ Crafty.c("Lab_Target", {
  */
 Crafty.c("MovingPlatform", {
 	init: function() {															// init function is automatically run when entity with this component is created
-	   	var xDirection = yDirection = xSpeed = ySpeed = 0;
-		this.requires("2D, Box2D, MouseHover, Canvas")					 		
+		this.requires("2D, Box2D, MouseHover, Canvas")
 			.attr({
 				w: 100, 
 				h: 20,
@@ -657,45 +662,40 @@ Crafty.c("MovingPlatform", {
 			.bind("EnterFrame", function() {									// runs everyframe of the game
 				var body = this.body,
 					ratio = Crafty.box2D.PTM_RATIO,
-					xPosition = body.m_xf.position.x*ratio,
-					yPosition = body.m_xf.position.y*ratio
-					
+					position = body.GetPosition()
+
 				if(!this.runOnce){
 					this.setOrigin()
+					this.setDistance(position, ratio)
 				}
-				if($.App.debug) {													// if app is in edit mode
-					if(body.GetLinearVelocity().x != 0 || body.GetLinearVelocity().y != 0){
-						body.SetLinearVelocity(new b2Vec2(0,0))
-						if(xPosition != this.x1 || yPosition != this.y1) {
-							console.log(this.x1, this.y1)
-							body.SetPosition(new b2Vec2(this.x1 / ratio, this.y1 / ratio))
-						}
-					} else {
+				if($.App.debug) {																	// if app is in edit mode
+					if(this.moving != true){
+						console.log(this.moving)
 						if(this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin){
+							console.log("NOP NOP NOP")
 							this.setOrigin()
 						}
+					} else {
+						if(this.x != this.x1 || this.y != this.y1) {
+							console.log("hererereer")
+							body.SetPosition(new b2Vec2(this.x1 / ratio, this.y1 / ratio))
+						}
 					}
-				} else {	
-				 	
-				 	if(xSpeed == 0 || ySpeed == 0){									// set respective speed for each direction
-						var fps = Crafty.timer.FPS()
-						
-						xSpeed = this.xDiff / (this.time * fps)
-						ySpeed = this.yDiff / (this.time * fps)
-					}
-					
-					xDirection = (xDirection == 0) ? xSpeed : xDirection;			// if direction is not set, give it positive value of speed
-					if(xPosition < this.x1 || xPosition > (this.x1 + this.xDiff)){		// if it reaches one of the bounderies(x1, x2) it switches direction
-						xDirection = -xDirection;
+					this.moving = false
+				} else {
+					this.moving = true
+					if(position.x < this.x1 / ratio || position.x > (this.x1 + this.xDiff) / ratio){		// if it reaches one of the bounderies(x1, x2) it switches direction
+						this.xPosDiff = -this.xPosDiff;
 					}
 					
-					yDirection = (yDirection == 0) ? ySpeed : yDirection;			// if direction is not set, give it positive value of speed
-					if(yPosition < this.y1 || yPosition > (this.y1 +this.yDiff)){		// if it reaches one of the bounderies(y1, y2) it switches direction
-						yDirection = -yDirection;
+					if(position.y < this.y1 / ratio || position.y > (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
+						this.yPosDiff = -this.yPosDiff;
 					}
-					
-					var velocity = new b2Vec2(xDirection, yDirection)
-					body.SetLinearVelocity(velocity)
+					console.log("platform")
+					this.position = new b2Vec2(position.x + this.xPosDiff, position.y + this.yPosDiff)
+					body.SetPosition(this.position)
+					xPrevPos = body.GetPosition().x
+					yPrevPos = body.GetPosition().y
 				}
 			});
 	},
@@ -707,6 +707,12 @@ Crafty.c("MovingPlatform", {
 		this.yOrigin = this.y;
 		this.wOrigin = this.w;
 		this.hOrigin = this.h;
+	},
+	setDistance: function(position, ratio) {
+		var fps = Crafty.timer.FPS()
+		this.xPosDiff = (this.xDiff / ratio) / (this.time * fps);
+		this.yPosDiff = (this.yDiff / ratio) / (this.time * fps);
+		console.log("INIT",this.xPosDiff)
 	}
 });
 Crafty.c("Standard_MovingPlatform", {
@@ -733,7 +739,6 @@ Crafty.c("Lab_MovingPlatform", {
 				userData: "moving_platform"
 			})
 			.updateSize = function(){											//Override update size function
-				console.log("this")
 				return sizeChange(this, ({"top":8, "right": 146, "bottom": 66, "left": 8}))
 			}
 	}
