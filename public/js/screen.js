@@ -17,7 +17,7 @@ jQuery(function($) {
          *                Setup                *
          * *********************************** */
         cfg: {
-            player: {x: 10, y: 5, z: 150},
+            //player: {x: 10, y: 5, z: 150},
             width: 600,
             height: 400,
             countdownDuration: 1,
@@ -328,8 +328,7 @@ jQuery(function($) {
                         "y": y - (h / 2),
                         "w": thick,
                         "h": h
-                    },
-                    {
+                    }, {
                         "components": "ColoredPlatform",
                         "color": "pink",
                         "x": x - (w / 2) + thick,
@@ -348,7 +347,7 @@ jQuery(function($) {
 
             App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
 
-            $.each(App.players, function(i, p) {                                // Bring all players to starting position
+            _.each(App.players, function(p) {                                   // Bring all players to starting position
                 p.reset();
             });
 
@@ -381,6 +380,9 @@ jQuery(function($) {
 
             if (this.debug) {
                 Crafty.stage.x = $("#tab-play").position().left;
+                App.restartHandler = setTimeout(function() {                    // do it later cause of css animation
+                    Crafty.stage.x = $("#tab-play").position().left;
+                }, 1000);
             }
         },
         toggleDebugCanvas: function() {

@@ -1,10 +1,9 @@
 extends layout
 
 block head
-	link(rel="stylesheet" type="text/css" href="css/screen.css")
 	link(rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css")
+	link(rel="stylesheet" type="text/css" href="css/screen.css")
 	link(rel="stylesheet" type="text/css" href="libs/colorpicker/css/colorpicker.css")
-
 
 block content
 	// Markup 
@@ -27,6 +26,9 @@ block content
 
 		div(class="wallo-edit wallo-u")
 
+			div(class="wallo-edit-beta")
+			div(class="wallo-edit-logo")
+
 			div(class="wallo-edit-buttons")
 				button(class="button-play fa fa-play fa-lg" title="Shortcut: p" disabled)
 				button(class="button-reset  fa fa-stop fa-lg" title="Shortcut: r")
@@ -35,14 +37,16 @@ block content
 				button(class="button-more fa fa-caret-down fa-lg")
 				ul
 					li(class="button-adddebugplayer") Toggle debug player
-					li(class="button-toggledebugcanvas") Toggle crafty debug canvas
-				button(class="button-close fa fa-close fa-lg"  title="Shortcut: §")
+					li(class="button-toggledebugcanvas") Toggle box2d debug
+					li(class="button-togglefps") Toggle fps meter
 
 			div(data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected") Preview
 			div(data-target="#tab-source" class="wallo-tab-link") Source
 			div(data-target="#tab-script" class="wallo-tab-link") Scripts
 
 			div(class="wallo-tab-footer")
+
+			div(class="wallo-edit-toggle" title="Shortcut: §")
 
 	// Libraries 
 	script(src="libs/jquery-2.1.1.min.js")
