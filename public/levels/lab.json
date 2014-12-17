@@ -84,8 +84,8 @@
 		},
 		{
 			"components": "Lab_Falling",
-			"x": 470,
-			"y": 512,
+			"x": 356,
+			"y": 672,
 			"w": 146,
 			"h": 92,
 			"z": 100
@@ -117,20 +117,20 @@
 		{
 			"components": "Lab_Platform",
 			"x": 1736,
-			"y": 402,
+			"y": 434,
 			"w": 154,
 			"h": 74,
 			"z": 100
 		},
 		{
 			"components": "Lab_MovingPlatform",
-			"x": 222,
-			"y": 722,
+			"x": 1384,
+			"y": 596,
 			"w": 154,
 			"h": 74,
-			"xDiff": 100,
-			"yDiff": 200,
-			"time": 2,
+			"xDiff": 0,
+			"yDiff": 380,
+			"time": 4,
 			"z": 100
 		},
 		{

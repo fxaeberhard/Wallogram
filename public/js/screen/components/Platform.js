@@ -261,7 +261,7 @@ Crafty.c("Lab_Platform", {
 				userData: "plat"
 			})
 			.updateSize = function(){																//Override update size function
-				   return sizeChange(this, ({"top":47, "right": 325, "bottom": 183, "left": 10}))
+				   return sizeChange(this, ({"top":8, "right": 146, "bottom": 66, "left": 8}))
 			}
 	}
 })
