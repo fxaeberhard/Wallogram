@@ -70,7 +70,6 @@ Crafty.c("Box2D", {
         this.fixtures = [];
 
         if (obj.bodyDef) {
-
             var BodyDef = obj.bodyDef;
 
         } else {
@@ -88,7 +87,6 @@ Crafty.c("Box2D", {
 
         BodyDef.userData = this;
         this.body = world.CreateBody(BodyDef);
-
         this.addFixture(obj);
 
         return this;
@@ -116,17 +114,14 @@ Crafty.c("Box2D", {
     addFixture: function(setup) {
 
         var fixDef = {};
-
         // Custom fixture
         if (setup.fixDef) {
-
             fixDef = setup.fixDef;
 
             fixDef.shape = this._addShapeToFixture(fixDef.shape);
 
             // Preconfigured fixture
         } else {
-
             fixDef = new b2FixtureDef();
             fixDef.density = (!isNaN(setup.density)) ? setup.density : 1;
             fixDef.friction = (!isNaN(setup.friction)) ? setup.friction : 0.5;
@@ -136,14 +131,13 @@ Crafty.c("Box2D", {
 
             // Add some filter stuff
             fixDef.filter = this._addFilterToFixture(setup);
-
+			
             // Enrich the fixture with a shape
             fixDef.shape = this._addShapeToFixture(setup.shape);
         }
 
         // Fixture was built
         if (Object.keys(fixDef).length) {
-
             this.fixtures.push(this.body.CreateFixture(fixDef));
         }
 
@@ -183,7 +177,6 @@ Crafty.c("Box2D", {
 
             // Shape is an array, hopefully..
         } else if (Object.prototype.toString.call(shapeSetup) === '[object Array]') {
-
             shape = new b2PolygonShape();
             var vertexCount = shapeSetup.length;
             var shapeArray = [];
@@ -192,12 +185,10 @@ Crafty.c("Box2D", {
                 var vector = shapeSetup[i];
                 shapeArray.push(new b2Vec2(vector[0] / PTM_RATIO, vector[1] / PTM_RATIO));
             }
-
             shape.SetAsArray(shapeArray, vertexCount);
 
             // No, it's a box! (maybe a shape wasn't defined!)
         } else {
-
             shape = new b2PolygonShape();
             shape.SetAsOrientedBox(
                 (this.w / 2) / PTM_RATIO, (this.h / 2) / PTM_RATIO,
@@ -290,10 +281,12 @@ Crafty.c("Box2D", {
         return this;
     },
     updateSize: function() {
+	    
         this.fixtures[0].m_shape.SetAsOrientedBox(
             (this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO,
             new b2Vec2((this.w / 2) / Crafty.box2D.PTM_RATIO, (this.h / 2) / Crafty.box2D.PTM_RATIO)
             );
+            console.log("here we g0",this.fixtures[0].m_shape)
         return this;
     }
 });

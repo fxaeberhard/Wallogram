@@ -1,8 +1,9 @@
 extends layout
 
 block head
-	link(rel="stylesheet" type="text/css" href="css/screen.css")
 	link(rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css")
+	link(rel="stylesheet" type="text/css" href="css/screen.css")
+	link(rel="stylesheet" type="text/css" href="libs/colorpicker/css/colorpicker.css")
 
 block content
 	// Markup 
@@ -20,38 +21,38 @@ block content
 		div(id="tab-source" class="wallo-u wallo-tab")
 			div(id="editor")
 
+		div(id="tab-script" class="wallo-u wallo-tab")
+			div(id="scripteditor")
+
 		div(class="wallo-edit wallo-u")
+
+			div(class="wallo-edit-beta")
+			div(class="wallo-edit-logo")
 
 			div(class="wallo-edit-buttons")
 				button(class="button-play fa fa-play fa-lg" title="Shortcut: p" disabled)
-				button(class="button-stop fa fa-pause fa-lg" title="Shortcut: s" disabled)
 				button(class="button-reset  fa fa-stop fa-lg" title="Shortcut: r")
 				button(class="button-fullscreen fa fa-expand fa-lg" title="Shortcut: f")
 				button(class="button-save fa fa-save fa-lg")
-				button(class="button-close fa fa-close fa-lg")
+				button(class="button-more fa fa-caret-down fa-lg")
+				ul
+					li(class="button-adddebugplayer") Toggle debug player
+					li(class="button-toggledebugcanvas") Toggle box2d debug
+					li(class="button-togglefps") Toggle fps meter
 
 			div(data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected") Preview
 			div(data-target="#tab-source" class="wallo-tab-link") Source
+			div(data-target="#tab-script" class="wallo-tab-link") Scripts
 
-			div(class="wallo-edit-content")
-				span(class="wallo-key") § 
-				span Show/hide edition
-				span(class="wallo-key") 1 
-				span Add debug player
-				span(class="wallo-key") 2 
-				span Export level
+			div(class="wallo-tab-footer")
 
-			div(id="tab-play" class="wallo-u wallo-tab wallo-tab-selected")
-				div(class="wallo-crafty")    
-
-			div(id="tab-source" class="wallo-u wallo-tab")
-				div(id="editor")
+			div(class="wallo-edit-toggle" title="Shortcut: §")
 
 	// Libraries 
 	script(src="libs/jquery-2.1.1.min.js")
 	script(src="libs/underscore-min.js")
-	script(src="libs/Box2dWeb-2.1.a.3.min.js")
-	script(src="libs/crafty-min.js")
+	script(src="libs/Box2dWeb-2.1.a.3.js")
+	script(src="libs/crafty.js")
 	script(src="/socket.io/socket.io.js")
 	script(src="libs/stats.min.js")
 	script(src="libs/yui3/build/yui/yui-min.js")
@@ -59,10 +60,12 @@ block content
 	script(src="libs/ace/ace.js")
 	script(src="libs/jquery-ui/jquery-ui.min.js")
 	script(src="libs/tinymce/tinymce.min.js")
-
+	script(src="libs/colorpicker/js/colorpicker.js")
+	script(src="js/inputex/inputex-color.js")
+	script(src="js/inputex/inputex-rte.js")
+        
 	// Sources 
 	script(src="js/screen/sprites.js")
-	script(src="js/screen/spriteColors.js")
 	//script(src="js/screen/scenes/demo.js")
 	script(src="js/screen/components/box2d.js")
 	script(src="js/screen/components/Player.js")

@@ -1,0 +1,152 @@
+{
+	"player": [{
+            "color": "blue",
+            "colorCode": "33a9e0",
+            "components": "WalloBotSpriteBlue, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "darkblue",
+            "colorCode": "0062e1",
+            "components": "WalloBotSpriteDarkBlue, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "orange",
+            "colorCode": "f79d06",
+            "components": "WalloBotSpriteOrange, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "red",
+            "colorCode": "fc5e21",
+            "components": "WalloBotSpriteRed, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "pink",
+            "colorCode": "ff33bd",
+            "components": "WalloBotSpritePink, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "violet",
+            "colorCode": "7e42e1",
+            "sprites": "",
+            "components": "WalloBotSpriteViolet, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "green",
+            "colorCode": "00da18",
+            "components": "WalloBotSpriteGreen, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "darkgreen",
+            "colorCode": "007e12",
+            "components": "WalloBotSpriteDarkGreen, WalloBot",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "yellow",
+            "colorCode": "e8cb00",
+            "components": "WalloBotSpriteYellow, WalloBot",
+            "x": 100,
+            "y": 100
+        }],
+	"width": 1920,
+	"height": 1080,
+	"countdownDuration": 5,
+	"entities": [
+		{
+			"components": "Timer",
+			"color": "green",
+			"x": 653.9977416992188,
+			"y": 195.99285888671875,
+			"w": 387,
+			"h": 71,
+			"z": 300
+		},
+		{
+			"components": "fixImage, lab_background",
+			"z": 1
+		},
+		{
+			"components": "fixImage, lab_foreground",
+			"z": 200
+		},
+		{
+			"components": "Gyrophare",
+			"x": 1754,
+			"y": 0,
+			"w": 116,
+			"h": 120,
+			"z": 201
+		},
+		{
+			"components": "Chimie",
+			"x": 1239,
+			"y": 468,
+			"w": 162,
+			"h": 170,
+			"z": 100
+		},
+		{
+			"components": "Jauge",
+			"x": 30,
+			"y": 722,
+			"w": 190,
+			"h": 142,
+			"z": 100
+		},
+		{
+			"components": "Serveur",
+			"x": 626.994140625,
+			"y": 329.9783935546875,
+			"w": 236,
+			"h": 362,
+			"z": 100
+		},
+		{
+			"components": "Ventilo",
+			"x": 1116,
+			"y": 216,
+			"w": 202,
+			"h": 204,
+			"z": 100
+		},
+		{
+			"components": "Ventilo",
+			"x": 1346,
+			"y": 218,
+			"w": 202,
+			"h": 204,
+			"z": 100
+		},
+		{
+			"components": "Lab_Falling",
+			"x": 350,
+			"y": 678,
+			"w": 146,
+			"h": 92,
+			"z": 100
+		},
+		{
+			"components": "Lab_Porte",
+			"x": 900,
+			"y": 596,
+			"w": 242,
+			"h": 342,
+			"z": 100
+		},
+		{
+			"components": "Lab_Target",
+			"x": 1500,
+			"y": 200,
+			"w": 86,
+			"h": 242,
+			"z": 160
+		}
+	]
+}

@@ -233,7 +233,9 @@ Crafty.c("Player", {
 		}else {
 			index2 = 1;
 		}
-		this.sensorCheck(fixtures[index].GetUserData(), true)
+		if(!fixtures[index2].IsSensor()) {
+			this.sensorCheck(fixtures[index].GetUserData(), true)
+		}	
 		
 		if(this.rightTouch.length > 0 || this.leftTouch.length > 0){ 								// If Players sensor is either side set sideContact to true
 	    	this.sideContact = true;
@@ -345,12 +347,13 @@ Crafty.c("Mannequin", {
     DOWNFORCELIMIT: 5,
     DOWNFORCE: 10,
     TOPSPEED: 8,
+    HEIGHT: 64,
     /**
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("Player, SpriteAnimation")               						// Requirements
-            .attr({x: 100, w: 64, h: 64, name: "player"})                       // set width and height
+            .attr({x: 100, w: 64, h: this.HEIGHT, name: "player"})                       // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
@@ -404,17 +407,18 @@ Crafty.c("Mannequin", {
  */
 Crafty.c("WalloBot", {
     ANIMSPEED: 800,
-    JUMPFORCE: -450,
-    WALKFORCE: 600,
-    DOWNFORCELIMIT: 16,
-    DOWNFORCE: 20,
+    JUMPFORCE: -150,
+    WALKFORCE: 500,
+    DOWNFORCELIMIT: 6,
+    DOWNFORCE: 12,
     TOPSPEED: 10,
+    HEIGHT: 80,
     /**
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("Player, WalloBotSprite, SpriteAnimation")                // Requirements
-            .attr({x: 100, w: 80, h: 80, name: "player"})                       // Set width and height
+            .attr({x: 100, w: 80, h: this.HEIGHT, name: "player"})                       // Set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2], [7, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
@@ -430,12 +434,12 @@ Crafty.c("WalloBot", {
                 		[this.w / 3, this.w]],
                 userData: "body"
             })
-            .addFixture({//                                                     // Add feet sensor
+			.addFixture({//                                                     // Add feet sensor
                 bodyType: 'dynamic',
-                shape: [[this.w / 3, this.w - 5], 
-                		[2 * this.w / 3, this.w - 5], 
-                		[2 * this.w / 3, this.w], 
-                		[this.w / 3, this.w]],
+                shape: [[(this.w / 3)+2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w + 3], 
+                		[(this.w / 3)+2, this.w + 3]],
                 isSensor: true,
                 userData: "foot"
             })
@@ -470,12 +474,13 @@ Crafty.c("SlowBigWalloBot", {
     ANIMSPEED: 8000,
     JUMPFORCE: -100,
     WALKFORCE: 170,
+    HEIGHT: 150,
     /**
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("SpriteAnimation")                // Requirements
-            .attr({x: 100, w: 150, h: 150, name: "player"})                     // Set width and height
+            .attr({x: 100, w: 150, h: this.HEIGHT, name: "player"})                     // Set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
             .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2], [7, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
