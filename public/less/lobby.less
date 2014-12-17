@@ -31,12 +31,6 @@ body{
 .my-wall{
   .content{
     .make-row();
-    .created{
-      .make-sm-column(6);
-    }
-    .played{
-      .make-sm-column(6);
-    }
   }
 }
 .container{
@@ -180,10 +174,14 @@ a{
       margin: 20px 0;
     }
     .created{
+      h4{
+        margin-left: 20px;
+      }
       .new{
-        width: 40%;
+        width: 190px;
         background-color: @main-gray;
         padding: 5px;
+        margin-left: 20px;
         cursor: pointer;
         color: @dark-gray;
         i{
@@ -191,21 +189,6 @@ a{
         }
         span{
           margin-left: 30px;
-        }
-        .levelName{
-          display: inline-block;
-          margin-left: 10px;
-          input{
-            background-color: @main-gray;
-            border: none;
-            border-bottom: 1px solid @light-gray;
-            &:focus{
-              outline: none;
-            }
-          }
-          button{
-            margin-left: 10px;
-          }
         }
       }
       .wallo-load-levels{
@@ -276,5 +259,15 @@ a{
         font-size: 0.7em;
       }
     }
+  }
+}
+#level-name{
+  text-align: center;
+  p{
+    margin-bottom: 0;
+  }
+  .new-game-validation{
+    color: red;
+    font-size: 0.8em;
   }
 }

@@ -1,7 +1,9 @@
 extends layout
-block head
-	link(rel="stylesheet" type='text/css' href="css/lobby.css")
+block head	
 	link(rel="stylesheet" type='text/css' href="font-awesome/css/font-awesome.min.css")
+	link(rel="stylesheet" type='text/css' href="libs/jquery-ui/jquery-ui.min.css")
+	link(rel="stylesheet" type='text/css' href="libs/jquery-ui/jquery-ui.theme.min.css")
+	link(rel="stylesheet" type='text/css' href="css/lobby.css")
 block content
 	.wrapper
 		include partials/nav
@@ -14,9 +16,9 @@ block content
 							h2 My profile
 							dl
 								dt username
-								dd camel113
+								dd gamedesigner86
 								dt mail
-								dd adrienbigler@gmail.com
+								dd gamedesigner@gmail.com
 								dt country
 								dd Switzerland
 							.update-infos
@@ -33,21 +35,21 @@ block content
 									img(src="assets/default-game-sample.gif")
 									h3 Game one
 									div(class="action play")
-										i(class="fa fa-play")	Play
+										i(class="fa fa-play")	Try
 									div(class="action edit")
 										i(class="fa fa-pencil-square-o")	Edit
 								div(class="game-two game")
 									img(src="assets/default-game-sample.gif")
 									h3 Game two
 									div(class="action play")
-										i(class="fa fa-play")	Play
+										i(class="fa fa-play")	Try
 									div(class="action edit")
 										i(class="fa fa-pencil-square-o")	Edit
 								div(class="game-three game")
 									img(src="assets/default-game-sample.gif")
 									h3 Game three
 									div(class="action play")
-										i(class="fa fa-play")	Play
+										i(class="fa fa-play")	Try
 									div(class="action edit")
 										i(class="fa fa-pencil-square-o")	Edit
 				.my-wall
@@ -56,69 +58,16 @@ block content
 						h3 My Wall
 					.content
 						.created
-							h4 My latest games
+							h4 My games
 							.new
 								i(id="newLevel" class="fa fa-plus")
 								span create a new game
-								.levelName
+								div(id="level-name" title="Create new game") 
+									p Game name&nbsp;
+									span(class="new-game-validation") Please enter a name
 									input(type="text")
-									button create
 							.wallo-load-levels
-						.played
-							h4 Latest game I played
-							.games-played
-								.row
-									article(class="col-md-6")
-										img(src="assets/default-game-sample.gif")
-										.game-infos
-											.buttons
-												a(class="fa fa-refresh" href="#")
-												a(class="fa fa-comment" href="#")
-												a(class="fa fa-share-square-o" href="#")
-											h5 Nom jeu
-											span Nom créateur
-										.last-score
-											p My last score
-												span 40'000
-									article(class="col-md-6")
-										img(src="assets/default-game-sample.gif")
-										.game-infos
-											.buttons
-												a(class="fa fa-refresh" href="#")
-												a(class="fa fa-comment" href="#")
-												a(class="fa fa-share-square-o" href="#")
-											h5 Nom jeu
-											span Nom créateur
-										.last-score
-											p My last score
-												span 40'000
-								.row
-									article(class="col-md-6")
-										img(src="assets/default-game-sample.gif")
-										.game-infos
-											.buttons
-												a(class="fa fa-refresh" href="#")
-												a(class="fa fa-comment" href="#")
-												a(class="fa fa-share-square-o" href="#")
-											h5 Nom jeu
-											span Nom créateur
-										.last-score
-											p My last score
-												span 40'000
-									article(class="col-md-6")
-										img(src="assets/default-game-sample.gif")
-										.game-infos
-											.buttons
-												a(class="fa fa-refresh" href="#")
-												a(class="fa fa-comment" href="#")
-												a(class="fa fa-share-square-o" href="#")
-											h5 Nom jeu
-											span Nom créateur
-										.last-score
-											p My last score
-												span 40'000
-
-				
 			//- a(href="/signout") Log out 
 	script(src="libs/jquery-2.1.1.min.js")
+	script(src="libs/jquery-ui/jquery-ui.min.js")
 	script(src="js/lobby/lobby.js")

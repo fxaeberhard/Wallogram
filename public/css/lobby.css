@@ -1213,30 +1213,6 @@ body {
   margin-left: -20px;
   margin-right: -20px;
 }
-.my-wall .content .created {
-  position: relative;
-  min-height: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-@media (min-width: 768px) {
-  .my-wall .content .created {
-    float: left;
-    width: 50%;
-  }
-}
-.my-wall .content .played {
-  position: relative;
-  min-height: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-@media (min-width: 768px) {
-  .my-wall .content .played {
-    float: left;
-    width: 50%;
-  }
-}
 .container {
   margin-top: 147px;
 }
@@ -1372,10 +1348,14 @@ a:hover {
 .lobby .my-wall .row {
   margin: 20px 0;
 }
+.lobby .my-wall .created h4 {
+  margin-left: 20px;
+}
 .lobby .my-wall .created .new {
-  width: 40%;
+  width: 190px;
   background-color: #c9c9c9;
   padding: 5px;
+  margin-left: 20px;
   cursor: pointer;
   color: #7f7f7f;
 }
@@ -1384,21 +1364,6 @@ a:hover {
 }
 .lobby .my-wall .created .new span {
   margin-left: 30px;
-}
-.lobby .my-wall .created .new .levelName {
-  display: inline-block;
-  margin-left: 10px;
-}
-.lobby .my-wall .created .new .levelName input {
-  background-color: #c9c9c9;
-  border: none;
-  border-bottom: 1px solid #f4f4f4;
-}
-.lobby .my-wall .created .new .levelName input:focus {
-  outline: none;
-}
-.lobby .my-wall .created .new .levelName button {
-  margin-left: 10px;
 }
 .lobby .my-wall .created .wallo-load-levels .level img {
   float: left;
@@ -1461,4 +1426,14 @@ a:hover {
   font-family: "HelveticaNeueLTS";
   color: #c9c9c9;
   font-size: 0.7em;
+}
+#level-name {
+  text-align: center;
+}
+#level-name p {
+  margin-bottom: 0;
+}
+#level-name .new-game-validation {
+  color: red;
+  font-size: 0.8em;
 }
