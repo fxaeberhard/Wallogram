@@ -1,9 +1,9 @@
 {
-    "player": {
+    "player": [{
         "components": "WalloBot",
         "x": 10,
         "y": 5
-    },
+    }],
     "width": 900,
     "height": 600,
     "countdownDuration": 5,
