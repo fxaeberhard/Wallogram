@@ -13,45 +13,59 @@
     transform: translateY(-50%);
   }
 }
+.diagonal{
+  #game-one{
+    width: 36%;
+    background: url('../assets/game_01.png') repeat 0 0 scroll;
+    -webkit-shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+    shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+    z-index: 3;
+    position: relative;
+  }
+  #game-two{
+    margin-left: -36%;
+    width: 72%;
+    background: url('../assets/game_02.png');
+    -webkit-shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
+    shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
+    z-index: 2;
+    img{
+      margin-left: 36%;
+    }
+  }
+  #game-three{
+    margin-left: -12%;
+    width: 40%;
+    background: url('../assets/game_03.png') no-repeat 0 0 scroll;
+    z-index: 1;
+    img{
+      margin-left: 12%;
+    }
+  }
+}
 #game-one{
-  width: 36%;
-  background: url('../assets/game_01.png') repeat 0 0 scroll;
-  -webkit-shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
-  shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
-  -webkit-clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
-  -webkit-clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
-  z-index: 3;
-  position: relative;
+  width: 33.33%;
+  background: url('../assets/game_01.png');
   &:hover{
     background: @game-overlay, url('../assets/game_01.png');
   }
 }
 #game-two{
-  margin-left: -36%;
-  width: 72%;
+  width: 33.33%;
   background: url('../assets/game_02.png');
-  -webkit-shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
-  shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
-  -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
-  -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
-  z-index: 2;
   &:hover{
     background: @game-overlay, url('../assets/game_02.png');
   }
-  img{
-    margin-left: 36%;
-  }
 }
 #game-three{
-  margin-left: -12%;
-  width: 40%;
-  background: url('../assets/game_03.png') no-repeat 0 0 scroll;
-  z-index: 1;
+  background: url('../assets/game_03.png');
+  width: 33.33%;
   &:hover{
     background: @game-overlay, url('../assets/game_03.png');
-  }
-  img{
-    margin-left: 12%;
   }
 }
 #choose-img{

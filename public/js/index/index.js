@@ -6,6 +6,12 @@ jQuery(function($) {
   HomePage = {
     init: function(){
       HomePage.initActions();
+      if(CSS.supports("(shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%))")){
+        HomePage.initUI();
+      }
+    },
+    initUI: function(){
+      $('body .wrapper').addClass('diagonal')
     },
     initActions:function(){
       $('body .game img').hide();

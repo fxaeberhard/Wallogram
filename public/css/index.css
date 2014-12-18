@@ -1185,7 +1185,7 @@ a:hover {
   top: 50%;
   transform: translateY(-50%);
 }
-#game-one {
+.diagonal #game-one {
   width: 36%;
   background: url('../assets/game_01.png') repeat 0 0 scroll;
   -webkit-shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
@@ -1194,10 +1194,7 @@ a:hover {
   z-index: 3;
   position: relative;
 }
-#game-one:hover {
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_01.png');
-}
-#game-two {
+.diagonal #game-two {
   margin-left: -36%;
   width: 72%;
   background: url('../assets/game_02.png');
@@ -1206,23 +1203,38 @@ a:hover {
   -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
   z-index: 2;
 }
-#game-two:hover {
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_02.png');
-}
-#game-two img {
+.diagonal #game-two img {
   margin-left: 36%;
 }
-#game-three {
+.diagonal #game-three {
   margin-left: -12%;
   width: 40%;
   background: url('../assets/game_03.png') no-repeat 0 0 scroll;
   z-index: 1;
 }
+.diagonal #game-three img {
+  margin-left: 12%;
+}
+#game-one {
+  width: 33.33%;
+  background: url('../assets/game_01.png');
+}
+#game-one:hover {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_01.png');
+}
+#game-two {
+  width: 33.33%;
+  background: url('../assets/game_02.png');
+}
+#game-two:hover {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_02.png');
+}
+#game-three {
+  background: url('../assets/game_03.png');
+  width: 33.33%;
+}
 #game-three:hover {
   background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_03.png');
-}
-#game-three img {
-  margin-left: 12%;
 }
 #choose-img {
   position: fixed;
