@@ -52,7 +52,13 @@
     "width": 900,
     "height": 600,
     "countdownDuration": 5,
-    "entities": [{
+    "entities": [
+    	{
+	    	"components": "Spawner",
+	    	"x": 100,
+	    	"y": 100
+    	},
+    	{
             "components": "Platform",
             "x": 40,
             "y": 200
@@ -75,14 +81,12 @@
 			"x": 770,
 			"y": 340
 		}, {
-	        "components": "MovingPlatform",
+	        "components": "Standard_MovingPlatform",
 	        "color": "red",
 	        "x": 400,
 	        "y": 200,
-	        "x1": 400,
-	        "y1": 200,
-	        "x2": 600,
-	        "y2": 300,
+	        "xDiff": 200,
+	        "yDiff": 400,
 	        "time": 2.5
         }, {
             "components": "QR",

@@ -8,6 +8,10 @@
     "height": 600,
     "countdownDuration": 5,
     "entities": [{
+	    	"components": "Spawner",
+	    	"x": 100,
+	    	"y": 100
+    	}, {
             "components": "Platform",
             "x": 40,
             "y": 200

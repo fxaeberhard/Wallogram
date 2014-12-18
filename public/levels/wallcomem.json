@@ -8,6 +8,10 @@
 	"height": 1080,
 	"countdownDuration": 5,
 	"entities": [{
+    	"components": "Spawner",
+    	"x": 100,
+    	"y": 100
+    }, {
 		"components": "Hotdog",
 		"x": 900,
 		"y": 100,
