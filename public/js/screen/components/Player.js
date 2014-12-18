@@ -162,10 +162,9 @@ Crafty.c("Player", {
     reset: function() {									
         this.body.SetLinearVelocity(new b2Vec2(0, 0));						// Reset velocity 
         this.attr({"x":$.App.cfg.spawn.x,"y":$.App.cfg.spawn.y});			// Reset the player position
-		console.log("player", $.App.cfg.player)
         this.dead = false;
         this.reseting = false;                                    
-		console.log("Player.reset()", this);
+		//console.log("Player.reset()", this);
     },
     hit: function(enemy) {
 	    if(this.ko != true) {												// If player is not ko than action can start
@@ -256,8 +255,9 @@ Crafty.c("Player", {
 		}else {
 			index2 = 1;
 		}
-	    
-	    this.sensorCheck(fixtures[index].GetUserData(), false)
+	    if(!fixtures[index2].IsSensor()) {
+	    	this.sensorCheck(fixtures[index].GetUserData(), false)
+	    }
 	    
 	    if(this.rightTouch.length == 0 && this.leftTouch.length == 0){ 							// If players sensor that lost contact is either said said sideContact to false
 	    	this.sideContact = false;
@@ -298,8 +298,10 @@ Crafty.c("Player", {
 			case "foot":
 				if(value == true) {
 					this.onground.push(1);
+					console.log("foot_touch")
 				} else if(this.onground.length != 0){
 					this.onground.pop()
+					console.log("foot_leave")
 				}
 			break;
 /*

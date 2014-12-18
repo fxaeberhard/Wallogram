@@ -275,7 +275,6 @@ Crafty.c("Lab_Spawner", {
 	            } else if(this.goingDown && this.y < this.yOrigin){
 	            	body.SetActive(true)
 	            	body.SetPosition(new b2Vec2(position.x ,position.y + 0.3))
-		            console.log("DOOOOWWWNNN")
 	            } else {
 		            this.goingDown = false
 		            this.goingUp = false
@@ -289,11 +288,9 @@ Crafty.c("Lab_Spawner", {
 		this.body.SetPosition(new b2Vec2(position.x ,(this.y - this.h) / ratio))
 	},
 	down: function() {
-		console.log("down")
 		this.goingDown = true
 	},
 	up: function() {
-		console.log("up")
 		this.goingUp = true
 	}
 	
