@@ -1,6 +1,6 @@
 {
     "player": [{
-        "components": "WalloBot",
+        "components": "WalloBotSpriteBlue, WalloBot",
         "x": 10,
         "y": 5
     }],
