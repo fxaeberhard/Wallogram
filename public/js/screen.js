@@ -321,6 +321,8 @@ jQuery(function($) {
             cfg.z = 150;                                                        // Player is on top
 			cfg.x = App.cfg.spawn.x;
 			cfg.y = App.cfg.spawn.y;
+			cfg.mySocketId = data.mySocketId;
+			console.log("mysocketid",data.mySocketId)
             App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
