@@ -1,6 +1,7 @@
 {
 	"width": 1920,
 	"height": 1080,
+	"spawn": {"x": 100, "y": 100, "w": 200, "h": 200},
 	"countdownDuration": 5,
 	"entities": [
 		{
@@ -46,10 +47,10 @@
 		},
 		{
 			"components": "Jauge",
-			"x": 30,
-			"y": 722,
-			"w": 190,
-			"h": 142,
+			"x": 18.993072509765625,
+			"y": 705.9896240234375,
+			"w": 213,
+			"h": 159,
 			"z": 100
 		},
 		{
@@ -136,14 +137,23 @@
 			"z": 160
 		},
 		{
+			"components": "Lab_Spawner",
+			"x": 23.993072509765625,
+			"y": 512.9861450195312,
+			"w": 204,
+			"h": 198,
+			"z": 160,
+			"name": "spawner"
+		},
+		{
 			"type": "QR",
 			"components": "QR",
-			"w": 80,
-			"h": 80,
+			"w": 138,
+			"h": 139,
 			"foreground": "#000000",
 			"background": "#ffffff",
-			"x": 90,
-			"y": 142
+			"x": 100,
+			"y": 41
 		}
 	],
 	"player": [
@@ -151,66 +161,56 @@
 			"color": "blue",
 			"colorCode": "33a9e0",
 			"components": "WalloBotSpriteBlue, WalloBot",
-			"x": 100,
-			"y": 100,
 			"z": 150
 		},
 		{
 			"color": "darkblue",
 			"colorCode": "0062e1",
 			"components": "WalloBotSpriteDarkBlue, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		},
 		{
 			"color": "orange",
 			"colorCode": "f79d06",
 			"components": "WalloBotSpriteOrange, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		},
 		{
 			"color": "red",
 			"colorCode": "fc5e21",
 			"components": "WalloBotSpriteRed, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		},
 		{
 			"color": "pink",
 			"colorCode": "ff33bd",
 			"components": "WalloBotSpritePink, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		},
 		{
 			"color": "violet",
 			"colorCode": "7e42e1",
 			"sprites": "",
 			"components": "WalloBotSpriteViolet, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		},
 		{
 			"color": "green",
 			"colorCode": "00da18",
 			"components": "WalloBotSpriteGreen, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		},
 		{
 			"color": "darkgreen",
 			"colorCode": "007e12",
 			"components": "WalloBotSpriteDarkGreen, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		},
 		{
 			"color": "yellow",
 			"colorCode": "e8cb00",
 			"components": "WalloBotSpriteYellow, WalloBot",
-			"x": 100,
-			"y": 100
+			"z": 150
 		}
 	]
 }

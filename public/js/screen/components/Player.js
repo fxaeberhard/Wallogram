@@ -156,15 +156,16 @@ Crafty.c("Player", {
 	    this.dead = true;
 	    setTimeout(function() {											// Set 2 seconds delay before reseting
 			player.reset();
-		}, 2000);	
-		console.log("die")
+		}, 2000);
+		//console.log("dead", this)	
     },
     reset: function() {									
         this.body.SetLinearVelocity(new b2Vec2(0, 0));						// Reset velocity 
-        this.attr({"x":$.App.cfg.player.x,"y":$.App.cfg.player.y});			// Reset the player position
+        this.attr({"x":$.App.cfg.spawn.x,"y":$.App.cfg.spawn.y});			// Reset the player position
+		console.log("player", $.App.cfg.player)
         this.dead = false;
         this.reseting = false;                                    
-		//console.log("Player.reset()", this);
+		console.log("Player.reset()", this);
     },
     hit: function(enemy) {
 	    if(this.ko != true) {												// If player is not ko than action can start
@@ -233,6 +234,7 @@ Crafty.c("Player", {
 		if(this.rightTouch.length > 0 || this.leftTouch.length > 0){ 								// If Players sensor is either side set sideContact to true
 	    	this.sideContact = true;
 		}
+		
 		if (fixtures[index].GetUserData() == "foot"){
 			if (fixtures[index2].GetBody().GetUserData().name == "movingPlat") {
 				this.onMovingPlatform = true
@@ -241,9 +243,9 @@ Crafty.c("Player", {
 			
 			this.setDir(this)
 		}
-		if(fixtures[index2].GetBody().GetUserData().components == "Target" && $.App.playing != false){
+		
+		if(fixtures[index2].GetBody().GetUserData().name == "Target" && $.App.playing != false){
 			$.App.win(fixtures[index].GetBody().GetUserData())
-			console.log("HIIII")
 		}
     },
     EndContact: function(fixtures, index){

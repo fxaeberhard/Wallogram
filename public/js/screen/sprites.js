@@ -75,6 +75,9 @@ Crafty.sprite(128, 128, 'assets/lab/player/wallobot-pink.png ', {
 Crafty.sprite(200, 40, 'assets/breakingAnim.png', {
 	breakingPlateforme: [0, 0]
 });
+Crafty.sprite(204, 198, 'assets/lab/cage.png', {
+	lab_cage: [0, 0]
+});
 Crafty.sprite(241, 342, 'assets/lab/porte.png', {
 	lab_porte: [0, 0]
 });

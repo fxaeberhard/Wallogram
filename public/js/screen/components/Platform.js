@@ -36,7 +36,7 @@ Crafty.c("ColoredPlatform", {
 Crafty.c("Spawner", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("2D, Box2D, MouseHover")									
-			.attr({w: 60, h: 60})												// set width and height based on player
+			.attr({w: 60, h: 60, name: "spawner"})												// set width and height based on player
 			.box2d({
 				bodyType: 'static',
 				density: 1.0,
@@ -45,10 +45,9 @@ Crafty.c("Spawner", {
 				isSensor: true,
 				shape: "box"
 			})
+			
 	}
 });
-
-
 /**
  * 
  */
@@ -74,8 +73,8 @@ Crafty.c("OutOfBounds", {
 			index2 = 1;
 		}
 		if(fixtures[index2].GetBody().GetUserData().reseting != true 
-		&& fixtures[index2].GetBody().GetUserData().name == "hotdog" 
-		|| fixtures[index2].GetBody().GetUserData().name == "player"){
+		&& (fixtures[index2].GetBody().GetUserData().name == "hotdog" 
+		|| fixtures[index2].GetBody().GetUserData().name == "player")){
 			fixtures[index2].GetBody().GetUserData().die()
 		}
 		 
@@ -221,6 +220,83 @@ Crafty.c('MouseHover', {
 	//remove: function () {
 	//	  document.body.style.cursor = "default";
 	//}
+});
+Crafty.c("Lab_Spawner", {
+	init: function() {
+		this.requires("Canvas, Spawner, lab_cage")
+			.attr({
+				"goingDown": false,
+				"goingUp": false
+			})
+			.addFixture({//                                                     // Add Top
+                bodyType: 'static',
+                shape: [[this.x, this.y], 
+                		[this.x + this.w, this.y], 
+                		[this.x + this.w , this.y + 2], 
+                		[this.x , this.y + 2]],
+                userData: "top"
+            })
+            .addFixture({//                                                     // Add right
+                bodyType: 'static',
+                shape: [[this.x + this.w - 2, this.y], 
+                		[this.x + this.w, this.y], 
+                		[this.x + this.w, this.y + this.h], 
+                		[this.x + this.w - 2, this.y + this.h]],
+                userData: "right"
+            })
+            /*
+.addFixture({//                                                     // Add bottom
+                bodyType: 'static',
+                shape: [[this.x, this.y + this.h], 
+                		[this.x + this.w, this.y + this.h], 
+                		[this.x + this.w, this.y + this.h + 2], 
+                		[this.x, this.y + this.h + 2]],
+                userData: "bottom"
+            })
+*/
+			.addFixture({//                                                     // Add left
+                bodyType: 'static',
+                shape: [[this.x, this.y], 
+                		[this.x + 2, this.y], 
+                		[this.x + 2 , this.y + this.h], 
+                		[this.x , this.y + this.h]],
+                userData: "left"
+            })
+            .bind("EnterFrame", function() {
+            	var body = this.body,
+            		ratio = Crafty.box2D.PTM_RATIO;
+            		position = body.GetPosition()
+            	if(this.runOnce != true) {
+	            	this.setOrigin(ratio)
+            	}
+	            if(this.goingUp && this.y > this.yOrigin - this.h) {
+	            	body.SetActive(false)
+					body.SetPosition(new b2Vec2(position.x ,position.y - 0.3))
+	            } else if(this.goingDown && this.y < this.yOrigin){
+	            	body.SetActive(true)
+	            	body.SetPosition(new b2Vec2(position.x ,position.y + 0.3))
+		            console.log("DOOOOWWWNNN")
+	            } else {
+		            this.goingDown = false
+		            this.goingUp = false
+	            }
+            })
+	},
+	setOrigin: function(ratio) {
+		this.yOrigin = this.y
+		this.runOnce = true
+		this.body.SetActive(false)
+		this.body.SetPosition(new b2Vec2(position.x ,(this.y - this.h) / ratio))
+	},
+	down: function() {
+		console.log("down")
+		this.goingDown = true
+	},
+	up: function() {
+		console.log("up")
+		this.goingUp = true
+	}
+	
 });
 Crafty.c("Lab_Porte", {
 	init: function() {
@@ -518,6 +594,7 @@ Crafty.c("Standard_Falling", {
 		 this
 	}
 })
+
 Crafty.c("Lab_Falling_platform", {
 	
 	init: function() {
@@ -595,7 +672,7 @@ Crafty.c("Lab_Falling", {
 Crafty.c("Target", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("2D, Box2D, MouseHover")									// allows the entity to be drawn as a colored box
-			.attr({w: 30, h: 30})												// set width and height
+			.attr({w: 30, h: 30, name: "Target"})												// set width and height
 			.box2d({
 				bodyType: 'static',
 				density: 1.0,
@@ -604,16 +681,12 @@ Crafty.c("Target", {
 				isSensor: true,
 				shape: "box"
 			})
-			.onContact("Player", function() {
-				console.log("Target Hit")
-				$.App.setState("win");
-			});
 	}
 });
 Crafty.c("Lab_Target", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("Canvas, lab_tuyeau, MouseHover")							// allows the entity to be drawn as a colored box
-			.attr({w: 86, h: 242})												// set width and height
+			.attr({w: 86, h: 242, name: "Target"})												// set width and height
 			.bind("EnterFrame", function() {
 				if(!this.added){
 					this.setOrigin()
@@ -625,19 +698,20 @@ Crafty.c("Lab_Target", {
 			})
 	},
 	setOrigin: function() {
-		 this.xOrigin = this.x;
-		 this.yOrigin = this.y;
-		 this.wOrigin = this.w;
-		 this.hOrigin = this.h;
+		this.xOrigin = this.x;
+		this.yOrigin = this.y;
+		this.wOrigin = this.w;
+		this.hOrigin = this.h;
 	},
 	create: function() {
-		 this.wScaleRatio =	 86 / this.w
+		this.wScaleRatio =	 86 / this.w
 		this.hScaleRatio = 	242 / this.h
-		 this.target = Crafty.e("Target").attr({
+		this.target = Crafty.e("Target").attr({
 								"x": this.x + (25 / this.wScaleRatio),
 								"y": this.y + (290 / this.hScaleRatio),
 								"w": 40 / this.wScaleRatio,
-								"h": 40 / this.hScaleRatio
+								"h": 40 / this.hScaleRatio,
+								"z": 160
 		 })
 		 this.added = true
 	},
@@ -673,12 +747,10 @@ Crafty.c("MovingPlatform", {
 				if($.App.debug) {																	// if app is in edit mode
 					if(this.moving != true){
 						if(this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin){
-							console.log("NOP NOP NOP")
 							this.setOrigin()
 						}
 					} else {
 						if(this.x != this.x1 || this.y != this.y1) {
-							console.log("hererereer")
 							body.SetPosition(new b2Vec2(this.x1 / ratio, this.y1 / ratio))
 						}
 					}

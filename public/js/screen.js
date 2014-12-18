@@ -194,10 +194,8 @@ jQuery(function($) {
 
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
-                    $.each(App.gate, function(i, ent) {
-                        ent.destroy();
-                    });
                     clearTimeout(App.countdownHandler);
+                    
                     break;
 
                 case "win":
@@ -209,11 +207,13 @@ jQuery(function($) {
                 case "countdown":                                               // Show countdown before play
                     //IO.emit('restart');                                       // Notify pads
                     App.showCountdown();
+                    App.cfg.spawn.down()										// cage goes down as soon as countdown starts
                     break;
 
                 case "run":                                                     // Play
                     App.startTime = new Date().getTime();
                     App.playing = true;
+                    App.cfg.spawn.up()
                     break;
 
                 case "win":                                                     // Somebody reach the goal
@@ -244,6 +244,9 @@ jQuery(function($) {
             var ret = _.map(entities, function(cfg) {                           // Add entities from config file
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
+                if (entity.name === "spawner") {								// set spawner
+                    App.cfg.spawn = entity
+                }
                 return entity;
             });
             return ret;
@@ -316,11 +319,11 @@ jQuery(function($) {
         },
         addPlayer: function(data, cfg) {
             cfg.z = 150;                                                        // Player is on top
-
+			cfg.x = App.cfg.spawn.x;
+			cfg.y = App.cfg.spawn.y;
             App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
-            console.log(App.cfg.player);
 
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
@@ -331,6 +334,8 @@ jQuery(function($) {
             if (!App.players.DEBUG) {
                 var cfg = App.cfg.player[0];
                 cfg.z = 150;
+                cfg.x = App.cfg.spawn.x;
+				cfg.y = App.cfg.spawn.y;
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
             } else {
@@ -342,41 +347,6 @@ jQuery(function($) {
             enemy.destroy();
         },
         showCountdown: function() {
-            var w = 200, h = 200, x = App.cfg.player.x, y = App.cfg.player.y, thick = 10, // Append a box to limit players moves
-
-                entities = [{
-                        "components": "ColoredPlatform",
-                        "color": "pink",
-                        "x": x - (w / 2) + thick,
-                        "y": y - (h / 2),
-                        "w": w - thick,
-                        "h": thick
-                    }, {
-                        "components": "ColoredPlatform",
-                        "color": "pink",
-                        "x": x + (w / 2),
-                        "y": y - (h / 2),
-                        "w": thick,
-                        "h": h
-                    }, {
-                        "components": "ColoredPlatform",
-                        "color": "pink",
-                        "x": x - (w / 2) + thick,
-                        "y": y + (h / 2) - thick,
-                        "w": w - thick,
-                        "h": thick
-                    }, {
-                        "components": "ColoredPlatform",
-                        "color": "pink",
-                        "x": x - (w / 2),
-                        "y": y - (h / 2),
-                        "w": thick,
-                        "h": h
-                    }];
-
-
-            App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
-
             _.each(App.players, function(p) {                                   // Bring all players to starting position
                 p.reset();
             });
@@ -394,12 +364,6 @@ jQuery(function($) {
             App.countdownHandler = setTimeout(step, 1000);                      // Show countdown
         },
         setCfg: function(cfg) {
-            $.each(cfg.entities, function(i, entity) {
-                if (entity.components === "Spawner") {
-                    cfg.player.x = entity.x;
-                    cfg.player.y = entity.y;
-                }
-            });
             $.extend(App.cfg, cfg);
         },
         toggleDebug: function(val) {
