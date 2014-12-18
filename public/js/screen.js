@@ -242,7 +242,6 @@ jQuery(function($) {
         },
         initEntities: function(entities) {
             var ret = _.map(entities, function(cfg) {                           // Add entities from config file
-                console.log(cfg)
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
                 return entity;
@@ -334,7 +333,6 @@ jQuery(function($) {
                 cfg.z = 150;
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
-                console.log(App.players.DEBUG);
             } else {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;

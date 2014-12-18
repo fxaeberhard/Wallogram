@@ -31,26 +31,7 @@ Crafty.c("ColoredPlatform", {
 
 
 
-/**
- * 
- */
-Crafty.c("Target", {
-	init: function() {															// init function is automatically run when entity with this component is created
-		this.requires("2D, Box2D, MouseHover")									// allows the entity to be drawn as a colored box
-			.attr({w: 30, h: 30})												// set width and height
-			.box2d({
-				bodyType: 'static',
-				density: 1.0,
-				friction: 10,
-				restitution: 0,
-				isSensor: true,
-				shape: "box"
-			})
-			.onContact("Player", function() {
-				$.App.setState("win");
-			});
-	}
-});
+
 
 Crafty.c("Spawner", {
 	init: function() {															// init function is automatically run when entity with this component is created
@@ -133,7 +114,7 @@ Crafty.c("QR", {
 			// background: "url(//chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=" + encodeURIComponent(padUrl) + ") 0 0",
 			background: "url(//qrickit.com/api/qr?fgdcolor=" + this._foreground.replace("#", "")
 				+ "&bgdcolor=" + this._background.replace("#", "")
-				+ "&qrsize=170&t=p&e=m&d=" + encodeURIComponent(padUrl) + ") 0 0",
+				+ "&qrsize=170&t=p&e=m&d=http://10.192.87.97:8080/pad?gameId=100) 0 0",
 			//background: "url(//api.qrserver.com/v1/create-qr-code/?size=170x170&fgcolor=" + this._foreground.replace("#", "")
 			//	  + "&bgcolor=" + this._background.replace("#", "")
 			//	  + "&data=" + encodeURIComponent(padUrl) + ") 0 0",
@@ -608,6 +589,27 @@ Crafty.c("Lab_Falling", {
 		 this.setOrigin()
 	}
 })
+/**
+ * 
+ */
+Crafty.c("Target", {
+	init: function() {															// init function is automatically run when entity with this component is created
+		this.requires("2D, Box2D, MouseHover")									// allows the entity to be drawn as a colored box
+			.attr({w: 30, h: 30})												// set width and height
+			.box2d({
+				bodyType: 'static',
+				density: 1.0,
+				friction: 10,
+				restitution: 0,
+				isSensor: true,
+				shape: "box"
+			})
+			.onContact("Player", function() {
+				console.log("Target Hit")
+				$.App.setState("win");
+			});
+	}
+});
 Crafty.c("Lab_Target", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("Canvas, lab_tuyeau, MouseHover")							// allows the entity to be drawn as a colored box
@@ -634,8 +636,8 @@ Crafty.c("Lab_Target", {
 		 this.target = Crafty.e("Target").attr({
 								"x": this.x + (25 / this.wScaleRatio),
 								"y": this.y + (290 / this.hScaleRatio),
-								"w": 30 / this.wScaleRatio,
-								"h": 30 / this.hScaleRatio
+								"w": 40 / this.wScaleRatio,
+								"h": 40 / this.hScaleRatio
 		 })
 		 this.added = true
 	},
@@ -670,7 +672,6 @@ Crafty.c("MovingPlatform", {
 				}
 				if($.App.debug) {																	// if app is in edit mode
 					if(this.moving != true){
-						console.log(this.moving)
 						if(this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin){
 							console.log("NOP NOP NOP")
 							this.setOrigin()
@@ -691,7 +692,6 @@ Crafty.c("MovingPlatform", {
 					if(position.y < this.y1 / ratio || position.y > (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
 						this.yPosDiff = -this.yPosDiff;
 					}
-					console.log("platform")
 					this.position = new b2Vec2(position.x + this.xPosDiff, position.y + this.yPosDiff)
 					body.SetPosition(this.position)
 					xPrevPos = body.GetPosition().x
@@ -712,7 +712,6 @@ Crafty.c("MovingPlatform", {
 		var fps = Crafty.timer.FPS()
 		this.xPosDiff = (this.xDiff / ratio) / (this.time * fps);
 		this.yPosDiff = (this.yDiff / ratio) / (this.time * fps);
-		console.log("INIT",this.xPosDiff)
 	}
 });
 Crafty.c("Standard_MovingPlatform", {

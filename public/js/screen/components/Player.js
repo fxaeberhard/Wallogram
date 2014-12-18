@@ -69,7 +69,6 @@ Crafty.c("Player", {
 			        	var playerPos = this.body.GetPosition(),
 			        		platform = this.contactPlatform.GetUserData()
 			        	if(platform){
-			        		console.log("player",platform.xPosDiff)
 		        			this.body.SetPosition(new b2Vec2(playerPos.x + platform.xPosDiff, playerPos.y + platform.yPosDiff))
 		        		}
 			        }
@@ -244,6 +243,7 @@ Crafty.c("Player", {
 		}
 		if(fixtures[index2].GetBody().GetUserData().components == "Target" && $.App.playing != false){
 			$.App.win(fixtures[index].GetBody().GetUserData())
+			console.log("HIIII")
 		}
     },
     EndContact: function(fixtures, index){
