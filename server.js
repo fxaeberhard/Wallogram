@@ -55,8 +55,6 @@ function hostHeartbeat(data) {
 }
 
 function addScore(player) {
-    console.log("player?", player)
-    console.log("socketttt", player.id)
     io.to(player.id).emit("addScoreToController", player.score)
 }
 
