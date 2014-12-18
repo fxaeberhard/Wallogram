@@ -63,7 +63,7 @@ a{
   right: 0;
   top: 0;
   z-index: 10;
-  .user-settings{
+  .user-settings,.user-unknown{
     float: left;
     margin-right: 41px;
     background-color: black;
@@ -88,7 +88,7 @@ a{
       }
     }
   }
-  .user-name{
+  .user-name,.user-log-sign-in{
     height: @nav-height/2;
     background-color: @light-gray;
     padding: 12px 0 12px 20px;
@@ -111,6 +111,19 @@ a{
       font-size: @main-size;
       border-left: 2px @dark-gray solid;
       margin-left: 10px;
+    }
+  }
+  .user-log-sign-in{
+    padding: 12px 20px 12px 20px;
+    a{
+      &:hover{
+        color:black;
+      }
+      &:first-child{
+        h2::after{
+          content: "|";
+        }
+      }
     }
   }
   .language-setting{

@@ -14,6 +14,9 @@ jQuery(function($) {
       $('body .wrapper').addClass('diagonal')
     },
     initActions:function(){
+      /* REMOVE BELOW */
+      $(".user-settings").hide();
+      /* REMOVE ABOVE */
       $('body .game img').hide();
       $('#choose-img').fadeOut(3000,function(){});
       $('body').on('mouseenter','.game',function(){

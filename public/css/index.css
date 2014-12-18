@@ -1104,55 +1104,75 @@ a:hover {
   top: 0;
   z-index: 10;
 }
-.nav-container-right .user-settings {
+.nav-container-right .user-settings,
+.nav-container-right .user-unknown {
   float: left;
   margin-right: 41px;
   background-color: black;
 }
-.nav-container-right .user-settings ul {
+.nav-container-right .user-settings ul,
+.nav-container-right .user-unknown ul {
   padding-left: 0;
   margin: 0;
   display: none;
 }
-.nav-container-right .user-settings ul li {
+.nav-container-right .user-settings ul li,
+.nav-container-right .user-unknown ul li {
   margin: 0;
   padding: 5px 0 5px 20px;
 }
-.nav-container-right .user-settings ul li:hover {
+.nav-container-right .user-settings ul li:hover,
+.nav-container-right .user-unknown ul li:hover {
   background-color: #414042;
   cursor: pointer;
 }
-.nav-container-right .user-settings ul li:first-child {
+.nav-container-right .user-settings ul li:first-child,
+.nav-container-right .user-unknown ul li:first-child {
   padding-top: 10px;
 }
-.nav-container-right .user-settings ul a {
+.nav-container-right .user-settings ul a,
+.nav-container-right .user-unknown ul a {
   font-size: 1.5em;
   color: white;
 }
-.nav-container-right .user-name {
+.nav-container-right .user-name,
+.nav-container-right .user-log-sign-in {
   height: 53.5px;
   background-color: #f4f4f4;
   padding: 12px 0 12px 20px;
 }
-.nav-container-right .user-name i {
+.nav-container-right .user-name i,
+.nav-container-right .user-log-sign-in i {
   font-size: 1.3em;
 }
-.nav-container-right .user-name .fa-caret-up {
+.nav-container-right .user-name .fa-caret-up,
+.nav-container-right .user-log-sign-in .fa-caret-up {
   display: none;
 }
-.nav-container-right .user-name h2 {
+.nav-container-right .user-name h2,
+.nav-container-right .user-log-sign-in h2 {
   margin-left: 10px;
   margin-top: 0;
   margin-bottom: 0;
   display: inline-block;
 }
-.nav-container-right .user-name a.toggle-settings {
+.nav-container-right .user-name a.toggle-settings,
+.nav-container-right .user-log-sign-in a.toggle-settings {
   background-color: #f4f4f4;
   cursor: pointer;
   padding: 16px 18px 13px 18px;
   font-size: 1.5em;
   border-left: 2px #7f7f7f solid;
   margin-left: 10px;
+}
+.nav-container-right .user-log-sign-in {
+  padding: 12px 20px 12px 20px;
+}
+.nav-container-right .user-log-sign-in a:hover {
+  color: black;
+}
+.nav-container-right .user-log-sign-in a:first-child h2::after {
+  content: "|";
 }
 .nav-container-right .language-setting {
   height: 53.5px;

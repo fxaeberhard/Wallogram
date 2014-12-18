@@ -8,7 +8,10 @@ jQuery(function($) {
             Lobby.initUI();
             Lobby.initActions();
         },
-        initActions: function () {   
+        initActions: function () {
+            /* REMOVE BELOW */
+            $(".user-unknown").hide();
+            /* REMOVE ABOVE */   
             $('#level-name').hide();
             $('#level-name .new-game-validation').hide();
             $('body').on('click','.my-wall .new',function(){
