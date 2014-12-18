@@ -114,7 +114,7 @@ Crafty.c("QR", {
 			// background: "url(//chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=" + encodeURIComponent(padUrl) + ") 0 0",
 			background: "url(//qrickit.com/api/qr?fgdcolor=" + this._foreground.replace("#", "")
 				+ "&bgdcolor=" + this._background.replace("#", "")
-				+ "&qrsize=170&t=p&e=m&d=http://10.192.87.97:8080/pad?gameId=100) 0 0",
+				+ "&qrsize=170&t=p&e=m&d=" + encodeURIComponent(padUrl) + ") 0 0",
 			//background: "url(//api.qrserver.com/v1/create-qr-code/?size=170x170&fgcolor=" + this._foreground.replace("#", "")
 			//	  + "&bgcolor=" + this._background.replace("#", "")
 			//	  + "&data=" + encodeURIComponent(padUrl) + ") 0 0",
