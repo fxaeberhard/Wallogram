@@ -16,7 +16,7 @@ jQuery(function($) {
     var currentEntity,
         TOOLBAR = {
             Color: {
-                thumbClass: "fa fa-square fa-4x",
+                category: "platforms",
                 label: "Colored platform",
                 form: [{
                         name: "color",
@@ -32,7 +32,7 @@ jQuery(function($) {
                 }
             },
             Invisible: {
-                thumbClass: "fa fa-square-o fa-4x",
+                category: "platforms",
                 label: "Invisible platform",
                 form: [],
                 value: {
@@ -43,6 +43,7 @@ jQuery(function($) {
                 }
             },
             Image: {
+                category: "image",
                 thumbClass: "fa fa-file-image-o fa-4x",
                 form: [{
                         name: "image",
@@ -57,6 +58,7 @@ jQuery(function($) {
                 }
             },
             Video: {
+                category: "video",
                 thumbClass: "fa fa-file-video-o fa-4x",
                 form: [{
                         name: "url",
@@ -72,6 +74,7 @@ jQuery(function($) {
                 }
             },
             Text: {
+                category: "other",
                 thumbClass: "fa fa-font fa-4x",
                 form: [{
                         name: "text",
@@ -87,6 +90,7 @@ jQuery(function($) {
                 }
             },
             QR: {
+                category: "other",
                 thumbClass: "fa fa-qrcode fa-4x",
                 form: [{
                         name: "background",
@@ -111,7 +115,11 @@ jQuery(function($) {
         /**
          *
          */
-        init: function() {
+        init: function() {                                                             // Toggle fps button
+
+            /**
+             * Entity edition overlay
+             */
             $("#tab-play").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"><div class="wallo-edit-menu"><div class="wallo-edit-destroy fa fa-trash"></div><div class="wallo-edit-editentity fa fa-pencil"></div></div></div></div>');
 
             var isDragging = false, over = false,
@@ -161,8 +169,12 @@ jQuery(function($) {
                 $(".wallo-tab-footer").prepend("Pad: <a href='" + padUrl + "' target='_blank'>" + padUrl + "</a><br /> <br />");
             });
 
+            /* 
+             * Fps counter 
+             */
             var stats = new Stats();                                            // Initialize fps counter
-            stats.setMode(0);                                                   // 0: fps, 1: ms
+            //stats.setMode(0);                                                 // 0: fps, 1: ms
+            $(stats.domElement).hide();
             $(".wallo-tab-footer").append(stats.domElement);
             stats.begin();
             Crafty.bind("RenderScene", function() {
@@ -170,8 +182,17 @@ jQuery(function($) {
                 stats.begin();
             });
 
+            /* 
+             * Right menu 
+             */
+            $(".wallo-edit-logo").click(function() {
+                window.location = "/screen";
+            });
+            $(".button-togglefps").click(function() {
+                $("#stats").toggle();
+            });
             $('.wallo-edit-buttons .button-save').click(Edit.save);             // Save Button
-            $(".button-close").on("click", function() {
+            $(".wallo-edit-toggle").on("click", function() {
                 $.App.toggleDebug();
             });
             $(".wallo-edit-buttons .button-more").click(function() {            // More button
@@ -192,7 +213,7 @@ jQuery(function($) {
             $('.wallo-edit-buttons .button-adddebugplayer').click($.App.addDebugPlayer);
             $('.wallo-edit-buttons .button-toggledebugcanvas').click($.App.toggleDebugCanvas);
 
-            var editor, scriptEditor, styleEditor, doUpdate = true;
+            var editor, scriptEditor, doUpdate = true;
             $(".wallo-tab-link").on("click", function() {                       // Add tab selection support
                 $(".wallo-tab-linkselected").removeClass("wallo-tab-linkselected");
                 $(this).addClass("wallo-tab-linkselected");
@@ -222,7 +243,6 @@ jQuery(function($) {
                         editor.setValue(JSON.stringify($.App.cfg, null, '\t'));
                         doUpdate = true;
                         editor.gotoLine(0, 0);
-
                         break;
 
                     case "#tab-script":
@@ -249,22 +269,40 @@ jQuery(function($) {
                 }
             });
 
+            var tablinks, tabContent, tabs = {
+                platforms: "",
+                ennemy: "",
+                image: "",
+                video: "",
+                other: ""
+            };
             _.each(TOOLBAR, function(i) {                                       // Render toolbar elements
-                $(".wallo-edit-toolbar").append("<div class='wallo-thumb " + i.thumbClass + "' data-type='" + i.value.type + "' title='" + (i.label || i.value.type) + "'></div>");
+                if (!tabs[i.category]) {
+                    tabs[i.category] = "";
+                }
+                tabs[i.category] += "<div class='wallo-thumb wallo-thumb-" + i.value.type + "' data-type='" + i.value.type + "' title='" + (i.label || i.value.type) + "'><div class='wallo-icon " + i.thumbClass + "'></div></div>";
             });
-            $(".wallo-edit-toolbar div").draggable({// and make it drag and droppable
+            tablinks = _.map(tabs, function(o, k) {
+                return '<li><a href="#tabs-toolbar-' + k + '" class="toolbar-' + k + '"></a></li>';
+            });
+            tabContent = _.map(tabs, function(o, k) {
+                return "<div id='tabs-toolbar-" + k + "'>" + o + "</div>";
+            });
+            $(".wallo-edit-toolbar").append("<ul>" + tablinks.join("") + "</ul>" + tabContent.join(""))
+                .tabs();
+
+            $(".wallo-edit-toolbar .wallo-thumb").draggable({// and make the icons  drag and droppable
                 opacity: 0.7,
                 helper: "clone"
             });
             $(".wallo-play").droppable({
                 drop: function(e) {
                     console.log(e, e.originalEvent.target.className);
-
                     if (e.originalEvent.target.className.indexOf("edit-dd") !== -1)
                         return;
 
                     try {
-                        var dropType = $(e.originalEvent.target).attr("data-type"),
+                        var dropType = $(e.originalEvent.target).closest(".wallo-thumb").attr("data-type"),
                             cfg = _.clone(TOOLBAR[dropType].value);
 
                         cfg.x = e.clientX - $("#tab-play").position().left - cfg.w / 2;

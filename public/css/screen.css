@@ -33,15 +33,10 @@ body {
     *letter-spacing: normal;
     *word-spacing: -0.43em;
     text-rendering: optimizespeed;
-    /*font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;*/
     display: -webkit-flex;
     -webkit-flex-flow: row wrap;
     display: -ms-flexbox;                                                       /* IE10 uses display: flexbox */
     -ms-flex-flow: row wrap;
-}
-.wallo-debugmode .wallo-page {
-    /*padding-right: 300px;*/
-    padding-left: 300px;
 }
 .wallo-u {
     display: inline-block;
@@ -75,16 +70,58 @@ body {
 }
 
 .wallo-edit {
-    width: 300px;
+    width: 291px;
     height: 100%;
     /*margin-right: -300px;*/
     font-size: 0.9em;
     background: #fafafa;
     position:absolute;
     left: 0px;
+    border-right: 9px solid #424242;
+    z-index: 99;
+    /*overflow: visible;*/
+}
+.wallo-edit-beta {    
+    background: url(../assets/wallo-editgame.png) -33px -725px;
+    width: 60px;
+    height: 62px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.wallo-edit-logo {   
+    background: url(../assets/wallo-editgame.png) -163px -712px;
+    width: 100%;
+    height: 199px;
+    cursor: pointer;
 }
 .wallo-edit-buttons {
-    padding: 1em;
+    /*padding: 1em;*/
+    border-top: 9px solid black;
+    border-bottom: 4px solid black;
+    /* margin-top: 60px; */
+}
+.wallo-edit-buttons button {
+    background: none;
+    border: none;
+    border-right: 2px solid black;
+    padding: 12px 11px 9px;
+    font-size: 30px;
+    vertical-align: top;
+}
+.wallo-edit-buttons button:hover {
+    color: white;
+    background: #6a6a6a;
+}
+.wallo-edit-toggle {
+    width: 32px;
+    height: 124px;
+    background: url(../assets/wallo-editgame.png) -191px -289px;
+    position: absolute;
+    top: 50%;
+    right: -41px;
+    margin-top: -62px;
+    cursor: pointer;
 }
 .button-close {
     float: right;
@@ -101,6 +138,14 @@ body {
 }
 #stats #fpsText {
     /*color: black !important;*/
+}
+
+/* Right tab */
+.wallo-edit, .wallo-page {
+    -webkit-transition:all 0.7s ease-in-out;
+    -moz-transition:all 0.7s ease-in-out;
+    -o-transition:all 0.7s ease-in-out;
+    transition:all 0.7s ease-in-out;
 }
 
 .wallo-edit-overlay {
@@ -132,10 +177,16 @@ body {
 }
 
 .wallo-stdmode #stats,
-.wallo-stdmode .wallo-edit,
 .wallo-stdmode .wallo-edit-overlay,
 .wallo-stdmode .wallo-edit-toolbar {
     display: none !important;
+}
+.wallo-stdmode .wallo-edit {
+    left: -300px;
+}
+.wallo-debugmode .wallo-page {
+    /*padding-right: 300px;*/
+    padding-left: 300px;
 }
 
 .wallo-tab-link {
@@ -145,9 +196,9 @@ body {
     cursor: pointer;
 }
 .wallo-tab-link:hover {
-    background: lightgray;
+    background: #6a6a6a;
 }
-.wallo-tab-linkselected {
+.wallo-tab-linkselected, .wallo-tab-linkselected:hover {
     background: black;
     color: white;
 }
@@ -158,10 +209,21 @@ body {
     display: block;
 }
 #tab-play {
-    overflow: auto;
+    overflow: hidden;
     width: 100%;
     background: black;
     position: relative;
+}
+.wallo-play {
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.wallo-debugmode .wallo-play {    
+    bottom: 170px;
 }
 #tab-source, #editor,
 #tab-script, #scripteditor {
@@ -171,42 +233,100 @@ body {
 .ace_gutter {
     background: #fafafa !important;
 }
-.wallo-edit-buttons button{
-    /*font-size: 0.7em;*/
-    margin-right:3px;
-    padding: 5px 6px 4px;
-    vertical-align: top;
-}
 
+/* 
+ * Toolbar styles
+ */
 .wallo-edit-toolbar {
-    position: absolute;
-    bottom: 10px;
-    /*background: #fafafa;*/
-    left: 10px;
-    right: 310px;
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 99;
+    background: white;
+    padding: 0 !important;
+}
+.wallo-edit-toolbar .ui-tabs-nav {
+    padding: 0;
+}
+.wallo-edit-toolbar .ui-tabs-nav li {
+    margin: 0px;
+    padding: 0.2em 0.3em;
+    border-right: 3px solid black;
+}
+.wallo-edit-toolbar .ui-tabs-nav li:hover {
+    background: lightgray;
+}
+.wallo-edit-toolbar .ui-tabs-nav li.ui-tabs-active {
+    background: #6a6a6a;
+    margin: 0;
+    padding: 0.2em 0.3em;
+}
+.wallo-edit-toolbar .ui-tabs-nav .ui-tabs-anchor {
+    background: url(../assets/wallo-editgame.png);
+    width: 33px;
+    height: 27px;
+    padding: 0;
+}
+.wallo-edit-toolbar .ui-tabs-nav li a.toolbar-platforms {
+    background-position: -387px -321px;
+}
+.wallo-edit-toolbar .ui-tabs-nav li a.toolbar-ennemy {
+    background-position: -596px -321px;
+}
+.wallo-edit-toolbar .ui-tabs-nav li a.toolbar-image {
+    background-position: -475px -321px;
+}
+.wallo-edit-toolbar .ui-tabs-nav li a.toolbar-video {
+    background-position: -562px -321px;
+}
+.wallo-edit-toolbar .ui-tabs-nav li a.toolbar-other {
+    background-position: -431px -321px;
+}
+.wallo-edit-toolbar .ui-tabs-panel {
+    padding: 0 !important;
+    background: black;
+}
+.wallo-edit-toolbar .ui-tabs-nav .ui-tabs-active a {
+    background-position-y: -381px !important;
 }
 .wallo-thumb {
-    /*margin: 5px;*/
     vertical-align: middle;
-    border: 1px solid lightgray;
-    padding: 6px 10px 4px 8px;
-    background: white;
+    /* border: 1px solid lightgray; */
+    padding: 6px 6px 6px 6px;
+    background-color: white;
     cursor: -webkit-grab;cursor: -moz-grab;
+    border-radius: 8px;
+    margin: 11px 0px 7px 10px;
+    /* width: 102px; */
+    /* height: 60px; */
+    display: inline-block;
+}
+.wallo-thumb .wallo-icon {
+    width: 107px;
+    height: 107px;
+    font-size: 110px;
+    text-align: center;
+}
+.wallo-edit-toolbar .wallo-thumb-Invisible .wallo-icon {
+    background: url(../assets/wallo-editgame.png) -7px -213px;
+}
+.wallo-edit-toolbar .wallo-thumb-Color .wallo-icon {
+    background: url(../assets/wallo-editgame.png) -7px -140px;
 }
 .ui-draggable-dragging {
     cursor: -webkit-grabbing;cursor: -moz-grabbing;
 }
-<<<<<<< HEAD
+
 #game-background{
-	z-index: 1;
-	position: absolute;
+    z-index: 1;
+    position: absolute;
 }
 #game-foreground{
-	z-index: 101;
-	position: absolute;
+    z-index: 101;
+    position: absolute;
 }
-=======
+
 .ui-icon, .ui-widget-content .ui-icon {
     background-image: url("../libs/jquery-ui/ui-icons_222222_256x240.png");    
 }
@@ -242,4 +362,3 @@ div.inputEx-Group div.inputEx-label {
     top: 0;
     left: 0;
 }
->>>>>>> 0096c702d6ae5c7d52fb7a97ac0bb90ea466f234

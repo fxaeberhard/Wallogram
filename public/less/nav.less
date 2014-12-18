@@ -1,0 +1,133 @@
+a{
+  color:black;
+  &:hover{
+    text-decoration: none;
+    color: black;
+  }
+}
+.nav-container-left{
+  position: absolute;
+  left: 0;
+  top: 0;
+  h1{
+    margin: 0;
+    float: left;
+    img{
+      width: 130px;
+      height: @nav-height;
+    }
+  }
+  .buttons{
+    float: left;
+    a{
+      padding: 7px 14px;
+      text-align: center;
+      background-color: black;
+      color: white;
+      height: @nav-height/2;
+      font-size: 2em;
+      display: block;
+      &:first-child{
+        border-bottom: 1px @light-gray solid;
+        cursor: pointer;
+      }
+    }
+    .fa-times{display: none;}
+  }
+  nav{
+    float: left;
+    display: none;
+    background-color: @light-gray;
+    font-size: 1.6em;
+    height: @nav-height/2;
+    ul{
+      margin: 0;
+      padding: 0;
+      li{
+        display: inline-block;
+        padding: 12px 40px;
+        a{
+          &:hover{
+            border-bottom: 5px solid;
+          }
+        }
+      }
+    }
+  }
+}
+.nav-container-right{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  .user-settings{
+    float: left;
+    margin-right: 41px;
+    background-color: black;
+    ul{
+      padding-left: 0;
+      margin: 0;
+      display: none;
+      li{
+        margin: 0;
+        padding: 5px 0 5px 20px;
+        &:hover{
+          background-color: @very-dark-gray;
+          cursor: pointer;
+        }
+        &:first-child{
+          padding-top: 10px;
+        }
+      }
+      a{
+        font-size: @main-size;
+        color: white;
+      }
+    }
+  }
+  .user-name{
+    height: @nav-height/2;
+    background-color: @light-gray;
+    padding: 12px 0 12px 20px;
+    i {
+      font-size: 1.3em;
+    }
+    .fa-caret-up{
+      display: none;
+    }
+    h2{
+      margin-left: 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+      display: inline-block;
+    }
+    a.toggle-settings{
+      background-color: @light-gray;
+      cursor: pointer;
+      padding: 16px 18px 13px 18px;
+      font-size: @main-size;
+      border-left: 2px @dark-gray solid;
+      margin-left: 10px;
+    }
+  }
+  .language-setting{
+    height: @nav-height/2;
+    float: left;
+    font-size: @main-size;
+    a{
+      display: block;
+      padding: 10px 20px;
+      background-color: @light-gray;
+      color: black;
+    }
+    a.current-language{
+      color: white;
+      background-color: black;
+      i{
+        display: block;
+        line-height: 4px;
+        text-align: center;
+      }
+    }
+  }
+}
