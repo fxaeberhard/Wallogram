@@ -1,62 +1,7 @@
 {
-	"player": [{
-            "color": "blue",
-            "colorCode": "33a9e0",
-            "components": "WalloBotSpriteBlue, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "darkblue",
-            "colorCode": "0062e1",
-            "components": "WalloBotSpriteDarkBlue, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "orange",
-            "colorCode": "f79d06",
-            "components": "WalloBotSpriteOrange, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "red",
-            "colorCode": "fc5e21",
-            "components": "WalloBotSpriteRed, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "pink",
-            "colorCode": "ff33bd",
-            "components": "WalloBotSpritePink, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "violet",
-            "colorCode": "7e42e1",
-            "sprites": "",
-            "components": "WalloBotSpriteViolet, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "green",
-            "colorCode": "00da18",
-            "components": "WalloBotSpriteGreen, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "darkgreen",
-            "colorCode": "007e12",
-            "components": "WalloBotSpriteDarkGreen, WalloBot",
-            "x": 100,
-            "y": 100
-        }, {
-            "color": "yellow",
-            "colorCode": "e8cb00",
-            "components": "WalloBotSpriteYellow, WalloBot",
-            "x": 100,
-            "y": 100
-        }],
 	"width": 1920,
 	"height": 1080,
+	"spawn": {"x": 100, "y": 100, "w": 200, "h": 200},
 	"countdownDuration": 5,
 	"entities": [
 		{
@@ -70,7 +15,7 @@
 		},
 		{
 			"components": "fixImage, lab_background",
-			"z": 1
+			"z": 0
 		},
 		{
 			"components": "fixImage, lab_foreground",
@@ -86,18 +31,26 @@
 		},
 		{
 			"components": "Chimie",
-			"x": 1239,
-			"y": 468,
+			"x": 1575,
+			"y": 392,
+			"w": 162,
+			"h": 170,
+			"z": 100
+		},
+		{
+			"components": "Chimie",
+			"x": 1373,
+			"y": 392,
 			"w": 162,
 			"h": 170,
 			"z": 100
 		},
 		{
 			"components": "Jauge",
-			"x": 30,
-			"y": 722,
-			"w": 190,
-			"h": 142,
+			"x": 18.993072509765625,
+			"y": 705.9896240234375,
+			"w": 213,
+			"h": 159,
 			"z": 100
 		},
 		{
@@ -114,7 +67,7 @@
 			"y": 216,
 			"w": 202,
 			"h": 204,
-			"z": 100
+			"z": 50
 		},
 		{
 			"components": "Ventilo",
@@ -122,31 +75,160 @@
 			"y": 218,
 			"w": 202,
 			"h": 204,
+			"z": 50
+		},
+		{
+			"components": "Lab_Falling",
+			"x": 356,
+			"y": 672,
+			"w": 146,
+			"h": 92,
 			"z": 100
 		},
 		{
 			"components": "Lab_Falling",
-			"x": 350,
-			"y": 678,
+			"x": 806,
+			"y": 740,
 			"w": 146,
 			"h": 92,
 			"z": 100
 		},
 		{
 			"components": "Lab_Porte",
-			"x": 900,
+			"x": 978,
 			"y": 596,
 			"w": 242,
 			"h": 342,
 			"z": 100
 		},
 		{
+			"components": "Lab_Falling",
+			"x": 1244,
+			"y": 582,
+			"w": 146,
+			"h": 92,
+			"z": 100
+		},
+		{
+			"components": "Lab_Platform",
+			"x": 1736,
+			"y": 434,
+			"w": 154,
+			"h": 74,
+			"z": 100
+		},
+		{
+			"components": "Lab_MovingPlatform",
+			"x": 1384,
+			"y": 596,
+			"w": 154,
+			"h": 74,
+			"xDiff": 0,
+			"yDiff": 380,
+			"time": 4,
+			"z": 100
+		},
+		{
 			"components": "Lab_Target",
-			"x": 1500,
-			"y": 200,
+			"x": 1772,
+			"y": 78,
 			"w": 86,
 			"h": 242,
 			"z": 160
+		},
+		{
+			"components": "Lab_Spawner",
+			"x": 23.993072509765625,
+			"y": 512.9861450195312,
+			"w": 204,
+			"h": 198,
+			"z": 160,
+			"name": "spawner"
+		},
+		{
+			"type": "QR",
+			"components": "QR",
+			"w": 138,
+			"h": 139,
+			"foreground": "#000000",
+			"background": "#ffffff",
+			"x": 100,
+			"y": 41
+		}
+	],
+	"player": [
+		{
+			"color": "blue",
+			"colorCode": "33a9e0",
+			"components": "WalloBotSpriteBlue, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "darkblue",
+			"colorCode": "0062e1",
+			"components": "WalloBotSpriteDarkBlue, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "orange",
+			"colorCode": "f79d06",
+			"components": "WalloBotSpriteOrange, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "red",
+			"colorCode": "fc5e21",
+			"components": "WalloBotSpriteRed, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "pink",
+			"colorCode": "ff33bd",
+			"components": "WalloBotSpritePink, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "violet",
+			"colorCode": "7e42e1",
+			"sprites": "",
+			"components": "WalloBotSpriteViolet, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "green",
+			"colorCode": "00da18",
+			"components": "WalloBotSpriteGreen, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "darkgreen",
+			"colorCode": "007e12",
+			"components": "WalloBotSpriteDarkGreen, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "yellow",
+			"colorCode": "e8cb00",
+			"components": "WalloBotSpriteYellow, WalloBot",
+			"z": 150,
+			"x": 100,
+			"y": 100
 		}
 	]
 }

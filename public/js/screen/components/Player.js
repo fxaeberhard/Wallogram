@@ -13,8 +13,7 @@ Crafty.c("Player", {
         this.leftTouch = [], this.rightTouch = [], /* this.bodyTouch = [] ,*/ this.onground = [],
         this.score = 0,
         this.onMovingPlatform = false;
-        var currentDir = 0,
-        	prevPlatPos = {x: 0, y: 0};
+        var currentDir = 0
         this.requires("2D, Canvas, Box2D")										// Requirements
             .bind("EnterFrame", function() {
 	            //console.log(this.ko)
@@ -65,20 +64,13 @@ Crafty.c("Player", {
 				            body.SetLinearVelocity(new b2Vec2(this.TOPSPEED, velocity.y))
 			            }
 			        }
-			        
+			        //console.log(this.body.GetLinearVelocity())
 			        if (this.onMovingPlatform){											// If on moving plate, compensate movement.
-			        	var contactObject = this.body.m_contactList.other,
-			        		PlateformPos = contactObject.GetPosition(),
-							playerPosition = this.body.GetPosition(),
-							diffPos = {x: 0, y: 0};
-			        		if(this.prevPlatPos.x == 0){
-				        		this.prevPlatPos.x = PlateformPos.x
-				        		diffPos.x = diffPos.y = 0
-			        		} else {
-				        		diffPos.x = PlateformPos.x - this.prevPlatPos.x
-				        		this.prevPlatPos.x = PlateformPos.x
-			        		}
-			        	this.body.SetPosition(new b2Vec2(playerPosition.x + diffPos.x, playerPosition.y))
+			        	var playerPos = this.body.GetPosition(),
+			        		platform = this.contactPlatform.GetUserData()
+			        	if(platform){
+		        			this.body.SetPosition(new b2Vec2(playerPos.x + platform.xPosDiff, playerPos.y + platform.yPosDiff))
+		        		}
 			        }
 			        
 	                if (this.onground.length > 0 && (this.isDown('SPACE') || this.isDown('UP_ARROW') || this.isDown('A'))) {
@@ -99,7 +91,6 @@ Crafty.c("Player", {
 		                 	new b2Vec2(0, this.DOWNFORCE),
 		                 	body.GetWorldCenter()
 		                 )
-		             this.prevPlatPos = {x: 0, y: 0};								// reset previous position to zero on release of jump. (can't use on press of button because it is too early.)
 		            }
 		
 	                if(velocity.x != 0 && !this.onground.lenght == 0
@@ -138,6 +129,7 @@ Crafty.c("Player", {
 
     },
     runOnce: function() {
+    	this.prevPlatPos = {x: 0, y: 0};
 	    this.originX = this._x;
 	    this.originY = this._y;
 	    this.runOnce = true;
@@ -164,11 +156,12 @@ Crafty.c("Player", {
 	    this.dead = true;
 	    setTimeout(function() {											// Set 2 seconds delay before reseting
 			player.reset();
-		}, 2000);	
+		}, 2000);
+		//console.log("dead", this)	
     },
     reset: function() {									
         this.body.SetLinearVelocity(new b2Vec2(0, 0));						// Reset velocity 
-        this.attr({"x":$.App.cfg.player.x,"y":$.App.cfg.player.y});			// Reset the player position
+        this.attr({"x":$.App.cfg.spawn.x,"y":$.App.cfg.spawn.y});			// Reset the player position
         this.dead = false;
         this.reseting = false;                                    
 		//console.log("Player.reset()", this);
@@ -240,14 +233,17 @@ Crafty.c("Player", {
 		if(this.rightTouch.length > 0 || this.leftTouch.length > 0){ 								// If Players sensor is either side set sideContact to true
 	    	this.sideContact = true;
 		}
+		
 		if (fixtures[index].GetUserData() == "foot"){
 			if (fixtures[index2].GetBody().GetUserData().name == "movingPlat") {
 				this.onMovingPlatform = true
+				this.contactPlatform = fixtures[index2].GetBody();
 			}
 			
 			this.setDir(this)
 		}
-		if(fixtures[index2].GetBody().GetUserData().components == "Target" && $.App.playing != false){
+		
+		if(fixtures[index2].GetBody().GetUserData().name == "Target" && $.App.playing != false){
 			$.App.win(fixtures[index].GetBody().GetUserData())
 		}
     },
@@ -259,8 +255,9 @@ Crafty.c("Player", {
 		}else {
 			index2 = 1;
 		}
-	    
-	    this.sensorCheck(fixtures[index].GetUserData(), false)
+	    if(!fixtures[index2].IsSensor()) {
+	    	this.sensorCheck(fixtures[index].GetUserData(), false)
+	    }
 	    
 	    if(this.rightTouch.length == 0 && this.leftTouch.length == 0){ 							// If players sensor that lost contact is either said said sideContact to false
 	    	this.sideContact = false;

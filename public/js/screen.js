@@ -120,6 +120,8 @@ jQuery(function($) {
                         break;
                 }
             });
+
+            $(".wallo-play").scroll(App.updateCanvasPosition);
         },
         SetB2dListener: function() {											// Initiate contact listener
 	        var contactListener = new b2ContactListener
@@ -242,9 +244,11 @@ jQuery(function($) {
         },
         initEntities: function(entities) {
             var ret = _.map(entities, function(cfg) {                           // Add entities from config file
-                console.log(cfg)
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
+                if (entity.name === "spawner") {								// set spawner
+                    App.cfg.spawn = entity
+                }
                 return entity;
             });
             return ret;
@@ -317,7 +321,10 @@ jQuery(function($) {
         },
         addPlayer: function(data, cfg) {
             cfg.z = 150;                                                        // Player is on top
-
+			if(App.cfg.spawn) {
+	                cfg.x = App.cfg.spawn.x;
+					cfg.y = App.cfg.spawn.y;
+				}
             App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
@@ -332,6 +339,10 @@ jQuery(function($) {
             if (!App.players.DEBUG) {
                 var cfg = App.cfg.player[0];
                 cfg.z = 150;
+                if(App.cfg.spawn) {
+	                cfg.x = App.cfg.spawn.x;
+					cfg.y = App.cfg.spawn.y;
+				}
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
                 console.log(App.players.DEBUG);
@@ -396,12 +407,6 @@ jQuery(function($) {
             App.countdownHandler = setTimeout(step, 1000);                      // Show countdown
         },
         setCfg: function(cfg) {
-            $.each(cfg.entities, function(i, entity) {
-                if (entity.components === "Spawner") {
-                    cfg.player.x = entity.x;
-                    cfg.player.y = entity.y;
-                }
-            });
             $.extend(App.cfg, cfg);
         },
         toggleDebug: function(val) {
@@ -411,10 +416,8 @@ jQuery(function($) {
                 .toggleClass("wallo-stdmode", !App.debug);
 
             if (this.debug) {
-                Crafty.stage.x = $("#tab-play").position().left;
-                App.restartHandler = setTimeout(function() {                    // do it later cause of css animation
-                    Crafty.stage.x = $("#tab-play").position().left;
-                }, 1000);
+                App.updateCanvasPosition();
+                App.restartHandler = setTimeout(App.updateCanvasPosition, 1000);// do it later cause of css animation
             }
         },
         toggleDebugCanvas: function() {
@@ -423,7 +426,12 @@ jQuery(function($) {
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
         },
         getPadUrl: function() {
-            return  PADURL + "?gameId=" + IO.gameId;
+            var port = window.location.port !== 80 ? ":" + window.location.port : "";
+            return  window.location.protocol + "//" + window.location.hostname + port + PADURL + "?gameId=" + IO.gameId;
+        },
+        updateCanvasPosition: function() {
+            Crafty.stage.x = $("#tab-play").position().left - $(".wallo-play").scrollLeft();
+            Crafty.stage.y = $("#tab-play").position().top - $(".wallo-play").scrollTop();
         }
     };
     $.App = App;                                                                // Set up global reference

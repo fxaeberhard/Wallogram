@@ -7,7 +7,12 @@
     "width": 600,
     "height": 400,
     "countdownDuration": 5,
-    "entities": [{
+    "entities": [
+    	{
+	    	"components": "Spawner",
+	    	"x": 100,
+	    	"y": 100
+    	}, {
             "components": "ColoredPlatform",
             "color": "pink",
             "x": 363,
