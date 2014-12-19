@@ -207,13 +207,11 @@ jQuery(function($) {
                 case "countdown":                                               // Show countdown before play
                     //IO.emit('restart');                                       // Notify pads
                     App.showCountdown();
-                    App.cfg.spawn.down()										// cage goes down as soon as countdown starts
                     break;
 
                 case "run":                                                     // Play
                     App.startTime = new Date().getTime();
                     App.playing = true;
-                    App.cfg.spawn.up()
                     break;
 
                 case "win":                                                     // Somebody reach the goal
@@ -246,6 +244,10 @@ jQuery(function($) {
                 entity.cfg = cfg;
                 if (entity.name === "spawner") {								// set spawner
                     App.cfg.spawn = entity
+                }
+                if (!App.cfg.spawn) {
+	                App.cfg.spawn.x = 100;
+	                App.cfg.spawn.y = 100;
                 }
                 return entity;
             });

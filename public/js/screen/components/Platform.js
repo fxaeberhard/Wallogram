@@ -223,6 +223,7 @@ Crafty.c('MouseHover', {
 });
 Crafty.c("Lab_Spawner", {
 	init: function() {
+		var Spawner = this
 		this.requires("Canvas, Spawner, lab_cage")
 			.attr({
 				"goingDown": false,
@@ -280,6 +281,18 @@ Crafty.c("Lab_Spawner", {
 		            this.goingUp = false
 	            }
             })
+			$(document).on("stateChange", function(e, newState, oldState) {
+
+			switch (newState) {													// Enter new state
+				case "countdown":
+					Spawner.down()													//
+					break;
+
+				case "run":														// Play
+					Spawner.up()
+					break;
+			}
+		});
 	},
 	setOrigin: function(ratio) {
 		this.yOrigin = this.y
@@ -293,6 +306,7 @@ Crafty.c("Lab_Spawner", {
 	up: function() {
 		this.goingUp = true
 	}
+	
 	
 });
 Crafty.c("Lab_Porte", {
@@ -727,8 +741,6 @@ Crafty.c("MovingPlatform", {
 			.attr({
 				w: 100, 
 				h: 20,
-				x2: 300,
-				y2: 200,
 				time: 2,
 				name: "movingPlat"
 			})
@@ -792,7 +804,8 @@ Crafty.c("Standard_MovingPlatform", {
 					 density: 1.0,
 					 friction: 10,
 					 restitution: 0,
-					 shape: "box"
+					 shape: "box",
+					 userData: "moving_platform"
 				 })
 	}
 });
