@@ -23,6 +23,10 @@ jQuery(function($) {
             countdownDuration: 1,
             entities: []
         },
+        spawn: {
+        	x: 100,
+	        y: 100
+        },
         /**
          * This runs when the page initially loads.
          */
@@ -243,11 +247,11 @@ jQuery(function($) {
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
                 if (entity.name === "spawner") {								// set spawner
-                    App.cfg.spawn = entity
+                    App.spawn = entity
                 }
-                if (!App.cfg.spawn) {
-	                App.cfg.spawn.x = 100;
-	                App.cfg.spawn.y = 100;
+                if (!App.spawn) {
+	                App.spawn.x = 100;
+	                App.spawn.y = 100;
                 }
                 return entity;
             });
@@ -321,8 +325,8 @@ jQuery(function($) {
         },
         addPlayer: function(data, cfg) {
             cfg.z = 150;                                                        // Player is on top
-			cfg.x = App.cfg.spawn.x;
-			cfg.y = App.cfg.spawn.y;
+			cfg.x = App.spawn.x;
+			cfg.y = App.spawn.y;
 			cfg.mySocketId = data.mySocketId;
 			console.log("mysocketid",data.mySocketId)
             App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
@@ -338,8 +342,8 @@ jQuery(function($) {
             if (!App.players.DEBUG) {
                 var cfg = App.cfg.player[0];
                 cfg.z = 150;
-                cfg.x = App.cfg.spawn.x;
-				cfg.y = App.cfg.spawn.y;
+                cfg.x = App.spawn.x;
+				cfg.y = App.spawn.y;
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
             } else {
