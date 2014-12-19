@@ -108,6 +108,12 @@ Crafty.sprite(1920, 1080, 'assets/lab/wallobot_fond.png', {
 Crafty.sprite(1920, 1080, 'assets/lab/wallobot_avant.png', {
 	lab_foreground: [0, 0]
 });
+Crafty.sprite(1400, 2520, 'assets/lab/back.png', {
+	lab_vert_background: [0, 0]
+});
+Crafty.sprite(1400, 2520, 'assets/lab/front.png', {
+	lab_vert_foreground: [0, 0]
+});
 Crafty.sprite(86, 242, 'assets/lab/tuyeau.png ', {
     lab_tuyeau: [0, 0]
 });
@@ -126,5 +132,11 @@ Crafty.sprite(187, 340, 'assets/lab/mechant.png ', {
  */
 Crafty.sprite(128, 128, 'assets/enemy.png',{
 	HotdogSprite: [0, 0]
+});
+/*
+ * Mario
+ */
+Crafty.sprite(128, 128, 'assets/mario/mario.png',{
+	MarioSprite: [0, 0]
 });
 

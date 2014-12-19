@@ -161,7 +161,7 @@ Crafty.c("Player", {
     },
     reset: function() {									
         this.body.SetLinearVelocity(new b2Vec2(0, 0));						// Reset velocity 
-        this.attr({"x":$.App.cfg.spawn.x,"y":$.App.cfg.spawn.y});			// Reset the player position
+        this.attr({"x":$.App.spawn.x,"y":$.App.spawn.y});			// Reset the player position
         this.dead = false;
         this.reseting = false;                                    
 		//console.log("Player.reset()", this);
@@ -416,7 +416,7 @@ Crafty.c("WalloBot", {
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
-        this.requires("Player, WalloBotSprite, SpriteAnimation")                // Requirements
+        this.requires("Player, SpriteAnimation")                // Requirements
             .attr({x: 100, w: 80, h: this.HEIGHT, name: "player"})                       // Set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 0, 4, 5)
@@ -462,6 +462,135 @@ Crafty.c("WalloBot", {
             });
             
 
+        this.body.SetFixedRotation(true);
+    }
+});
+Crafty.c("WalloBotBigger", {
+    ANIMSPEED: 800,
+    JUMPFORCE: -300,
+    WALKFORCE: 800,
+    DOWNFORCELIMIT: 6,
+    DOWNFORCE: 12,
+    TOPSPEED: 10,
+    HEIGHT: 120,
+    /**
+     * 
+     */
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("Player, SpriteAnimation")                // Requirements
+            .attr({x: 100, w: 120, h: this.HEIGHT, name: "player"})                       // Set width and height
+            .reel("idle", this.ANIMSPEED, 0, 0, 4)                              // Set up animation
+            .reel("jump", this.ANIMSPEED, 0, 4, 5)
+            .reel("run", this.ANIMSPEED, [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2], [7, 2]]) // Specify frames 1 by 1 since the anim spans on 2 cells
+            .animate("idle", -1)                                                 // Run idle animation
+            .box2d({
+                bodyType: 'dynamic',
+                density: 2,
+                friction: 0,
+                restitution: 0,
+                shape: [[this.w / 3, this.w / 4], 
+                		[2 * this.w / 3, this.w / 4], 
+                		[2 * this.w / 3, this.w], 
+                		[this.w / 3, this.w]],
+                userData: "body"
+            })
+			.addFixture({//                                                     // Add feet sensor
+                bodyType: 'dynamic',
+                shape: [[(this.w / 3)+2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w - 2], 
+                		[(2 * this.w / 3)-2, this.w + 3], 
+                		[(this.w / 3)+2, this.w + 3]],
+                isSensor: true,
+                userData: "foot"
+            })
+            .addFixture({//                                                     // Add left sensor
+                bodyType: 'dynamic',
+                shape: [[this.w / 3, this.w / 4], 
+                		[(this.w / 3) + 5, this.w / 4], 
+                		[(this.w / 3) + 5 , this.w - 5], 
+                		[this.w / 3, this.w - 5]],
+                isSensor: true,
+                userData: "leftSide"
+            })
+            .addFixture({//                                                     // Add right sensor
+                bodyType: 'dynamic',
+                shape: [[ (2 * this.w / 3) - 5, this.w / 4], 
+                		[2 * this.w / 3, this.w / 4], 
+                		[2 * this.w / 3, this.w - 5], 
+                		[(2 * this.w / 3) - 5, this.w - 5]],
+                isSensor: true,
+                userData: "rightSide"
+            });
+            
+
+        this.body.SetFixedRotation(true);
+    }
+});
+Crafty.c("Mario", {
+    ANIMSPEED: 400,
+    JUMPFORCE: -450,
+    WALKFORCE: 500,
+    DOWNFORCELIMIT: 6,
+    DOWNFORCE: 12,
+    TOPSPEED: 10,
+    HEIGHT: 64,
+    /**
+     * 
+     */
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("Player, SpriteAnimation")                // Requirements
+            .attr({x: 100, w: 64, h: this.HEIGHT, name: "player"})                       // Set width and height
+            .reel("idle", this.ANIMSPEED, 3, 0, 1)                              // Set up animation
+            .reel("jump", this.ANIMSPEED, 4 , 0, 1)
+            .reel("run", this.ANIMSPEED, 0, 0, 3) 
+            .animate("idle", -1)                                                 // Run idle animation
+            .box2d({
+                bodyType: 'dynamic',
+                density: 3.0,
+                friction: 0,
+                restitution: 0,
+                shape: [[this.w * (8 / 128), 0], 
+                		[this.w * (120 / 128), 0], 
+                		[this.w * (120 / 128), this.h], 
+                		[this.w * (8 / 128), this.h]],
+                userData: "body"
+            })
+            .addFixture({														// Add foot sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (8 / 128) + 3, this.h - 3], 
+                		[this.w * (120 / 128) - 3, this.h - 3], 
+                		[this.w * (120 / 128) - 3, this.h + 3], 
+                		[this.w * (8 / 128) + 3, this.h + 3]],
+                isSensor: true,
+                userData: "foot"
+            })
+            .addFixture({														// Add left sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (8 / 128) - 3, 3], 
+                		[this.w * (8 / 128) + 3, 3], 
+                		[this.w * (8 / 128) + 3, this.h - 3], 
+                		[this.w * (8 / 128) - 3, this.h - 3]],
+                isSensor: true,
+                userData: "leftSide"
+            })
+            .addFixture({	                                                   	// Add right sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (120 / 128) - 3, 3],
+                		[this.w * (120 / 128) + 3, 3], 
+                		[this.w * (120 / 128) + 3, this.h - 3], 
+                		[this.w * (120 / 128) - 3, this.h - 3]],
+                isSensor: true,
+                userData: "rightSide"
+            })
+            .addFixture({														// Add top sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (8 / 128) + 3, 3], 
+                		[this.w * (120 / 128) - 3, 3], 
+                		[this.w * (120 / 128) - 3, - 3], 
+                		[this.w * (8 / 128) + 3, - 3]],
+                isSensor: true,
+                userData: "top"
+            });
         this.body.SetFixedRotation(true);
     }
 });
