@@ -1261,6 +1261,9 @@ a:hover {
 }
 #game-three:hover {
   background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/mur_home.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 #choose-img {
   position: fixed;
