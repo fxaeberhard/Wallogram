@@ -3,12 +3,21 @@ var less = require('gulp-less');
 var path = require('path');
 
 var paths = {
-  mainStyleSheet: 'public/less/lobby.less',
+  indexStyleSheet: 'public/less/index.less',
+  lobbyStyleSheet: 'public/less/lobby.less',
   styles: 'public/less/*.less'
 };
 
-gulp.task('css', function () {  
-  return gulp.src(paths.mainStyleSheet)
+gulp.task('lobbyCss', function () {  
+  return gulp.src(paths.lobbyStyleSheet)
+    .pipe(less({
+      paths: [ path.join(__dirname, 'less', 'includes') ]
+    }))
+    .pipe(gulp.dest('public/css'))
+});
+
+gulp.task('indexCss', function () {  
+  return gulp.src(paths.indexStyleSheet)
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
@@ -16,7 +25,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.styles, ['css']);
+  gulp.watch(paths.styles, ['lobbyCss','indexCss']);
 });
 
 gulp.task('default', ['watch'])

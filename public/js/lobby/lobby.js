@@ -8,7 +8,10 @@ jQuery(function($) {
             Lobby.initUI();
             Lobby.initActions();
         },
-        initActions: function () {   
+        initActions: function () {
+            /* REMOVE BELOW */
+            $(".user-unknown").hide();
+            /* REMOVE ABOVE */   
             $('#level-name').hide();
             $('#level-name .new-game-validation').hide();
             $('body').on('click','.my-wall .new',function(){
@@ -40,14 +43,6 @@ jQuery(function($) {
             //     var $liLevel = $(this).parent()
             //     Lobby.renameLevel($liLevel)
             // })
-            $('body').on('click','.nav-container-left .buttons a:first-child',function(){
-                $('.nav-container-left nav').toggle()
-                $('.nav-container-left .buttons a:first-child i').toggle()
-            })
-            $('body').on('click','.nav-container-right a.toggle-settings',function(){
-                $('.nav-container-right .user-settings ul').toggle()
-                $('.nav-container-right a.toggle-settings i').toggle()
-            })
             $('body').on('mouseenter','.games .default-games .game',function(){
                 $(this).addClass('game-selected')
             })

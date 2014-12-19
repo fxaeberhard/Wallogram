@@ -1,19 +1,15 @@
 @font-face {
   font-family: "bebas";
-  src: url('font/BebasNeue.otf');
+  src: url('BebasNeue.otf');
 }
 @font-face {
   font-family: "HelveticaNeueLTS";
-  src: url('font/HelveticaNeueLTStd-Roman.otf');
+  src: url('HelveticaNeueLTStd-Roman.otf');
 }
 @font-face {
   font-family: "HelveticaNeueLTS";
-  src: url("font/HelveticaNeueLTStd-Bd.otf");
+  src: url("HelveticaNeueLTStd-Bd.otf");
   font-weight: bold;
-}
-body {
-  font-family: 'HelveticaNeueLTS', sans-serif;
-  font-size: 1em;
 }
 * {
   -webkit-box-sizing: border-box;
@@ -788,20 +784,14 @@ hr {
 .container-fluid:before,
 .container-fluid:after,
 .row:before,
-.row:after,
-.header:before,
-.header:after,
-.my-wall .content:before,
-.my-wall .content:after {
+.row:after {
   content: " ";
   display: table;
 }
 .clearfix:after,
 .container:after,
 .container-fluid:after,
-.row:after,
-.header:after,
-.my-wall .content:after {
+.row:after {
   clear: both;
 }
 .center-block {
@@ -1204,264 +1194,72 @@ a:hover {
   line-height: 4px;
   text-align: center;
 }
-body {
-  background-color: #c9c9c9;
-  font-family: bebas;
-}
-.header {
-  margin-left: -20px;
-  margin-right: -20px;
-}
-.header .profile {
-  position: relative;
-  min-height: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-@media (min-width: 768px) {
-  .header .profile {
-    float: left;
-    width: 33.33333333%;
-  }
-}
-.header .games {
-  position: relative;
-  min-height: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-@media (min-width: 768px) {
-  .header .games {
-    float: left;
-    width: 66.66666667%;
-  }
-}
-.my-wall .content {
-  margin-left: -20px;
-  margin-right: -20px;
-}
-.container {
-  margin-top: 147px;
-}
-a:hover {
-  text-decoration: none;
-}
-.lobby .header .profile {
-  color: white;
-  padding: 8px !important;
-  background-color: black;
-}
-.lobby .header .profile img {
-  width: 50%;
+.game {
+  height: 100vh;
   float: left;
-}
-.lobby .header .profile .infos {
-  float: left;
-  margin-left: 10px;
-}
-.lobby .header .profile .infos h2 {
-  margin: 0;
-  padding: 0;
-  font-size: 1.8em;
-}
-.lobby .header .profile .infos dl {
-  font-family: 'HelveticaNeueLTS';
-}
-.lobby .header .profile .infos dl dt {
-  display: none;
-}
-.lobby .header .profile .infos dl dd {
-  margin-left: 0;
-}
-.lobby .header .profile .infos dl dd:first-of-type {
-  font-weight: bold;
-}
-.lobby .header .profile .infos .update-infos {
-  font-size: 1.4em;
-  letter-spacing: 15px;
-}
-.lobby .header .profile .infos .update-infos a {
-  color: white;
-}
-.lobby .header .games {
-  padding-right: 0;
-}
-.lobby .header .games .wrapper {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  background-color: white;
-  overflow: auto;
-}
-.lobby .header .games .wallogames-logo {
-  width: 25%;
-  float: left;
-}
-.lobby .header .games .default-games {
-  float: left;
-  border-left: 2px black;
-  width: 75%;
-}
-.lobby .header .games .default-games .game {
-  float: left;
-  width: 33%;
   text-align: center;
-  margin-top: 12px;
 }
-.lobby .header .games .default-games .game img {
-  max-width: 120px;
-  display: inline-block;
-  border-bottom: 40px white solid;
-  border-left: 5px white solid;
-  border-top: 5px white solid;
-  border-right: 5px white solid;
+.game img {
+  height: 174px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
-.lobby .header .games .default-games .game h3 {
-  padding: 0;
-  margin-top: -30px;
-}
-.lobby .header .games .default-games .game .action {
-  display: none;
-}
-.lobby .header .games .default-games .game-selected {
+.diagonal #game-one {
+  width: 36%;
+  background: url('../assets/game_01.png') repeat 0 0 scroll;
+  -webkit-shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+  shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+  z-index: 3;
   position: relative;
 }
-.lobby .header .games .default-games .game-selected img {
-  border-color: black;
+.diagonal #game-two {
+  margin-left: -36%;
+  width: 72%;
+  background: url('../assets/game_02.png');
+  -webkit-shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
+  shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
+  z-index: 2;
 }
-.lobby .header .games .default-games .game-selected h3 {
-  color: white;
+.diagonal #game-two img {
+  margin-left: 36%;
 }
-.lobby .header .games .default-games .game-selected .action {
-  display: block;
-  position: absolute;
+.diagonal #game-three {
+  margin-left: -12%;
+  width: 40%;
+  background: url('../assets/game_03.png') no-repeat 0 0 scroll;
+  z-index: 1;
+}
+.diagonal #game-three img {
+  margin-left: 12%;
+}
+#game-one {
+  width: 33.33%;
+  background: url('../assets/game_01.png');
+}
+#game-one:hover {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_01.png');
+}
+#game-two {
+  width: 33.33%;
+  background: url('../assets/game_02.png');
+}
+#game-two:hover {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_02.png');
+}
+#game-three {
+  background: url('../assets/game_03.png');
+  width: 33.33%;
+}
+#game-three:hover {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_03.png');
+}
+#choose-img {
+  position: fixed;
+  top: 50%;
   left: 50%;
-  width: 60px;
-  height: 35px;
-  margin-left: -30px;
-  background-color: white;
-  padding-top: 8px;
-  cursor: pointer;
+  transform: translate(-50%, -50%);
+  z-index: 999;
 }
-.lobby .header .games .default-games .game-selected .play {
-  top: 20px;
-}
-.lobby .header .games .default-games .game-selected .edit {
-  top: 65px;
-}
-.lobby .my-wall {
-  margin-top: 20px;
-}
-.lobby .my-wall .header {
-  background-color: black;
-  color: white;
-}
-.lobby .my-wall .header img {
-  display: inline-block;
-  margin: 0 0.7em;
-}
-.lobby .my-wall .header h3 {
-  font-size: 1.4em;
-  margin: 0.5em 0;
-  display: inline-block;
-}
-.lobby .my-wall .content {
-  background-color: white;
-}
-.lobby .my-wall .created,
-.lobby .my-wall .played {
-  padding-right: 0;
-  background-color: white;
-}
-.lobby .my-wall .row {
-  margin: 20px 0;
-}
-.lobby .my-wall .created h4 {
-  margin-left: 20px;
-}
-.lobby .my-wall .created .new {
-  width: 190px;
-  background-color: #c9c9c9;
-  padding: 5px;
-  margin-left: 20px;
-  cursor: pointer;
-  color: #7f7f7f;
-}
-.lobby .my-wall .created .new i {
-  margin-left: 20px;
-}
-.lobby .my-wall .created .new span {
-  margin-left: 30px;
-}
-.lobby .my-wall .created .wallo-load-levels .level img {
-  float: left;
-  width: 60px;
-  margin-right: 10px;
-}
-.lobby .my-wall .created .wallo-load-levels .level .buttons {
-  border-top: 1px solid #f4f4f4;
-}
-.lobby .my-wall .created .wallo-load-levels .level .buttons a {
-  margin: 5px 20px 0 5px;
-  color: #c9c9c9;
-}
-.lobby .my-wall .created .wallo-load-levels .level .buttons a:last-of-type {
-  margin-right: 5px;
-}
-.lobby .my-wall .played {
-  border-left: 1px black solid;
-}
-.lobby .my-wall .played .games-played article img {
-  float: left;
-  width: 70px;
-  margin-right: 10px;
-}
-.lobby .my-wall .played .games-played article .buttons {
-  border-bottom: 1px solid #f4f4f4;
-  margin-bottom: 5px;
-}
-.lobby .my-wall .played .games-played article .buttons a {
-  margin: 0px 20px 10px 5px;
-  color: #c9c9c9;
-}
-.lobby .my-wall .played .games-played article .buttons a:last-of-type {
-  margin-right: 5px;
-}
-.lobby .my-wall .played .games-played article .last-score {
-  clear: left;
-}
-.lobby .my-wall .played .games-played article .last-score p {
-  padding-top: 6px;
-}
-.lobby .my-wall .played .games-played article .last-score p span {
-  color: white;
-  background-color: black;
-  padding: 2px 4px;
-  margin-left: 5px;
-}
-.lobby .my-wall .level-infos,
-.lobby .my-wall .game-infos {
-  float: left;
-}
-.lobby .my-wall .level-infos h5,
-.lobby .my-wall .game-infos h5 {
-  font-size: 1em;
-  margin: 0;
-}
-.lobby .my-wall .level-infos span,
-.lobby .my-wall .game-infos span {
-  display: block;
-  font-family: "HelveticaNeueLTS";
-  color: #c9c9c9;
-  font-size: 0.7em;
-}
-#level-name {
-  text-align: center;
-}
-#level-name p {
-  margin-bottom: 0;
-}
-#level-name .new-game-validation {
-  color: red;
-  font-size: 0.8em;
-}
-/*# sourceMappingURL=lobby.css.map */

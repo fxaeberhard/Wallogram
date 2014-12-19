@@ -1,38 +1,11 @@
 {
-    "player": {
-        "components": "WalloBot",
-        "x": 10,
-        "y": 5
-    },
+    "player": [{
+            "components": "WalloBotSpriteBlue, WalloBot",
+            "x": 10,
+            "y": 5
+        }],
     "width": 900,
     "height": 600,
     "countdownDuration": 5,
-    "entities": [{
-	    	"components": "Spawner",
-	    	"x": 100,
-	    	"y": 100
-    	}, {
-            "components": "Platform",
-            "x": 40,
-            "y": 200
-        }, {
-            "components": "Falling",
-            "x": 150,
-            "y": 200,
-            "w": 100,
-            "h": 20
-        },
-        {
-			"components": "ColoredPlatform",
-			"color": "pink",
-			"x": 190,
-			"y": 339,
-			"w": 100,
-			"h": 20
-		}, {
-			"components": "ColoredPlatform",
-			"color": "red",
-			"x": 770,
-			"y": 340
-		}]
+    "entities": []
 }

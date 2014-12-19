@@ -9,7 +9,10 @@
  * @fileoverview
  * @author Francois-Xavier Aeberhard <fx@red-agent.com>
  */
-@font-face { font-family: counter; src: url('font/citaro_voor_dubbele_hoogte_breed.ttf'); }
+@font-face { 
+    font-family: counter; 
+    src: url('font/citaro_voor_dubbele_hoogte_breed.ttf');
+}
 html {
     height: 100%;
 }
@@ -18,6 +21,7 @@ body {
     height: 100%;
     /*overflow: hidden;*/
     /*background: url(../assets/murheigvd.jpg);*/
+    /* background: #c9c9c9; */
 }
 .wallo-crafty .Timer {
     font-size: 4em !important;
@@ -51,7 +55,7 @@ body {
     border-bottom: 1px dashed white;
 }
 .Box2DCanvasDebug {
-    z-index: 150;
+    z-index: 90;
 }
 
 .wallo-connectionindicator {
@@ -74,7 +78,7 @@ body {
     height: 100%;
     /*margin-right: -300px;*/
     font-size: 0.9em;
-    background: #fafafa;
+    /* background: #fafafa; */
     position:absolute;
     left: 0px;
     border-right: 9px solid #424242;
@@ -90,9 +94,9 @@ body {
     left: 0;
 }
 .wallo-edit-logo {   
-    background: url(../assets/wallo-editgame.png) -163px -712px;
+    background: white url(../assets/logo-beta.jpg) no-repeat;
     width: 100%;
-    height: 199px;
+    height: 155px;
     cursor: pointer;
 }
 .wallo-edit-buttons {
@@ -104,7 +108,7 @@ body {
 .wallo-edit-buttons button {
     background: none;
     border: none;
-    border-right: 2px solid black;
+    border-right: 3px solid black;
     padding: 12px 11px 9px;
     font-size: 30px;
     vertical-align: top;
@@ -301,12 +305,31 @@ body {
     /* width: 102px; */
     /* height: 60px; */
     display: inline-block;
+    width: 108px;
+    height: 108px;
+    text-align: center;
+    font: 0/0 a;
+}
+.wallo-thumb-img:before {    /* create a full-height inline block pseudo=element */
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;  /* vertical alignment of the inline element */
+    height: 100%;
+    
+  width: 1px;
 }
 .wallo-thumb .wallo-icon {
     width: 107px;
     height: 107px;
     font-size: 110px;
     text-align: center;
+}
+.wallo-thumb img {
+    max-width: 107px;
+    max-height: 107px;
+    vertical-align: middle;
+    display: inline-block;      
+    vertical-align: middle;
 }
 .wallo-edit-toolbar .wallo-thumb-Invisible .wallo-icon {
     background: url(../assets/wallo-editgame.png) -7px -213px;

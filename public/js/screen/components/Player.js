@@ -298,10 +298,8 @@ Crafty.c("Player", {
 			case "foot":
 				if(value == true) {
 					this.onground.push(1);
-					console.log("foot_touch")
 				} else if(this.onground.length != 0){
 					this.onground.pop()
-					console.log("foot_leave")
 				}
 			break;
 /*

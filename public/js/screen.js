@@ -120,6 +120,8 @@ jQuery(function($) {
                         break;
                 }
             });
+
+            $(".wallo-play").scroll(App.updateCanvasPosition);
         },
         SetB2dListener: function() {											// Initiate contact listener
 	        var contactListener = new b2ContactListener
@@ -194,8 +196,10 @@ jQuery(function($) {
 
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
+                    $.each(App.gate, function(i, ent) {
+                        ent.destroy();
+                    });
                     clearTimeout(App.countdownHandler);
-                    
                     break;
 
                 case "win":
@@ -321,13 +325,11 @@ jQuery(function($) {
         },
         addPlayer: function(data, cfg) {
             cfg.z = 150;                                                        // Player is on top
-			cfg.x = App.cfg.spawn.x;
-			cfg.y = App.cfg.spawn.y;
-			cfg.mySocketId = data.mySocketId;
-			console.log("mysocketid",data.mySocketId)
+
             App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
+            console.log(App.cfg.player);
 
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
@@ -338,10 +340,9 @@ jQuery(function($) {
             if (!App.players.DEBUG) {
                 var cfg = App.cfg.player[0];
                 cfg.z = 150;
-                cfg.x = App.cfg.spawn.x;
-				cfg.y = App.cfg.spawn.y;
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
+                console.log(App.players.DEBUG);
             } else {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;
@@ -351,6 +352,41 @@ jQuery(function($) {
             enemy.destroy();
         },
         showCountdown: function() {
+            var w = 200, h = 200, x = App.cfg.player.x, y = App.cfg.player.y, thick = 10, // Append a box to limit players moves
+
+                entities = [{
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x - (w / 2) + thick,
+                        "y": y - (h / 2),
+                        "w": w - thick,
+                        "h": thick
+                    }, {
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x + (w / 2),
+                        "y": y - (h / 2),
+                        "w": thick,
+                        "h": h
+                    }, {
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x - (w / 2) + thick,
+                        "y": y + (h / 2) - thick,
+                        "w": w - thick,
+                        "h": thick
+                    }, {
+                        "components": "ColoredPlatform",
+                        "color": "pink",
+                        "x": x - (w / 2),
+                        "y": y - (h / 2),
+                        "w": thick,
+                        "h": h
+                    }];
+
+
+            App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
+
             _.each(App.players, function(p) {                                   // Bring all players to starting position
                 p.reset();
             });
@@ -377,10 +413,8 @@ jQuery(function($) {
                 .toggleClass("wallo-stdmode", !App.debug);
 
             if (this.debug) {
-                Crafty.stage.x = $("#tab-play").position().left;
-                App.restartHandler = setTimeout(function() {                    // do it later cause of css animation
-                    Crafty.stage.x = $("#tab-play").position().left;
-                }, 1000);
+                App.updateCanvasPosition();
+                App.restartHandler = setTimeout(App.updateCanvasPosition, 1000);// do it later cause of css animation
             }
         },
         toggleDebugCanvas: function() {
@@ -389,7 +423,12 @@ jQuery(function($) {
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
         },
         getPadUrl: function() {
-            return  PADURL + "?gameId=" + IO.gameId;
+            var port = window.location.port !== 80 ? ":" + window.location.port : "";
+            return  window.location.protocol + "//" + window.location.hostname + port + PADURL + "?gameId=" + IO.gameId;
+        },
+        updateCanvasPosition: function() {
+            Crafty.stage.x = $("#tab-play").position().left - $(".wallo-play").scrollLeft();
+            Crafty.stage.y = $("#tab-play").position().top - $(".wallo-play").scrollTop();
         }
     };
     $.App = App;                                                                // Set up global reference

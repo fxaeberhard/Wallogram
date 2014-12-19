@@ -205,21 +205,21 @@ Crafty.c("Timer", {
  * 
  */
 Crafty.c('MouseHover', {
-	init: function() {
-		this.requires("Mouse")
-			.bind('MouseOver', function() {
-				$.Edit.showEdition(this);
-				//document.body.style.cursor = "pointer";
-			})
-			.bind('MouseOut', function() {
-				$.Edit.hideEdition();
-				//document.body.style.cursor = "default";
-			});
-		return this;
-	}
-	//remove: function () {
-	//	  document.body.style.cursor = "default";
-	//}
+    init: function() {
+        this.requires("Mouse")
+            .bind('MouseOver', function() {
+                $.Edit.showEditOverlay(this);
+                //document.body.style.cursor = "pointer";
+            })
+            .bind('MouseOut', function() {
+                $.Edit.hideEdition();
+                //document.body.style.cursor = "default";
+            });
+        return this;
+    }
+    //remove: function () {
+    //    document.body.style.cursor = "default";
+    //}
 });
 Crafty.c("Lab_Spawner", {
 	init: function() {
