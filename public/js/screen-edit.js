@@ -120,7 +120,7 @@ jQuery(function($) {
             /**
              * Entity edition overlay
              */
-            $("#tab-play").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"><div class="wallo-edit-menu"><div class="wallo-edit-destroy fa fa-trash"></div><div class="wallo-edit-editentity fa fa-pencil"></div></div></div></div>');
+            $(".wallo-crafty").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"><div class="wallo-edit-menu"><div class="wallo-edit-destroy fa fa-trash"></div><div class="wallo-edit-editentity fa fa-pencil"></div></div></div></div>');
 
             var isDragging = false, over = false,
                 overlay = $(".wallo-edit-dd"),
@@ -130,7 +130,7 @@ jQuery(function($) {
                     //distance: 20,
                     handles: "ne, se, sw, nw",
                     start: function() {
-                        isDragging = true;
+                        Edit.isDragging = true;
                     },
                     resize: function() {
                         Edit.savePositions();
@@ -141,7 +141,7 @@ jQuery(function($) {
                     stop: function() {
                         //console.log("stop");
                         Edit.savePositions();
-                        isDragging = false;
+                        Edit.isDragging = false;
                         if (!over) {
                             Edit.hideEdition();
                         }
@@ -156,7 +156,7 @@ jQuery(function($) {
             overlay.on("mouseleave", function() {
                 //console.log("mouseleave");
                 over = false;
-                if (!isDragging) {
+                if (!Edit.isDragging) {
                     Edit.hideEdition();
                 }
             });
@@ -317,13 +317,15 @@ jQuery(function($) {
                 }
             });
         },
-        showEdition: function(entity) {
-            $('.wallo-edit-overlay').show();
-            $('.wallo-edit-dd').css("left", entity.x)
-                .css("top", entity.y)
-                .width(entity.w)
-                .height(entity.h);
-            currentEntity = entity;
+        showEditOverlay: function(entity) {
+            if (!Edit.isDragging) {
+                $('.wallo-edit-overlay').show();
+                $('.wallo-edit-dd').css("left", entity.x)
+                    .css("top", entity.y)
+                    .width(entity.w)
+                    .height(entity.h);
+                currentEntity = entity;
+            }
         },
         hideEdition: function() {
             $('.wallo-edit-overlay').hide();

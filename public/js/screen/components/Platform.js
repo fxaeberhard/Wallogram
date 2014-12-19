@@ -289,7 +289,7 @@ Crafty.c('MouseHover', {
     init: function() {
         this.requires("Mouse")
             .bind('MouseOver', function() {
-                $.Edit.showEdition(this);
+                $.Edit.showEditOverlay(this);
                 //document.body.style.cursor = "pointer";
             })
             .bind('MouseOut', function() {

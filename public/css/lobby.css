@@ -1,15 +1,19 @@
 @font-face {
   font-family: "bebas";
-  src: url('BebasNeue.otf');
+  src: url('font/BebasNeue.otf');
 }
 @font-face {
   font-family: "HelveticaNeueLTS";
-  src: url('HelveticaNeueLTStd-Roman.otf');
+  src: url('font/HelveticaNeueLTStd-Roman.otf');
 }
 @font-face {
   font-family: "HelveticaNeueLTS";
-  src: url("HelveticaNeueLTStd-Bd.otf");
+  src: url("font/HelveticaNeueLTStd-Bd.otf");
   font-weight: bold;
+}
+body {
+  font-family: 'HelveticaNeueLTS', sans-serif;
+  font-size: 1em;
 }
 * {
   -webkit-box-sizing: border-box;
@@ -1460,3 +1464,4 @@ a:hover {
   color: red;
   font-size: 0.8em;
 }
+/*# sourceMappingURL=lobby.css.map */

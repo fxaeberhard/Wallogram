@@ -120,6 +120,8 @@ jQuery(function($) {
                         break;
                 }
             });
+
+            $(".wallo-play").scroll(App.updateCanvasPosition);
         },
         SetB2dListener: function() {											// Initiate contact listener
 	        var contactListener = new b2ContactListener
@@ -411,10 +413,8 @@ jQuery(function($) {
                 .toggleClass("wallo-stdmode", !App.debug);
 
             if (this.debug) {
-                Crafty.stage.x = $("#tab-play").position().left;
-                App.restartHandler = setTimeout(function() {                    // do it later cause of css animation
-                    Crafty.stage.x = $("#tab-play").position().left;
-                }, 1000);
+                App.updateCanvasPosition();
+                App.restartHandler = setTimeout(App.updateCanvasPosition, 1000);// do it later cause of css animation
             }
         },
         toggleDebugCanvas: function() {
@@ -423,7 +423,12 @@ jQuery(function($) {
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
         },
         getPadUrl: function() {
-            return  PADURL + "?gameId=" + IO.gameId;
+            var port = window.location.port !== 80 ? ":" + window.location.port : "";
+            return  window.location.protocol + "//" + window.location.hostname + port + PADURL + "?gameId=" + IO.gameId;
+        },
+        updateCanvasPosition: function() {
+            Crafty.stage.x = $("#tab-play").position().left - $(".wallo-play").scrollLeft();
+            Crafty.stage.y = $("#tab-play").position().top - $(".wallo-play").scrollTop();
         }
     };
     $.App = App;                                                                // Set up global reference
