@@ -189,7 +189,7 @@ jQuery(function($) {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme1.png",
                 value: {
-                    components: "2D, Canvas, lab_plateforme1",
+                    components: "2D, Canvas, lab_plateforme1, MouseHover",
                     w: 128,
                     h: 128
                 }
@@ -232,7 +232,7 @@ jQuery(function($) {
                         Edit.savePositions();
                     },
                     stop: function() {
-                        //console.log("stop");
+                        console.log("EditOverlay.stopDrag(over: " + over + ")");
                         Edit.savePositions();
                         Edit.isDragging = false;
                         if (!over) {
@@ -431,7 +431,10 @@ jQuery(function($) {
             }
         },
         hideEdition: function() {
-            $('.wallo-edit-overlay').hide();
+            console.log("Edit.hideEdition(isDragging:" + Edit.isDragging + ")");
+            if (!Edit.isDragging) {
+                $('.wallo-edit-overlay').hide();
+            }
         },
         savePositions: function() {
             var node = $('.wallo-edit-dd'),
@@ -483,6 +486,7 @@ jQuery(function($) {
             });
         },
         destroyEntity: function() {
+            console.log("Edit.destroyEntity()");
             $.arrayFind($.App.cfg.entities, function(i, e) {
                 if (e === currentEntity.cfg) {
                     $.App.cfg.entities.splice(i, 1);
