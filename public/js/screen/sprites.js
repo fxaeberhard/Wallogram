@@ -117,6 +117,9 @@ Crafty.sprite(153, 73, 'assets/lab/sprite_plateforme1.png ', {
 Crafty.sprite(138, 65, 'assets/lab/sprite_plateforme2.png ', {
     lab_plateforme2: [0, 0]
 });
+Crafty.sprite(187, 340, 'assets/lab/mechant.png ', {
+    lab_enemy: [0, 0]
+});
 
 /*
  * Enemy

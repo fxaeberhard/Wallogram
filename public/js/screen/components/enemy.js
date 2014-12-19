@@ -8,13 +8,11 @@
 Crafty.c("Enemy", {
 	init: function() {  																			// init function is automatically run when entity with this component is created
 		this.dead = this.rightTouch = this.leftTouch = this.footTouch = false 
-		                           
         this.requires("2D, Canvas, Box2D")
     	.bind("EnterFrame", function() {
     		var body = this.body,
     			velocity = body.GetLinearVelocity(),
     			forceX
-    		
     		if (this.runOnce != true) {
 	    		this.runOnce()
     		}	
@@ -209,6 +207,65 @@ Crafty.c("Hotdog", {
                 		[(3 * this.w / 4) - 3, (this.w / 10) + 3], 
                 		[(3 * this.w / 4) - 3, (this.w / 10) - 3], 
                 		[(this.w / 4) + 3, (this.w / 10) - 3]],
+                isSensor: true,
+                userData: "top"
+            });
+        this.body.SetFixedRotation(true);
+	}
+});
+Crafty.c("Lab_Enemy", {
+	ANIMSPEED: 1000,
+	init: function() {
+		this.requires("Enemy, lab_enemy, SpriteAnimation")               	// Requirements
+            .attr({x: 100, y: 100, w: 44, h: 80, name: "hotdog"})               // set width and height
+			.reel("idle", this.ANIMSPEED, 0, 0, 1)
+            .reel("run", this.ANIMSPEED, 0, 0, 24)								// Set up animation
+            .reel("die", this.ANIMSPEED, 0, 0, 1)
+            .animate("idle", -1)                                                // Run idle animation
+            .box2d({
+                bodyType: 'dynamic',
+                density: 2.0,
+                friction: 0,
+                restitution: 0,
+                shape: [[this.w * (60 / 187), this.h * (51 / 340)], 
+                		[this.w * (162 / 187), this.h * (51 / 340)], 
+                		[this.w * (162 / 187), this.h * (315 / 340)], 
+                		[this.w * (60 / 187), this.h * (315 / 340)]],
+                userData: "body"
+            })
+            .addFixture({														// Add foot sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (60 / 187) + 3, this.h * (315 / 340)- 3], 
+                		[this.w * (162 / 187) - 3, this.h * (315 / 340)- 3], 
+                		[this.w * (162 / 187) - 3, this.h * (315 / 340)+ 3], 
+                		[this.w * (60 / 187) + 3, this.h * (315 / 340)+ 3]],
+                isSensor: true,
+                userData: "foot"
+            })
+            .addFixture({														// Add left sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (60 / 187) - 3, this.h * (51 / 340) + 3], 
+                		[this.w * (60 / 187) + 3, this.h * (51 / 340) + 3], 
+                		[this.w * (60 / 187) + 3, this.h * (315 / 340) - 3], 
+                		[this.w * (60 / 187) - 3, this.h * (315 / 340) - 3]],
+                isSensor: true,
+                userData: "leftSide"
+            })
+            .addFixture({	                                                   	// Add right sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (162 / 187) - 3, this.h * (51 / 340) + 3],
+                		[this.w * (162 / 187) + 3, this.h * (51 / 340) + 3], 
+                		[this.w * (162 / 187) + 3, this.h * (315 / 340) - 3], 
+                		[this.w * (162 / 187) - 3, this.h * (315 / 340) - 3]],
+                isSensor: true,
+                userData: "rightSide"
+            })
+            .addFixture({														// Add top sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (60 / 187) + 3, this.h * (51 / 340) + 3], 
+                		[this.w * (162 / 187) - 3, this.h * (51 / 340) + 3], 
+                		[this.w * (162 / 187) - 3, this.h * (51 / 340) - 3], 
+                		[this.w * (60 / 187) + 3, this.h * (51 / 340) - 3]],
                 isSensor: true,
                 userData: "top"
             });
