@@ -1229,7 +1229,10 @@ a:hover {
 .diagonal #game-three {
   margin-left: -12%;
   width: 40%;
-  background: url('../assets/game_03.png') no-repeat 0 0 scroll;
+  background: url('../assets/mur_home.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   z-index: 1;
 }
 .diagonal #game-three img {
@@ -1250,11 +1253,14 @@ a:hover {
   background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_02.png');
 }
 #game-three {
-  background: url('../assets/game_03.png');
+  background: url('../assets/mur_home.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   width: 33.33%;
 }
 #game-three:hover {
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_03.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/mur_home.jpg');
 }
 #choose-img {
   position: fixed;
