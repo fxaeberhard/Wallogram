@@ -16,7 +16,7 @@ jQuery(function($) {
     var currentEntity,
         TOOLBAR = {
             Color: {
-                category: "platforms",
+                tab: "platforms",
                 label: "Colored platform",
                 form: [{
                         name: "color",
@@ -24,7 +24,6 @@ jQuery(function($) {
                         type: "color"
                     }],
                 value: {
-                    type: "Color",
                     components: "ColoredPlatform",
                     color: "red",
                     w: 100,
@@ -32,25 +31,23 @@ jQuery(function($) {
                 }
             },
             Invisible: {
-                category: "platforms",
+                tab: "platforms",
                 label: "Invisible platform",
                 form: [],
                 value: {
-                    type: "Invisible",
                     components: "Invisible",
                     w: 100,
                     h: 100
                 }
             },
             Image: {
-                category: "image",
+                tab: "image",
                 thumbClass: "fa fa-file-image-o fa-4x",
                 form: [{
                         name: "image",
                         label: "Image"
                     }],
                 value: {
-                    type: "Image",
                     components: "WalloImage, Platform",
                     image: "assets/mario-platform.png",
                     w: 90,
@@ -58,7 +55,7 @@ jQuery(function($) {
                 }
             },
             Video: {
-                category: "video",
+                tab: "video",
                 thumbClass: "fa fa-file-video-o fa-4x",
                 form: [{
                         name: "url",
@@ -66,7 +63,6 @@ jQuery(function($) {
                         type: "url"
                     }],
                 value: {
-                    type: "Video",
                     components: "Video",
                     url: "http://www.youtube.com/watch?v=xhrBDcQq2DM",
                     w: 320,
@@ -74,7 +70,7 @@ jQuery(function($) {
                 }
             },
             Text: {
-                category: "other",
+                tab: "other",
                 thumbClass: "fa fa-font fa-4x",
                 form: [{
                         name: "text",
@@ -82,7 +78,6 @@ jQuery(function($) {
                         className: "inputEx-Field form-text"
                     }],
                 value: {
-                    type: "Text",
                     components: "WalloText",
                     text: "Ipsem lorum",
                     w: 200,
@@ -90,7 +85,7 @@ jQuery(function($) {
                 }
             },
             QR: {
-                category: "other",
+                tab: "other",
                 thumbClass: "fa fa-qrcode fa-4x",
                 form: [{
                         name: "background",
@@ -102,20 +97,118 @@ jQuery(function($) {
                         type: "color"
                     }],
                 value: {
-                    type: "QR",
                     components: "QR",
                     w: 80,
                     h: 80,
                     foreground: "#000000",
                     background: "#ffffff"
                 }
+            },
+            Lab_Porte: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/porte.png",
+                value: {
+                    components: "Lab_Porte",
+                    w: 120,
+                    h: 170
+                }
+            },
+            Gyrophare: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/sprite_gyrophare_thumb.png",
+                value: {
+                    components: "Gyrophare",
+                    w: 80,
+                    h: 80
+                }
+            },
+            Chimie: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/sprite_chimie_thumb.png",
+                value: {
+                    components: "Chimie",
+                    w: 160,
+                    h: 160
+                }
+            },
+            Jauge: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/sprite_jauge_thumb.png",
+                value: {
+                    components: "Jauge",
+                    w: 182,
+                    h: 153
+                }
+            },
+//            Serrure: {
+//                tab: "platforms",
+//                thumbUrl: "assets/lab/sprite_serrure_thumb.png",
+//                value: {
+//                    components: "Serrure",
+//                    w: 95,
+//                    h: 70
+//                }
+//            },
+            Ventilo: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/sprite_ventilo_thumb.png",
+                value: {
+                    components: "Ventilo",
+                    w: 202,
+                    h: 204
+                }
+            },
+            Serveur: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/sprite_serveur_thumb.png",
+                value: {
+                    components: "Serveur",
+                    w: 115,
+                    h: 180
+                }
+            },
+            Lab_Falling: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/sprite_plateforme_tombe_thumb.png",
+                value: {
+                    components: "Lab_Falling",
+                    w: 128,
+                    h: 100
+                }
+            },
+//            Lab_MovingPlatform: {
+//                tab: "platforms",
+//                thumbUrl: "assets/lab/sprite_plateforme1.png",
+//                value: {
+//                    components: "Lab_MovingPlatform",
+//                    w: 128,
+//                    h: 100
+//                }
+//            },
+            Lab_Plateform1: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/sprite_plateforme1.png",
+                value: {
+                    components: "2D, Canvas, lab_plateforme1",
+                    w: 128,
+                    h: 128
+                }
             }
+//            Lab_Plateform2: {
+//                tab: "platforms",
+//                thumbUrl: "assets/lab/sprite_plateforme2.png",
+//                value: {
+//                    components: "2D, Canvas, lab_plateforme2",
+//                    w: 153,
+//                    h: 73
+//                }
+//            }
         },
     Edit = {
         /**
          *
          */
-        init: function() {                                                             // Toggle fps button
+        init: function() {                                                      // Toggle fps button
 
             /**
              * Entity edition overlay
@@ -150,11 +243,11 @@ jQuery(function($) {
             overlay.draggable(cfg);                                             // Set up drag and drop on overlay
             overlay.resizable(cfg);
             overlay.on("mouseenter", function() {
-                //console.log("mouseenter");
+                console.log("mouseenter");
                 over = true;
             });
             overlay.on("mouseleave", function() {
-                //console.log("mouseleave");
+                console.log("mouseleave(isDragging: " + Edit.isDragging + ")");
                 over = false;
                 if (!Edit.isDragging) {
                     Edit.hideEdition();
@@ -276,11 +369,19 @@ jQuery(function($) {
                 video: "",
                 other: ""
             };
-            _.each(TOOLBAR, function(i) {                                       // Render toolbar elements
-                if (!tabs[i.category]) {
-                    tabs[i.category] = "";
+            _.each(TOOLBAR, function(i, type) {                                 // Render toolbar elements
+                if (!tabs[i.tab]) {
+                    tabs[i.tab] = "";
                 }
-                tabs[i.category] += "<div class='wallo-thumb wallo-thumb-" + i.value.type + "' data-type='" + i.value.type + "' title='" + (i.label || i.value.type) + "'><div class='wallo-icon " + i.thumbClass + "'></div></div>";
+                var thumb, className = "";
+                if (i.thumbUrl) {
+                    thumb = "<img src='" + i.thumbUrl + "' />";
+                    className = "wallo-thumb-img";
+                } else {
+                    thumb = "<div class='wallo-icon " + i.thumbClass + "'></div>";
+                }
+                tabs[i.tab] += "<div class='wallo-thumb wallo-thumb-" + type + " " + className + "' data-type='" + type + "' title='" + (i.label || type) + "'>"
+                    + thumb + "</div>";
             });
             tablinks = _.map(tabs, function(o, k) {
                 return '<li><a href="#tabs-toolbar-' + k + '" class="toolbar-' + k + '"></a></li>';
@@ -307,6 +408,7 @@ jQuery(function($) {
 
                         cfg.x = e.clientX - $("#tab-play").position().left - cfg.w / 2;
                         cfg.y = e.clientY - cfg.h / 2;
+                        cfg.type = dropType;
 
                         $.App.cfg.entities.push(cfg);
                         var entity = Crafty.e(cfg.components).attr(cfg);
