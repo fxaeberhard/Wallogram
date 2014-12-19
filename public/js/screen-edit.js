@@ -114,7 +114,7 @@ jQuery(function($) {
                 }
             },
             Gyrophare: {
-                tab: "platforms",
+                tab: "furniture",
                 thumbUrl: "assets/lab/sprite_gyrophare_thumb.png",
                 value: {
                     components: "Gyrophare",
@@ -150,7 +150,7 @@ jQuery(function($) {
 //                }
 //            },
             Ventilo: {
-                tab: "platforms",
+                tab: "furniture",
                 thumbUrl: "assets/lab/sprite_ventilo_thumb.png",
                 value: {
                     components: "Ventilo",
@@ -364,6 +364,7 @@ jQuery(function($) {
 
             var tablinks, tabContent, tabs = {
                 platforms: "",
+                furniture: "",
                 ennemy: "",
                 image: "",
                 video: "",
