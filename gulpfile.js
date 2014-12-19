@@ -13,6 +13,7 @@ gulp.task('lobbyCss', function () {
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
+    .on('error', function(err){ console.log(err.message); })
     .pipe(gulp.dest('public/css'))
 });
 
@@ -21,6 +22,7 @@ gulp.task('indexCss', function () {
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
+    .on('error', function(err){ console.log(err.message); })
     .pipe(gulp.dest('public/css'))
 });
 
