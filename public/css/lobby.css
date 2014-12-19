@@ -1194,11 +1194,7 @@ a:hover {
 .nav-container-right .language-setting a.current-language {
   color: white;
   background-color: black;
-}
-.nav-container-right .language-setting a.current-language i {
-  display: block;
-  line-height: 4px;
-  text-align: center;
+  text-decoration: underline;
 }
 body {
   background-color: #c9c9c9;
@@ -1337,6 +1333,11 @@ a:hover {
   background-color: white;
   padding-top: 8px;
   cursor: pointer;
+}
+.lobby .header .games .default-games .game-selected .action span {
+  font-size: 0.8em;
+  font-family: HelveticaNeueLTS;
+  margin-left: 2px;
 }
 .lobby .header .games .default-games .game-selected .play {
   top: 20px;

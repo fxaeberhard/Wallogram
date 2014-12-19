@@ -11,40 +11,38 @@
   nav
     ul
       li 
-        a(href="#") About us
+        a(href="#")=__("About us")
       li 
-        a(href="#") Team
+        a(href="#")=__("Team")
       li 
-        a(href="#") Pricing
+        a(href="#")=__("Pricing")
       li 
-        a(href="#") Contact
+        a(href="#")=__("Contact")
 .nav-container-right
   .user-unknown
     .user-log-sign-in 
       a(href="lobby")
         i(class="fa fa-key")
-        h2 My Account  
+        h2=__("My Account")
       a(href="lobby")
         i(class="fa fa-pencil")
-        h2 Sing In
+        h2=__("Sign In")
   .user-settings
     .user-name
       i(class="fa fa-user")
-      h2 User name
+      h2=__("User name")
       a(class="toggle-settings")
         i(class="fa fa-caret-down")
         i(class="fa fa-caret-up")
     ul
       li
-        a(href="#") Edit my profile
+        a(href="#")=__("Edit my profile")
       li
-        a(href="#") Account's settings
+        a(href="#")=__("Account's settings")
       li
-        a(href="#") Disconnect
+        a(href="#")=__("Disconnect")
     
   .language-setting
-    a(href="#" class="current-language") EN
-      i(class="fa fa-angle-down")
-    a(href="#" class="") FR
-    a(href="#" class="") DE
+    a(href="/setlocale/en" class="english") EN
+    a(href="/setlocale/fr" class="french") FR
 

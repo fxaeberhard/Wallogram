@@ -1,6 +1,7 @@
 // Import the Express module
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 // Configuring Passport
 var passport = require('passport');
 var expressSession = require('express-session');
@@ -9,7 +10,12 @@ var expressSession = require('express-session');
  // and displaying in templates
 var flash = require('connect-flash');
 
-
+var i18n = require("i18n");
+i18n.configure({
+  locales:['en', 'fr'],
+  cookie: 'wallolocale',
+  directory: __dirname + '/locales'
+});
 // Import the 'path' module (packaged with Node.js)
 var path = require('path');
 
@@ -27,7 +33,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-
 // Import the Anagrammatix game file.
 var game = require('./server');
 app.use(bodyParser.json());
@@ -37,7 +42,10 @@ app.use(expressSession({secret: 'mySecretKey',resave: true,saveUninitialized: tr
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(cookieParser());
+app.use(i18n.init);
 
+app.locals.title = 'My App';
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;

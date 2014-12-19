@@ -22,15 +22,26 @@ block content
   div(class="wrapper")
     div(id="game-one" class="game")
       a(href="#") 
-        img(src="assets/try_game.png")
+        +try_img_translation
     div(id="game-two" class="game game-overlay")
       a(href="#") 
-        img(src="assets/try_game.png")
+        +try_img_translation
     div(id="game-three" class="game")
       a(href="#") 
-        img(src="assets/try_game.png")
-  img(src="assets/choose_game.png" id="choose-img")
+        +try_img_translation
+  -if(locals.locale == "en")
+    img(src="assets/choose_game.png" id="choose-img")
+  - else
+    img(src="assets/choisir_jeu.png" id="choose-img")
   script(src="libs/jquery-2.1.1.min.js")
+  script(src="libs/jquery.cookie.js")
   script(src="js/index/index.js")
   script(src="js/nav/nav.js")
   script(src="js/detectBrowser.js")
+
+
+mixin try_img_translation
+  -if(locals.locale == "en")
+    img(src="assets/try_game.png")
+  - else
+    img(src="assets/essayer_jeu.png")

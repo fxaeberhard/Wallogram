@@ -1188,11 +1188,7 @@ a:hover {
 .nav-container-right .language-setting a.current-language {
   color: white;
   background-color: black;
-}
-.nav-container-right .language-setting a.current-language i {
-  display: block;
-  line-height: 4px;
-  text-align: center;
+  text-decoration: underline;
 }
 .game {
   height: 100vh;
