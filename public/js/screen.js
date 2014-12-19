@@ -249,10 +249,6 @@ jQuery(function($) {
                 if (entity.name === "spawner") {								// set spawner
                     App.cfg.spawn = entity
                 }
-                if (!App.cfg.spawn) {
-	                App.cfg.spawn.x = 100;
-	                App.cfg.spawn.y = 100;
-                }
                 return entity;
             });
             return ret;
@@ -325,7 +321,10 @@ jQuery(function($) {
         },
         addPlayer: function(data, cfg) {
             cfg.z = 150;                                                        // Player is on top
-
+			if(App.cfg.spawn) {
+	                cfg.x = App.cfg.spawn.x;
+					cfg.y = App.cfg.spawn.y;
+				}
             App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
@@ -340,6 +339,10 @@ jQuery(function($) {
             if (!App.players.DEBUG) {
                 var cfg = App.cfg.player[0];
                 cfg.z = 150;
+                if(App.cfg.spawn) {
+	                cfg.x = App.cfg.spawn.x;
+					cfg.y = App.cfg.spawn.y;
+				}
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
                 console.log(App.players.DEBUG);
