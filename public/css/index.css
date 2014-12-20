@@ -2,17 +2,8 @@
   font-family: "bebas";
   src: url('font/BebasNeue.otf');
 }
-@font-face {
-  font-family: "HelveticaNeueLTS";
-  src: url('font/HelveticaNeueLTStd-Roman.otf');
-}
-@font-face {
-  font-family: "HelveticaNeueLTS";
-  src: url("font/HelveticaNeueLTStd-Bd.otf");
-  font-weight: bold;
-}
 body {
-  font-family: 'HelveticaNeueLTS', sans-serif;
+  font-family: 'Open Sans', "Helvetica", sans-serif;
   font-size: 1em;
 }
 * {
@@ -31,7 +22,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -1296,3 +1287,4 @@ a:hover {
   transform: translate(-50%, -50%);
   z-index: 999;
 }
+/*# sourceMappingURL=index.css.map */
