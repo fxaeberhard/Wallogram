@@ -8,7 +8,7 @@
 jQuery(function($) {
     'use strict';
 
-    YUI_config.groups.inputex.base = "libs/inputEx/src/";
+    YUI_config.groups.inputex.base = "libs/inputex/src/";
     YUI_config.groups.inputex.filter = "raw";
     YUI_config.groups.inputex.modules['inputex-rte'].requires = ['inputex-field', 'inputex-textarea'];
     YUI_config.groups.inputex.modules['inputex-color'].requires = ['inputex-field'];
@@ -48,7 +48,7 @@ jQuery(function($) {
                         label: "Image"
                     }],
                 value: {
-                    components: "WalloImage, Platform",
+                    components: "WalloImage",
                     image: "assets/mario-platform.png",
                     w: 90,
                     h: 100
@@ -114,7 +114,7 @@ jQuery(function($) {
                 }
             },
             Gyrophare: {
-                tab: "platforms",
+                tab: "furniture",
                 thumbUrl: "assets/lab/sprite_gyrophare_thumb.png",
                 value: {
                     components: "Gyrophare",
@@ -150,7 +150,7 @@ jQuery(function($) {
 //                }
 //            },
             Ventilo: {
-                tab: "platforms",
+                tab: "furniture",
                 thumbUrl: "assets/lab/sprite_ventilo_thumb.png",
                 value: {
                     components: "Ventilo",
@@ -189,7 +189,7 @@ jQuery(function($) {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme1.png",
                 value: {
-                    components: "2D, Canvas, lab_plateforme1",
+                    components: "2D, Canvas, lab_plateforme1, MouseHover",
                     w: 128,
                     h: 128
                 }
@@ -232,7 +232,7 @@ jQuery(function($) {
                         Edit.savePositions();
                     },
                     stop: function() {
-                        //console.log("stop");
+                        console.log("EditOverlay.stopDrag(over: " + over + ")");
                         Edit.savePositions();
                         Edit.isDragging = false;
                         if (!over) {
@@ -279,7 +279,7 @@ jQuery(function($) {
              * Right menu 
              */
             $(".wallo-edit-logo").click(function() {
-                window.location = "/screen";
+                window.location = "/lobby";
             });
             $(".button-togglefps").click(function() {
                 $("#stats").toggle();
@@ -364,6 +364,7 @@ jQuery(function($) {
 
             var tablinks, tabContent, tabs = {
                 platforms: "",
+                furniture: "",
                 ennemy: "",
                 image: "",
                 video: "",
@@ -430,7 +431,10 @@ jQuery(function($) {
             }
         },
         hideEdition: function() {
-            $('.wallo-edit-overlay').hide();
+            console.log("Edit.hideEdition(isDragging:" + Edit.isDragging + ")");
+            if (!Edit.isDragging) {
+                $('.wallo-edit-overlay').hide();
+            }
         },
         savePositions: function() {
             var node = $('.wallo-edit-dd'),
@@ -482,6 +486,7 @@ jQuery(function($) {
             });
         },
         destroyEntity: function() {
+            console.log("Edit.destroyEntity()");
             $.arrayFind($.App.cfg.entities, function(i, e) {
                 if (e === currentEntity.cfg) {
                     $.App.cfg.entities.splice(i, 1);

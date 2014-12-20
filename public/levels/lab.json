@@ -15,7 +15,7 @@
 		},
 		{
 			"components": "fixImage, lab_background",
-			"z": 1
+			"z": 0
 		},
 		{
 			"components": "fixImage, lab_foreground",

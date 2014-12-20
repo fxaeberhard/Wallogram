@@ -2,17 +2,8 @@
   font-family: "bebas";
   src: url('font/BebasNeue.otf');
 }
-@font-face {
-  font-family: "HelveticaNeueLTS";
-  src: url('font/HelveticaNeueLTStd-Roman.otf');
-}
-@font-face {
-  font-family: "HelveticaNeueLTS";
-  src: url("font/HelveticaNeueLTStd-Bd.otf");
-  font-weight: bold;
-}
 body {
-  font-family: 'HelveticaNeueLTS', sans-serif;
+  font-family: 'Open Sans', "Helvetica", sans-serif;
   font-size: 1em;
 }
 * {
@@ -31,7 +22,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -1198,11 +1189,7 @@ a:hover {
 .nav-container-right .language-setting a.current-language {
   color: white;
   background-color: black;
-}
-.nav-container-right .language-setting a.current-language i {
-  display: block;
-  line-height: 4px;
-  text-align: center;
+  text-decoration: underline;
 }
 body {
   background-color: #c9c9c9;
@@ -1265,7 +1252,7 @@ a:hover {
   font-size: 1.8em;
 }
 .lobby .header .profile .infos dl {
-  font-family: 'HelveticaNeueLTS';
+  font-family: 'Open Sans', "Helvetica", sans-serif;
 }
 .lobby .header .profile .infos dl dt {
   display: none;
@@ -1341,6 +1328,11 @@ a:hover {
   background-color: white;
   padding-top: 8px;
   cursor: pointer;
+}
+.lobby .header .games .default-games .game-selected .action span {
+  font-size: 0.8em;
+  font-family: 'Open Sans', "Helvetica", sans-serif;
+  margin-left: 2px;
 }
 .lobby .header .games .default-games .game-selected .play {
   top: 20px;
@@ -1450,7 +1442,7 @@ a:hover {
 .lobby .my-wall .level-infos span,
 .lobby .my-wall .game-infos span {
   display: block;
-  font-family: "HelveticaNeueLTS";
+  font-family: 'Open Sans', "Helvetica", sans-serif;
   color: #c9c9c9;
   font-size: 0.7em;
 }

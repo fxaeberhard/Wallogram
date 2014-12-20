@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var cookieParser = require('cookie-parser');
+var app = express();
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler 
@@ -37,6 +39,11 @@ module.exports = function(passport){
     failureRedirect: '/signup',
     failureFlash : true  
   }));
+
+  router.get('/setlocale/:locale', function (req, res) {
+    res.cookie('wallolocale', req.params.locale);
+    res.redirect('back');
+  });
 
   // /* GET Home Page */
   // router.get('/lobby', isAuthenticated, function(req, res){

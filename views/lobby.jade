@@ -1,9 +1,9 @@
 extends layout
 block head	
-	link(rel="stylesheet" type='text/css' href="font-awesome/css/font-awesome.min.css")
 	link(rel="stylesheet" type='text/css' href="libs/jquery-ui/jquery-ui.min.css")
 	link(rel="stylesheet" type='text/css' href="libs/jquery-ui/jquery-ui.theme.min.css")
 	link(rel="stylesheet" type='text/css' href="css/lobby.css")
+	
 block content
 	.wrapper
 		include partials/nav
@@ -13,14 +13,14 @@ block content
 					.profile
 						img(src="assets/user-profile-picture.jpg" alt="user-picture")
 						.infos
-							h2 My profile
+							h2= __("My profile")
 							dl
 								dt username
 								dd gamedesigner86
 								dt mail
 								dd gamedesigner@gmail.com
 								dt country
-								dd Switzerland
+								dd= __("Switzerland")
 							.update-infos
 								a(href="#")
 									i(class="fa fa-pencil-square-o")
@@ -35,40 +35,47 @@ block content
 									img(src="assets/default-game-sample.gif")
 									h3 Game one
 									div(class="action play")
-										i(class="fa fa-play")	Try
+										i(class="fa fa-play")
+										span=	__("Try")
 									div(class="action edit")
-										i(class="fa fa-pencil-square-o")	Edit
+										i(class="fa fa-pencil-square-o")
+										span=	__("Edit")
 								div(class="game-two game")
 									img(src="assets/default-game-sample.gif")
 									h3 Game two
 									div(class="action play")
-										i(class="fa fa-play")	Try
+										i(class="fa fa-play")
+										span=	__("Try")
 									div(class="action edit")
-										i(class="fa fa-pencil-square-o")	Edit
+										i(class="fa fa-pencil-square-o")
+										span=	__("Edit")
 								div(class="game-three game")
 									img(src="assets/default-game-sample.gif")
 									h3 Game three
 									div(class="action play")
-										i(class="fa fa-play")	Try
+										i(class="fa fa-play")
+										span=	__("Try")
 									div(class="action edit")
-										i(class="fa fa-pencil-square-o")	Edit
+										i(class="fa fa-pencil-square-o")
+										span=	__("Edit")
 				.my-wall
 					.header
 						img(src="assets/small-wall.png" alt="my-wall")
-						h3 My Wall
+						h3= __("My wall")
 					.content
 						.created
-							h4 My games
+							h4= __("My games")
 							.new
 								i(id="newLevel" class="fa fa-plus")
-								span create a new game
+								span= __("create a new game")
 								div(id="level-name" title="Create new game") 
-									p Game name&nbsp;
-									span(class="new-game-validation") Please enter a name
+									p!= __("Game name")
+									span(class="new-game-validation")= __("Please enter a name")
 									input(type="text")
 							.wallo-load-levels
 			//- a(href="/signout") Log out 
 	script(src="libs/jquery-2.1.1.min.js")
 	script(src="libs/jquery-ui/jquery-ui.min.js")
+	script(src="libs/jquery.cookie.js")
 	script(src="js/lobby/lobby.js")
 	script(src="js/nav/nav.js")

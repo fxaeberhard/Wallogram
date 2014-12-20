@@ -16,6 +16,11 @@ jQuery(function($) {
           $('.nav-container-right .user-settings ul').toggle()
           $('.nav-container-right a.toggle-settings i').toggle()
       })
+      if($.cookie('wallolocale') == "en"){
+        $('.english').addClass('current-language')
+      }else{
+        $('.french').addClass('current-language')
+      }
     }
   }
 

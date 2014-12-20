@@ -1,15 +1,10 @@
 @font-face {
   font-family: "bebas";
-  src: url('BebasNeue.otf');
+  src: url('font/BebasNeue.otf');
 }
-@font-face {
-  font-family: "HelveticaNeueLTS";
-  src: url('HelveticaNeueLTStd-Roman.otf');
-}
-@font-face {
-  font-family: "HelveticaNeueLTS";
-  src: url("HelveticaNeueLTStd-Bd.otf");
-  font-weight: bold;
+body {
+  font-family: 'Open Sans', "Helvetica", sans-serif;
+  font-size: 1em;
 }
 * {
   -webkit-box-sizing: border-box;
@@ -27,7 +22,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -1188,11 +1183,7 @@ a:hover {
 .nav-container-right .language-setting a.current-language {
   color: white;
   background-color: black;
-}
-.nav-container-right .language-setting a.current-language i {
-  display: block;
-  line-height: 4px;
-  text-align: center;
+  text-decoration: underline;
 }
 .game {
   height: 100vh;
@@ -1207,7 +1198,10 @@ a:hover {
 }
 .diagonal #game-one {
   width: 36%;
-  background: url('../assets/game_01.png') repeat 0 0 scroll;
+  background: url('../assets/gare.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
   -webkit-shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
   shape-outside: polygon(0 0, 100% 0, 70% 100%, 0 100%);
   -webkit-clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
@@ -1217,7 +1211,10 @@ a:hover {
 .diagonal #game-two {
   margin-left: -36%;
   width: 72%;
-  background: url('../assets/game_02.png');
+  background: url('../assets/factory.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
   -webkit-shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
   shape-outside: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
   -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, -30% 100%);
@@ -1226,10 +1223,19 @@ a:hover {
 .diagonal #game-two img {
   margin-left: 36%;
 }
+.diagonal #game-two:hover {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/factory.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+}
 .diagonal #game-three {
   margin-left: -12%;
   width: 40%;
-  background: url('../assets/game_03.png') no-repeat 0 0 scroll;
+  background: url('../assets/mur_home.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
   z-index: 1;
 }
 .diagonal #game-three img {
@@ -1237,24 +1243,42 @@ a:hover {
 }
 #game-one {
   width: 33.33%;
-  background: url('../assets/game_01.png');
+  background: url('../assets/gare.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
 }
 #game-one:hover {
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_01.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/gare.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
 }
 #game-two {
   width: 33.33%;
-  background: url('../assets/game_02.png');
+  background: url('../assets/factory-vertical.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: 50% 0;
 }
 #game-two:hover {
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_02.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/factory-vertical.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
 }
 #game-three {
-  background: url('../assets/game_03.png');
+  background: url('../assets/mur_home.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
   width: 33.33%;
 }
 #game-three:hover {
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/game_03.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('../assets/mur_home.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
 }
 #choose-img {
   position: fixed;
@@ -1263,3 +1287,4 @@ a:hover {
   transform: translate(-50%, -50%);
   z-index: 999;
 }
+/*# sourceMappingURL=index.css.map */

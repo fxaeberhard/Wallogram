@@ -275,6 +275,9 @@ body {
 .wallo-edit-toolbar .ui-tabs-nav li a.toolbar-platforms {
     background-position: -387px -321px;
 }
+.wallo-edit-toolbar .ui-tabs-nav li a.toolbar-furniture {
+    background-position: -431px -321px;
+}
 .wallo-edit-toolbar .ui-tabs-nav li a.toolbar-ennemy {
     background-position: -596px -321px;
 }
@@ -285,8 +288,9 @@ body {
     background-position: -562px -321px;
 }
 .wallo-edit-toolbar .ui-tabs-nav li a.toolbar-other {
-    background-position: -431px -321px;
+    background-position: -638px -321px;
 }
+
 .wallo-edit-toolbar .ui-tabs-panel {
     padding: 0 !important;
     background: black;
@@ -315,8 +319,7 @@ body {
     display: inline-block;
     vertical-align: middle;  /* vertical alignment of the inline element */
     height: 100%;
-    
-  width: 1px;
+    width: 1px;
 }
 .wallo-thumb .wallo-icon {
     width: 107px;
