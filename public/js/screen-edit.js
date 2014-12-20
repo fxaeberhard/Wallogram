@@ -8,7 +8,7 @@
 jQuery(function($) {
     'use strict';
 
-    YUI_config.groups.inputex.base = "libs/inputEx/src/";
+    YUI_config.groups.inputex.base = "libs/inputex/src/";
     YUI_config.groups.inputex.filter = "raw";
     YUI_config.groups.inputex.modules['inputex-rte'].requires = ['inputex-field', 'inputex-textarea'];
     YUI_config.groups.inputex.modules['inputex-color'].requires = ['inputex-field'];
@@ -48,7 +48,7 @@ jQuery(function($) {
                         label: "Image"
                     }],
                 value: {
-                    components: "WalloImage, Platform",
+                    components: "WalloImage",
                     image: "assets/mario-platform.png",
                     w: 90,
                     h: 100
@@ -279,7 +279,7 @@ jQuery(function($) {
              * Right menu 
              */
             $(".wallo-edit-logo").click(function() {
-                window.location = "/screen";
+                window.location = "/lobby";
             });
             $(".button-togglefps").click(function() {
                 $("#stats").toggle();
