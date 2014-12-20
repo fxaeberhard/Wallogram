@@ -528,18 +528,18 @@ Crafty.c("WalloBotBigger", {
 });
 Crafty.c("Mario", {
     ANIMSPEED: 400,
-    JUMPFORCE: -450,
-    WALKFORCE: 500,
+    JUMPFORCE: -250,
+    WALKFORCE: 350,
     DOWNFORCELIMIT: 6,
     DOWNFORCE: 12,
     TOPSPEED: 10,
-    HEIGHT: 64,
+    HEIGHT: 45,
     /**
      * 
      */
     init: function() {                                                          // init function is automatically run when entity with this component is created
         this.requires("Player, SpriteAnimation")                // Requirements
-            .attr({x: 100, w: 64, h: this.HEIGHT, name: "player"})                       // Set width and height
+            .attr({x: 100, w: 45, h: this.HEIGHT, name: "player"})                       // Set width and height
             .reel("idle", this.ANIMSPEED, 3, 0, 1)                              // Set up animation
             .reel("jump", this.ANIMSPEED, 4 , 0, 1)
             .reel("run", this.ANIMSPEED, 0, 0, 3) 

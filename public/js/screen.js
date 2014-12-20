@@ -39,7 +39,7 @@ jQuery(function($) {
             if ($.urlParam('level')) {
                 levelUri = "/levels/getLevel?level=" + $.urlParam('level');
             } else {
-                levelUri = "levels/lab.json";
+                levelUri = "levels/garage.json";
             }
             $.getJSON(levelUri, function(cfg) {                           	// Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
@@ -142,7 +142,7 @@ jQuery(function($) {
 					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity starting Contact is Player
 						var player = f.GetBody().GetUserData()
 						player.BeginContact(fixtures, i);
-					} else if (f.GetBody().GetUserData().name == "hotdog"){		// If one of the entity starting Contact is Enemy
+					} else if (f.GetBody().GetUserData().name == "enemy"){		// If one of the entity starting Contact is Enemy
 						var enemy = f.GetBody().GetUserData();					// Get relevent enemy
 						enemy.BeginContact(fixtures, i);						// Send both fixtures
 					} else if (f.GetBody().GetUserData().components == "OutOfBounds") {
@@ -171,7 +171,7 @@ jQuery(function($) {
 					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
 						var player = f.GetBody().GetUserData()
 						player.EndContact(fixtures, i);
-					} else if(f.GetBody().GetUserData().name == "hotdog"){				// If one of the entity ending Contact is Enemy
+					} else if(f.GetBody().GetUserData().name == "enemy"){				// If one of the entity ending Contact is Enemy
 						var enemy = f.GetBody().GetUserData()
 						enemy.EndContact(fixtures, i);
 					} else if(f.GetBody().GetUserData().name == "falling") {
@@ -259,28 +259,28 @@ jQuery(function($) {
         },
         setOutOfBound: function() {
 	        var entities = [{
-                        "components": "OutOfBounds",
+                        "components": "Platform", // top
                         "x": - 10,
                         "y": - 30,
                         "w": App.cfg.width + 20,
-                        "h": 20
+                        "h": 30
                     }, {
-                        "components": "OutOfBounds",
-                        "x": App.cfg.width + 30,
+                        "components": "Platform", // right
+                        "x": App.cfg.width,
                         "y":  - 10,
-                        "w": 20,
-                        "h": App.cfg.height + 30
+                        "w": 30,
+                        "h": App.cfg.height
                     }, {
-                        "components": "OutOfBounds",
+                        "components": "OutOfBounds", // bottom
                         "x": - 30,
                         "y": App.cfg.height + 10,
                         "w": App.cfg.width + 20,
                         "h": 20
                     }, {
-                        "components": "OutOfBounds",
+                        "components": "Platform", // left
                         "x": - 30,
                         "y": - 30,
-                        "w": 20,
+                        "w": 30,
                         "h": App.cfg.height + 60
                     }];
                     

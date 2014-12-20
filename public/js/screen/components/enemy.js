@@ -8,36 +8,58 @@
 Crafty.c("Enemy", {
 	init: function() {  																			// init function is automatically run when entity with this component is created
 		this.dead = this.rightTouch = this.leftTouch = this.footTouch = false 
-        this.requires("2D, Canvas, Box2D")
-    	.bind("EnterFrame", function() {
-    		var body = this.body,
-    			velocity = body.GetLinearVelocity(),
-    			forceX
-    		if (this.runOnce != true) {
-	    		this.runOnce()
-    		}	
-    		
-    		if (velocity.x != 0 && this.dead && this.leftTouch == false && this.rightTouch == false){			// slow down to a stop when dead
-        		if (velocity.x < 0){
-				    forceX = -velocity.x
+        this.requires("2D, Canvas, Box2D, MouseHover")
+	    	.bind("EnterFrame", function() {
+	    		var body = this.body,
+	    			velocity = body.GetLinearVelocity(),
+	    			ratio = Crafty.box2D.PTM_RATIO,
+					position = body.GetPosition(),
+	    			forceX
+	    		if (this.runOnce != true) {
+		    		this.setOrigin()
+	    		}
+	    		if($.App.debug){
+	    			this.animate("idle", -1)
+	    			body.SetLinearVelocity(new b2Vec2(0, 0))
+	    			if(this.moving != true){
+						if(this.x != this.xOrigin || this.y != this.yOrigin){
+							this.setOrigin()
+						}
+					} else {
+						if(this.x != this.x1 || this.y != this.y1) {
+							body.SetPosition(new b2Vec2(this.xOrigin / ratio, this.yOrigin / ratio))
+						}
+					}
+					this.moving = false
+	    		} else {
+	    			if(this.moving == false){
+		    			this.start()
+	    			}
+		    		if (velocity.x != 0 && this.dead && this.leftTouch == false && this.rightTouch == false){			// slow down to a stop when dead
+		        		if (velocity.x < 0){
+						    forceX = -velocity.x
+				        }
+				        if (velocity.x > 0) {	
+					        forceX = -velocity.x
+				        }
+				        if (forceX != 0) {																// Apply moving force if forceX exist
+		                    body.ApplyImpulse(
+		                        new b2Vec2(forceX, 0),
+		                        body.GetWorldCenter()
+		                    )
+		                }
+		            }
+		        this.moving = true
 		        }
-		        if (velocity.x > 0) {	
-			        forceX = -velocity.x
-		        }
-		        if (forceX != 0) {																// Apply moving force if forceX exist
-                    body.ApplyImpulse(
-                        new b2Vec2(forceX, 0),
-                        body.GetWorldCenter()
-                    )
-                }
-            }            
-    	})
+	    	})
     },
-    runOnce: function() {
-	    this.originX = this._x;
-	    this.originY = this._y;
-	    this.setDirection();
+    setOrigin: function() {
+	    this. xOrigin = this.x;
+	    this. yOrigin = this.y;
 	    this.runOnce = true;
+    },
+    start: function() {
+	    this.setDirection();
     },
     run: function(dir) {
         this.currentDir = dir;
@@ -55,7 +77,7 @@ Crafty.c("Enemy", {
 
     },
     reset: function() {								
-		this.attr({"components": "Hotdog", "x": this.originX, "y": this.originY})				// Reset the player position
+		this.attr({"components": "Hotdog", "x": this. xOrigin, "y": this. yOrigin})				// Reset the player position
         this.dead = false;
         this.reseting = false;
         this.setDirection();
@@ -83,14 +105,13 @@ Crafty.c("Enemy", {
 			index2 = 1;
 		}
 		
-		this.sensorCheck(fixtures[index].GetUserData(), true)
-		
 		if (fixtures[index2].GetBody().GetUserData().name == "player" && this.dead == false ){ 			// If other entity is a player and the enemy is not dead
 			if(fixtures[index].GetUserData() == "top"){													// If player gets in contact with top sensor, enemy dies
 				var enemy = this,
 					fix = [],
 					position = body.GetPosition()
 					fixLoop = body.GetFixtureList()
+				console.log(fixtures[index2])
 				this.animate("die");
 				for(var i = 0; i < body.m_fixtureCount;  i++){
 					fix.push(fixLoop)
@@ -100,21 +121,6 @@ Crafty.c("Enemy", {
 				var fixture = $.arrayFind(fix, function(i, f) {
                     return f.m_userData === "body";
                 })
-                
-                //console.log(fixture)
-				//fixture.Destroy()
-				
-				/*
-body.CreateFixture({bodyType: 'dynamic',
-					                density: 2.0,
-					                friction: 0,
-					                restitution: 0,
-					                shape: [[this.w / 4, this.w / 10], 
-					                		[3 * this.w / 22, this.w / 10], 
-					                		[4 * this.w / 4, 11 * this.w / 12], 
-					                		[this.w / 4, 11 * this.w / 12]],
-					                userData: "body"})
-*/
 					                
 				body.SetLinearVelocity(new b2Vec2(0, velocity.y))
 				this.dead = true;
@@ -158,7 +164,7 @@ Crafty.c("Hotdog", {
 	ANIMSPEED: 1000,
 	init: function() {
 		this.requires("Enemy, HotdogSprite, SpriteAnimation")               	// Requirements
-            .attr({x: 100, y: 100, w: 64, h: 64, name: "hotdog"})               // set width and height
+            .attr({x: 100, y: 100, w: 64, h: 64, name: "enemy"})               // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 16)                             // Set up animation
             .reel("run", this.ANIMSPEED, 0, 1, 16)
             .reel("die", this.ANIMSPEED, 0, 11, 8)
@@ -217,7 +223,7 @@ Crafty.c("Lab_Enemy", {
 	ANIMSPEED: 1000,
 	init: function() {
 		this.requires("Enemy, lab_enemy, SpriteAnimation")               	// Requirements
-            .attr({x: 100, y: 100, w: 44, h: 80, name: "hotdog"})               // set width and height
+            .attr({x: 100, y: 100, w: 44, h: 80, name: "enemy"})               // set width and height
 			.reel("idle", this.ANIMSPEED, 0, 0, 1)
             .reel("run", this.ANIMSPEED, 0, 0, 24)								// Set up animation
             .reel("die", this.ANIMSPEED, 0, 0, 1)
@@ -266,6 +272,65 @@ Crafty.c("Lab_Enemy", {
                 		[this.w * (162 / 187) - 3, this.h * (51 / 340) + 3], 
                 		[this.w * (162 / 187) - 3, this.h * (51 / 340) - 3], 
                 		[this.w * (60 / 187) + 3, this.h * (51 / 340) - 3]],
+                isSensor: true,
+                userData: "top"
+            });
+        this.body.SetFixedRotation(true);
+	}
+});
+Crafty.c("Mario_Goomba", {
+	ANIMSPEED: 400,
+	init: function() {
+		this.requires("Enemy, mario_blue_goomba, SpriteAnimation")               	// Requirements
+            .attr({x: 100, y: 100, w: 45, h: 45, name: "enemy"})               // set width and height
+			.reel("idle", this.ANIMSPEED, 0, 0, 1)
+            .reel("run", this.ANIMSPEED, 0, 0, 2)								// Set up animation
+            .reel("die", this.ANIMSPEED, 2, 0, 1)
+            .animate("idle", -1)                                                // Run idle animation
+            .box2d({
+                bodyType: 'dynamic',
+                density: 3.0,
+                friction: 0,
+                restitution: 0,
+                shape: [[0, 0], 
+                		[this.w, 0], 
+                		[this.w, this.h], 
+                		[0, this.h]],
+                userData: "body"
+            })
+            .addFixture({														// Add foot sensor
+                bodyType: 'dynamic',
+                shape: [[ 3, this.h - 3], 
+                		[this.w - 3, this.h - 3], 
+                		[this.w - 3, this.h + 3], 
+                		[ 3, this.h + 3]],
+                isSensor: true,
+                userData: "foot"
+            })
+            .addFixture({														// Add left sensor
+                bodyType: 'dynamic',
+                shape: [[- 3, 3], 
+                		[3, 3], 
+                		[3, this.h - 3], 
+                		[- 3, this.h - 3]],
+                isSensor: true,
+                userData: "leftSide"
+            })
+            .addFixture({	                                                   	// Add right sensor
+                bodyType: 'dynamic',
+                shape: [[this.w - 3, 3],
+                		[this.w + 3, 3], 
+                		[this.w + 3, this.h - 3], 
+                		[this.w - 3, this.h - 3]],
+                isSensor: true,
+                userData: "rightSide"
+            })
+            .addFixture({														// Add top sensor
+                bodyType: 'dynamic',
+                shape: [[ 3, 3], 
+                		[this.w - 3, 3], 
+                		[this.w - 3, - 3], 
+                		[ 3, - 3]],
                 isSensor: true,
                 userData: "top"
             });
