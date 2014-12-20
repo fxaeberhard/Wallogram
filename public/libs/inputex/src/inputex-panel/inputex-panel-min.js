@@ -1,0 +1,1 @@
+YUI.add("inputex-panel",function(a){a.inputEx.Panel=a.Base.create("panel",a.Panel,[a.inputEx.Base],{hide:function(){a.inputEx.Panel.superclass.hide.apply(this,arguments);this.get("field").hide()},show:function(){a.inputEx.Panel.superclass.show.apply(this,arguments);this.get("field").show()}})},"3.1.0",{requires:["inputex","panel","inputex-base"]});
