@@ -1,0 +1,131 @@
+{
+	"width": 1440,
+	"height": 960,
+	"countdownDuration": 5,
+	"entities": [
+		{
+			"components": "Timer",
+			"color": "green",
+			"x": 418,
+			"y": 2,
+			"w": 387,
+			"h": 71,
+			"z": 300
+		},
+		{
+			"components": "fixImage, mario_background",
+			"z": 0
+		},
+		{
+			"components": "Garage_Window",
+			"x": 58,
+			"y": 552,
+			"w": 304,
+			"h": 168,
+			"z": 150
+		},
+		{
+			"components": "Garage_Window",
+			"x": 500,
+			"y": 560,
+			"w": 304,
+			"h": 168,
+			"z": 150
+		},
+		{
+			"components": "Garage_Window",
+			"x": 60,
+			"y": 188,
+			"w": 304,
+			"h": 168,
+			"z": 150
+		},
+		{
+			"components": "Garage_Window",
+			"x": 943,
+			"y": 190,
+			"w": 304,
+			"h": 168,
+			"z": 150
+		},
+		{
+			"components": "Garage_Falling_Ledge",
+			"x": 749,
+			"y": 101,
+			"w": 159,
+			"h": 23,
+			"fallTime": 1,
+			"breaking": 4,
+			"recoverTime": 5
+		},
+		{
+			"components": "Garage_Falling_Ledge",
+			"x": 988,
+			"y": 622,
+			"w": 159,
+			"h": 23,
+			"fallTime": 1,
+			"breaking": 4,
+			"recoverTime": 5
+		},
+		{
+			"components": "Garage_Falling_Ledge",
+			"x": 1270,
+			"y": 454,
+			"w": 159,
+			"h": 23,
+			"fallTime": 1,
+			"breaking": 4,
+			"recoverTime": 5
+		},
+		{
+			"components": "Garage_Falling_Ledge",
+			"x": 1275,
+			"y": 281,
+			"w": 97,
+			"h": 23,
+			"fallTime": 1,
+			"breaking": 4,
+			"recoverTime": 5
+		},
+		{
+			"components": "Garage_Falling_Ledge",
+			"x": 438,
+			"y": 392,
+			"w": 125,
+			"h": 23,
+			"fallTime": 1,
+			"breaking": 4,
+			"recoverTime": 5
+		},
+		{
+			"components": "Garage_Sign",
+			"x": 555,
+			"y": 318,
+			"w": 195,
+			"h": 153
+		},
+		{
+			"components": "Mario_Goomba",
+			"x": 800,
+			"y": 50,
+			"direction": "left"
+		}
+	],
+	"spawn": {
+		"x": 100,
+		"y": 100,
+		"w": 200,
+		"h": 200
+	},
+	"player": [
+		{
+			"color": "blue",
+			"colorCode": "33a9e0",
+			"components": "MarioSprite, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		}
+	]
+}
