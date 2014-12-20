@@ -1,0 +1,272 @@
+{
+	"width": 1400,
+	"height": 2520,
+	"countdownDuration": 5,
+	"entities": [
+		{
+			"components": "Timer",
+			"color": "green",
+			"x": 176,
+			"y": 354,
+			"w": 544,
+			"h": 102,
+			"z": 300
+		},
+		{
+			"components": "fixImage, lab_vert_background",
+			"z": 1
+		},
+		{
+			"components": "fixImage, lab_vert_foreground",
+			"z": 200
+		},
+		{
+			"components": "Gyrophare",
+			"x": 1222.9728698730469,
+			"y": 121.99699401855469,
+			"w": 117,
+			"h": 120,
+			"z": 201
+		},
+		{
+			"components": "Chimie",
+			"x": 170.98348999023438,
+			"y": 350.9290466308594,
+			"w": 553,
+			"h": 105,
+			"z": 100
+		},
+		{
+			"components": "Chimie",
+			"x": 327.9842224121094,
+			"y": 926.9894409179688,
+			"w": 162,
+			"h": 171,
+			"z": 100
+		},
+		{
+			"components": "Jauge",
+			"x": 52.974853515625,
+			"y": 2026.97998046875,
+			"w": 213,
+			"h": 159,
+			"z": 100
+		},
+		{
+			"components": "Lab_Platform",
+			"x": 162.9598388671875,
+			"y": 931.9631958007812,
+			"w": 153,
+			"h": 75,
+			"z": 100
+		},
+		{
+			"components": "Lab_Platform",
+			"x": 1198.9958190917969,
+			"y": 497.9823303222656,
+			"w": 153,
+			"h": 75,
+			"z": 100
+		},
+		{
+			"components": "Serveur",
+			"x": 927.9748229980469,
+			"y": 1252.9560546875,
+			"w": 237,
+			"h": 363,
+			"z": 100
+		},
+		{
+			"components": "Ventilo",
+			"x": 889.9681091308594,
+			"y": 406.9538269042969,
+			"w": 201,
+			"h": 204,
+			"z": 50
+		},
+		{
+			"components": "Ventilo",
+			"x": 376.9707336425781,
+			"y": 1223.958251953125,
+			"w": 201,
+			"h": 204,
+			"z": 50
+		},
+		{
+			"components": "Lab_Falling",
+			"x": 891.9856872558594,
+			"y": 1078.9696044921875,
+			"w": 147,
+			"h": 93,
+			"z": 100
+		},
+		{
+			"components": "Lab_Falling",
+			"x": 42.98046875,
+			"y": 795.9834594726562,
+			"w": 147,
+			"h": 93,
+			"z": 100
+		},
+		{
+			"components": "Lab_Porte",
+			"x": 684.9662170410156,
+			"y": 1266.9857177734375,
+			"w": 243,
+			"h": 342,
+			"z": 100
+		},
+		{
+			"components": "Lab_Platform",
+			"x": 318.9751892089844,
+			"y": 1941.95751953125,
+			"w": 147,
+			"h": 93,
+			"z": 100
+		},
+		{
+			"components": "Lab_Platform",
+			"x": 618.9939880371094,
+			"y": 1091.9669189453125,
+			"w": 153,
+			"h": 75,
+			"z": 100
+		},
+		{
+			"components": "Lab_MovingPlatform",
+			"x": 518.9564514160156,
+			"y": 1552.9747314453125,
+			"w": 153,
+			"h": 75,
+			"xDiff": 0,
+			"yDiff": 400,
+			"time": 3,
+			"z": 100
+		},
+		{
+			"components": "Lab_MovingPlatform",
+			"x": 885.9797058105469,
+			"y": 803.960205078125,
+			"w": 153,
+			"h": 75,
+			"xDiff": -550,
+			"yDiff": 0,
+			"time": 4,
+			"z": 100
+		},
+		{
+			"components": "Lab_MovingPlatform",
+			"x": 1031.9538269042969,
+			"y": 801.9894409179688,
+			"w": 153,
+			"h": 75,
+			"xDiff": 0,
+			"yDiff": -300,
+			"time": 4,
+			"z": 100
+		},
+		{
+			"components": "Lab_MovingPlatform",
+			"x": 1207.9578552246094,
+			"y": 1103.9788818359375,
+			"w": 153,
+			"h": 75,
+			"xDiff": 0,
+			"yDiff": 400,
+			"time": 3,
+			"z": 100
+		},
+		{
+			"components": "Lab_Target",
+			"x": 1235.9703063964844,
+			"y": 99.99060821533203,
+			"w": 87,
+			"h": 243,
+			"z": 160
+		},
+		{
+			"components": "Lab_Spawner",
+			"x": 55.97784423828125,
+			"y": 1829.954833984375,
+			"w": 204,
+			"h": 198,
+			"z": 160,
+			"name": "spawner"
+		},
+		{
+			"type": "QR",
+			"components": "QR",
+			"w": 150,
+			"h": 150,
+			"foreground": "#000000",
+			"background": "#ffffff",
+			"x": 50,
+			"y": 50
+		}
+	],
+	"spawn": {
+		"x": 100,
+		"y": 100,
+		"w": 200,
+		"h": 200
+	},
+	"player": [
+		{
+			"color": "blue",
+			"colorCode": "33a9e0",
+			"components": "WalloBotSpriteBlue, WalloBotBigger",
+			"z": 150,
+			"x": 55.97784423828125,
+			"y": 1829.954833984375
+		},
+		{
+			"color": "darkblue",
+			"colorCode": "0062e1",
+			"components": "WalloBotSpriteDarkBlue, WalloBotBigger",
+			"z": 150
+		},
+		{
+			"color": "orange",
+			"colorCode": "f79d06",
+			"components": "WalloBotSpriteOrange, WalloBotBigger",
+			"z": 150
+		},
+		{
+			"color": "red",
+			"colorCode": "fc5e21",
+			"components": "WalloBotSpriteRed, WalloBotBigger",
+			"z": 150
+		},
+		{
+			"color": "pink",
+			"colorCode": "ff33bd",
+			"components": "WalloBotSpritePink, WalloBotBigger",
+			"z": 150
+		},
+		{
+			"color": "violet",
+			"colorCode": "7e42e1",
+			"sprites": "",
+			"components": "WalloBotSpriteViolet, WalloBotBigger",
+			"z": 150
+		},
+		{
+			"color": "green",
+			"colorCode": "00da18",
+			"components": "WalloBotSpriteGreen, WalloBotBigger",
+			"z": 150
+		},
+		{
+			"color": "darkgreen",
+			"colorCode": "007e12",
+			"components": "WalloBotSpriteDarkGreen, WalloBotBigger",
+			"z": 150
+		},
+		{
+			"color": "yellow",
+			"colorCode": "e8cb00",
+			"components": "WalloBotSpriteYellow, WalloBotBigger",
+			"z": 150
+		}
+	]
+}
