@@ -765,18 +765,29 @@ Crafty.c("MovingPlatform", {
 					}
 					this.moving = false
 				} else {
-					this.moving = true
-					if(position.x < this.x1 / ratio || position.x > (this.x1 + this.xDiff) / ratio){		// if it reaches one of the bounderies(x1, x2) it switches direction
-						this.xPosDiff = -this.xPosDiff;
+					if(this.xDiff > 0 ){
+						if(position.x < this.x1 / ratio || position.x > (this.x1 + this.xDiff) / ratio){		// if it reaches one of the bounderies(x1, x2) it switches direction
+							this.xPosDiff = -this.xPosDiff;
+						}
+					} else if(this.xDiff < 0){
+						if(position.x > this.x1 / ratio || position.x < (this.x1 + this.xDiff) / ratio){		// if it reaches one of the bounderies(x1, x2) it switches direction
+							this.xPosDiff = -this.xPosDiff;
+						}
 					}
-					
-					if(position.y < this.y1 / ratio || position.y > (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
-						this.yPosDiff = -this.yPosDiff;
+					if(this.yDiff > 0){
+						if(position.y < this.y1 / ratio || position.y > (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
+							this.yPosDiff = -this.yPosDiff;
+						}
+					}else if(this.yDiff < 0){
+						if(position.y > this.y1 / ratio || position.y < (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
+							this.yPosDiff = -this.yPosDiff;
+						}
 					}
-					this.position = new b2Vec2(position.x + this.xPosDiff, position.y + this.yPosDiff)
+										this.position = new b2Vec2(position.x + this.xPosDiff, position.y + this.yPosDiff)
 					body.SetPosition(this.position)
 					xPrevPos = body.GetPosition().x
 					yPrevPos = body.GetPosition().y
+					this.moving = true
 				}
 			});
 	},
