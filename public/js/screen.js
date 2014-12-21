@@ -1,11 +1,10 @@
-/*
+﻿/*
  * Wallogram
  * http://www.red-agent.com/wallogram
  *
  * Copyright (c) Francois-Xavier Aeberhard <fx@red-agent.com>
  * Licensed under the MIT License
  */
-
 jQuery(function($) {
     'use strict';
 
@@ -98,19 +97,20 @@ jQuery(function($) {
             $(".button-fullscreen").click($.toggleFullscreen);                  // Toggle fullscreen button
 
             $("body").keydown(function(e) {                                     // Keyboard events
-                //console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
+                console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
                 switch (e.keyCode) {
                     case 191:
-                    case 192:                                                   // §: Debug
+                    case 192:                                                   // ยง: Debug
                         App.toggleDebug();
                         break;
 
                     case 82:                                                    // r: Restart game
-                    case 51:													// 3: "
+                    case 51:							// 3: "
                         App.setState("countdown");
                         break;
 
                     case 49:                                                    // 1: Add a debug player w/ keyboard
+                    case 80:                                                    // p: ""
                         App.addDebugPlayer();
                         break;
 
@@ -243,7 +243,7 @@ jQuery(function($) {
 
             App.initEntities(App.cfg.entities);
             App.setOutOfBound();											// Add OutOfBound box
-            
+
             App.addDebugPlayer();
         },
         initEntities: function(entities) {
@@ -413,6 +413,7 @@ jQuery(function($) {
         },
         setCfg: function(cfg) {
             $.extend(App.cfg, cfg);
+            $.extend($.Edit.TOOLBAR, cfg.toolbar);
         },
         toggleDebug: function(val) {
             App.debug = val || !App.debug;
@@ -448,8 +449,8 @@ jQuery(function($) {
 var oldAttr = Crafty.prototype.attr;
 Crafty.prototype.attr = function(key) {
     if (arguments.length === 1 && typeof key === "object") {
-        if (key.image && (this.has("WalloImage") || this.has("Image"))) {
-            this.image(key.image);
+        if (key.url && (this.has("WalloImage") || this.has("Image"))) {
+            this.url(key.url);
         }
         if (key.color && this.has("Color")) {
             this.color(key.color);

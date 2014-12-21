@@ -2,6 +2,7 @@ extends layout
 
 block head
 	link(rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css")
+	link(rel="stylesheet" type='text/css' href="css/jquery-ui/jquery-ui.theme.css")
 	link(rel="stylesheet" type="text/css" href="css/screen.css")
 	link(rel="stylesheet" type="text/css" href="libs/colorpicker/css/colorpicker.css")
 
@@ -29,16 +30,18 @@ block content
 			div(class="wallo-edit-beta")
 			div(class="wallo-edit-logo")
 
-			div(class="wallo-edit-buttons")
-				button(class="button-play fa fa-play fa-lg" title="Shortcut: p" disabled)
-				button(class="button-reset  fa fa-stop fa-lg" title="Shortcut: r")
-				button(class="button-fullscreen fa fa-expand fa-lg" title="Shortcut: f")
-				button(class="button-save fa fa-save fa-lg")
+			.wallo-edit-buttons
+				//button(class="button-play fa fa-play fa-lg" title="Shortcut: p" disabled)
+				button(class="button-reset  fa fa-undo fa-lg" title="Reset (r)")
+				button(class="button-fullscreen fa fa-expand fa-lg" title="Fullscreen (f)")
+				button(class="button-adddebugplayer fa fa-user fa-lg" title="Show/hide debug player (d)")
+				//button(class="button-save fa fa-save fa-lg")
 				button(class="button-more fa fa-caret-down fa-lg")
 				ul
-					li(class="button-adddebugplayer") Toggle debug player
-					li(class="button-toggledebugcanvas") Toggle box2d debug
-					li(class="button-togglefps") Toggle fps meter
+					//li(class="button-adddebugplayer") Show/hide debug player
+					li(class="button-toggledebugcanvas") Show/hide box2d debug
+					li(class="button-togglefps") Show/hide fps
+				.wallo-status-msg
 
 			div(data-target="#tab-play" class="wallo-tab-link wallo-tab-linkselected") Preview
 			div(data-target="#tab-source" class="wallo-tab-link") Source
@@ -51,20 +54,20 @@ block content
 	// Libraries 
 	script(src="libs/jquery-2.1.1.min.js")
 	script(src="libs/underscore-min.js")
-	script(src="libs/Box2dWeb-2.1.a.3.js")
-	script(src="libs/crafty.js")
+	script(src="libs/Box2dWeb-2.1.a.3.min.js")
+	script(src="libs/crafty-min.js")
 	script(src="/socket.io/socket.io.js")
 	script(src="libs/stats.min.js")
 	script(src="libs/yui3/build/yui/yui-min.js")
-	script(src="libs/inputex/src/loader.js")
+	script(src="libs/inputex/src/loader-min.js")
 	script(src="libs/ace/ace.js")
 	script(src="libs/jquery-ui/jquery-ui.min.js")
 	script(src="libs/tinymce/tinymce.min.js")
-	script(src="libs/colorpicker/js/colorpicker.js")
-	script(src="js/inputex/inputex-color.js")
-	script(src="js/inputex/inputex-rte.js")
+	script(src="libs/colorpicker/js/colorpicker.min.js")
         
 	// Sources 
+	script(src="js/inputex/inputex-color.js")
+	script(src="js/inputex/inputex-rte.js")
 	script(src="js/screen/sprites.js")
 	//script(src="js/screen/scenes/demo.js")
 	script(src="js/screen/components/box2d.js")

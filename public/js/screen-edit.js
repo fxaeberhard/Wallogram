@@ -9,12 +9,12 @@ jQuery(function($) {
     'use strict';
 
     YUI_config.groups.inputex.base = "libs/inputex/src/";
-    YUI_config.groups.inputex.filter = "raw";
     YUI_config.groups.inputex.modules['inputex-rte'].requires = ['inputex-field', 'inputex-textarea'];
     YUI_config.groups.inputex.modules['inputex-color'].requires = ['inputex-field'];
 
-    var currentEntity,
-        TOOLBAR = {
+    var currentEntity, Edit;
+    Edit = {
+        TOOLBAR: {
             Color: {
                 tab: "platforms",
                 label: "Colored platform",
@@ -44,12 +44,12 @@ jQuery(function($) {
                 tab: "image",
                 thumbClass: "fa fa-file-image-o fa-4x",
                 form: [{
-                        name: "image",
-                        label: "Image"
+                        name: "url",
+                        label: "Url"
                     }],
                 value: {
                     components: "WalloImage",
-                    image: "assets/mario-platform.png",
+                    url: "assets/mario-platform.png",
                     w: 90,
                     h: 100
                 }
@@ -294,7 +294,6 @@ jQuery(function($) {
 //                }
 //            }
         },
-    Edit = {
         /**
          *
          */
@@ -460,7 +459,7 @@ jQuery(function($) {
                 video: "",
                 other: ""
             };
-            _.each(TOOLBAR, function(i, type) {                                 // Render toolbar elements
+            _.each(Edit.TOOLBAR, function(i, type) {                                 // Render toolbar elements
                 if (!tabs[i.tab]) {
                     tabs[i.tab] = "";
                 }
@@ -495,7 +494,7 @@ jQuery(function($) {
 
                     try {
                         var dropType = $(e.originalEvent.target).closest(".wallo-thumb").attr("data-type"),
-                            cfg = _.clone(TOOLBAR[dropType].value);
+                            cfg = _.clone(Edit.TOOLBAR[dropType].value);
 
                         cfg.x = e.clientX - $("#tab-play").position().left - cfg.w / 2;
                         cfg.y = e.clientY - cfg.h / 2;
@@ -504,6 +503,7 @@ jQuery(function($) {
                         $.App.cfg.entities.push(cfg);
                         var entity = Crafty.e(cfg.components).attr(cfg);
                         entity.cfg = cfg;
+                        Edit.autoSave();
                     } catch (e) {
                         console.log("Unable to drop new object", e);
                     }
@@ -518,6 +518,12 @@ jQuery(function($) {
                     .width(entity.w)
                     .height(entity.h);
                 currentEntity = entity;
+                console.log("Edit.showEditOverlay(type: " + currentEntity.cfg.type + ")", currentEntity.cfg);
+                if (Edit.TOOLBAR[currentEntity.cfg.type] && Edit.TOOLBAR[currentEntity.cfg.type].form) {
+                    $(".wallo-edit-editentity").show();
+                } else {
+                    $(".wallo-edit-editentity").hide();
+                }
             }
         },
         hideEdition: function() {
@@ -536,12 +542,12 @@ jQuery(function($) {
                 };
             currentEntity.attr(cfg);
             $.extend(currentEntity.cfg, cfg);
-            //Edit.save();
+            Edit.autoSave();
         },
         showEditForm: function() {
             var form,
                 dialog = $('<div></div>').dialog({
-                //title: "Edit",
+                title: "Edit",
                 modal: true,
                 width: 700,
                 position: {
@@ -562,7 +568,7 @@ jQuery(function($) {
                     }]
             }), cfg = {
                 type: "group",
-                fields: TOOLBAR[currentEntity.cfg.type].form,
+                fields: Edit.TOOLBAR[currentEntity.cfg.type].form,
                 parentEl: dialog.get(0),
                 value: currentEntity.cfg
             };
@@ -586,7 +592,17 @@ jQuery(function($) {
             currentEntity.destroy();
             currentEntity = null;
             Edit.hideEdition();
-            Edit.save();
+            Edit.autoSave();
+        },
+        saveTimer: null,
+        autoSave: function() {
+            if ($.App.cfg.editable !== false) {
+                clearTimeout(Edit.saveTimer);
+                Edit.saveTimer = setTimeout(Edit.save, 800);
+                $(".wallo-status-msg").text("Saving...");
+            } else {
+                $(".wallo-status-msg").text("Demo game, changes cannot be saved");
+            }
         },
         save: function() {
             $.ajax({
@@ -598,6 +614,7 @@ jQuery(function($) {
             }).done(function(response) {
                 // Check for successful (blank) response
                 if (response.msg === '') {
+                    $(".wallo-status-msg").text("All changes saved");
                     console.log('level saved');
                 } else {
                     alert('Error: ' + response.msg);                            // If something goes wrong, alert the error message that our service returned
