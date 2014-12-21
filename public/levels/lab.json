@@ -157,11 +157,12 @@
 		},
 		{
 			"components": "WalloImage",
-			"image": "assets/controller.png",
+			"url": "assets/controller.png",
 			"x": 250,
 			"y": 41,
 			"w": 81,
-			"h": 47
+			"h": 47,
+			"z": 310
 		},
 		{
 			"type": "Text",
