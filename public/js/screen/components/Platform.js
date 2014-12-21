@@ -36,7 +36,7 @@ Crafty.c("ColoredPlatform", {
 Crafty.c("Spawner", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("2D, Box2D, MouseHover")									
-			.attr({w: 60, h: 60, name: "spawner"})												// set width and height based on player
+			.attr({w: 60, h: 60, name: "spawner", boxedIn: false})												// set width and height based on player
 			.box2d({
 				bodyType: 'static',
 				density: 1.0,
@@ -227,7 +227,9 @@ Crafty.c("Lab_Spawner", {
 		this.requires("Canvas, Spawner, lab_cage")
 			.attr({
 				"goingDown": false,
-				"goingUp": false
+				"goingUp": false,
+				"name": "spawner",
+				"boxedIn": true
 			})
 			.addFixture({//                                                     // Add Top
                 bodyType: 'static',
