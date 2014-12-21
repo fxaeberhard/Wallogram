@@ -126,7 +126,7 @@ Crafty.c("Enemy", {
 				this.dead = true;
 				this.deathReset = setTimeout(function() {
 					enemy.die();
-				}, 20000)
+				}, 10000)
 			}
 			
 		if(this.leftTouch || this.rightTouch || this.footTouch){  										// If player gets in contact with any side or bottom

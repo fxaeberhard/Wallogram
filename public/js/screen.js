@@ -39,7 +39,7 @@ jQuery(function($) {
             if ($.urlParam('level')) {
                 levelUri = "/levels/getLevel?level=" + $.urlParam('level');
             } else {
-                levelUri = "levels/garage.json";
+                levelUri = "levels/lab.json";
             }
             $.getJSON(levelUri, function(cfg) {                           	// Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
@@ -351,7 +351,6 @@ jQuery(function($) {
 				cfg.y = App.spawn.y;
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
-                console.log(App.players.DEBUG);
             } else {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;
