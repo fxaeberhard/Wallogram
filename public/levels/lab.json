@@ -164,6 +164,15 @@
 			"z": 310
 		},
 		{
+			"components": "WalloImage",
+			"url": "assets/lma.png",
+			"x": 885.9796752929688,
+			"y": 958.9901733398438,
+			"w": 272,
+			"h": 92,
+			"z": 310
+		},
+		{
 			"type": "Text",
 			"components": "WalloText",
 			"text": "<p style=\"text-align: center;\"><span style=\"font-size: 18pt;\">Scan to Play</span></p>",
