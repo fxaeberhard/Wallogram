@@ -671,7 +671,8 @@ Crafty.c("Lab_Falling", {
 		this.added = true
 	},
 	destroyEntity: function(){
-		console.log("SUUUUPPPPPP")
+		this.hookRight.destroy()
+		this.hookLeft.destroy()
 	},
 	resetPosition: function(){
 		 this.hookRight.destroy()

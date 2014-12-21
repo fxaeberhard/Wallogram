@@ -625,7 +625,7 @@ jQuery(function($) {
                     return true;
                 }
             });
-            if(currentEntity.destroyEntity()){
+            if (typeof currentEntity.destroyEntity == 'function') {
 	            currentEntity.destroyEntity();
             }
             currentEntity.destroy();
