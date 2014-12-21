@@ -223,9 +223,9 @@ Crafty.c("Lab_Enemy", {
 		this.b2dDead = ({"top": 51, "right": 162, "bottom": 315, "left": 60})
 		this.requires("Enemy, lab_enemy, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 44, h: 80, name: "enemy"})               // set width and height
-			.reel("idle", this.ANIMSPEED, 0, 0, 1)
+			.reel("idle", this.ANIMSPEED, 0, 1, 17)
             .reel("run", this.ANIMSPEED, 0, 0, 24)								// Set up animation
-            .reel("die", this.ANIMSPEED, 0, 0, 1)
+            .reel("die", this.ANIMSPEED, 0, 2, 5)
             .animate("idle", -1)                                                // Run idle animation
             .box2d({
                 bodyType: 'dynamic',
