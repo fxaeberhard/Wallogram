@@ -170,10 +170,85 @@ jQuery(function($) {
             Lab_Falling: {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme_tombe_thumb.png",
+                form: [{
+                    name: "Time until fall",
+                    label: "fallTime"
+                },
+                {
+                    name: "Time until recover",
+                    label: "tecoverTime"
+                }],
                 value: {
                     components: "Lab_Falling",
                     w: 128,
                     h: 100
+                }
+            },
+            Garage_Window: {
+                tab: "platforms",
+                thumbUrl: "assets/mario/window.png",
+                value: {
+                    components: "Garage_Window",
+                    w: 250,
+                    h: 127
+                }
+            },
+            Garage_Falling_Ledge: {
+                tab: "platforms",
+                thumbUrl: "assets/mario/ledge_thumb.png",
+            	form: [{
+                    name: "Time until fall",
+                    label: "fallTime"
+                },
+                {
+                    name: "Time until recover",
+                    label: "tecoverTime"
+                }],
+                value: {
+                    components: "Garage_Falling_Ledge",
+                    w: 150,
+                    h: 21,
+					fallTime: 3,
+					recoverTime: 5
+                }
+            },
+            Lab_Enemy: {
+                tab: "ennemy",
+                thumbUrl: "assets/lab/mechant_thumb.png",
+                form: [{
+                        name: "direction",
+                        label: "Direction"
+                    }],
+                value: {
+                    components: "Lab_Enemy",
+                    w: 44,
+                    h: 80,
+                    z: 160,
+                    direction: "left"
+                }
+            },
+            Mario_Goomba: {
+                tab: "ennemy",
+                thumbUrl: "assets/mario/blue_goomba_thumb.png",
+                form: [{
+                        name: "direction",
+                        label: "Direction"
+                    }],
+                value: {
+                    components: "Mario_Goomba",
+                    w: 45,
+                    h: 45,
+                    z: 160,
+                    direction: "left"
+                }
+            },
+            Garage_Sign: {
+            	tab: "platforms",
+                thumbUrl: "assets/mario/sign.png",
+                value: {
+                    components: "Garage_Sign",
+                    w: 400,
+                    h: 340,
                 }
             },
 //            Lab_MovingPlatform: {
@@ -192,6 +267,21 @@ jQuery(function($) {
                     components: "2D, Canvas, lab_plateforme1, MouseHover",
                     w: 128,
                     h: 128
+                }
+            },
+            Hotdog: {
+                tab: "ennemy",
+                thumbUrl: "assets/hotdog_thumb.png",
+                form: [{
+                        name: "direction",
+                        label: "Direction"
+                    }],
+                value: {
+                    components: "Hotdog",
+                    w: 45,
+                    h: 45,
+                    z: 160,
+                    direction: "left"
                 }
             }
 //            Lab_Plateform2: {

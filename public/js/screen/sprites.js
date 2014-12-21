@@ -108,6 +108,12 @@ Crafty.sprite(1920, 1080, 'assets/lab/wallobot_fond.png', {
 Crafty.sprite(1920, 1080, 'assets/lab/wallobot_avant.png', {
 	lab_foreground: [0, 0]
 });
+Crafty.sprite(1400, 2520, 'assets/lab/back.png', {
+	lab_vert_background: [0, 0]
+});
+Crafty.sprite(1400, 2520, 'assets/lab/front.png', {
+	lab_vert_foreground: [0, 0]
+});
 Crafty.sprite(86, 242, 'assets/lab/tuyeau.png ', {
     lab_tuyeau: [0, 0]
 });
@@ -127,4 +133,27 @@ Crafty.sprite(187, 340, 'assets/lab/mechant.png ', {
 Crafty.sprite(128, 128, 'assets/enemy.png',{
 	HotdogSprite: [0, 0]
 });
-
+/*
+ * Mario
+ */
+Crafty.sprite(128, 128, 'assets/mario/mario.png',{
+	MarioSprite: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/blue_goomba.png',{
+	mario_blue_goomba: [0, 0]
+});
+Crafty.sprite(1440, 960, 'assets/mario/background.png',{
+	garage_background: [0, 0]
+});
+Crafty.sprite(200, 28, 'assets/mario/ledge.png',{
+	garage_ledge: [0, 0]
+});
+Crafty.sprite(200, 28, 'assets/mario/breaking_ledge.png',{
+	garage_breaking_ledge: [0, 0]
+});
+Crafty.sprite(500, 254, 'assets/mario/window.png',{
+	garage_window: [0, 0]
+});
+Crafty.sprite(560, 477, 'assets/mario/sign.png',{
+	garage_sign: [0, 0]
+});

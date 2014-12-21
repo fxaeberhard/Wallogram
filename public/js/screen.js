@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Wallogram
  * http://www.red-agent.com/wallogram
  *
@@ -21,6 +21,10 @@ jQuery(function($) {
             height: 400,
             countdownDuration: 1,
             entities: []
+        },
+        spawn: {
+        	x: 100,
+	        y: 100
         },
         /**
          * This runs when the page initially loads.
@@ -96,7 +100,7 @@ jQuery(function($) {
                 console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
                 switch (e.keyCode) {
                     case 191:
-                    case 192:                                                   // §: Debug
+                    case 192:                                                   // ยง: Debug
                         App.toggleDebug();
                         break;
 
@@ -124,62 +128,62 @@ jQuery(function($) {
             $(".wallo-play").scroll(App.updateCanvasPosition);
         },
         SetB2dListener: function() {											// Initiate contact listener
-            var contactListener = new b2ContactListener
-
-
-            /*
-             * Begin Contact Listener
-             */
-
-            contactListener.BeginContact = function(contact) {
-                var fixtures = [];												// create array of the two Entity in contact
-                fixtures.push(contact.GetFixtureA())
-                fixtures.push(contact.GetFixtureB())
-
-                $.each(fixtures, function(i, f) {
-                    if (f.GetBody().GetUserData().name == "player") {				// If one of the entity starting Contact is Player
-                        var player = f.GetBody().GetUserData()
-                        player.BeginContact(fixtures, i);
-                    } else if (f.GetBody().GetUserData().name == "hotdog") {		// If one of the entity starting Contact is Enemy
-                        var enemy = f.GetBody().GetUserData();					// Get relevent enemy
-                        enemy.BeginContact(fixtures, i);						// Send both fixtures
-                    } else if (f.GetBody().GetUserData().components == "OutOfBounds") {
-                        var platform = f.GetBody().GetUserData();
-                        platform.BeginContact(fixtures, i);
-                    } else if (f.GetBody().GetUserData().name == "falling") {
-                        var platform = f.GetBody().GetUserData();
-                        platform.BeginContact(fixtures, i);
-                    }
-
-                })
-            }
-
-
-
-
-            /*
-             * End contact listener
-             */
-            contactListener.EndContact = function(contact) {
-                var fixtures = [];
-                fixtures.push(contact.GetFixtureA())
-                fixtures.push(contact.GetFixtureB())
-
-                $.each(fixtures, function(i, f) {
-                    if (f.GetBody().GetUserData().name == "player") {				// If one of the entity ending Contact is Player
-                        var player = f.GetBody().GetUserData()
-                        player.EndContact(fixtures, i);
-                    } else if (f.GetBody().GetUserData().name == "hotdog") {				// If one of the entity ending Contact is Enemy
-                        var enemy = f.GetBody().GetUserData()
-                        enemy.EndContact(fixtures, i);
-                    } else if (f.GetBody().GetUserData().name == "falling") {
-                        var platform = f.GetBody().GetUserData();
-                        platform.EndContact(fixtures, i);
-                    }
-                })
-            }
-
-            Crafty.box2D.world.SetContactListener(contactListener);
+	        var contactListener = new b2ContactListener
+			
+			
+			/*
+			 * Begin Contact Listener
+			 */
+			 
+			contactListener.BeginContact = function(contact){
+				var fixtures = [];												// create array of the two Entity in contact
+				fixtures.push(contact.GetFixtureA())
+				fixtures.push(contact.GetFixtureB())
+				
+				$.each(fixtures, function(i, f){
+					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity starting Contact is Player
+						var player = f.GetBody().GetUserData()
+						player.BeginContact(fixtures, i);
+					} else if (f.GetBody().GetUserData().name == "enemy"){		// If one of the entity starting Contact is Enemy
+						var enemy = f.GetBody().GetUserData();					// Get relevent enemy
+						enemy.BeginContact(fixtures, i);						// Send both fixtures
+					} else if (f.GetBody().GetUserData().components == "OutOfBounds") {
+						var platform = f.GetBody().GetUserData();
+						platform.BeginContact(fixtures, i);
+					} else if(f.GetBody().GetUserData().name == "falling") {
+						var platform = f.GetBody().GetUserData();
+						platform.BeginContact(fixtures, i);
+					}
+					
+				})
+			}
+			
+			
+			
+			
+			/*
+			 * End contact listener
+			 */
+			contactListener.EndContact = function(contact){
+				var fixtures = [];
+				fixtures.push(contact.GetFixtureA())
+				fixtures.push(contact.GetFixtureB())
+				
+				$.each(fixtures, function(i, f){
+					if(f.GetBody().GetUserData().name == "player"){				// If one of the entity ending Contact is Player
+						var player = f.GetBody().GetUserData()
+						player.EndContact(fixtures, i);
+					} else if(f.GetBody().GetUserData().name == "enemy"){				// If one of the entity ending Contact is Enemy
+						var enemy = f.GetBody().GetUserData()
+						enemy.EndContact(fixtures, i);
+					} else if(f.GetBody().GetUserData().name == "falling") {
+						var platform = f.GetBody().GetUserData();
+						platform.EndContact(fixtures, i);
+					}
+				})
+			}
+			
+			Crafty.box2D.world.SetContactListener(contactListener);
         },
         win: function(player) {
             App.setState("win");
@@ -247,40 +251,44 @@ jQuery(function($) {
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
                 if (entity.name === "spawner") {								// set spawner
-//                    App.cfg.spawn = entity
+                    App.spawn = entity
+                }
+                if (!App.spawn) {
+	                App.spawn.x = 100;
+	                App.spawn.y = 100;
                 }
                 return entity;
             });
             return ret;
         },
         setOutOfBound: function() {
-            var entities = [{
-                    "components": "OutOfBounds",
-                    "x": -10,
-                    "y": -30,
-                    "w": App.cfg.width + 20,
-                    "h": 20
-                }, {
-                    "components": "OutOfBounds",
-                    "x": App.cfg.width + 30,
-                    "y": -10,
-                    "w": 20,
-                    "h": App.cfg.height + 30
-                }, {
-                    "components": "OutOfBounds",
-                    "x": -30,
-                    "y": App.cfg.height + 10,
-                    "w": App.cfg.width + 20,
-                    "h": 20
-                }, {
-                    "components": "OutOfBounds",
-                    "x": -30,
-                    "y": -30,
-                    "w": 20,
-                    "h": App.cfg.height + 60
-                }];
-
-            App.outOfBound = App.initEntities(entities);
+	        var entities = [{
+                        "components": "Platform", // top
+                        "x": - 10,
+                        "y": - 30,
+                        "w": App.cfg.width + 20,
+                        "h": 30
+                    }, {
+                        "components": "Platform", // right
+                        "x": App.cfg.width,
+                        "y":  - 10,
+                        "w": 30,
+                        "h": App.cfg.height
+                    }, {
+                        "components": "OutOfBounds", // bottom
+                        "x": - 30,
+                        "y": App.cfg.height + 10,
+                        "w": App.cfg.width + 20,
+                        "h": 20
+                    }, {
+                        "components": "Platform", // left
+                        "x": - 30,
+                        "y": - 30,
+                        "w": 30,
+                        "h": App.cfg.height + 60
+                    }];
+                    
+			App.outOfBound = App.initEntities(entities);
         },
         updateEntityCfg: function(entity, newCfg) {
             var cfg = entity.cfg;
@@ -321,10 +329,10 @@ jQuery(function($) {
         },
         addPlayer: function(data, cfg) {
             cfg.z = 150;                                                        // Player is on top
-            if (App.cfg.spawn) {
-                cfg.x = App.cfg.spawn.x;
-                cfg.y = App.cfg.spawn.y;
-            }
+			cfg.x = App.spawn.x;
+			cfg.y = App.spawn.y;
+			cfg.mySocketId = data.mySocketId;
+			console.log("mysocketid",data.mySocketId)
             App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
@@ -339,13 +347,10 @@ jQuery(function($) {
             if (!App.players.DEBUG) {
                 var cfg = App.cfg.player[0];
                 cfg.z = 150;
-                if (App.cfg.spawn) {
-                    cfg.x = App.cfg.spawn.x;
-                    cfg.y = App.cfg.spawn.y;
-                }
+                cfg.x = App.spawn.x;
+				cfg.y = App.spawn.y;
                 App.players.DEBUG = Crafty.e(cfg.components + ",  Keyboard")
                     .attr(cfg);
-                console.log(App.players.DEBUG);
             } else {
                 App.players.DEBUG.destroy();
                 delete App.players.DEBUG;

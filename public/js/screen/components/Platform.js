@@ -73,7 +73,7 @@ Crafty.c("OutOfBounds", {
 			index2 = 1;
 		}
 		if(fixtures[index2].GetBody().GetUserData().reseting != true 
-		&& (fixtures[index2].GetBody().GetUserData().name == "hotdog" 
+		&& (fixtures[index2].GetBody().GetUserData().name == "enemy" 
 		|| fixtures[index2].GetBody().GetUserData().name == "player")){
 			fixtures[index2].GetBody().GetUserData().die()
 		}
@@ -479,20 +479,15 @@ Crafty.c("Falling", {
 			.attr({
 		 		w: 100,
 		 		h: 20,
-		 		fallTime: 2,
-		 		breaking: 30,
-		 		idle: 1,
-		 		recoverTime: 5,
-		 		animSpeed: 800,
 		 		active: false,
 		 		touching: false,
+		 		idle: 1,
 		 		name: "falling"
 			})
-			.reel("breaking", (this.fallTime * 1000), 0, 0, this.breaking )
-			.reel("idle", this.fallTime * 1000, 0, 0, this.idle )
 			.bind("EnterFrame", function() {
 				var body = this.body
 				if (this.runOnce != true) {
+					console.log(this.breaking)
 			  		this.setOrigin()
 			  		this.setCounters(multiplier)
 		 		}	
@@ -584,7 +579,11 @@ Crafty.c("Standard_Falling", {
 			.attr({
 				animSpeed: 1000,
 				animLength: 1,
-				isSensor: true
+				isSensor: true,
+				fallTime: 2,
+		 		breaking: 30,
+		 		idle: 1,
+		 		recoverTime: 5
 			})
 			.reel("anim", this.animSpeed, 0, 0, 76)
 			.reel("idle", this.animSpeed, 0, 0, 1)
@@ -610,6 +609,14 @@ Crafty.c("Lab_Falling_platform", {
 	
 	init: function() {
 		this.requires("Falling, lab_plateforme_tombe, Box2D")
+			.attr({
+				fallTime: 2,
+		 		breaking: 30,
+		 		idle: 1,
+		 		recoverTime: 5
+			})
+			.reel("breaking", (this.fallTime * 1000), 0, 0, this.breaking )
+			.reel("idle", this.fallTime * 1000, 0, 0, this.idle )
 			.box2d({
 				bodyType: 'static',
 				density: 1.0,
@@ -620,9 +627,7 @@ Crafty.c("Lab_Falling_platform", {
 			.updateSize = function(){																//Override update size function
 				   return sizeChange(this, ({"top":47, "right": 325, "bottom": 183, "left": 10}))
 			}
-
 	}
-
 })
 Crafty.c("Lab_Falling_hook", {
 	init: function() {
@@ -757,6 +762,7 @@ Crafty.c("MovingPlatform", {
 					if(this.moving != true){
 						if(this.x != this.xOrigin || this.y != this.yOrigin || this.w != this.wOrigin || this.h != this.hOrigin){
 							this.setOrigin()
+							console.log("setOrigin")
 						}
 					} else {
 						if(this.x != this.x1 || this.y != this.y1) {
@@ -765,18 +771,29 @@ Crafty.c("MovingPlatform", {
 					}
 					this.moving = false
 				} else {
-					this.moving = true
-					if(position.x < this.x1 / ratio || position.x > (this.x1 + this.xDiff) / ratio){		// if it reaches one of the bounderies(x1, x2) it switches direction
-						this.xPosDiff = -this.xPosDiff;
+					if(this.xDiff > 0 ){
+						if(position.x < this.x1 / ratio || position.x > (this.x1 + this.xDiff) / ratio){		// if it reaches one of the bounderies(x1, x2) it switches direction
+							this.xPosDiff = -this.xPosDiff;
+						}
+					} else if(this.xDiff < 0){
+						if(position.x > this.x1 / ratio || position.x < (this.x1 + this.xDiff) / ratio){		// if it reaches one of the bounderies(x1, x2) it switches direction
+							this.xPosDiff = -this.xPosDiff;
+						}
 					}
-					
-					if(position.y < this.y1 / ratio || position.y > (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
-						this.yPosDiff = -this.yPosDiff;
+					if(this.yDiff > 0){
+						if(position.y < this.y1 / ratio || position.y > (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
+							this.yPosDiff = -this.yPosDiff;
+						}
+					}else if(this.yDiff < 0){
+						if(position.y > this.y1 / ratio || position.y < (this.y1 + this.yDiff) / ratio){		// if it reaches one of the bounderies(y1, y2) it switches direction
+							this.yPosDiff = -this.yPosDiff;
+						}
 					}
-					this.position = new b2Vec2(position.x + this.xPosDiff, position.y + this.yPosDiff)
+										this.position = new b2Vec2(position.x + this.xPosDiff, position.y + this.yPosDiff)
 					body.SetPosition(this.position)
 					xPrevPos = body.GetPosition().x
 					yPrevPos = body.GetPosition().y
+					this.moving = true
 				}
 			});
 	},
@@ -824,6 +841,66 @@ Crafty.c("Lab_MovingPlatform", {
 			}
 	}
 });
+/*
+ * Garage
+ */
+Crafty.c("Garage_Window", {
+	
+	init: function() {
+		this.requires("2D, Box2D, MouseHover, garage_window, Canvas")									// allows the entity to be drawn as a colored box
+			.attr({
+				w: 500,
+				h: 254
+			})												// set width and height
+			.box2d({
+				bodyType: 'static',
+				userData: "plat"
+			})
+			.updateSize = function(){																//Override update size function
+				   return sizeChange(this, ({"top":3, "right": 478, "bottom": 248, "left": 22}))
+			}
+	}
+})
+Crafty.c("Garage_Sign", {
+	
+	init: function() {
+		this.requires("2D, Box2D, MouseHover, garage_sign, Canvas")									// allows the entity to be drawn as a colored box
+			.attr({
+				w: 560,
+				h: 477
+			})												// set width and height
+			.box2d({
+				bodyType: 'static',
+				userData: "plat"
+			})
+			.updateSize = function(){																//Override update size function
+				   return sizeChange(this, ({"top":12, "right": 415, "bottom": 417, "left": 8}))
+			}
+	}
+})
+Crafty.c("Garage_Falling_Ledge", {
+	
+	init: function() {
+		this.requires("Falling, garage_breaking_ledge, Box2D")
+			.attr({
+				w: 200,
+				h: 28,
+				fallTime: 2,
+		 		breaking: 4,
+		 		idle: 1,
+		 		recoverTime: 5
+			})												// set width and height
+			.reel("breaking", (this.fallTime * 1000), 0, 0, this.breaking )
+			.reel("idle", this.fallTime * 1000, 0, 0, this.idle )
+			.box2d({
+				bodyType: 'static',
+				userData: "plat"
+			})
+			.updateSize = function(){																//Override update size function
+				   return sizeChange(this, ({"top":6, "right": 193, "bottom": 23, "left": 8}))
+			}
+	}
+})
 Crafty.c("WalloText", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("2D, DOM, Text, MouseHover")
