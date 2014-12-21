@@ -145,9 +145,6 @@ Crafty.sprite(128, 128, 'assets/mario/blue_goomba.png',{
 Crafty.sprite(1440, 960, 'assets/mario/background.png',{
 	garage_background: [0, 0]
 });
-Crafty.sprite(200, 28, 'assets/mario/ledge.png',{
-	garage_ledge: [0, 0]
-});
 Crafty.sprite(200, 28, 'assets/mario/breaking_ledge.png',{
 	garage_breaking_ledge: [0, 0]
 });
