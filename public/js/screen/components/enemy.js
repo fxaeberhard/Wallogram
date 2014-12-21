@@ -17,6 +17,7 @@ Crafty.c("Enemy", {
 	    			forceX
 	    		if (this.runOnce != true) {
 		    		this.setOrigin()
+		    		console.log(this.fixtures)
 	    		}
 	    		if($.App.debug){
 	    			this.animate("idle", -1)
@@ -163,6 +164,7 @@ Crafty.c("Enemy", {
 Crafty.c("Hotdog", {
 	ANIMSPEED: 1000,
 	init: function() {
+		this.b2d = ({"top":13, "right": 98, "bottom": 119, "left": 27})
 		this.requires("Enemy, HotdogSprite, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 64, h: 64, name: "enemy"})               // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 16)                             // Set up animation
@@ -174,54 +176,38 @@ Crafty.c("Hotdog", {
                 density: 2.0,
                 friction: 0,
                 restitution: 0,
-                shape: [[this.w / 4, this.w / 10], 
-                		[3 * this.w / 4, this.w / 10], 
-                		[3 * this.w / 4, 11 * this.w / 12], 
-                		[this.w / 4, 11 * this.w / 12]],
                 userData: "body"
             })
             .addFixture({														// Add foot sensor
                 bodyType: 'dynamic',
-                shape: [[(this.w / 4) + 3, (11 * this.w / 12) - 3], 
-                		[(3 * this.w / 4) - 3, (11 * this.w / 12) - 3], 
-                		[(3 * this.w / 4) - 3, (11 * this.w / 12) + 3], 
-                		[(this.w / 4) + 3, (11 * this.w / 12) + 3]],
                 isSensor: true,
                 userData: "foot"
             })
             .addFixture({														// Add left sensor
                 bodyType: 'dynamic',
-                shape: [[(this.w / 4) - 3, (this.w / 10) + 3], 
-                		[(this.w / 4) + 3, (this.w / 10) + 3], 
-                		[(this.w / 4) + 3, (11 * this.w / 12) - 3], 
-                		[(this.w / 4) - 3, (11 * this.w / 12) - 3]],
                 isSensor: true,
                 userData: "leftSide"
             })
             .addFixture({	                                                   	// Add right sensor
                 bodyType: 'dynamic',
-                shape: [[(3 * this.w / 4) - 3, (this.w / 10) + 3],
-                		[(3 * this.w / 4) + 3, (this.w / 10) + 3], 
-                		[(3 * this.w / 4) + 3, (11 * this.w / 12) - 3], 
-                		[(3 * this.w / 4) - 3, (11 * this.w / 12) - 3]],
                 isSensor: true,
                 userData: "rightSide"
             })
             .addFixture({														// Add top sensor
                 bodyType: 'dynamic',
-                shape: [[(this.w / 4) + 3, (this.w / 10) + 3], 
-                		[(3 * this.w / 4) - 3, (this.w / 10) + 3], 
-                		[(3 * this.w / 4) - 3, (this.w / 10) - 3], 
-                		[(this.w / 4) + 3, (this.w / 10) - 3]],
                 isSensor: true,
                 userData: "top"
-            });
+            })
+            .updateSize = function(){																//Override update size function
+				return enemySizeChange(this, this.b2d)
+			}
         this.body.SetFixedRotation(true);
 	}
 });
 Crafty.c("Lab_Enemy", {
 	ANIMSPEED: 1000,
 	init: function() {
+		this.b2d = ({"top":51, "right": 162, "bottom": 315, "left": 60})
 		this.requires("Enemy, lab_enemy, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 44, h: 80, name: "enemy"})               // set width and height
 			.reel("idle", this.ANIMSPEED, 0, 0, 1)
@@ -233,54 +219,38 @@ Crafty.c("Lab_Enemy", {
                 density: 2.0,
                 friction: 0,
                 restitution: 0,
-                shape: [[this.w * (60 / 187), this.h * (51 / 340)], 
-                		[this.w * (162 / 187), this.h * (51 / 340)], 
-                		[this.w * (162 / 187), this.h * (315 / 340)], 
-                		[this.w * (60 / 187), this.h * (315 / 340)]],
                 userData: "body"
             })
             .addFixture({														// Add foot sensor
                 bodyType: 'dynamic',
-                shape: [[this.w * (60 / 187) + 3, this.h * (315 / 340)- 3], 
-                		[this.w * (162 / 187) - 3, this.h * (315 / 340)- 3], 
-                		[this.w * (162 / 187) - 3, this.h * (315 / 340)+ 3], 
-                		[this.w * (60 / 187) + 3, this.h * (315 / 340)+ 3]],
                 isSensor: true,
                 userData: "foot"
             })
             .addFixture({														// Add left sensor
                 bodyType: 'dynamic',
-                shape: [[this.w * (60 / 187) - 3, this.h * (51 / 340) + 3], 
-                		[this.w * (60 / 187) + 3, this.h * (51 / 340) + 3], 
-                		[this.w * (60 / 187) + 3, this.h * (315 / 340) - 3], 
-                		[this.w * (60 / 187) - 3, this.h * (315 / 340) - 3]],
                 isSensor: true,
                 userData: "leftSide"
             })
             .addFixture({	                                                   	// Add right sensor
                 bodyType: 'dynamic',
-                shape: [[this.w * (162 / 187) - 3, this.h * (51 / 340) + 3],
-                		[this.w * (162 / 187) + 3, this.h * (51 / 340) + 3], 
-                		[this.w * (162 / 187) + 3, this.h * (315 / 340) - 3], 
-                		[this.w * (162 / 187) - 3, this.h * (315 / 340) - 3]],
                 isSensor: true,
                 userData: "rightSide"
             })
             .addFixture({														// Add top sensor
                 bodyType: 'dynamic',
-                shape: [[this.w * (60 / 187) + 3, this.h * (51 / 340) + 3], 
-                		[this.w * (162 / 187) - 3, this.h * (51 / 340) + 3], 
-                		[this.w * (162 / 187) - 3, this.h * (51 / 340) - 3], 
-                		[this.w * (60 / 187) + 3, this.h * (51 / 340) - 3]],
                 isSensor: true,
                 userData: "top"
-            });
+            })
+            .updateSize = function(){																//Override update size function
+			   return enemySizeChange(this, this.b2d)
+			}
         this.body.SetFixedRotation(true);
 	}
 });
 Crafty.c("Mario_Goomba", {
 	ANIMSPEED: 400,
 	init: function() {
+		this.b2d = ({"top": 0, "right": 128, "bottom": 128, "left": 0})
 		this.requires("Enemy, mario_blue_goomba, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 45, h: 45, name: "enemy"})               // set width and height
 			.reel("idle", this.ANIMSPEED, 0, 0, 1)
@@ -292,48 +262,89 @@ Crafty.c("Mario_Goomba", {
                 density: 3.0,
                 friction: 0,
                 restitution: 0,
-                shape: [[0, 0], 
-                		[this.w, 0], 
-                		[this.w, this.h], 
-                		[0, this.h]],
                 userData: "body"
             })
             .addFixture({														// Add foot sensor
                 bodyType: 'dynamic',
-                shape: [[ 3, this.h - 3], 
-                		[this.w - 3, this.h - 3], 
-                		[this.w - 3, this.h + 3], 
-                		[ 3, this.h + 3]],
                 isSensor: true,
                 userData: "foot"
             })
             .addFixture({														// Add left sensor
                 bodyType: 'dynamic',
-                shape: [[- 3, 3], 
-                		[3, 3], 
-                		[3, this.h - 3], 
-                		[- 3, this.h - 3]],
                 isSensor: true,
                 userData: "leftSide"
             })
             .addFixture({	                                                   	// Add right sensor
                 bodyType: 'dynamic',
-                shape: [[this.w - 3, 3],
-                		[this.w + 3, 3], 
-                		[this.w + 3, this.h - 3], 
-                		[this.w - 3, this.h - 3]],
                 isSensor: true,
                 userData: "rightSide"
             })
             .addFixture({														// Add top sensor
                 bodyType: 'dynamic',
-                shape: [[ 3, 3], 
-                		[this.w - 3, 3], 
-                		[this.w - 3, - 3], 
-                		[ 3, - 3]],
                 isSensor: true,
                 userData: "top"
-            });
+            })
+            .updateSize = function(){																//Override update size function
+			   return enemySizeChange(this, this.b2d)
+			}
+
         this.body.SetFixedRotation(true);
 	}
 });
+
+function enemySizeChange(enemy, boxPos){
+	console.log(boxPos)
+	var PTM_RATIO = Crafty.box2D.PTM_RATIO;
+	$.each(enemy.fixtures, function(i, fixture){
+		switch (fixture.m_userData) {
+		case "body":
+	    	fixture.m_shape.SetAsArray([
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile)) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh)) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile)) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh)) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile)) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh)) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile)) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh)) / PTM_RATIO)],
+				4
+			);
+			break;
+	    case "foot":
+	    	fixture.m_shape.SetAsArray([
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) - 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) - 3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) - 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) - 3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) + 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) + 3) / PTM_RATIO)],
+				4
+			);
+			break;
+		case "leftSide":
+	    	fixture.m_shape.SetAsArray([
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) - 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) + 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) + 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) - 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) -  3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) - 3) / PTM_RATIO)],
+				4
+			);
+			break;
+		case "rightSide":
+	    	fixture.m_shape.SetAsArray([
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) - 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) + 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) + 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) - 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) - 3) / PTM_RATIO, (enemy.h * (boxPos.bottom / enemy.__tileh) - 3) / PTM_RATIO)],
+				4
+			);
+			break;
+		case "top":
+	    	fixture.m_shape.SetAsArray([
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) + 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) - 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) + 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.right / enemy.__tile) - 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) - 3) / PTM_RATIO),
+				new b2Vec2((enemy.w * (boxPos.left / enemy.__tile) + 3) / PTM_RATIO, (enemy.h * (boxPos.top / enemy.__tileh) - 3) / PTM_RATIO)],
+				4
+			);
+			break;
+	}
+	})
+	
+	
+	return enemy;
+}
