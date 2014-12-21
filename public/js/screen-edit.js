@@ -413,6 +413,7 @@ jQuery(function($) {
                         $.App.cfg.entities.push(cfg);
                         var entity = Crafty.e(cfg.components).attr(cfg);
                         entity.cfg = cfg;
+                        Edit.autoSave();
                     } catch (e) {
                         console.log("Unable to drop new object", e);
                     }
@@ -427,6 +428,12 @@ jQuery(function($) {
                     .width(entity.w)
                     .height(entity.h);
                 currentEntity = entity;
+
+                if (TOOLBAR[currentEntity.cfg.type] && TOOLBAR[currentEntity.cfg.type].form) {
+                    $(".wallo-edit-editentity").show();
+                } else {
+                    $(".wallo-edit-editentity").hide();
+                }
             }
         },
         hideEdition: function() {
@@ -445,7 +452,7 @@ jQuery(function($) {
                 };
             currentEntity.attr(cfg);
             $.extend(currentEntity.cfg, cfg);
-            //Edit.save();
+            Edit.autoSave();
         },
         showEditForm: function() {
             var form,
@@ -495,7 +502,17 @@ jQuery(function($) {
             currentEntity.destroy();
             currentEntity = null;
             Edit.hideEdition();
-            Edit.save();
+            Edit.autoSave();
+        },
+        saveTimer: null,
+        autoSave: function() {
+            if ($.App.cfg.editable !== false) {
+                clearTimeout(Edit.saveTimer);
+                Edit.saveTimer = setTimeout(Edit.save, 800);
+                $(".wallo-status-msg").text("Saving...");
+            } else {
+                $(".wallo-status-msg").text("Demo game, changes cannot be saved");
+            }
         },
         save: function() {
             $.ajax({
@@ -507,6 +524,7 @@ jQuery(function($) {
             }).done(function(response) {
                 // Check for successful (blank) response
                 if (response.msg === '') {
+                    $(".wallo-status-msg").text("All changes saved");
                     console.log('level saved');
                 } else {
                     alert('Error: ' + response.msg);                            // If something goes wrong, alert the error message that our service returned
