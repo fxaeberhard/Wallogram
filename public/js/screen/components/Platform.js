@@ -284,17 +284,16 @@ Crafty.c("Lab_Spawner", {
 	            }
             })
 			$(document).on("stateChange", function(e, newState, oldState) {
-
-			switch (newState) {													// Enter new state
-				case "countdown":
-					Spawner.down()													//
-					break;
-
-				case "run":														// Play
-					Spawner.up()
-					break;
-			}
-		});
+				switch (newState) {													// Enter new state
+					case "countdown":
+						Spawner.down()													//
+						break;
+	
+					case "run":														// Play
+						Spawner.up()
+						break;
+				}
+			});
 	},
 	setOrigin: function(ratio) {
 		this.yOrigin = this.y
