@@ -90,9 +90,9 @@
 		},
 		{
 			"components": "Garage_Falling_Ledge",
-			"x": 438,
-			"y": 392,
-			"w": 125,
+			"x": 404.98309326171875,
+			"y": 391.9857177734375,
+			"w": 158,
 			"h": 23,
 			"fallTime": 1,
 			"breaking": 4,
@@ -107,9 +107,11 @@
 		},
 		{
 			"components": "Mario_Goomba",
-			"x": 800,
-			"y": 50,
-			"direction": "left"
+			"x": 767.9945678710938,
+			"y": 59.98967361450195,
+			"direction": "left",
+			"w": 45,
+			"h": 45
 		},
 		{
 			"components": "Garage_Target",
@@ -145,6 +147,26 @@
 			"h": 69,
 			"x": 1243,
 			"y": 821
+		},
+		{
+			"components": "Mario_Goomba",
+			"w": 45,
+			"h": 45,
+			"z": 160,
+			"direction": "right",
+			"x": 552.998291015625,
+			"y": 275.9947204589844,
+			"type": "Mario_Goomba"
+		},
+		{
+			"components": "Mario_Goomba",
+			"w": 45,
+			"h": 45,
+			"z": 160,
+			"direction": "right",
+			"x": 837.9785766601562,
+			"y": 59.98967361450195,
+			"type": "Mario_Goomba"
 		}
 	],
 	"spawn": {
