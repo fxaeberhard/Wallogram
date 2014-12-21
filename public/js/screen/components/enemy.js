@@ -264,7 +264,7 @@ Crafty.c("Mario_Goomba", {
 	ANIMSPEED: 400,
 	init: function() {
 		this.b2d = this.b2dAlive = ({"top": 0, "right": 128, "bottom": 128, "left": 0})
-		this.b2dDead = ({"top": 0, "right": 128, "bottom": 128, "left": 0})
+		this.b2dDead = ({"top": 64, "right": 128, "bottom": 128, "left": 0})
 		this.requires("Enemy, mario_blue_goomba, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 45, h: 45, name: "enemy"})               // set width and height
 			.reel("idle", this.ANIMSPEED, 0, 0, 1)
