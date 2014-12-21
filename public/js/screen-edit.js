@@ -49,9 +49,19 @@ jQuery(function($) {
                     }],
                 value: {
                     components: "WalloImage",
-                    url: "assets/mario-platform.png",
+                    url: "assets/pictue-placeholder.png",
                     w: 90,
                     h: 100
+                }
+            },
+            Picture_Controller: {
+                tab: "image",
+                thumbUrl: "assets/controller-black-400.png",
+                value: {
+                    components: "WalloImage",
+                    url: "assets/controller.png",
+                    w: 100,
+                    h: 57
                 }
             },
             Video: {
@@ -288,9 +298,9 @@ jQuery(function($) {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme1.png",
                 value: {
-                    components: "2D, Canvas, lab_plateforme1, MouseHover",
-                    w: 128,
-                    h: 128
+                    components: "2D, Canvas, lab_plateforme1, PlatForm, MouseHover",
+                    w: 125,
+                    h: 50
                 }
             },
             Hotdog: {

@@ -391,7 +391,8 @@ div.inputEx-Group div.inputEx-label {
   font-size: inherit !important;
 }
 .wallo-debugmode .wallo-crafty .Invisible.obj,
-.wallo-debugmode .wallo-crafty .Time.obj {
+.wallo-debugmode .wallo-crafty .Timer.obj,
+.wallo-debugmode .wallo-crafty .Target.obj {
   border: 1px dashed white;
 }
 .wallo-debugmode .wallo-crafty .Video .dummy {

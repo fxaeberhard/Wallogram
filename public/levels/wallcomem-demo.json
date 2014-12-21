@@ -1,0 +1,365 @@
+{
+    "width": 1700,
+    "height": 800,
+    "countdownDuration": 5,
+    "entities": [
+        {
+            "components": "Spawner",
+            "x": 244,
+            "y": 120,
+            "w": 60,
+            "h": 60
+        },
+        {
+            "components": "Hotdog",
+            "x": 900,
+            "y": 100,
+            "direction": "right",
+            "type": "Hotdog"
+        },
+        {
+            "components": "Hotdog",
+            "x": 369,
+            "y": 438,
+            "direction": "right",
+            "w": 64,
+            "h": 64,
+            "type": "Hotdog"
+        },
+        {
+            "components": "Hotdog",
+            "x": 1419,
+            "y": 339,
+            "direction": "left",
+            "w": 64,
+            "h": 64,
+            "type": "Hotdog"
+        },
+        {
+            "components": "WalloImage, Platform",
+            "url": "assets/plateforme_1.png",
+            "x": 794,
+            "y": 611,
+            "w": 106,
+            "h": 39
+        },
+        {
+            "components": "WalloImage, Platform",
+            "url": "assets/plateforme_1.png",
+            "x": 1170,
+            "y": 337,
+            "w": 37,
+            "h": 22
+        },
+        {
+            "components": "WalloImage, Platform",
+            "url": "assets/plateforme_1.png",
+            "x": 1198,
+            "y": 439,
+            "w": 55,
+            "h": 22
+        },
+        {
+            "components": "WalloImage, Platform",
+            "url": "assets/plateforme_1.png",
+            "x": 1365,
+            "y": 293,
+            "w": 60,
+            "h": 26
+        },
+        {
+            "components": "Target",
+            "x": 1580,
+            "y": 155,
+            "w": 56,
+            "h": 57
+        },
+        {
+            "components": "Timer",
+            "x": 719,
+            "y": 0,
+            "w": 317,
+            "h": 83
+        },
+        {
+            "components": "OutOfBounds",
+            "x": -1000,
+            "y": 1000,
+            "w": 4000,
+            "h": 30
+        },
+        {
+            "components": "OutOfBounds",
+            "x": -1000,
+            "y": 0,
+            "w": 30,
+            "h": 1500
+        },
+        {
+            "components": "OutOfBounds",
+            "x": 3000,
+            "y": 0,
+            "w": 30,
+            "h": 1500
+        },
+        {
+            "components": "Video, Platform",
+            "url": "http://www.youtube.com/watch?v=v62OelThs4E",
+            "w": 474,
+            "h": 267,
+            "x": 583,
+            "y": 152,
+            "type": "Video5"
+        },
+        {
+            "components": "Video, Platform",
+            "url": "http://www.youtube.com/watch?v=lADH7FSHrgM",
+            "w": 340,
+            "h": 192,
+            "x": 242,
+            "y": 533,
+            "type": "Video4"
+        },
+        {
+            "components": "Video, Platform",
+            "url": "http://www.youtube.com/watch?v=-CzByi_id1I",
+            "w": 255,
+            "h": 143,
+            "x": 947,
+            "y": 526,
+            "type": "Video1"
+        },
+        {
+            "components": "Video, Platform",
+            "url": "http://www.youtube.com/watch?v=0SzLiac4rPI",
+            "w": 376,
+            "h": 211,
+            "x": 1302,
+            "y": 396,
+            "type": "Video3"
+        },
+        {
+            "components": "Video, Platform",
+            "url": "http://www.youtube.com/watch?v=Y_hN-sp5bz4",
+            "w": 287,
+            "h": 162,
+            "x": 81,
+            "y": 232,
+            "type": "Video6"
+        },
+        {
+            "components": "Video, Platform",
+            "url": "http://www.youtube.com/watch?v=6ootgzsnz70",
+            "w": 207,
+            "h": 116,
+            "x": 1493,
+            "y": 223,
+            "type": "Video7"
+        },
+        {
+            "components": "WalloImage, Platform",
+            "url": "assets/plateforme_1.png",
+            "w": 112,
+            "h": 42,
+            "x": 643,
+            "y": 683
+        },
+        {
+            "components": "WalloImage",
+            "url": "assets/heigvd/exit.png",
+            "w": 54,
+            "h": 89,
+            "x": 1581,
+            "y": 134,
+            "type": "Picture_Exit"
+        },
+        {
+            "components": "WalloImage",
+            "url": "assets/heigvd/heig-vd-logo-white.png",
+            "w": 250,
+            "h": 75,
+            "x": 1539,
+            "y": 6,
+            "type": "Picture_Heigvd"
+        },
+        {
+            "type": "QR",
+            "components": "QR",
+            "w": 116,
+            "h": 117,
+            "foreground": "#000000",
+            "background": "#ffffff",
+            "x": 11,
+            "y": 13
+        },
+        {
+            "components": "WalloImage",
+            "url": "assets/controller.png",
+            "x": 136,
+            "y": 13,
+            "w": 81,
+            "h": 47,
+            "z": 310
+        },
+        {
+            "type": "Text",
+            "components": "WalloText",
+            "text": "<p style=\"text-align: center;\"><span style=\"font-size: 18pt;\">Scan to Play</span></p>",
+            "w": 81,
+            "h": 69,
+            "x": 135,
+            "y": 72
+        }
+    ],
+    "player": [
+        {
+            "color": "green",
+            "colorCode": "91cc70",
+            "components": "MannequinSpriteGreen, Mannequin",
+            "x": 244,
+            "y": 120,
+            "z": 150
+        },
+        {
+            "color": "orange",
+            "colorCode": "db953b",
+            "component": "MannequinSpriteOrange, Mannequin",
+            "x": 100,
+            "y": 100
+        },
+        {
+            "color": "pink",
+            "colorCode": "dd6eaf",
+            "component": "MannequinSpritePink, Mannequin",
+            "x": 100,
+            "y": 100
+        },
+        {
+            "color": "red",
+            "colorCode": "e75d58",
+            "component": "MannequinSpriteRed, Mannequin",
+            "x": 100,
+            "y": 100
+        },
+        {
+            "color": "violet",
+            "colorCode": "bf60e3",
+            "component": "MannequinSpriteViolet, Mannequin",
+            "x": 100,
+            "y": 100
+        },
+        {
+            "color": "cyan",
+            "colorCode": "64dec3",
+            "component": "MannequinSpriteCyan, Mannequin",
+            "x": 100,
+            "y": 100
+        },
+        {
+            "color": "blue",
+            "colorCode": "608ce6",
+            "component": "MannequinSpriteBlue, Mannequin",
+            "x": 100,
+            "y": 100
+        },
+        {
+            "color": "yellow",
+            "colorCode": "decb21",
+            "component": "MannequinSpriteYellow, Mannequin",
+            "x": 100,
+            "y": 100
+        }
+    ],
+    "toolbar": {
+        "Video1": {
+            "tab": "video",
+            "thumbUrl": "http://img.youtube.com/vi/-CzByi_id1I/1.jpg",
+            "value": {
+                "components": "Video, Platform",
+                "url": "http://www.youtube.com/watch?v=-CzByi_id1I",
+                "w": 320,
+                "h": 280
+            }
+        },
+        "Video2": {
+            "tab": "video",
+            "thumbUrl": "http://img.youtube.com/vi/idB1WjNARQk/1.jpg",
+            "value": {
+                "components": "Video, Platform",
+                "url": "http://www.youtube.com/watch?v=idB1WjNARQk",
+                "w": 320,
+                "h": 280
+            }
+        },
+        "Video3": {
+            "tab": "video",
+            "thumbUrl": "http://img.youtube.com/vi/0SzLiac4rPI/1.jpg",
+            "value": {
+                "components": "Video, Platform",
+                "url": "http://www.youtube.com/watch?v=0SzLiac4rPI",
+                "w": 320,
+                "h": 280
+            }
+        },
+        "Video4": {
+            "tab": "video",
+            "thumbUrl": "http://img.youtube.com/vi/lADH7FSHrgM/1.jpg",
+            "value": {
+                "components": "Video, Platform",
+                "url": "http://www.youtube.com/watch?v=lADH7FSHrgM",
+                "w": 320,
+                "h": 280
+            }
+        },
+        "Video5": {
+            "tab": "video",
+            "thumbUrl": "http://img.youtube.com/vi/v62OelThs4E/1.jpg",
+            "value": {
+                "components": "Video, Platform",
+                "url": "http://www.youtube.com/watch?v=v62OelThs4E",
+                "w": 320,
+                "h": 280
+            }
+        },
+        "Video6": {
+            "tab": "video",
+            "thumbUrl": "http://img.youtube.com/vi/Y_hN-sp5bz4/1.jpg",
+            "value": {
+                "components": "Video, Platform",
+                "url": "http://www.youtube.com/watch?v=Y_hN-sp5bz4",
+                "w": 320,
+                "h": 280
+            }
+        },
+        "Video7": {
+            "tab": "video",
+            "thumbUrl": "http://img.youtube.com/vi/6ootgzsnz70/1.jpg",
+            "value": {
+                "components": "Video, Platform",
+                "url": "http://www.youtube.com/watch?v=6ootgzsnz70",
+                "w": 320,
+                "h": 280
+            }
+        },
+        "Picture_Exit": {
+            "tab": "image",
+            "thumbUrl": "assets/heigvd/exit.png",
+            "value": {
+                "components": "WalloImage",
+                "url": "assets/heigvd/exit.png",
+                "w": 50,
+                "h": 70
+            }
+        },
+        "Picture_Heigvd": {
+            "tab": "image",
+            "thumbUrl": "assets/heigvd/heig-vd-logo.png",
+            "value": {
+                "components": "WalloImage",
+                "url": "assets/heigvd/heig-vd-logo-white.png",
+                "w": 250,
+                "h": 75
+            }
+        }
+    }
+}
