@@ -137,6 +137,31 @@ Crafty.sprite(128, 128, 'assets/enemy.png',{
  * Mario
  */
 Crafty.sprite(128, 128, 'assets/mario/mario.png',{
+	MarioSpriteStandard: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/mario_blue.png',{
+	MarioSpriteBlue: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/mario_cyan.png',{
+	MarioSpriteCyan: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/mario_green.png',{
+	MarioSpriteGreen: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/mario_orange.png',{
+	MarioSpriteOrange: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/mario_pink.png',{
+	MarioSpritePink: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/mario_purple.png',{
+	MarioSpritePurple: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/mario_yellow.png',{
+	MarioSpriteYellow: [0, 0]
+});
+
+Crafty.sprite(128, 128, 'assets/mario/mario.png',{
 	MarioSprite: [0, 0]
 });
 Crafty.sprite(128, 128, 'assets/mario/blue_goomba.png',{
