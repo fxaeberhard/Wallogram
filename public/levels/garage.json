@@ -110,6 +110,13 @@
 			"x": 800,
 			"y": 50,
 			"direction": "left"
+		},
+		{
+			"components": "Garage_Target",
+			"x": 1018,
+			"y": 70,
+			"w": 159,
+			"h": 87
 		}
 	],
 	"spawn": {

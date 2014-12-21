@@ -40,7 +40,7 @@ jQuery(function($) {
             } else if ($.urlParam('levelUri')) {
                 levelUri = "levels/" + $.urlParam('levelUri');
             } else {
-                levelUri = "levels/lab.json";
+                levelUri = "levels/garage.json";
             }
             $.getJSON(levelUri, function(cfg) {                           	// Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg

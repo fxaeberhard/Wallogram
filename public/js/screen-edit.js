@@ -255,6 +255,15 @@ jQuery(function($) {
                     h: 340
                 }
             },
+            Garage_Target: {
+                tab: "platforms",
+                thumbUrl: "assets/mario/exit.png",
+                value: {
+                    components: "Garage_Sign",
+                    w: 159,
+					h: 87
+                }
+            },
 //            Lab_MovingPlatform: {
 //                tab: "platforms",
 //                thumbUrl: "assets/lab/sprite_plateforme1.png",

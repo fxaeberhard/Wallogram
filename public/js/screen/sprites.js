@@ -179,3 +179,6 @@ Crafty.sprite(500, 254, 'assets/mario/window.png',{
 Crafty.sprite(560, 477, 'assets/mario/sign.png',{
 	garage_sign: [0, 0]
 });
+Crafty.sprite(429, 233, 'assets/mario/exit.png',{
+	garage_exit: [0, 0]
+});

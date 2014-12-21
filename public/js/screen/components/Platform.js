@@ -578,7 +578,6 @@ Crafty.c("Standard_Falling", {
 			.attr({
 				isSensor: true,
 				fallTime: 2,
-		 		breaking: 30,
 		 		idle: 1,
 		 		recoverTime: 5
 			})
@@ -681,13 +680,10 @@ Crafty.c("Lab_Falling", {
  */
 Crafty.c("Target", {
 	init: function() {															// init function is automatically run when entity with this component is created
-		this.requires("2D, Box2D, MouseHover")									// allows the entity to be drawn as a colored box
+		this.requires("2D, Box2D")									// allows the entity to be drawn as a colored box
 			.attr({w: 30, h: 30, name: "Target"})												// set width and height
 			.box2d({
 				bodyType: 'static',
-				density: 1.0,
-				friction: 10,
-				restitution: 0,
 				isSensor: true,
 				shape: "box"
 			})
@@ -729,6 +725,14 @@ Crafty.c("Lab_Target", {
 		 this.target.destroy()
 		 this.create()
 		 this.setOrigin()
+	}
+});
+
+
+Crafty.c("Garage_Target", {
+	init: function() {															// init function is automatically run when entity with this component is created
+		this.requires("Canvas, Target, garage_exit, MouseHover")							// allows the entity to be drawn as a colored box
+			.attr({w: 429, h: 233, name: "Target"})												// set width and height
 	}
 });
 /**
