@@ -96,6 +96,7 @@ Crafty.c("Enemy", {
 			this.animate("run", -1)
 			this.body.SetLinearVelocity(new b2Vec2(-2, 0))
 	    } else {
+	    	this.unflip()
 		    this.animate("run", -1)
 			this.body.SetLinearVelocity(new b2Vec2(2, 0))
 	    }
@@ -111,9 +112,13 @@ Crafty.c("Enemy", {
 		}else {
 			index2 = 1;
 		}
+		if(!fixtures[index2].IsSensor()){
+			this.sensorCheck(fixtures[index].GetUserData(), true)
+		}
 		
 		if (fixtures[index2].GetBody().GetUserData().name == "player" && this.dead == false ){ 			// If other entity is a player and the enemy is not dead
-			this.sensorCheck(fixtures[index].GetUserData(), true)
+			
+			
 			if(fixtures[index].GetUserData() == "top"){													// If player gets in contact with top sensor, enemy dies
 				var enemy = this,
 					fix = [],
@@ -145,7 +150,6 @@ Crafty.c("Enemy", {
 	            fixtures[index2].GetBody().GetUserData().hit(this)										// Player gets hit
 			}
 		}
-		
 		if (this.rightTouch == true && velocity.x > -1 && this.dead == false) {		// Switch direction when it gets in contact with something
 	        this.flip()
         	body.SetLinearVelocity(new b2Vec2(-2, velocity.y))
@@ -155,7 +159,14 @@ Crafty.c("Enemy", {
 		}
     },
     EndContact: function(fixtures, index){																// Contact listener relating an Enemy entity
-		this.sensorCheck(fixtures[index].GetUserData(), false)
+    	if(index == 1) {																				// If index is 1 than index two is 0 and vice versa
+			index2 = 0;
+		}else {
+			index2 = 1;
+		}
+		if(!fixtures[index2].IsSensor()){
+			this.sensorCheck(fixtures[index].GetUserData(), false)
+		}
     },
     sensorCheck: function(fixtureName, value) {
 	    switch(fixtureName){

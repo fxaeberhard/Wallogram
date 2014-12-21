@@ -164,16 +164,6 @@
 			"z": 310
 		},
 		{
-			"components": "Lab_Enemy",
-			"w": 44,
-			"h": 80,
-			"z": 160,
-			"direction": "left",
-			"x": 1827,
-			"y": 353,
-			"type": "Lab_Enemy"
-		},
-		{
 			"type": "Text",
 			"components": "WalloText",
 			"text": "<p style=\"text-align: center;\"><span style=\"font-size: 18pt;\">Scan to Play</span></p>",
@@ -181,6 +171,16 @@
 			"h": 69,
 			"x": 250,
 			"y": 110.98958587646484
+		},
+		{
+			"components": "Lab_Enemy",
+			"w": 44,
+			"h": 80,
+			"z": 160,
+			"direction": "left",
+			"x": 1481,
+			"y": 439,
+			"type": "Lab_Enemy"
 		},
 		{
 			"components": "Lab_Enemy",
