@@ -127,65 +127,65 @@
 	},
 	"player": [
 		{
-			"color": "red",
-			"colorCode": "f83800",
-			"components": "MarioSpriteStandard, Mario",
-			"z": 150,
-			"x": 100,
-			"y": 100
-		},
-		{
 			"color": "yellow",
-			"colorCode": "faf800",
-			"components": "MarioSpriteYellow, Mario",
+			"colorCode": "ffeb00",
+			"components": "DuckySpriteYellow, Ducky",
 			"z": 150,
 			"x": 100,
 			"y": 100
 		},
 		{
-			"color": "purple",
-			"colorCode": "dc03de",
-			"components": "MarioSpritePurple, Mario",
-			"z": 150,
-			"x": 100,
-			"y": 100
-		},
-		{
-			"color": "pink",
-			"colorCode": "fe41c2",
-			"components": "MarioSpritePink, Mario",
-			"z": 150,
-			"x": 100,
-			"y": 100
-		},
-		{
-			"color": "orange",
-			"colorCode": "fa9f00",
-			"components": "MarioSpriteOrange, Mario",
-			"z": 150,
-			"x": 100,
-			"y": 100
-		},
-		{
-			"color": "green",
-			"colorCode": "02c007",
-			"components": "MarioSpriteGreen, Mario",
-			"z": 150,
-			"x": 100,
-			"y": 100
-		},
-		{
-			"color": "cyan",
-			"colorCode": "03ded7",
-			"components": "MarioSpriteCyan, Mario",
+			"color": "algea",
+			"colorCode": "03ed88",
+			"components": "DuckySpriteAlgea, Ducky",
 			"z": 150,
 			"x": 100,
 			"y": 100
 		},
 		{
 			"color": "blue",
-			"colorCode": "0052fa",
-			"components": "MarioSpriteBlue, Mario",
+			"colorCode": "273afe",
+			"components": "DuckySpriteBlue, Ducky",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "green",
+			"colorCode": "81d948",
+			"components": "DuckySpriteGreen, Ducky",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "lightBlue",
+			"colorCode": "00d6ff",
+			"components": "DuckySpriteLightBlue, Ducky",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "orange",
+			"colorCode": "ff7820",
+			"components": "DuckySpriteOrange, Ducky",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "pink",
+			"colorCode": "ff009a",
+			"components": "DuckySpritePink, Ducky",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "purple",
+			"colorCode": "b706fd",
+			"components": "DuckySpritePurple, Ducky",
 			"z": 150,
 			"x": 100,
 			"y": 100

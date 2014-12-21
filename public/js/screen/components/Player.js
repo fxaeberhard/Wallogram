@@ -582,7 +582,74 @@ Crafty.c("Mario", {
         this.body.SetFixedRotation(true);
     }
 });
-
+Crafty.c("Ducky", {
+    ANIMSPEED: 400,
+    JUMPFORCE: -140,
+    WALKFORCE: 350,
+    DOWNFORCELIMIT: 6,
+    DOWNFORCE: 12,
+    TOPSPEED: 10,
+    HEIGHT: 45,
+    /**
+     * 
+     */
+    init: function() {                                                          // init function is automatically run when entity with this component is created
+        this.requires("Player, SpriteAnimation")                // Requirements
+            .attr({x: 100, w: 45, h: this.HEIGHT, name: "player"})                       // Set width and height
+            .reel("idle", this.ANIMSPEED, 0, 0, 1)                              // Set up animation
+            .reel("jump", this.ANIMSPEED, 3 , 0, 1)
+            .reel("run", this.ANIMSPEED, 1, 0, 2) 
+            .animate("idle", -1)                                                 // Run idle animation
+            .box2d({
+                bodyType: 'dynamic',
+                density: 2.0,
+                friction: 0,
+                restitution: 0,
+                shape: [[this.w * (8 / 128),this.h * (24 / 128)], 
+                		[this.w * (120 / 128),this.h * (24 / 128)], 
+                		[this.w * (120 / 128), this.h], 
+                		[this.w * (8 / 128), this.h]],
+                userData: "body"
+            })
+            .addFixture({														// Add foot sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (8 / 128) + 3, this.h - 3], 
+                		[this.w * (120 / 128) - 3, this.h - 3], 
+                		[this.w * (120 / 128) - 3, this.h + 3], 
+                		[this.w * (8 / 128) + 3, this.h + 3]],
+                isSensor: true,
+                userData: "foot"
+            })
+            .addFixture({														// Add left sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (8 / 128) - 3, this.h * (24 / 128) + 3], 
+                		[this.w * (8 / 128) + 3, this.h * (24 / 128) + 3], 
+                		[this.w * (8 / 128) + 3, this.h - 3], 
+                		[this.w * (8 / 128) - 3, this.h - 3]],
+                isSensor: true,
+                userData: "leftSide"
+            })
+            .addFixture({	                                                   	// Add right sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (120 / 128) - 3, this.h * (24 / 128) + 3],
+                		[this.w * (120 / 128) + 3, this.h * (24 / 128) + 3], 
+                		[this.w * (120 / 128) + 3, this.h - 3], 
+                		[this.w * (120 / 128) - 3, this.h - 3]],
+                isSensor: true,
+                userData: "rightSide"
+            })
+            .addFixture({														// Add top sensor
+                bodyType: 'dynamic',
+                shape: [[this.w * (8 / 128) + 3, this.h * (24 / 128) + 3], 
+                		[this.w * (120 / 128) - 3, this.h * (24 / 128) + 3], 
+                		[this.w * (120 / 128) - 3, this.h * (24 / 128) - 3], 
+                		[this.w * (8 / 128) + 3, this.h * (24 / 128) - 3]],
+                isSensor: true,
+                userData: "top"
+            });
+        this.body.SetFixedRotation(true);
+    }
+});
 /**
  * 
  */

@@ -649,6 +649,7 @@ Crafty.c("Lab_Falling", {
 					this.resetPosition()
 				}
 			})
+			
 	},
 	create: function() {
 		this.wScaleRatio =	 336 / this.w
@@ -668,6 +669,9 @@ Crafty.c("Lab_Falling", {
 											"z": 2
 										})
 		this.added = true
+	},
+	destroyEntity: function(){
+		console.log("SUUUUPPPPPP")
 	},
 	resetPosition: function(){
 		 this.hookRight.destroy()

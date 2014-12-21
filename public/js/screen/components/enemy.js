@@ -19,7 +19,7 @@ Crafty.c("Enemy", {
 		    		this.setOrigin()
 		    		console.log(this.fixtures)
 	    		}
-	    		if($.App.debug){
+	    		if($.App.debug != true){
 	    			this.animate("idle", -1)
 	    			body.SetLinearVelocity(new b2Vec2(0, 0))
 	    			if(this.moving != true){

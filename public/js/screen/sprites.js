@@ -161,6 +161,31 @@ Crafty.sprite(128, 128, 'assets/mario/mario_yellow.png',{
 	MarioSpriteYellow: [0, 0]
 });
 
+Crafty.sprite(128, 128, 'assets/mario/ducky.png',{
+	DuckySpriteYellow: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/duckyAlgea.png',{
+	DuckySpriteAlgea: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/duckyBlue.png',{
+	DuckySpriteBlue: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/duckyGreen.png',{
+	DuckySpriteGreen: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/duckyLightBlue.png',{
+	DuckySpriteLightBlie: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/duckyOrange.png',{
+	DuckySpriteOrange: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/duckyPink.png',{
+	DuckySpritePink: [0, 0]
+});
+Crafty.sprite(128, 128, 'assets/mario/duckyPurple.png',{
+	DuckySpritePurple: [0, 0]
+});
+
 Crafty.sprite(128, 128, 'assets/mario/mario.png',{
 	MarioSprite: [0, 0]
 });
