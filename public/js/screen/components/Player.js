@@ -28,15 +28,13 @@ Crafty.c("Player", {
                 /*
 	             * This replaces box2d friction since it does not work well for plateformer (when character lands velocity drops to zero to go back up)
 	             */
-                if ((this.has("Keyboard") || this.has("WebsocketController"))){			// If velocity is smaller than 0 and left arrow isn't pressed decrease speed
-			        if (velocity.x <= -1 && !this.isDown('LEFT_ARROW')) {											// If velocity is smaller or equal to 0 decrease by walkforce else bring it to 0
-				        forceX = this.WALKFORCE
-					}else if(velocity.x >= 1 && !this.isDown('RIGHT_ARROW')){											// If velocity is bigger or equal to 0 decrease by walkforce else bring it to 0
-			        	forceX = -this.WALKFORCE
-		        	} else if(!this.isDown('RIGHT_ARROW') && !this.isDown('LEFT_ARROW')){
-			        	body.SetLinearVelocity(new b2Vec2(0, velocity.y))
-		        	}
-		        }
+		        if (velocity.x <= -1 && !this.isDown('LEFT_ARROW')) {											// If velocity is smaller or equal to 0 decrease by walkforce else bring it to 0
+			        forceX = this.WALKFORCE
+				}else if(velocity.x >= 1 && !this.isDown('RIGHT_ARROW')){											// If velocity is bigger or equal to 0 decrease by walkforce else bring it to 0
+		        	forceX = -this.WALKFORCE
+	        	} else if(!this.isDown('RIGHT_ARROW') && !this.isDown('LEFT_ARROW')){
+		        	body.SetLinearVelocity(new b2Vec2(0, velocity.y))
+	        	}
 		        
 	            if(this.has("Keyboard") || this.has("WebsocketController")){			// If it has Keyboad or WebsocketController component than set controles
 	                if (this.isDown('LEFT_ARROW')) {									// If right arrow is down
@@ -174,21 +172,13 @@ Crafty.c("Player", {
 		    	enemy = enemy.body,
 				posPlayer = playerB2D.GetPosition(),						// Get position of player and enemy to calculate the angle at which he will fly out
 				posEnemy = enemy.GetPosition(),
-				enemyCenter = new b2Vec2(
-					posEnemy.x + (enemy.GetUserData().w/2),
-					posEnemy.y + enemy.GetUserData().h
-				),
-				playerCenter = new b2Vec2(
-					posPlayer.x + (playerB2D.GetUserData().w/2),
-					posPlayer.y + (playerB2D.GetUserData().h/2)
-				),
 				vector = new b2Vec2(
-					50*(playerCenter.x - enemyCenter.x),
-					-Math.abs(2*(playerCenter.y - enemyCenter.y))
+					50*(posPlayer.x - posEnemy.x),
+					-Math.abs(2*(posPlayer.y - posEnemy.y))
 				);
 			this.alpha = 0.5;
 		    this.ko = true;													// set ko to true so it doesn't happen more than once
-			
+			console.log("center", enemy)
 			if (this.has("Keyboard")) {
 				this.removeComponent("Keyboard")
 				this.controlleComp = "Keyboard"	

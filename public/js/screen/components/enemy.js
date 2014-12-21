@@ -109,6 +109,7 @@ Crafty.c("Enemy", {
 		}
 		
 		if (fixtures[index2].GetBody().GetUserData().name == "player" && this.dead == false ){ 			// If other entity is a player and the enemy is not dead
+			this.sensorCheck(fixtures[index].GetUserData(), true)
 			if(fixtures[index].GetUserData() == "top"){													// If player gets in contact with top sensor, enemy dies
 				var enemy = this,
 					fix = [],
@@ -135,8 +136,8 @@ Crafty.c("Enemy", {
 				this.updateSize()
 				console.log("dead", this.b2d.top)
 			}
-			
-		if(this.leftTouch || this.rightTouch || this.footTouch){  										// If player gets in contact with any side or bottom
+			console.log(this.leftTouch, this.rightTouch)
+			if(this.leftTouch || this.rightTouch || this.footTouch){  										// If player gets in contact with any side or bottom
 	            fixtures[index2].GetBody().GetUserData().hit(this)										// Player gets hit
 			}
 		}
