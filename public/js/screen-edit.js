@@ -171,12 +171,12 @@ jQuery(function($) {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme_tombe_thumb.png",
                 form: [{
-                        name: "Time until fall",
-                        label: "fallTime"
+                        name: "fallTime",
+                        label: "Time until fall"
                     },
                     {
-                        name: "Time until recover",
-                        label: "tecoverTime"
+                        name: "recoverTime",
+                        label: "Time until recover"
                     }],
                 value: {
                     components: "Lab_Falling",
@@ -197,12 +197,12 @@ jQuery(function($) {
                 tab: "platforms",
                 thumbUrl: "assets/mario/ledge_thumb.png",
                 form: [{
-                        name: "Time until fall",
-                        label: "fallTime"
+                        name: "fallTime",
+                        label: "Time until fall"
                     },
                     {
-                        name: "Time until recover",
-                        label: "tecoverTime"
+                        name: "recoverTime",
+                        label: "Time until recover"
                     }],
                 value: {
                     components: "Garage_Falling_Ledge",
