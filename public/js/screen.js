@@ -37,6 +37,8 @@ jQuery(function($) {
             var levelUri;
             if ($.urlParam('level')) {
                 levelUri = "/levels/getLevel?level=" + $.urlParam('level');
+            } else if ($.urlParam('levelUri')) {
+                levelUri = "levels/" + $.urlParam('levelUri');
             } else {
                 levelUri = "levels/lab.json";
             }
@@ -53,7 +55,9 @@ jQuery(function($) {
 
                 $.Edit.init();
 
-                App.toggleDebug(true);
+                App.debug = !!$.urlParam('edit');
+
+                App.toggleDebug(App.debug);
             });
         },
         bindEvents: function() {
@@ -416,7 +420,9 @@ jQuery(function($) {
             $.extend($.Edit.TOOLBAR, cfg.toolbar);
         },
         toggleDebug: function(val) {
-            App.debug = val || !App.debug;
+            if (val === undefined) {
+                App.debug = !App.debug;
+            }
 
             $("body").toggleClass("wallo-debugmode", App.debug)
                 .toggleClass("wallo-stdmode", !App.debug);

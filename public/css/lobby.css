@@ -1085,7 +1085,7 @@ a:hover {
   display: block;
 }
 .nav-container-left .buttons a:first-child {
-  border-bottom: 1px #f4f4f4 solid;
+  /*border-bottom: 1px @light-gray solid;*/
   cursor: pointer;
 }
 .nav-container-left .buttons .fa-times {
@@ -1119,7 +1119,7 @@ a:hover {
 .nav-container-right .user-settings,
 .nav-container-right .user-unknown {
   float: left;
-  margin-right: 41px;
+  /*margin-right: 41px;*/
   background-color: black;
 }
 .nav-container-right .user-settings ul,
@@ -1178,7 +1178,7 @@ a:hover {
   margin-left: 10px;
 }
 .nav-container-right .user-log-sign-in {
-  padding: 12px 20px 12px 20px;
+  padding: 10px 20px 10px 20px;
 }
 .nav-container-right .user-log-sign-in a:hover {
   color: black;
@@ -1193,7 +1193,7 @@ a:hover {
 }
 .nav-container-right .language-setting a {
   display: block;
-  padding: 10px 20px;
+  padding: 12px 20px;
   background-color: #f4f4f4;
   color: black;
 }
@@ -1399,6 +1399,7 @@ a:hover {
   float: left;
   width: 60px;
   margin-right: 10px;
+  border: 2px solid black;
 }
 .lobby .my-wall .created .wallo-load-levels .level .buttons {
   border-top: 1px solid #f4f4f4;
@@ -1447,7 +1448,7 @@ a:hover {
 }
 .lobby .my-wall .level-infos h5,
 .lobby .my-wall .game-infos h5 {
-  font-size: 1em;
+  font-size: 1.3em;
   margin: 0;
 }
 .lobby .my-wall .level-infos span,
@@ -1455,7 +1456,7 @@ a:hover {
   display: block;
   font-family: 'Open Sans', "Helvetica", sans-serif;
   color: #c9c9c9;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 #level-name {
   text-align: center;

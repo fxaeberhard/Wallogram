@@ -167,7 +167,9 @@ body {
 }
 /* Right tab */
 .wallo-edit,
-.wallo-page {
+.wallo-page,
+.wallo-edit-toolbar,
+.wallo-play {
   -webkit-transition: all 0.7s ease-in-out;
   -moz-transition: all 0.7s ease-in-out;
   -o-transition: all 0.7s ease-in-out;
@@ -199,10 +201,11 @@ body {
   margin: 0.2em 0.4em 0 0;
   display: inline-block;
 }
-.wallo-stdmode #stats,
-.wallo-stdmode .wallo-edit-overlay,
-.wallo-stdmode .wallo-edit-toolbar {
+.wallo-stdmode .wallo-edit-overlay {
   display: none !important;
+}
+.wallo-stdmode .wallo-edit-toolbar {
+  bottom: -170px;
 }
 .wallo-stdmode .wallo-edit {
   left: -300px;
@@ -219,6 +222,7 @@ body {
 }
 .wallo-tab-link:hover {
   background: #6a6a6a;
+  color: white;
 }
 .wallo-tab-linkselected,
 .wallo-tab-linkselected:hover {
@@ -382,14 +386,15 @@ div.inputEx-Group div.inputEx-label {
   width: 100%;
 }
 /* Crafty components */
-.wallo-debugmode .wallo-crafty .Invisible.obj {
-  border: 1px dashed white;
-}
 .WalloText {
   color: white;
   font-size: inherit !important;
 }
-.wallo-debugmode .Video .dummy {
+.wallo-debugmode .wallo-crafty .Invisible.obj,
+.wallo-debugmode .wallo-crafty .Time.obj {
+  border: 1px dashed white;
+}
+.wallo-debugmode .wallo-crafty .Video .dummy {
   z-index: 10;
   width: 100%;
   height: 100%;

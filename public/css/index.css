@@ -1079,7 +1079,7 @@ a:hover {
   display: block;
 }
 .nav-container-left .buttons a:first-child {
-  border-bottom: 1px #f4f4f4 solid;
+  /*border-bottom: 1px @light-gray solid;*/
   cursor: pointer;
 }
 .nav-container-left .buttons .fa-times {
@@ -1113,7 +1113,7 @@ a:hover {
 .nav-container-right .user-settings,
 .nav-container-right .user-unknown {
   float: left;
-  margin-right: 41px;
+  /*margin-right: 41px;*/
   background-color: black;
 }
 .nav-container-right .user-settings ul,
@@ -1172,7 +1172,7 @@ a:hover {
   margin-left: 10px;
 }
 .nav-container-right .user-log-sign-in {
-  padding: 12px 20px 12px 20px;
+  padding: 10px 20px 10px 20px;
 }
 .nav-container-right .user-log-sign-in a:hover {
   color: black;
@@ -1187,7 +1187,7 @@ a:hover {
 }
 .nav-container-right .language-setting a {
   display: block;
-  padding: 10px 20px;
+  padding: 12px 20px;
   background-color: #f4f4f4;
   color: black;
 }
