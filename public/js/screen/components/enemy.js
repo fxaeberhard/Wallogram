@@ -284,7 +284,7 @@ Crafty.c("Mario_Goomba", {
             .animate("idle", -1)                                                // Run idle animation
             .box2d({
                 bodyType: 'dynamic',
-                density: 3.0,
+                density: 0.1,
                 friction: 0,
                 restitution: 0,
                 userData: "body"
