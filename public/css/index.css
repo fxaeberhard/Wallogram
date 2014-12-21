@@ -1115,6 +1115,7 @@ a:hover {
   float: left;
   /*margin-right: 41px;*/
   background-color: black;
+  border-right: 2px #7f7f7f solid;
 }
 .nav-container-right .user-settings ul,
 .nav-container-right .user-unknown ul {
