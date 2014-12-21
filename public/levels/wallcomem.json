@@ -71,55 +71,55 @@
 		"y": 100,
 		"direction": "right"
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 81,
 		"y": 232,
 		"w": 277,
 		"h": 139
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 186,
 		"y": 474,
 		"w": 374,
 		"h": 189
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 401,
 		"y": 369,
 		"w": 261,
 		"h": 71
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 728,
 		"y": 227,
 		"w": 525,
 		"h": 266
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 631,
 		"y": 548,
 		"w": 186,
 		"h": 92
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 1333,
 		"y": 403,
 		"w": 372,
 		"h": 180
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 999,
 		"y": 594,
 		"w": 251,
 		"h": 122
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 1644,
 		"y": 239,
 		"w": 199,
 		"h": 100
 	}, {
-		"components": "Platform",
+		"components": "Invisible",
 		"x": 1269,
 		"y": 203,
 		"w": 247,

@@ -152,7 +152,7 @@ body {
 }
 
 /* Right tab */
-.wallo-edit, .wallo-page {
+.wallo-edit, .wallo-page, .wallo-edit-toolbar, .wallo-play {
     -webkit-transition:all 0.7s ease-in-out;
     -moz-transition:all 0.7s ease-in-out;
     -o-transition:all 0.7s ease-in-out;
@@ -186,10 +186,11 @@ body {
     }
 }
 .wallo-stdmode {
-    #stats,
-    .wallo-edit-overlay,
-    .wallo-edit-toolbar {
+    .wallo-edit-overlay {
         display: none !important;
+    }
+    .wallo-edit-toolbar {
+        bottom: -170px;
     }
     .wallo-edit {
         left: -300px;
@@ -208,6 +209,7 @@ body {
 }
 .wallo-tab-link:hover {
     background: #6a6a6a;
+    color: white;
 }
 .wallo-tab-linkselected, .wallo-tab-linkselected:hover {
     background: black;
@@ -316,7 +318,7 @@ body {
     background-color: white;
     cursor: -webkit-grab;cursor: -moz-grab;
     border-radius: 8px;
-    margin: 11px 0px 7px 10px;
+    margin: 7px 0px 5px 10px;
     /* width: 102px; */
     /* height: 60px; */
     display: inline-block;
@@ -374,18 +376,21 @@ div.inputEx-Group div.inputEx-label {
 }
 
 /* Crafty components */
-.wallo-debugmode .wallo-crafty .Invisible.obj {
-    border: 1px dashed white;
-}
+
 .WalloText {
     color: white;
     font-size: inherit !important;
 }
-.wallo-debugmode .Video .dummy {
-    z-index: 10;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+.wallo-debugmode .wallo-crafty  {
+    .Invisible.obj, .Time.obj {
+        border: 1px dashed white;
+    } 
+    .Video .dummy {
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }

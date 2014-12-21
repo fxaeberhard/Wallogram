@@ -11,14 +11,14 @@ block content
 			.lobby
 				.header
 					.profile
-						img(src="assets/user-profile-picture.jpg" alt="user-picture")
+						img(src="assets/user-profile-picture.png" alt="user-picture")
 						.infos
 							h2= __("My profile")
 							dl
 								dt username
-								dd gamedesigner86
+								dd Guest
 								dt mail
-								dd gamedesigner@gmail.com
+								dd designer@wallogram.ch
 								dt country
 								dd= __("Switzerland")
 							.update-infos
@@ -64,7 +64,8 @@ block content
 						h3= __("My wall")
 					.content
 						.created
-							h4= __("My games")
+							//h4= __("My games")
+							br
 							.new
 								i(id="newLevel" class="fa fa-plus")
 								span= __("create a new game")

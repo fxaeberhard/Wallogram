@@ -171,13 +171,13 @@ jQuery(function($) {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme_tombe_thumb.png",
                 form: [{
-                    name: "Time until fall",
-                    label: "fallTime"
-                },
-                {
-                    name: "Time until recover",
-                    label: "tecoverTime"
-                }],
+                        name: "Time until fall",
+                        label: "fallTime"
+                    },
+                    {
+                        name: "Time until recover",
+                        label: "tecoverTime"
+                    }],
                 value: {
                     components: "Lab_Falling",
                     w: 128,
@@ -196,20 +196,20 @@ jQuery(function($) {
             Garage_Falling_Ledge: {
                 tab: "platforms",
                 thumbUrl: "assets/mario/ledge_thumb.png",
-            	form: [{
-                    name: "Time until fall",
-                    label: "fallTime"
-                },
-                {
-                    name: "Time until recover",
-                    label: "tecoverTime"
-                }],
+                form: [{
+                        name: "Time until fall",
+                        label: "fallTime"
+                    },
+                    {
+                        name: "Time until recover",
+                        label: "tecoverTime"
+                    }],
                 value: {
                     components: "Garage_Falling_Ledge",
                     w: 150,
                     h: 21,
-					fallTime: 3,
-					recoverTime: 5
+                    fallTime: 3,
+                    recoverTime: 5
                 }
             },
             Lab_Enemy: {
@@ -217,7 +217,9 @@ jQuery(function($) {
                 thumbUrl: "assets/lab/mechant_thumb.png",
                 form: [{
                         name: "direction",
-                        label: "Direction"
+                        label: "Direction",
+                        type: "select",
+                        choices: ["left", "right"]
                     }],
                 value: {
                     components: "Lab_Enemy",
@@ -232,7 +234,9 @@ jQuery(function($) {
                 thumbUrl: "assets/mario/blue_goomba_thumb.png",
                 form: [{
                         name: "direction",
-                        label: "Direction"
+                        label: "Direction",
+                        type: "select",
+                        choices: ["left", "right"]
                     }],
                 value: {
                     components: "Mario_Goomba",
@@ -243,12 +247,12 @@ jQuery(function($) {
                 }
             },
             Garage_Sign: {
-            	tab: "platforms",
+                tab: "platforms",
                 thumbUrl: "assets/mario/sign.png",
                 value: {
                     components: "Garage_Sign",
                     w: 400,
-                    h: 340,
+                    h: 340
                 }
             },
 //            Lab_MovingPlatform: {
@@ -274,7 +278,9 @@ jQuery(function($) {
                 thumbUrl: "assets/hotdog_thumb.png",
                 form: [{
                         name: "direction",
-                        label: "Direction"
+                        label: "Direction",
+                        type: "select",
+                        choices: ["left", "right"]
                     }],
                 value: {
                     components: "Hotdog",
@@ -496,8 +502,8 @@ jQuery(function($) {
                         var dropType = $(e.originalEvent.target).closest(".wallo-thumb").attr("data-type"),
                             cfg = _.clone(Edit.TOOLBAR[dropType].value);
 
-                        cfg.x = e.clientX - $("#tab-play").position().left - cfg.w / 2;
-                        cfg.y = e.clientY - cfg.h / 2;
+                        cfg.x = e.clientX - $("#tab-play").position().left - cfg.w / 2 + $(".wallo-play").scrollLeft();
+                        cfg.y = e.clientY - cfg.h / 2 + $(".wallo-play").scrollTop();
                         cfg.type = dropType;
 
                         $.App.cfg.entities.push(cfg);

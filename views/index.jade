@@ -1,6 +1,8 @@
 extends layout
+
 block head
   link(rel="stylesheet" type='text/css' href="css/index.css")
+
 block content
   //- Login
   //- div.container
@@ -21,13 +23,13 @@ block content
   include partials/nav
   div(class="wrapper")
     div(id="game-one" class="game")
-      a(href="#") 
+      a(href="screen?levelUri=lab.json") 
         +try_img_translation
     div(id="game-two" class="game game-overlay")
-      a(href="#") 
+      a(href="screen?levelUri=garage.json") 
         +try_img_translation
     div(id="game-three" class="game")
-      a(href="#") 
+      a(href="screen?levelUri=wallcomem-demo.json") 
         +try_img_translation
   -if(locals.locale == "en")
     img(src="assets/choose_game.png" id="choose-img")
