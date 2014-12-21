@@ -36,7 +36,7 @@ Crafty.c("ColoredPlatform", {
 Crafty.c("Spawner", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("2D, Box2D, MouseHover")									
-			.attr({w: 60, h: 60, name: "spawner"})												// set width and height based on player
+			.attr({w: 60, h: 60, name: "spawner", boxedIn: false})												// set width and height based on player
 			.box2d({
 				bodyType: 'static',
 				density: 1.0,
@@ -227,7 +227,9 @@ Crafty.c("Lab_Spawner", {
 		this.requires("Canvas, Spawner, lab_cage")
 			.attr({
 				"goingDown": false,
-				"goingUp": false
+				"goingUp": false,
+				"name": "spawner",
+				"boxedIn": true
 			})
 			.addFixture({//                                                     // Add Top
                 bodyType: 'static',
@@ -282,17 +284,16 @@ Crafty.c("Lab_Spawner", {
 	            }
             })
 			$(document).on("stateChange", function(e, newState, oldState) {
-
-			switch (newState) {													// Enter new state
-				case "countdown":
-					Spawner.down()													//
-					break;
-
-				case "run":														// Play
-					Spawner.up()
-					break;
-			}
-		});
+				switch (newState) {													// Enter new state
+					case "countdown":
+						Spawner.down()													//
+						break;
+	
+					case "run":														// Play
+						Spawner.up()
+						break;
+				}
+			});
 	},
 	setOrigin: function(ratio) {
 		this.yOrigin = this.y
@@ -576,16 +577,13 @@ Crafty.c("Standard_Falling", {
 		 
 		this.requires("Falling, Box2D")
 			.attr({
-				animSpeed: 1000,
-				animLength: 1,
 				isSensor: true,
 				fallTime: 2,
-		 		breaking: 30,
 		 		idle: 1,
 		 		recoverTime: 5
 			})
-			.reel("anim", this.animSpeed, 0, 0, 76)
-			.reel("idle", this.animSpeed, 0, 0, 1)
+			.reel("anim", this.fallTime * 1000, 0, 0, 76)
+			.reel("idle", 1000, 0, 0, 1)
 			.box2d({
 				bodyType: 'static',
 				density: 0.2,
@@ -598,9 +596,6 @@ Crafty.c("Standard_Falling", {
 					this.animate("anim",-1)
 				}
 			})
-	},
-	setupBox2D: function() {
-		 this
 	}
 })
 
@@ -615,7 +610,7 @@ Crafty.c("Lab_Falling_platform", {
 		 		recoverTime: 5
 			})
 			.reel("breaking", (this.fallTime * 1000), 0, 0, this.breaking )
-			.reel("idle", this.fallTime * 1000, 0, 0, this.idle )
+			.reel("idle", 1000, 0, 0, this.idle )
 			.box2d({
 				bodyType: 'static',
 				density: 1.0,
@@ -686,13 +681,10 @@ Crafty.c("Lab_Falling", {
  */
 Crafty.c("Target", {
 	init: function() {															// init function is automatically run when entity with this component is created
-		this.requires("2D, Box2D, MouseHover")									// allows the entity to be drawn as a colored box
+		this.requires("2D, Box2D")									// allows the entity to be drawn as a colored box
 			.attr({w: 30, h: 30, name: "Target"})												// set width and height
 			.box2d({
 				bodyType: 'static',
-				density: 1.0,
-				friction: 10,
-				restitution: 0,
 				isSensor: true,
 				shape: "box"
 			})
@@ -734,6 +726,14 @@ Crafty.c("Lab_Target", {
 		 this.target.destroy()
 		 this.create()
 		 this.setOrigin()
+	}
+});
+
+
+Crafty.c("Garage_Target", {
+	init: function() {															// init function is automatically run when entity with this component is created
+		this.requires("Canvas, Target, garage_exit, MouseHover")							// allows the entity to be drawn as a colored box
+			.attr({w: 429, h: 233, name: "Target"})												// set width and height
 	}
 });
 /**

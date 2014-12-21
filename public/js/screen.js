@@ -40,7 +40,7 @@ jQuery(function($) {
             } else if ($.urlParam('levelUri')) {
                 levelUri = "levels/" + $.urlParam('levelUri');
             } else {
-                levelUri = "levels/lab.json";
+                levelUri = "levels/garage.json";
             }
             $.getJSON(levelUri, function(cfg) {                           	// Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
@@ -204,9 +204,11 @@ jQuery(function($) {
 
             switch (App.state) {                                                // Exit previous state
                 case "countdown":
-                    $.each(App.gate, function(i, ent) {
-                        ent.destroy();
-                    });
+                	if(App.spawn.boxedIn != true){
+	                    $.each(App.gate, function(i, ent) {
+	                        ent.destroy();
+	                    });
+	                }
                     clearTimeout(App.countdownHandler);
                     break;
 
@@ -254,7 +256,7 @@ jQuery(function($) {
             var ret = _.map(entities, function(cfg) {                           // Add entities from config file
                 var entity = Crafty.e(cfg.components).attr(cfg);
                 entity.cfg = cfg;
-                if (entity.name === "spawner") {								// set spawner
+                if (entity.name == "spawner") {								// set spawner
                     App.spawn = entity
                 }
                 if (!App.spawn) {
@@ -364,7 +366,9 @@ jQuery(function($) {
             enemy.destroy();
         },
         showCountdown: function() {
-            var w = 200, h = 200, x = App.cfg.player.x, y = App.cfg.player.y, thick = 10, // Append a box to limit players moves
+        	console.log("spwner", App.spawn)
+            if(App.spawn.boxedIn != true){
+	            var w = 200, h = 200, x = App.spawn.x, y = App.spawn.y, thick = 10, // Append a box to limit players moves
 
                 entities = [{
                         "components": "ColoredPlatform",
@@ -397,8 +401,8 @@ jQuery(function($) {
                     }];
 
 
-            App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
-
+				App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
+            }
             _.each(App.players, function(p) {                                   // Bring all players to starting position
                 p.reset();
             });

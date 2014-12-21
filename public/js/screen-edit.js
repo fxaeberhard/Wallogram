@@ -177,16 +177,27 @@ jQuery(function($) {
                     h: 180
                 }
             },
+			Lab_spawner: {
+                tab: "platforms",
+                thumbUrl: "assets/lab/cage.png",
+                value: {
+                    components: "Lab_Spawner",
+                    w: 204,
+                    h: 198,
+                    boxedIn: true
+                }
+            },
+
             Lab_Falling: {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme_tombe_thumb.png",
                 form: [{
-                        name: "Time until fall",
-                        label: "fallTime"
+                        name: "fallTime",
+                        label: "Time until fall"
                     },
                     {
-                        name: "Time until recover",
-                        label: "tecoverTime"
+                        name: "recoverTime",
+                        label: "Time until recover"
                     }],
                 value: {
                     components: "Lab_Falling",
@@ -207,12 +218,12 @@ jQuery(function($) {
                 tab: "platforms",
                 thumbUrl: "assets/mario/ledge_thumb.png",
                 form: [{
-                        name: "Time until fall",
-                        label: "fallTime"
+                        name: "fallTime",
+                        label: "Time until fall"
                     },
                     {
-                        name: "Time until recover",
-                        label: "tecoverTime"
+                        name: "recoverTime",
+                        label: "Time until recover"
                     }],
                 value: {
                     components: "Garage_Falling_Ledge",
@@ -263,6 +274,15 @@ jQuery(function($) {
                     components: "Garage_Sign",
                     w: 400,
                     h: 340
+                }
+            },
+            Garage_Target: {
+                tab: "platforms",
+                thumbUrl: "assets/mario/exit.png",
+                value: {
+                    components: "Garage_Target",
+                    w: 159,
+					h: 87
                 }
             },
 //            Lab_MovingPlatform: {

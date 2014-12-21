@@ -78,7 +78,9 @@ Crafty.c("Enemy", {
 
     },
     reset: function() {								
-		this.attr({"components": "Hotdog", "x": this. xOrigin, "y": this. yOrigin})				// Reset the player position
+		this.attr({"x": this. xOrigin, "y": this. yOrigin})				// Reset the player position
+		this.b2d = this.b2dAlive
+		this.updateSize()
         this.dead = false;
         this.reseting = false;
         this.setDirection();
@@ -107,6 +109,7 @@ Crafty.c("Enemy", {
 		}
 		
 		if (fixtures[index2].GetBody().GetUserData().name == "player" && this.dead == false ){ 			// If other entity is a player and the enemy is not dead
+			this.sensorCheck(fixtures[index].GetUserData(), true)
 			if(fixtures[index].GetUserData() == "top"){													// If player gets in contact with top sensor, enemy dies
 				var enemy = this,
 					fix = [],
@@ -128,9 +131,13 @@ Crafty.c("Enemy", {
 				this.deathReset = setTimeout(function() {
 					enemy.die();
 				}, 10000)
+				
+				this.b2d = this.b2dDead
+				this.updateSize()
+				console.log("dead", this.b2d.top)
 			}
-			
-		if(this.leftTouch || this.rightTouch || this.footTouch){  										// If player gets in contact with any side or bottom
+			console.log(this.leftTouch, this.rightTouch)
+			if(this.leftTouch || this.rightTouch || this.footTouch){  										// If player gets in contact with any side or bottom
 	            fixtures[index2].GetBody().GetUserData().hit(this)										// Player gets hit
 			}
 		}
@@ -164,7 +171,8 @@ Crafty.c("Enemy", {
 Crafty.c("Hotdog", {
 	ANIMSPEED: 1000,
 	init: function() {
-		this.b2d = ({"top":13, "right": 98, "bottom": 119, "left": 27})
+		this.b2d = this.b2dAlive = ({"top":13, "right": 98, "bottom": 119, "left": 27})
+		this.b2dDead = ({"top": 25, "right": 98, "bottom": 119, "left": 27})
 		this.requires("Enemy, HotdogSprite, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 64, h: 64, name: "enemy"})               // set width and height
             .reel("idle", this.ANIMSPEED, 0, 0, 16)                             // Set up animation
@@ -207,7 +215,8 @@ Crafty.c("Hotdog", {
 Crafty.c("Lab_Enemy", {
 	ANIMSPEED: 1000,
 	init: function() {
-		this.b2d = ({"top":51, "right": 162, "bottom": 315, "left": 60})
+		this.b2d = this.b2dAlive = ({"top":51, "right": 162, "bottom": 315, "left": 60})
+		this.b2dDead = ({"top": 51, "right": 162, "bottom": 315, "left": 60})
 		this.requires("Enemy, lab_enemy, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 44, h: 80, name: "enemy"})               // set width and height
 			.reel("idle", this.ANIMSPEED, 0, 0, 1)
@@ -250,7 +259,8 @@ Crafty.c("Lab_Enemy", {
 Crafty.c("Mario_Goomba", {
 	ANIMSPEED: 400,
 	init: function() {
-		this.b2d = ({"top": 0, "right": 128, "bottom": 128, "left": 0})
+		this.b2d = this.b2dAlive = ({"top": 0, "right": 128, "bottom": 128, "left": 0})
+		this.b2dDead = ({"top": 0, "right": 128, "bottom": 128, "left": 0})
 		this.requires("Enemy, mario_blue_goomba, SpriteAnimation")               	// Requirements
             .attr({x: 100, y: 100, w: 45, h: 45, name: "enemy"})               // set width and height
 			.reel("idle", this.ANIMSPEED, 0, 0, 1)
