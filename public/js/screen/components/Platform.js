@@ -73,7 +73,7 @@ Crafty.c("OutOfBounds", {
 			index2 = 1;
 		}
 		if(fixtures[index2].GetBody().GetUserData().reseting != true 
-		&& (fixtures[index2].GetBody().GetUserData().name == "hotdog" 
+		&& (fixtures[index2].GetBody().GetUserData().name == "enemy" 
 		|| fixtures[index2].GetBody().GetUserData().name == "player")){
 			fixtures[index2].GetBody().GetUserData().die()
 		}
@@ -481,10 +481,7 @@ Crafty.c("Falling", {
 		 		h: 20,
 		 		active: false,
 		 		touching: false,
-		 		fallTime: 2,
-		 		breaking: 30,
 		 		idle: 1,
-		 		recoverTime: 5,
 		 		name: "falling"
 			})
 			.bind("EnterFrame", function() {
