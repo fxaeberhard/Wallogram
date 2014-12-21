@@ -1,10 +1,54 @@
 {
     "player": [{
-            "components": "WalloBotSpriteBlue, WalloBot",
-            "x": 10,
-            "y": 5
+            "color": "green",
+            "colorCode": "91cc70",
+            "components": "MannequinSpriteGreen, Mannequin",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "orange",
+            "colorCode": "db953b",
+            "component": "MannequinSpriteOrange, Mannequin",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "pink",
+            "colorCode": "dd6eaf",
+            "component": "MannequinSpritePink, Mannequin",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "red",
+            "colorCode": "e75d58",
+            "component": "MannequinSpriteRed, Mannequin",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "violet",
+            "colorCode": "bf60e3",
+            "component": "MannequinSpriteViolet, Mannequin",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "cyan",
+            "colorCode": "64dec3",
+            "component": "MannequinSpriteCyan, Mannequin",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "blue",
+            "colorCode": "608ce6",
+            "component": "MannequinSpriteBlue, Mannequin",
+            "x": 100,
+            "y": 100
+        }, {
+            "color": "yellow",
+            "colorCode": "decb21",
+            "component": "MannequinSpriteYellow, Mannequin",
+            "x": 100,
+            "y": 100
         }],
-    "width": 900,
+    "width": 800,
     "height": 600,
     "countdownDuration": 5,
     "entities": []

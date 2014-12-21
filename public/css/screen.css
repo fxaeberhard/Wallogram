@@ -320,6 +320,8 @@ body {
 .wallo-edit-toolbar .ui-tabs-panel {
   padding: 0 !important;
   background: black;
+  max-height: 132px;
+  overflow: auto;
 }
 .wallo-thumb {
   vertical-align: middle;

@@ -45,6 +45,8 @@ jQuery(function($) {
             $.getJSON(levelUri, function(cfg) {                           	// Retrieve current level
                 App.setCfg(cfg);                                                // Update game cfg
 
+                App.debug = !!$.urlParam('edit');
+
                 App.initCrafty();                                               // Init crafty
 
                 App.bindEvents();                                               // Bind game events
@@ -54,8 +56,6 @@ jQuery(function($) {
                 IO.emit('hostCreateNewGame');                                   // Join a game
 
                 $.Edit.init();
-
-                App.debug = !!$.urlParam('edit');
 
                 App.toggleDebug(App.debug);
             });
@@ -250,7 +250,7 @@ jQuery(function($) {
             App.initEntities(App.cfg.entities);
             App.setOutOfBound();											// Add OutOfBound box
 
-            App.addDebugPlayer();
+            //App.addDebugPlayer();
         },
         initEntities: function(entities) {
             var ret = _.map(entities, function(cfg) {                           // Add entities from config file
@@ -442,7 +442,7 @@ jQuery(function($) {
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
         },
         getPadUrl: function() {
-            var port = window.location.port !== 80 ? ":" + window.location.port : "";
+            var port = window.location.port ? ":" + window.location.port : "";
             return  window.location.protocol + "//" + window.location.hostname + port + PADURL + "?gameId=" + IO.gameId;
         },
         updateCanvasPosition: function() {
