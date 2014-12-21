@@ -487,7 +487,6 @@ Crafty.c("Falling", {
 			.bind("EnterFrame", function() {
 				var body = this.body
 				if (this.runOnce != true) {
-					console.log(this.breaking)
 			  		this.setOrigin()
 			  		this.setCounters(multiplier)
 		 		}	

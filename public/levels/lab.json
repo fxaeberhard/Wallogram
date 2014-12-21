@@ -154,6 +154,24 @@
 			"background": "#ffffff",
 			"x": 100,
 			"y": 41
+		},
+		{
+			"components": "WalloImage",
+			"url": "assets/controller.png",
+			"x": 250,
+			"y": 41,
+			"w": 81,
+			"h": 47,
+			"z": 310
+		},
+		{
+			"type": "Text",
+			"components": "WalloText",
+			"text": "<p style=\"text-align: center;\"><span style=\"font-size: 18pt;\">Scan to Play</span></p>",
+			"w": 81,
+			"h": 69,
+			"x": 250,
+			"y": 110.98958587646484
 		}
 	],
 	"player": [

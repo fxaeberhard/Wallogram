@@ -120,9 +120,65 @@
 	},
 	"player": [
 		{
+			"color": "red",
+			"colorCode": "f83800",
+			"components": "MarioSpriteStandard, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "yellow",
+			"colorCode": "faf800",
+			"components": "MarioSpriteYellow, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "purple",
+			"colorCode": "dc03de",
+			"components": "MarioSpritePurple, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "pink",
+			"colorCode": "fe41c2",
+			"components": "MarioSpritePink, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "orange",
+			"colorCode": "fa9f00",
+			"components": "MarioSpriteOrange, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "green",
+			"colorCode": "02c007",
+			"components": "MarioSpriteGreen, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
+			"color": "cyan",
+			"colorCode": "03ded7",
+			"components": "MarioSpriteCyan, Mario",
+			"z": 150,
+			"x": 100,
+			"y": 100
+		},
+		{
 			"color": "blue",
-			"colorCode": "33a9e0",
-			"components": "MarioSprite, Mario",
+			"colorCode": "0052fa",
+			"components": "MarioSpriteBlue, Mario",
 			"z": 150,
 			"x": 100,
 			"y": 100

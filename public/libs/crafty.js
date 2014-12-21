@@ -1622,7 +1622,6 @@ Crafty.c("DOM", {
             elem = this._element,
             val,
             style = elem.style;
-
         //if an object passed
         if (typeof obj === "object") {
             for (key in obj) {
