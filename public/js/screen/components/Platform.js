@@ -140,7 +140,7 @@ Crafty.c("WalloImage", {
 		//		  "background-size": "100% 100%"
 		//	  })
 	},
-	image: function(url) {
+	url: function(url) {
 		this.css({
 			background: "url(" + url + ")",
 			"background-size": "100% 100%"
@@ -833,26 +833,53 @@ Crafty.c("WalloText", {
 
 Crafty.c("Invisible", {
 	init: function() {															// init function is automatically run when entity with this component is created
-		this.requires("2D, DOM, MouseHover")
+		this.requires("2D, DOM, Platform, MouseHover")
 			.attr({w: 100, h: 20});
 	}
 });
 
 Crafty.c("Video", {
-	init: function() {															// init function is automatically run when entity with this component is created
-		this.requires("2D, DOM, MouseHover")
-			.attr({w: 150, h: 80});
-	},
-	url: function(url) {
+    init: function() {															// init function is automatically run when entity with this component is created
+        this.requires("2D, DOM, MouseHover")
+            .attr({w: 150, h: 80});
+    },
+    url: function(url) {
 
-		if (url.indexOf("youtube.com") > -1) {
-			var id = url.match(/v=(...........)/)[1];
-			$(this._element).html('<div class="dummy"></div><iframe width="100%" height="100%" src="//www.youtube.com/embed/' + id
-				+ '?rel=0&amp;controls=0&amp;showinfo=0&loop=1&modestbranding=1&autoplay=1&fs=0" frameborder="0" ></iframe>');
-		}
+        if (url.indexOf("youtube.com") > -1) {
+            var id = url.match(/v=(...........)/)[1];
+            $(this._element).html('<div class="dummy"></div><iframe class="ytplayer" width="100%" height="100%" src="//www.youtube.com/embed/' + id
+                + '?rel=0&amp;controls=0&amp;showinfo=0&loop=1&modestbranding=1&autoplay=1&fs=0&enablejsapi=1" frameborder="0" ></iframe>');
 
-	}
+            var tag = document.createElement('script');
+            tag.src = "//www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            if (window.YT) {
+                muteAllVids();
+            }
+        }
+    }
 });
+
+window.onYouTubeIframeAPIReady = function() {
+    muteAllVids();
+};
+function muteAllVids() {
+    $(".ytplayer").each(function(i, e) {
+        var player = new YT.Player(e, {
+            events: {
+                'onReady': function(event) {
+                    player.playVideo();
+                    // Mute?!
+                    //player.mute(); instead of this use below
+                    event.target.mute();
+                    //player.setVolume(0);
+                }
+            }
+        });
+    });
+}
+
 
 function sizeChange(platform, boxPos){
 	var PTM_RATIO = Crafty.box2D.PTM_RATIO;

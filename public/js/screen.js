@@ -408,6 +408,7 @@ jQuery(function($) {
         },
         setCfg: function(cfg) {
             $.extend(App.cfg, cfg);
+            $.extend($.Edit.TOOLBAR, cfg.toolbar);
         },
         toggleDebug: function(val) {
             App.debug = val || !App.debug;
@@ -443,8 +444,8 @@ jQuery(function($) {
 var oldAttr = Crafty.prototype.attr;
 Crafty.prototype.attr = function(key) {
     if (arguments.length === 1 && typeof key === "object") {
-        if (key.image && (this.has("WalloImage") || this.has("Image"))) {
-            this.image(key.image);
+        if (key.url && (this.has("WalloImage") || this.has("Image"))) {
+            this.url(key.url);
         }
         if (key.color && this.has("Color")) {
             this.color(key.color);

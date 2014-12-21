@@ -12,8 +12,9 @@ jQuery(function($) {
     YUI_config.groups.inputex.modules['inputex-rte'].requires = ['inputex-field', 'inputex-textarea'];
     YUI_config.groups.inputex.modules['inputex-color'].requires = ['inputex-field'];
 
-    var currentEntity,
-        TOOLBAR = {
+    var currentEntity, Edit;
+    Edit = {
+        TOOLBAR: {
             Color: {
                 tab: "platforms",
                 label: "Colored platform",
@@ -43,12 +44,12 @@ jQuery(function($) {
                 tab: "image",
                 thumbClass: "fa fa-file-image-o fa-4x",
                 form: [{
-                        name: "image",
-                        label: "Image"
+                        name: "url",
+                        label: "Url"
                     }],
                 value: {
                     components: "WalloImage",
-                    image: "assets/mario-platform.png",
+                    url: "assets/mario-platform.png",
                     w: 90,
                     h: 100
                 }
@@ -203,7 +204,6 @@ jQuery(function($) {
 //                }
 //            }
         },
-    Edit = {
         /**
          *
          */
@@ -369,7 +369,7 @@ jQuery(function($) {
                 video: "",
                 other: ""
             };
-            _.each(TOOLBAR, function(i, type) {                                 // Render toolbar elements
+            _.each(Edit.TOOLBAR, function(i, type) {                                 // Render toolbar elements
                 if (!tabs[i.tab]) {
                     tabs[i.tab] = "";
                 }
@@ -404,7 +404,7 @@ jQuery(function($) {
 
                     try {
                         var dropType = $(e.originalEvent.target).closest(".wallo-thumb").attr("data-type"),
-                            cfg = _.clone(TOOLBAR[dropType].value);
+                            cfg = _.clone(Edit.TOOLBAR[dropType].value);
 
                         cfg.x = e.clientX - $("#tab-play").position().left - cfg.w / 2;
                         cfg.y = e.clientY - cfg.h / 2;
@@ -428,8 +428,8 @@ jQuery(function($) {
                     .width(entity.w)
                     .height(entity.h);
                 currentEntity = entity;
-
-                if (TOOLBAR[currentEntity.cfg.type] && TOOLBAR[currentEntity.cfg.type].form) {
+                console.log("Edit.showEditOverlay(type: " + currentEntity.cfg.type + ")", currentEntity.cfg);
+                if (Edit.TOOLBAR[currentEntity.cfg.type] && Edit.TOOLBAR[currentEntity.cfg.type].form) {
                     $(".wallo-edit-editentity").show();
                 } else {
                     $(".wallo-edit-editentity").hide();
@@ -457,7 +457,7 @@ jQuery(function($) {
         showEditForm: function() {
             var form,
                 dialog = $('<div></div>').dialog({
-                //title: "Edit",
+                title: "Edit",
                 modal: true,
                 width: 700,
                 position: {
@@ -478,7 +478,7 @@ jQuery(function($) {
                     }]
             }), cfg = {
                 type: "group",
-                fields: TOOLBAR[currentEntity.cfg.type].form,
+                fields: Edit.TOOLBAR[currentEntity.cfg.type].form,
                 parentEl: dialog.get(0),
                 value: currentEntity.cfg
             };

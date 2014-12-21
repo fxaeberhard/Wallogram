@@ -3,7 +3,6 @@
 * Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
 
 .ui-widget {
-    font-family: Verdana,Arial,sans-serif;
     font-size: 1.1em;
 }
 
@@ -39,7 +38,7 @@
 }
 
 .ui-widget-header {
-    border-bottom: 3px solid black;
+    /*border-bottom: 3px solid black;*/
     color: #222;
     font-weight: bold;
     margin: 0;
@@ -894,7 +893,14 @@
     filter: Alpha(Opacity=30);
     border-radius: 8px;
 }
-
+.ui-dialog .ui-widget-header {
+    border-bottom: 3px solid black;
+    color: #222;
+    font-weight: bold;
+    margin: 0;
+    font-family: Bebas;
+    font-size: 1.5em;
+}
 .ui-dialog .ui-dialog-titlebar-close {
     position: absolute;
     right: .3em;
