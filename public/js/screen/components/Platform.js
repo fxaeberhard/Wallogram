@@ -576,16 +576,14 @@ Crafty.c("Standard_Falling", {
 		 
 		this.requires("Falling, Box2D")
 			.attr({
-				animSpeed: 1000,
-				animLength: 1,
 				isSensor: true,
 				fallTime: 2,
 		 		breaking: 30,
 		 		idle: 1,
 		 		recoverTime: 5
 			})
-			.reel("anim", this.animSpeed, 0, 0, 76)
-			.reel("idle", this.animSpeed, 0, 0, 1)
+			.reel("anim", this.fallTime * 1000, 0, 0, 76)
+			.reel("idle", 1000, 0, 0, 1)
 			.box2d({
 				bodyType: 'static',
 				density: 0.2,
@@ -598,9 +596,6 @@ Crafty.c("Standard_Falling", {
 					this.animate("anim",-1)
 				}
 			})
-	},
-	setupBox2D: function() {
-		 this
 	}
 })
 
@@ -615,7 +610,7 @@ Crafty.c("Lab_Falling_platform", {
 		 		recoverTime: 5
 			})
 			.reel("breaking", (this.fallTime * 1000), 0, 0, this.breaking )
-			.reel("idle", this.fallTime * 1000, 0, 0, this.idle )
+			.reel("idle", 1000, 0, 0, this.idle )
 			.box2d({
 				bodyType: 'static',
 				density: 1.0,
