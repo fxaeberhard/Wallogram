@@ -117,6 +117,34 @@
 			"y": 70,
 			"w": 159,
 			"h": 87
+		},
+		{
+			"type": "QR",
+			"components": "QR",
+			"w": 139,
+			"h": 139,
+			"foreground": "#000000",
+			"background": "#ffffff",
+			"x": 1077,
+			"y": 749
+		},
+		{
+			"components": "WalloImage",
+			"url": "assets/controller.png",
+			"x": 1244,
+			"y": 756,
+			"w": 81,
+			"h": 47,
+			"z": 310
+		},
+		{
+			"type": "Text",
+			"components": "WalloText",
+			"text": "<p style=\"text-align: center;\"><span style=\"font-size: 18pt;\">Scan to Play</span></p>",
+			"w": 81,
+			"h": 69,
+			"x": 1243,
+			"y": 821
 		}
 	],
 	"spawn": {
