@@ -625,9 +625,6 @@ jQuery(function($) {
                     return true;
                 }
             });
-            if (typeof currentEntity.destroyEntity == 'function') {
-	            currentEntity.destroyEntity();
-            }
             currentEntity.destroy();
             currentEntity = null;
             Edit.hideEdition();

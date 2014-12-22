@@ -672,7 +672,7 @@ Crafty.c("Lab_Falling", {
 										})
 		this.added = true
 	},
-	destroyEntity: function(){
+	destroy: function(){
 		this.hookRight.destroy()
 		this.hookLeft.destroy()
 	},
