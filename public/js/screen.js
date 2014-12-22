@@ -91,8 +91,9 @@ jQuery(function($) {
                 //console.log("Screen.padEvent", data);
                 if (!App.players[data.socketId]) {
                     //App.addPlayer(data);                                      // @fixme this wont work anymore with color selection
+                } else {
+                    App.players[data.socketId].onPadEvent(data);
                 }
-                App.players[data.socketId].onPadEvent(data);
             });
 
             $(".button-reset").click(function() {
