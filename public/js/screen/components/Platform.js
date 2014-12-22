@@ -109,12 +109,14 @@ Crafty.c("QR", {
 	},
 	sync: function() {
 		var padUrl = $.App.getPadUrl();
-		this.css({
-			// background: "url(//chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=" + encodeURIComponent(padUrl) + ") 0 0",
+                console.log("QR.sync(url: " + padUrl + ")");
+                this.css({
 			background: "url(//qrickit.com/api/qr?fgdcolor=" + this._foreground.replace("#", "")
 				+ "&bgdcolor=" + this._background.replace("#", "")
 				+ "&qrsize=170&t=p&e=m&d=" + encodeURIComponent(padUrl) + ") 0 0",
-			//background: "url(//api.qrserver.com/v1/create-qr-code/?size=170x170&fgcolor=" + this._foreground.replace("#", "")
+			// background: "url(//chart.apis.google.com/chart?cht=qr&chs=170x170&chld=Q&choe=UTF-8&chl=" + encodeURIComponent(padUrl) + ") 0 0",
+ 
+			// background: "url(//api.qrserver.com/v1/create-qr-code/?size=170x170&fgcolor=" + this._foreground.replace("#", "")
 			//	  + "&bgcolor=" + this._background.replace("#", "")
 			//	  + "&data=" + encodeURIComponent(padUrl) + ") 0 0",
 			"background-size": "100% 100%"
