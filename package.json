@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+	"fetch": "*",
     "bcrypt-nodejs": "*",
     "body-parser": "~1.8.1",
     "connect-flash": "*",

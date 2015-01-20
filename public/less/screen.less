@@ -88,6 +88,18 @@ body {
     z-index: 99;
     /*overflow: visible;*/
 }
+.wallo-edit-right {
+    width: 291px;
+    height: 100%;
+    /*margin-right: -300px;*/
+    font-size: 0.9em;
+    /* background: #fafafa; */
+    position:absolute;
+    right: 0px;
+    border-left: 9px solid #424242;
+    z-index: 99;
+    /*overflow: visible;*/
+}
 .wallo-edit-beta {    
     background: url(../assets/wallo-editgame.png) -33px -725px;
     width: 60px;
@@ -134,6 +146,22 @@ body {
     margin-top: -62px;
     cursor: pointer;
 }
+.wallo-edit-toggle-right {
+    width: 32px;
+    height: 124px;
+    background: url(../assets/wallo-editgame.png) -191px -289px;
+    position: absolute;
+    top: 50%;
+    left: -41px;
+    margin-top: -62px;
+    cursor: pointer;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
 .button-close {
     float: right;
 }
@@ -152,7 +180,8 @@ body {
 }
 
 /* Right tab */
-.wallo-edit, .wallo-page, .wallo-edit-toolbar, .wallo-play {
+
+.wallo-edit, .wallo-edit-right, .wallo-page, .wallo-edit-toolbar, .wallo-play {
     -webkit-transition:all 0.7s ease-in-out;
     -moz-transition:all 0.7s ease-in-out;
     -o-transition:all 0.7s ease-in-out;
@@ -195,12 +224,16 @@ body {
     .wallo-edit {
         left: -300px;
     }
+    .wallo-edit-right {
+        right: -300px;
+    }
 }
 .wallo-debugmode .wallo-page {
-    /*padding-right: 300px;*/
     padding-left: 300px;
 }
-
+.wallo-debugmode-right .wallo-page {
+	padding-right: 300px;
+}
 .wallo-tab-link {
     display: block;
     padding: 0.4em .9em;

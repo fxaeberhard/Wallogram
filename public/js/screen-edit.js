@@ -330,6 +330,7 @@ jQuery(function($) {
 //                }
 //            }
         },
+        position: "left",
         /**
          *
          */
@@ -408,6 +409,19 @@ jQuery(function($) {
             });
             $(".button-togglefps").click(function() {
                 $("#stats").toggle();
+            });
+            $(".button-toggleLR").click(function() {
+                if($.Edit.position == "left"){
+	                $(".wallo-debugmode").removeClass("wallo-debugmode").addClass("wallo-debugmode-right")
+	                $(".wallo-edit").removeClass("wallo-edit").addClass("wallo-edit-right")
+	                $(".wallo-edit-toggle").removeClass("wallo-edit-toggle").addClass("wallo-edit-toggle-right")
+	                $.Edit.position = "right"
+                } else {
+	                $(".wallo-debugmode-right").removeClass("wallo-debugmode-right").addClass("wallo-debugmode")
+	                $(".wallo-edit-right").removeClass("wallo-edit-right").addClass("wallo-edit")
+	                $(".wallo-edit-toggle-right").removeClass("wallo-edit-toggle-right").addClass("wallo-edit-toggle")
+	                $.Edit.position = "left"
+                }
             });
             $('.wallo-edit-buttons .button-save').click(Edit.save);             // Save Button
             $(".wallo-edit-toggle").on("click", function() {

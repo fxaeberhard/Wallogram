@@ -428,9 +428,13 @@ jQuery(function($) {
             if (val === undefined) {
                 App.debug = !App.debug;
             }
-
+			if($.Edit.position == "left"){
             $("body").toggleClass("wallo-debugmode", App.debug)
                 .toggleClass("wallo-stdmode", !App.debug);
+            } else {
+	            $("body").toggleClass("wallo-debugmode-right", App.debug)
+                .toggleClass("wallo-stdmode", !App.debug);
+            }
 
             if (this.debug) {
                 App.updateCanvasPosition();
