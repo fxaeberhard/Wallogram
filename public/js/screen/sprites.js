@@ -127,6 +127,9 @@ Crafty.sprite(187, 340, 'assets/lab/mechant.png ', {
     lab_enemy: [0, 0]
 });
 
+Crafty.sprite(1920,1080, 'assets/cubes_dev.png', {
+	wallo_dev: [0, 0]
+});
 /*
  * Enemy
  */

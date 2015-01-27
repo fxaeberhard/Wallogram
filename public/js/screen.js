@@ -43,13 +43,14 @@ jQuery(function($) {
                 levelUri = "levels/lab.json";
             }
             $.getJSON(levelUri, function(cfg) {                           	// Retrieve current level
+                
+                App.bindEvents();                                               // Bind game events
+                
                 App.setCfg(cfg);                                                // Update game cfg
 
                 App.debug = !!$.urlParam('edit');
 
                 App.initCrafty();                                               // Init crafty
-
-                App.bindEvents();                                               // Bind game events
 
                 App.SetB2dListener();
 
@@ -61,11 +62,12 @@ jQuery(function($) {
             });
         },
         bindEvents: function() {
+	        
             IO.on('newGameCreated', function(data) {                            // When the game is created
                 console.log("Screen.newGameCreated(id: " + data.gameId + ', host:' + data.socketId + ")");
 
                 IO.gameId = data.gameId;                                        // setup game id
-
+				App.qr.sync()
                 setInterval(function() {
                     IO.emit('heartBeat');
                 }, 5000);
@@ -259,6 +261,8 @@ jQuery(function($) {
                 entity.cfg = cfg;
                 if (entity.name == "spawner") {								// set spawner
                     App.spawn = entity
+                } else if (entity.name == "QR") {
+	                App.qr = entity;
                 }
                 if (!App.spawn) {
 	                App.spawn.x = 100;
@@ -447,6 +451,7 @@ jQuery(function($) {
                 .clearRect(0, 0, Crafty.box2D.debugCanvas.width, Crafty.box2D.debugCanvas.height);
         },
         getPadUrl: function() {
+	        console.log("GETPADURL", IO.gameId)
             var port = window.location.port ? ":" + window.location.port : "";
             return  window.location.protocol + "//" + window.location.hostname + port + PADURL + "?gameId=" + IO.gameId;
         },

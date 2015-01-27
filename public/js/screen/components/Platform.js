@@ -91,7 +91,8 @@ Crafty.c("QR", {
 			.attr({
 				w: 80,
 				h: 80,
-				z: 100
+				z: 100,
+				name: "QR"
 			});
 		// Same, using image component
 		//this.requires("2D, DOM, Image,  MouseHover")

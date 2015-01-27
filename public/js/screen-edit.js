@@ -285,22 +285,35 @@ jQuery(function($) {
 					h: 87
                 }
             },
-//            Lab_MovingPlatform: {
-//                tab: "platforms",
-//                thumbUrl: "assets/lab/sprite_plateforme1.png",
-//                value: {
-//                    components: "Lab_MovingPlatform",
-//                    w: 128,
-//                    h: 100
-//                }
-//            },
+           Lab_MovingPlatform: {
+               tab: "platforms",
+               thumbUrl: "assets/lab/sprite_plateforme_move.png",
+               form: [{
+                        name: "yDiff",
+                        label: "Vertical movement (- up, + down)",
+                    },
+                    {
+                        name: "xDiff",
+                        label: "Horizontal movement (- left, + right)",
+                    },
+                    {
+                        name: "time",
+                        label: "Time in seconds to go one way",
+                    }],
+                    
+               value: {
+                   components: "Lab_MovingPlatform",
+                   w: 154,
+                   h: 74
+               }
+           },
             Lab_Plateform1: {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme1.png",
                 value: {
                     components: "2D, Canvas, lab_plateforme1, PlatForm, MouseHover",
-                    w: 125,
-                    h: 50
+                    w: 154,
+                    h: 74
                 }
             },
             Hotdog: {
