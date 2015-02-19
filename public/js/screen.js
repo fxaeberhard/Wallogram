@@ -104,7 +104,7 @@ jQuery(function($) {
             $(".button-fullscreen").click($.toggleFullscreen);                  // Toggle fullscreen button
 
             $("body").keydown(function(e) {                                     // Keyboard events
-                console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
+                //console.log("Key pressed event(keycode:" + e.keyCode + ")", e);
                 switch (e.keyCode) {
                     case 191:
                     case 192:                                                   // ยง: Debug
@@ -160,6 +160,9 @@ jQuery(function($) {
 					} else if(f.GetBody().GetUserData().name == "falling") {
 						var platform = f.GetBody().GetUserData();
 						platform.BeginContact(fixtures, i);
+					} else if(f.GetBody().GetUserData().name == "teleport") {
+						var teleport = f.GetBody().GetUserData();
+						teleport.BeginContact(fixtures, i);
 					}
 					
 				})

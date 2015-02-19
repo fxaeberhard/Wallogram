@@ -187,7 +187,23 @@ jQuery(function($) {
                     boxedIn: true
                 }
             },
-
+            Lab_Teleport: {
+	            tab: "platforms",
+	            thumbUrl: "assets/lab/teleport.png",
+	            form: [{
+                        name: "label",
+                        label: "Name of portal"
+                    },
+                    {
+                        name: "target",
+                        label: "Name of taget portal"
+                    }],
+	            value: {
+		            components: "Lab_Teleport",
+		            w: 50,
+		            h: 50,
+	            }
+            },
             Lab_Falling: {
                 tab: "platforms",
                 thumbUrl: "assets/lab/sprite_plateforme_tombe_thumb.png",

@@ -29,10 +29,6 @@ Crafty.c("ColoredPlatform", {
 	}
 });
 
-
-
-
-
 Crafty.c("Spawner", {
 	init: function() {															// init function is automatically run when entity with this component is created
 		this.requires("2D, Box2D, MouseHover")									
@@ -312,6 +308,79 @@ Crafty.c("Lab_Spawner", {
 	}
 	
 	
+});
+Crafty.c("Lab_Teleport", {
+	init: function() {															// init function is automatically run when entity with this component is created		
+		this.active = [];
+		this.requires("2D, Box2D, MouseHover, Canvas, lab_teleport_ball")					// allows the entity to be drawn as a colored box
+			.attr({ w: 60,
+					h:60,
+					z:10,
+					name: "teleport"
+			})
+			.box2d({
+				bodyType: 'static',
+				density: 1.0,
+				friction: 10,
+				restitution: 0,
+				isSensor: true,
+				shape: "box"
+			})
+			.bind("EnterFrame", function() {
+				if(this.runOnce != true){
+					this.AddToList()
+				}
+			})
+		
+		if(!$.App.Teleport){														// if teleport list doesn't exist create it.
+			$.App.Teleport = []
+		}
+	},
+	AddToList: function(){
+		$.App.Teleport[this.label] = this
+		this.runOnce = true;
+	},
+	BeginContact: function(fixtures, index) {
+		var index2, body = this.body
+	
+		if(index == 1) {																				// If index is 1 than index two is 0 and vice versa
+			index2 = 0;
+		}else {
+			index2 = 1;
+		}
+		
+		if(fixtures[index2].GetBody().GetUserData().name == "player" && this.active.indexOf(fixtures[index2].GetBody().GetUserData()) == -1){
+			var active = this.active,
+				tagetActive = $.App.Teleport[this.target].active 
+				destination = $.App.Teleport[this.target],
+				itemId = active.push(fixtures[index2].GetBody().GetUserData()),										// add player to teleported list
+				TargetTtemId = tagetActive.push(fixtures[index2].GetBody().GetUserData()),	// add player to taget teleported list
+				x = $.App.Teleport[this.target].x,
+				y = $.App.Teleport[this.target].y
+	        setTimeout(function() {															// Set 1 milliseconds delay before teleporting
+				fixtures[index2].GetBody().GetUserData().SetP(x, y)
+			}, 1);
+			setTimeout(function() {															// Set 2 second Delay before teleporting again
+				active.splice(itemId - 1, 1);
+				tagetActive.splice(TargetTtemId -1, 1);
+	        }, 1000);
+			
+		}
+		
+	},
+	EndContact: function(fixtures, index) {
+		var index2, body = this.body
+	
+		if(index == 1) {																				// If index is 1 than index two is 0 and vice versa
+			index2 = 0;
+		}else {
+			index2 = 1;
+		}
+		
+		if(fixtures[index2].GetBody().GetUserData().name == "player"){
+			
+		}
+	}
 });
 Crafty.c("Lab_Porte", {
 	init: function() {
