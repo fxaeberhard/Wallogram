@@ -123,8 +123,11 @@ Crafty.sprite(153, 73, 'assets/lab/sprite_plateforme1.png ', {
 Crafty.sprite(138, 65, 'assets/lab/sprite_plateforme2.png ', {
     lab_plateforme2: [0, 0]
 });
-Crafty.sprite(187, 340, 'assets/lab/mechant.png ', {
+Crafty.sprite(187, 340, 'assets/lab/mechant.png', {
     lab_enemy: [0, 0]
+});
+Crafty.sprite(100, 100, 'assets/lab/teleport.png', {
+    lab_teleport_ball: [0, 0]
 });
 
 Crafty.sprite(1920,1080, 'assets/cubes_dev.png', {
@@ -209,4 +212,11 @@ Crafty.sprite(560, 477, 'assets/mario/sign.png',{
 });
 Crafty.sprite(429, 233, 'assets/mario/exit.png',{
 	garage_exit: [0, 0]
+});
+
+Crafty.sprite(1920, 1080, 'assets/lab/walloFond.png', {
+	walloFond: [0, 0]
+});
+Crafty.sprite(1920, 1080, 'assets/lab/walloFondDebug.png', {
+	walloFondDebug: [0, 0]
 });
