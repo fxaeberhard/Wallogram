@@ -157,16 +157,15 @@ Crafty.c("Player", {
 		}, 2000);
 		//console.log("dead", this)	
     },
-    reset: function() {									
+    reset: function() {		
+	    this.body.SetLinearVelocity(new b2Vec2(0, 0));							
         this.SetP($.App.spawn.x, $.App.spawn.y)						
         this.dead = false;
         this.reseting = false;                                    
 		//console.log("Player.reset()", this);
     },
     SetP: function(x, y) {
-	    this.body.SetLinearVelocity(new b2Vec2(0, 0));
         this.attr({"x": x,"y": y});
-        console.log("position", this.body.GetPosition());
 	},
     hit: function(enemy) {
 	    if(this.ko != true) {												// If player is not ko than action can start

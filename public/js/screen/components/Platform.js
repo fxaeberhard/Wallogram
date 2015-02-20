@@ -324,13 +324,15 @@ Crafty.c("Lab_Teleport", {
 				friction: 10,
 				restitution: 0,
 				isSensor: true,
-				shape: "box"
 			})
 			.bind("EnterFrame", function() {
 				if(this.runOnce != true){
 					this.AddToList()
 				}
 			})
+			.updateSize = function(){																//Override update size function
+				   return sizeChange(this, ({"top":30, "right": 70, "bottom": 70, "left": 30}))
+			}
 		
 		if(!$.App.Teleport){														// if teleport list doesn't exist create it.
 			$.App.Teleport = []
@@ -350,16 +352,20 @@ Crafty.c("Lab_Teleport", {
 		}
 		
 		if(fixtures[index2].GetBody().GetUserData().name == "player" && this.active.indexOf(fixtures[index2].GetBody().GetUserData()) == -1){
+			console.log("speed",fixtures[index2].GetBody().GetLinearVelocity())
 			var active = this.active,
+				speed = fixtures[index2].GetBody().GetLinearVelocity()
 				tagetActive = $.App.Teleport[this.target].active 
 				destination = $.App.Teleport[this.target],
 				itemId = active.push(fixtures[index2].GetBody().GetUserData()),										// add player to teleported list
 				TargetTtemId = tagetActive.push(fixtures[index2].GetBody().GetUserData()),	// add player to taget teleported list
 				x = $.App.Teleport[this.target].x,
 				y = $.App.Teleport[this.target].y
-	        setTimeout(function() {															// Set 1 milliseconds delay before teleporting
-				fixtures[index2].GetBody().GetUserData().SetP(x, y)
-			}, 1);
+		        setTimeout(function() {															// Set 1 milliseconds delay before teleporting
+					fixtures[index2].GetBody().GetUserData().SetP(x, y)
+					fixtures[index2].GetBody().SetLinearVelocity(speed)
+					console.log("speed2",fixtures[index2].GetBody().GetLinearVelocity())
+				}, 1);
 			setTimeout(function() {															// Set 2 second Delay before teleporting again
 				active.splice(itemId - 1, 1);
 				tagetActive.splice(TargetTtemId -1, 1);
