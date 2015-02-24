@@ -158,7 +158,6 @@ Crafty.c("Player", {
 		//console.log("dead", this)	
     },
     reset: function() {		
-	    console.log("TEST")
 	    //this.body.SetLinearVelocity(new b2Vec2(0, 0));							
         this.SetP($.App.spawn.x, $.App.spawn.y)
         this.dead = false;
@@ -166,7 +165,6 @@ Crafty.c("Player", {
 		//console.log("Player.reset()", this);
     },
     SetP: function(x, y) {
-	    console.log("SOMETHINGGGGGGG")
         this.attr({"x": x,"y": y});
 	},
     hit: function(enemy) {

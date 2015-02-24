@@ -335,7 +335,7 @@ jQuery(function($) {
 
                 App.usedSprites.push(randomColor);
                 IO.emit('colorSelected', data);
-
+				//console.log("cfg", App.cfg.player[randomColor])
                 return App.cfg.player[randomColor];
             } else {
                 IO.emit('roomFull');
@@ -346,12 +346,13 @@ jQuery(function($) {
 			cfg.x = App.spawn.x;
 			cfg.y = App.spawn.y;
 			cfg.mySocketId = data.mySocketId;
-			console.log("mysocketid",data.mySocketId)
-            App.players[data.mySocketId] = Crafty.e(cfg.components + ", WebsocketController")
+			// console.log("mysocketid",data.mySocketId)
+			// console.log("components", cfg)
+            App.players[data.mySocketId] = Crafty.e(cfg.component + ", WebsocketController")
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
-            console.log(App.cfg.player);
-			
+
+			console.log("the player",App.players[data.mySocketId])
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
                 this.playing = false;
@@ -411,6 +412,7 @@ jQuery(function($) {
 
 				App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
             }
+            console.log("All players", App.players)
             _.each(App.players, function(p) {                                   // Bring all players to starting position
 	            	console.log("player", p)
 	                p.reset();
