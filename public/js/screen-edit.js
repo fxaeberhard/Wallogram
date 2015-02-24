@@ -368,54 +368,7 @@ jQuery(function($) {
             /**
              * Entity edition overlay
              */
-            $(".wallo-crafty").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"><div class="wallo-edit-menu"><div class="wallo-edit-destroy fa fa-trash"></div><div class="wallo-edit-editentity fa fa-pencil"></div></div></div></div>');
-
-            var isDragging = false, over = false,
-                overlay = $(".wallo-edit-dd"),
-                cfg = {
-                    containment: ".wallo-crafty",
-                    //delay: 100,
-                    //distance: 20,
-                    handles: "ne, se, sw, nw",
-                    start: function() {
-                        Edit.isDragging = true;
-                    },
-                    resize: function() {
-                        Edit.savePositions();
-                    },
-                    drag: function() {
-                        Edit.savePositions();
-                    },
-                    stop: function() {
-                        console.log("EditOverlay.stopDrag(over: " + over + ")");
-                        Edit.savePositions();
-                        Edit.isDragging = false;
-                        if (!over) {
-                            Edit.hideEdition();
-                        }
-                    }
-                };
-            overlay.draggable(cfg);                                             // Set up drag and drop on overlay
-            overlay.resizable(cfg);
-            overlay.on("mouseenter", function() {
-                console.log("mouseenter");
-                over = true;
-            });
-            overlay.on("mouseleave", function() {
-                console.log("mouseleave(isDragging: " + Edit.isDragging + ")");
-                over = false;
-                if (!Edit.isDragging) {
-                    Edit.hideEdition();
-                }
-            });
-
-            $('.wallo-edit-editentity').click(Edit.showEditForm);               // Entity overlay buttons
-            $(".wallo-edit-destroy").click(Edit.destroyEntity);
-
-            $(document).on("newGameCreated", function() {
-                var padUrl = $.App.getPadUrl();
-                $(".wallo-tab-footer").prepend("Pad: <a href='" + padUrl + "' target='_blank'>" + padUrl + "</a><br /> <br />");
-            });
+            this.initOverlay()
 
             /* 
              * Fps counter 
@@ -587,6 +540,56 @@ jQuery(function($) {
                         console.log("Unable to drop new object", e);
                     }
                 }
+            });
+        },
+        initOverlay: function() {
+	        $(".wallo-crafty").prepend('<div class="wallo-edit-overlay"><div class="wallo-edit-dd"><div class="wallo-edit-menu"><div class="wallo-edit-destroy fa fa-trash"></div><div class="wallo-edit-editentity fa fa-pencil"></div></div></div></div>');
+
+            var isDragging = false, over = false,
+                overlay = $(".wallo-edit-dd"),
+                cfg = {
+                    containment: ".wallo-crafty",
+                    //delay: 100,
+                    //distance: 20,
+                    handles: "ne, se, sw, nw",
+                    start: function() {
+                        Edit.isDragging = true;
+                    },
+                    resize: function() {
+                        Edit.savePositions();
+                    },
+                    drag: function() {
+                        Edit.savePositions();
+                    },
+                    stop: function() {
+                        console.log("EditOverlay.stopDrag(over: " + over + ")");
+                        Edit.savePositions();
+                        Edit.isDragging = false;
+                        if (!over) {
+                            Edit.hideEdition();
+                        }
+                    }
+                };
+            overlay.draggable(cfg);                                             // Set up drag and drop on overlay
+            overlay.resizable(cfg);
+            overlay.on("mouseenter", function() {
+                console.log("mouseenter");
+                over = true;
+            });
+            overlay.on("mouseleave", function() {
+                console.log("mouseleave(isDragging: " + Edit.isDragging + ")");
+                over = false;
+                if (!Edit.isDragging) {
+                    Edit.hideEdition();
+                }
+            });
+
+            $('.wallo-edit-editentity').click(Edit.showEditForm);               // Entity overlay buttons
+            $(".wallo-edit-destroy").click(Edit.destroyEntity);
+
+            $(document).on("newGameCreated", function() {
+                var padUrl = $.App.getPadUrl();
+                $(".wallo-tab-footer").prepend("Pad: <a href='" + padUrl + "' target='_blank'>" + padUrl + "</a><br /> <br />");
             });
         },
         showEditOverlay: function(entity) {

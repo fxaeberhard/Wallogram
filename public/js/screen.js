@@ -315,10 +315,12 @@ jQuery(function($) {
             Crafty.stop();                                                      // Destroy crafty
             Crafty("*").destroy();
             $(".wallo-crafty").empty();
+            
             App.players = {};
-
-            App.initCrafty();                                                   // Render entities
-
+			
+            App.initCrafty();   												// Render entities
+            App.SetB2dListener();
+			$.Edit.initOverlay();                                              
             App.toggleDebug(App.debug);                                         // to force refresh
         },
         playerSetup: function(data) {
