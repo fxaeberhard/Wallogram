@@ -351,7 +351,7 @@ jQuery(function($) {
                 .attr(cfg);
             App.players[data.mySocketId].extend(cfg);				// add player specific data
             console.log(App.cfg.player);
-
+			
             if ($.size(App.players) === 1) {
                 this.setState("countdown");
                 this.playing = false;
@@ -412,7 +412,8 @@ jQuery(function($) {
 				App.gate = App.initEntities(entities);      			// Add a box to limit players moves until they can move
             }
             _.each(App.players, function(p) {                                   // Bring all players to starting position
-                p.reset();
+	            	console.log("player", p)
+	                p.reset();
             });
 
             var countDown = App.cfg.countdownDuration,
