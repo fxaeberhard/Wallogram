@@ -235,11 +235,13 @@ jQuery(function($) {
                 thumbUrl: "assets/mario/ledge_thumb.png",
                 form: [{
                         name: "fallTime",
-                        label: "Time until fall"
+                        label: "Time until fall",
+                        type: "number"
                     },
                     {
                         name: "recoverTime",
-                        label: "Time until recover"
+                        label: "Time until recover",
+                        type: "number"
                     }],
                 value: {
                     components: "Garage_Falling_Ledge",
@@ -307,20 +309,26 @@ jQuery(function($) {
                form: [{
                         name: "yDiff",
                         label: "Vertical movement (- up, + down)",
+                        type: "number"
                     },
                     {
                         name: "xDiff",
                         label: "Horizontal movement (- left, + right)",
+                        type: "number"
                     },
                     {
                         name: "time",
                         label: "Time in seconds to go one way",
+                        type: "number"
                     }],
                     
                value: {
                    components: "Lab_MovingPlatform",
                    w: 154,
-                   h: 74
+                   h: 74,
+                   xDiff: 100,
+                   yDiff: 100,
+                   time: 2
                }
            },
             Lab_Plateform1: {
